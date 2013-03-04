@@ -1,0 +1,162 @@
+
+.wz-app-8{
+	background: #FFF;
+}
+
+.wz-app-8 .left-column{
+	width: 160px;
+	height: 540px;
+	float: left;
+	background: #F9F9F9;
+}
+
+.wz-app-8 .left-column-top{
+	width: 160px;
+	height: 39px;
+	float: left;
+	border-bottom: 1px solid #466176;
+	background: #54728C;
+}
+
+.wz-app-8 .left-column-content{
+	width: 160px;
+	height: 500px;
+	float: left;
+}
+
+.wz-app-8 .middle-column{
+	width: 250px;
+	height: 540px;
+	float: left;
+}
+
+.wz-app-8 .middle-column-top{
+	width: 250px;
+	height: 39px;
+	float: left;
+	border-bottom: 1px solid #466176;
+	background: #54728C;
+}
+
+.wz-app-8 .middle-column-content{
+	width: 250px;
+	height: 500px;
+	float: left;
+}
+
+.wz-app-8 .right-column{
+	width: 580px;
+	height: 540px;
+	float: left;
+}
+
+.wz-app-8 .right-column-top{
+	width: 580px;
+	height: 39px;
+	float: left;
+	border-bottom: 1px solid #466176;
+	background: #54728C;
+}
+
+.wz-app-8 .right-column-content{
+	width: 580px;
+	height: 500px;
+	float: left;
+}
+
+.wz-app-8 .separator{
+	width: 5px;
+	height: 540px;
+	float: left;
+	background: #ECECEC;
+}
+
+.wz-app-8 .separator-top{
+	width: 3px;
+	height: 40px;
+	float: left;
+	background: #66829A;
+	border-left: 1px solid #466176;
+	border-right: 1px solid #466176;
+}
+
+.wz-app-8 .separator-content{
+	width: 3px;
+	height: 500px;
+	float: left;
+	border-left: 1px solid #DADADA;
+	border-right: 1px solid #DADADA;
+}
+
+.wz-app-8 .new-mail{
+	width: 100px;
+	height: 15px;
+	margin: 19px;
+	padding: 8px 10px;
+	border-radius: 2px;
+	background: #E45857;
+	border: 1px solid #C14142;
+}
+
+.wz-app-8 .new-mail i{
+	width: 16px;
+	height: 16px;
+	float: left;
+	background: url('https://static.weezeel.com/app/8/new.png')	
+}
+
+.wz-app-8 span{
+	float: left;
+	margin-left: 8px;
+	font-size: 14px;
+	color: #FFF;
+}
+
+.wz-app-8 .account{
+	width: 158px;
+	height: 38px;
+	border: 1px solid rgba(60,60,60,0);
+	float: left;
+}
+
+.wz-app-8 .account:hover{
+	background: rgba(117,169,209,0.3);
+	border: 1px solid #75A9D1; 
+}
+
+.wz-app-8 .account i{
+	width: 0px; 
+	height: 0px; 
+	float: left;
+	margin-top: 15px;
+	margin-left: 14px;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid #DADADA;
+}
+
+.wz-app-8 .account span{
+	margin-top: 13px;
+	margin-left: 8px;
+	color: #5D5D5D;
+}
+
+.wz-app-8 .account figure{
+	float: right;
+	margin-top: 11px;
+	margin-right: 10px;
+	line-height: 8px;
+	padding: 5px;
+	border-radius: 2px;
+	background: #E45857;
+	border: 1px solid #C14142; 
+}
+
+.wz-app-8 .account figure.hidden{
+	display: none;
+}
+
+.wz-app-8 .account figure span{
+	margin: 0px;
+	color: #FFF;
+}
