@@ -1,5 +1,7 @@
 
-wz.app.addScript( 8, 'common', function( win ){
+wz.app.addScript( 8, 'main', function( win ){
+	
+	var attachments = $('.content-attachments', win);
     
     $(win)
 	
@@ -36,6 +38,21 @@ wz.app.addScript( 8, 'common', function( win ){
 			}else{
 				$(this).addClass('active');
 			}
+		})
+		
+		.on( 'click', '.options-reply', function(){
+			wz.app.createWindow(8, null, 'new');
 		});
+	
+	if( attachments.children().size() < 3 ){
+		attachments.height( 60 );
+		$('.content-message').height( 244 );
+	}else if( attachments.children().size() === 3 ){
+		attachments.height( 85 );
+		$('.content-message').height( 222 );
+	}else{
+		attachments.height( 110 );
+		$('.content-message').height( 192 );
+	}
 
 });

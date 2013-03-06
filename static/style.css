@@ -37,6 +37,15 @@
 	background: url('https://static.weezeel.com/app/8/close.png') no-repeat;
 }
 
+.wz-app-8 hr{
+	width: 520px;
+	float: left;
+	border: none;
+	border-bottom: 1px solid #DADADA;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
 .wz-app-8 .left-column{
 	width: 180px;
 	height: 540px;
@@ -122,8 +131,9 @@
 }
 
 .wz-app-8 .right-column-content{
-	width: 560px;
-	height: 500px;
+	width: 520px;
+	height: 460px;
+	padding: 19px 0px 20px 20px;
 	float: left;
 }
 
@@ -180,51 +190,54 @@
 }
 
 .wz-app-8 .account{
-	width: 178px;
+	width: 180px;
 	height: 38px;
-	border: 1px solid rgba(60,60,60,0);
+	border-top: 1px solid rgba(60,60,60,0);
+	border-bottom: 1px solid rgba(60,60,60,0);
 	float: left;
 	overflow: hidden;
 }
 
 .wz-app-8 .account:hover{
 	background: rgba(117,169,209,0.3);
-	border: 1px solid #75A9D1; 
+	border-top: 1px solid #75A9D1;
+	border-bottom: 1px solid #75A9D1;
 }
 
 .wz-app-8 .account.display:hover{
 	background: none;
-	border: 1px solid rgba(60,60,60,0); 
+	border-top: 1px solid rgba(60,60,60,0);
+	border-bottom: 1px solid rgba(60,60,60,0);
 }
 
 .wz-app-8 .account .arrow{
 	width: 0px; 
 	height: 0px; 
 	float: left;
-	margin-top: 15px;
+	margin-top: 13px;
 	margin-left: 14px;
 	border-top: 5px solid transparent;
 	border-bottom: 5px solid transparent;
-	border-left: 7px solid #AAA;
+	border-left: 6px solid #AAA;
 }
 
 .wz-app-8 .account.display .arrow{
-	margin-top: 18px;
+	margin-top: 16px;
 	margin-left: 11px;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
-	border-top: 7px solid #AAA;
+	border-top: 6px solid #AAA;
 }
 
 .wz-app-8 .account span{
-	margin-top: 13px;
+	margin-top: 11px;
 	margin-left: 8px;
 	color: #5D5D5D;
 }
 
 .wz-app-8 .account figure{
 	float: right;
-	margin-top: 11px;
+	margin-top: 9px;
 	margin-right: 10px;
 	line-height: 8px;
 	padding: 5px;
@@ -274,7 +287,7 @@
 .wz-app-8 .add-account{
 	width: 160px;
 	height: 38px;
-	border-top: 1px solid #AAA;
+	border-top: 1px solid #DADADA;
 	float: left;
 	margin-left: 9px;
 	margin-top: 10px;
@@ -378,7 +391,7 @@
 	float: left;
 }
 
-.wz-app-8 .middle-column-content nav figure{
+.wz-app-8 nav figure{
 	width: 22px;
 	height: 22px;
 	padding-top: 9px;
@@ -389,52 +402,53 @@
 	border-right: none;
 }
 
-.wz-app-8 .middle-column-content nav figure:hover{
-	background: #DDD;
+.wz-app-8 nav figure:hover{
+	background: #E6E6E6;
+	/*box-shadow: inset 0px 0px 4px #FEA100;*/
 }
 
-.wz-app-8 .middle-column-content nav figure:first-child{
+.wz-app-8 nav figure:first-child{
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-folder{
+.wz-app-8 nav figure.options-folder{
 	width: 32px;
 	padding-left: 6px;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-label{
+.wz-app-8 nav figure.options-label{
 	width: 32px;
 	padding-left: 6px;
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px;
-	border-right: 1px solid #DADADA;; 
+	border-right: 1px solid #DADADA; 
 }
 
-.wz-app-8 .middle-column-content nav figure i{
+.wz-app-8 nav figure i{
 	width: 14px;
 	height: 14px;
 	float: left;
 	display: block;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-display i{
+.wz-app-8 nav figure.options-display i{
 	background: url('https://static.weezeel.com/app/8/display.png') no-repeat;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-refresh i{
+.wz-app-8 nav figure.options-refresh i{
 	background: url('https://static.weezeel.com/app/8/refresh.png') no-repeat;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-spam i{
+.wz-app-8 nav figure.options-spam i{
 	background: url('https://static.weezeel.com/app/8/spam.png') no-repeat;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-trash i{
+.wz-app-8 nav figure.options-trash i{
 	background: url('https://static.weezeel.com/app/8/trash.png') no-repeat;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-folder i{
+.wz-app-8 nav figure.options-folder i{
 	width: 9px;
 	height: 6px;
 	margin-left: 2px;
@@ -442,7 +456,7 @@
 	background: url('https://static.weezeel.com/app/8/arrow.png') no-repeat;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-folder i:first-child{
+.wz-app-8 nav figure.options-folder i:first-child{
 	width: 14px;
 	height: 14px;
 	margin-left: 2px;
@@ -450,7 +464,7 @@
 	background: url('https://static.weezeel.com/app/8/folder.png') no-repeat;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-label i{
+.wz-app-8 nav figure.options-label i{
 	width: 9px;
 	height: 6px;
 	margin-left: 2px;
@@ -458,7 +472,7 @@
 	background: url('https://static.weezeel.com/app/8/arrow.png') no-repeat;
 }
 
-.wz-app-8 .middle-column-content nav figure.options-label i:first-child{
+.wz-app-8 figure.options-label i:first-child{
 	width: 14px;
 	height: 14px;
 	margin-left: 2px;
@@ -612,4 +626,212 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-	
+
+.wz-app-8 .right-column-content nav{
+	width: 520px;
+	height: 33px;
+	float: left;
+}
+
+.wz-app-8 nav figure.options-reply{
+	float: right;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+.wz-app-8 nav figure.options-reply i{
+	margin-top: 2px;
+	background: url('https://static.weezeel.com/app/8/reply.png') no-repeat;
+}
+
+.wz-app-8 nav figure.options-more{
+	width: 14px;
+	float: right;
+	padding-left: 6px;
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+	border-right: 1px solid #DADADA;
+}
+
+.wz-app-8 nav figure.options-more i{
+	width: 9px;
+	height: 6px;
+	margin-top: 4px;
+	background: url('https://static.weezeel.com/app/8/arrow.png') no-repeat;
+}
+
+.wz-app-8 .content-origin{
+	width: 520px;
+	float: left;
+	padding: 21px 0px 20px 0px;
+	border-bottom: 1px solid #DADADA;
+}
+
+.wz-app-8 .content-origin img{
+	width: 34px;
+	height: 34px;
+	float: left;
+	border-radius: 18px;
+	background: #f00;
+}
+
+.wz-app-8 .content-origin-top{
+	width: 476px;
+	height: 18px;
+	float: left;
+	margin-left: 10px;
+}
+
+.wz-app-8 .content-origin-bottom{
+	width: 476px;
+	height: 16px;
+	float: left;
+	margin-left: 10px;
+}
+
+.wz-app-8 .content-origin-name{
+	float: left;
+	font-size: 15px;
+	color: #5D5D5D;
+}
+
+.wz-app-8 .content-origin-mail{
+	float: left;
+	font-size: 14px;
+	color: #A3B6C5;
+}
+
+.wz-app-8 .content-origin-display{
+	width: 14px;
+	height: 14px;
+	float: left;
+	margin-left: 8px;
+	display: block;
+	background: url('https://static.weezeel.com/app/8/display.png') no-repeat;
+}
+
+.wz-app-8 .content-origin-date{
+	float: right;
+	font-size: 14px;
+	color: #5D5D5D;
+}
+
+.wz-app-8 .content-origin .message-clip{
+	float: right;
+	margin-left: 8px;
+}
+
+.wz-app-8 .right-column-content.attachements .message-clip{
+	display: block;
+}
+
+.wz-app-8 .content-origin-bottom .message-star{
+	float: right;
+}
+
+.wz-app-8 .content-message{
+	width: 540px;
+	height: 352px;
+	float: left;
+	margin-top: 20px;
+}
+
+.wz-app-8 .right-column-content.attachements .content-message{
+	height: 181px;
+}
+
+.wz-app-8 .content-message-text{
+	padding-right: 20px;
+	padding-bottom: 20px;
+	margin-left: 0px;
+	font-size: 14px;
+	line-height: 17px;
+	color: #5D5D5D;
+	text-align: justify;
+}
+
+.wz-app-8 .right-column-content .wz-scroll-slider{
+	margin-right: 8px;
+}
+
+.wz-app-8 .right-column-content .wz-scroll-bar{
+	margin-right: 8px;
+}
+
+.wz-app-8 .content-attachments{
+	display: none;
+	width: 540px;
+	height: 110px;
+	float: left;
+}
+
+.wz-app-8 .right-column-content.attachements .content-attachments{
+	display: block;
+}	
+
+.wz-app-8 .content-attachments article{
+	width: 520px;
+	float: left;
+	padding-right: 20px;
+	height: 16px;
+	margin-top: 10px;
+}
+
+.wz-app-8 .content-attachments article:first-child{
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+.wz-app-8 .content-attachments span{
+	float: left;
+	font-size: 14px;
+	color: #5D5D5D;
+}
+
+.wz-app-8 .content-attachments span:first-child{
+	margin-left: 0px;
+}
+
+.wz-app-8 .content-attachments article i{
+	width: 11px;
+	height: 13px;
+	float: left;
+	margin-top: 1px;
+	background: url('https://static.weezeel.com/app/8/file.png') no-repeat;
+}
+
+.wz-app-8 .content-attachments .light{
+	color: #AAA;
+}
+
+.wz-app-8 span.content-attachements-view{
+	float: right;
+	color: #AAA;
+	cursor: pointer;
+}
+
+.wz-app-8 .content-attachements-view:hover{
+	color: #5D5D5D;
+}
+
+.wz-app-8 span.content-attachements-download{
+	float: right;
+	margin-right: 8px;
+	color: #AAA;
+	cursor: pointer;
+}
+
+.wz-app-8 .content-attachements-download:hover{
+	color: #5D5D5D;
+}
+
+.wz-app-8 span.content-attachements-import{
+	float: right;
+	margin-right: 8px;
+	color: #AAA;
+	cursor: pointer;
+}
+
+.wz-app-8 .content-attachements-import:hover{
+	color: #5D5D5D;
+}

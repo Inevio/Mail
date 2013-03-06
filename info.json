@@ -17,8 +17,8 @@
 
     "common" : {
 
-        "css"    : ["style.css"],
-        "script" : ["script.js"]
+        "css"    : [],
+        "script" : []
 
     },
 
@@ -51,8 +51,38 @@
 
             },
 
-            "css"    : [],
-            "script" : []
+            "css"    : ["style.css"],
+            "script" : ["script.js"]
+
+        },
+		
+		"new" : {
+
+            "description" : "",
+            
+            "template" : "new.html",
+
+            "maxizable" : false,
+            "resizable" : false,
+
+            "width"  : {
+
+                "default" : 560,
+                "min"     : 0,
+                "max"     : 0
+
+            },
+
+            "height" : {
+
+                "default" : 540,
+                "min"     : 0,
+                "max"     : 0
+
+            },
+
+            "css"    : ["new.css"],
+            "script" : ["new.js"]
 
         }
 
