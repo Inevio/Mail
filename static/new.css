@@ -1,189 +1,189 @@
 
 .wz-app-8-new{
-	background: #FFF;
+    background: #FFF;
 }
 
 .wz-app-8-new .wz-scroll-slider{
-	width: 5px;
+    width: 5px;
 }
 
 .wz-app-8-new .wz-scroll-bar{
-	width: 5px;
+    width: 5px;
 }
 
 .wz-app-8-new .wz-win-minimize{
-	width: 16px;
-	height: 3px;
-	float: right;
-	margin-top: 19px;
-	margin-right: 23px;
-	background: url('https://static.weezeel.com/app/8/min.png') no-repeat;
+    width: 16px;
+    height: 3px;
+    float: right;
+    margin-top: 19px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/min.png') no-repeat;
 }
 
 .wz-app-8-new .wz-win-maximize{
-	width: 16px;
-	height: 16px;
-	float: right;
-	margin-top: 13px;
-	margin-right: 23px;
-	background: url('https://static.weezeel.com/app/8/max.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/max.png') no-repeat;
 }
 
 .wz-app-8-new .wz-win-close{
-	width: 16px;
-	height: 16px;
-	float: right;
-	margin-top: 13px;
-	margin-right: 23px;
-	background: url('https://static.weezeel.com/app/8/close.png') no-repeat;
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/close.png') no-repeat;
 }
 
 .wz-app-8-new .wz-win-menu{
-	
-	width: 560px;
-	height: 39px;
-	padding: 0px;
-	background: #54728C;
-	border-bottom: 1px solid #466176;
-	
+    
+    width: 560px;
+    height: 39px;
+    padding: 0px;
+    background: #54728C;
+    border-bottom: 1px solid #466176;
+    
 }
 
 .wz-app-8-new .wz-win-menu span{
-	
-	width: 130px;
-	float: left;
-	font-size: 16px;
-	color: #FFF;
-	margin-left: 16px;
-	margin-top: 13px;
-	
+    
+    width: 130px;
+    float: left;
+    font-size: 16px;
+    color: #FFF;
+    margin-left: 16px;
+    margin-top: 13px;
+    
 }
 
 .wz-app-8-new .content{
-	width: 540px;
-	height: 460px;
-	padding: 20px 0px 20px 20px;
+    width: 540px;
+    height: 460px;
+    padding: 20px 0px 20px 20px;
 }
 
 .wz-app-8-new input{
 
-	width: 230px;
-	float: left;
-	margin-top: -3px;
-	border-radius: 3px;
-	border: 1px solid #DDD;	
-	font-size: 14px;
-	color: #5D5D5D;
-	padding: 3px 5px 3px 5px;
-	
+    width: 230px;
+    float: left;
+    margin-top: -3px;
+    border-radius: 3px;
+    border: 1px solid #DDD; 
+    font-size: 14px;
+    color: #5D5D5D;
+    padding: 3px 5px 3px 5px;
+    
 }
 
 .wz-app-8-new input:focus{
-	border: 1px solid #50BDFF;
+    border: 1px solid #50BDFF;
 }
 
 .wz-app-8-new .content-compose{
 
-	width: 458px;
-	height: 260px;
-	float: left;
-	margin-top: 15px;
-	border-radius: 3px;
-	border: 1px solid #DDD;	
-	font-size: 14px;
-	color: #5D5D5D;
-	padding: 20px 30px 20px 30px;
-	
+    width: 458px;
+    height: 260px;
+    float: left;
+    margin-top: 15px;
+    border-radius: 3px;
+    border: 1px solid #DDD; 
+    font-size: 14px;
+    color: #5D5D5D;
+    padding: 20px 30px 20px 30px;
+    
 }
 
 .wz-app-8-new .content-compose:focus{
-	border: 1px solid #50BDFF;
+    border: 1px solid #50BDFF;
 }
 
 .wz-app-8-new .content span{
-	width: 80px;
-	height: 16px;
-	float: left;
-	font-size: 14px;
-	color: #5D5D5D;
+    width: 80px;
+    height: 16px;
+    float: left;
+    font-size: 14px;
+    color: #5D5D5D;
 }
 
 .wz-app-8-new .content-send i{
-	width: 31px;
-	height: 26px;
-	float: left;
-	margin-top: 15px;
-	margin-left: 39px;
-	background: url('https://static.weezeel.com/app/8/send.png') no-repeat;
+    width: 31px;
+    height: 26px;
+    float: left;
+    margin-top: 15px;
+    margin-left: 39px;
+    background: url('https://static.weezeel.com/app/8/send.png') no-repeat;
 }
 
 .wz-app-8-new .content-to{
-	float: left;
-	clear: left;
-	margin-top: 8px;
+    float: left;
+    clear: left;
+    margin-top: 8px;
 }
 
 .wz-app-8-new .content-subject{
-	float: left;
-	clear: left;
-	margin-top: 8px;
+    float: left;
+    clear: left;
+    margin-top: 8px;
 }
 
 .wz-app-8-new .content-from{
-	float: left;
-	clear: left;
-	margin-top: 8px;
+    float: left;
+    clear: left;
+    margin-top: 8px;
 }
 
 .wz-app-8-new .content-send{
-	width: 110px;
-	height: 83px;
-	float: right;
-	margin-top: 5px;
-	margin-right: 49px;
-	background: #F7F7F7;
-	border: 1px solid #DADADA;
-	border-radius: 2px;
+    width: 110px;
+    height: 83px;
+    float: right;
+    margin-top: 5px;
+    margin-right: 49px;
+    background: #F7F7F7;
+    border: 1px solid #DADADA;
+    border-radius: 2px;
 }
 
 .wz-app-8-new .content-send:hover{
-	box-shadow: inset 0px 0px 7px #FEA100;
-	border: 1px solid rgba(60,60,60,0);
-	border-radius: 3px;
+    box-shadow: inset 0px 0px 7px #FEA100;
+    border: 1px solid rgba(60,60,60,0);
+    border-radius: 3px;
 }
 
 .wz-app-8-new .content-send span{
-	text-align: center;
-	margin-top: 8px;
-	margin-left: 14px;
+    text-align: center;
+    margin-top: 8px;
+    margin-left: 14px;
 }
 
 .wz-app-8-new .content-left{
-	float: left;
+    float: left;
 }
 
 .wz-app-8-new .content-attachments{
-	display: block;
-	width: 520px;
-	height: 30px;
-	float: left;
-	margin-top: 15px;
+    display: block;
+    width: 520px;
+    height: 30px;
+    float: left;
+    margin-top: 15px;
 }
 
 .wz-app-8-new .content-attachments span{
-	float: left;
-	font-size: 14px;
-	color: #AAA;
-	cursor: pointer;
+    float: left;
+    font-size: 14px;
+    color: #AAA;
+    cursor: pointer;
 }
 
 .wz-app-8-new .content-attachments span:hover{
-	color: #5D5D5D;
+    color: #5D5D5D;
 }
 
 .wz-app-8-new .content-attachments i{
-	width: 14px;
-	height: 13px;
-	float: left;
-	background: url('https://static.weezeel.com/app/8/clip.png') no-repeat;
+    width: 14px;
+    height: 13px;
+    float: left;
+    background: url('https://static.weezeel.com/app/8/clip.png') no-repeat;
 }
