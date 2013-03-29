@@ -40,8 +40,12 @@ wz.app.addScript( 8, 'main', function( win ){
             }
         })
         
-        .on( 'click', '.options-reply', function(){
+        .on( 'click', '.options-reply, .new-mail', function(){
             wz.app.createWindow(8, null, 'new');
+        })
+
+        .on( 'click', '.add-account', function(){
+            alert('I\'m sorry but weeMail isn\'t working right now.');
         });
     
     if( attachments.children().size() < 3 ){
