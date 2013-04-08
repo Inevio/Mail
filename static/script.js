@@ -1,5 +1,5 @@
 
-wz.app.addScript( 8, 'main', function( win ){
+wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     
     var attachments = $('.content-attachments', win);
     

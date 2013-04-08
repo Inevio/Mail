@@ -1,5 +1,5 @@
 
-wz.app.addScript( 8, 'new', function( win ){
+wz.app.addScript( 8, 'new', function( win, app, lang, params ){
     
     win
     
