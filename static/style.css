@@ -18,6 +18,7 @@
     margin-top: 19px;
     margin-right: 23px; 
     background: url('https://static.weezeel.com/app/8/min.png') no-repeat;
+    background-size: 16px 3px;
 }
 
 .wz-app-8 .wz-win-maximize{
@@ -26,6 +27,7 @@
     float: right;
     margin: 13px 23px 0px 0px;
     background: url('https://static.weezeel.com/app/8/max.png') no-repeat;
+    background-size: 15px 16px;
 }
 
 .wz-app-8 .wz-win-close{
@@ -35,6 +37,7 @@
     margin-top: 13px;
     margin-right: 23px;
     background: url('https://static.weezeel.com/app/8/close.png') no-repeat;
+    background-size: 15px 15px;
 }
 
 .wz-app-8 hr{
@@ -175,7 +178,8 @@
     width: 16px;
     height: 16px;
     float: left;
-    background: url('https://static.weezeel.com/app/8/new.png') no-repeat;  
+    background: url('https://static.weezeel.com/app/8/new.png') no-repeat;
+    background-size: 16px 16px;
 }
 
 .wz-app-8 span{
@@ -299,7 +303,8 @@
     float: left;
     margin-top: 10px;
     margin-left: 30px;
-    background: url('https://static.weezeel.com/app/8/plus.png') no-repeat; 
+    background: url('https://static.weezeel.com/app/8/plus.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .add-account span{
@@ -311,26 +316,32 @@
 
 .wz-app-8 .inbox i{
     background: url('https://static.weezeel.com/app/8/inbox.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .starred i{
     background: url('https://static.weezeel.com/app/8/star.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .sent i{
     background: url('https://static.weezeel.com/app/8/mail.png') no-repeat;
+    background-size: 14px 12px;
 }
 
 .wz-app-8 .important i{
     background: url('https://static.weezeel.com/app/8/important.png') no-repeat;
+    background-size: 14px 12px;
 }
 
 .wz-app-8 .drafts i{
     background: url('https://static.weezeel.com/app/8/drafts.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .trash i{
     background: url('https://static.weezeel.com/app/8/trash.png') no-repeat;
+    background-size: 11px 14px;
 }
 
 .wz-app-8 .middle-column-top span{
@@ -434,18 +445,22 @@
 
 .wz-app-8 nav figure.options-display i{
     background: url('https://static.weezeel.com/app/8/display.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 nav figure.options-refresh i{
     background: url('https://static.weezeel.com/app/8/refresh.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 nav figure.options-spam i{
     background: url('https://static.weezeel.com/app/8/spam.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 nav figure.options-trash i{
     background: url('https://static.weezeel.com/app/8/trash.png') no-repeat;
+    background-size: 11px 14px;
 }
 
 .wz-app-8 nav figure.options-folder i{
@@ -454,6 +469,7 @@
     margin-left: 2px;
     margin-top: 6px;
     background: url('https://static.weezeel.com/app/8/arrow.png') no-repeat;
+    background-size: 9px 6px;
 }
 
 .wz-app-8 nav figure.options-folder i:first-child{
@@ -462,6 +478,7 @@
     margin-left: 2px;
     margin-top: 2px;
     background: url('https://static.weezeel.com/app/8/folder.png') no-repeat;
+    background-size: 14px 11px;
 }
 
 .wz-app-8 nav figure.options-label i{
@@ -470,6 +487,7 @@
     margin-left: 2px;
     margin-top: 6px;
     background: url('https://static.weezeel.com/app/8/arrow.png') no-repeat;
+    background-size: 9px 6px;
 }
 
 .wz-app-8 figure.options-label i:first-child{
@@ -478,6 +496,7 @@
     margin-left: 2px;
     margin-top: 0px;
     background: url('https://static.weezeel.com/app/8/tag.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .middle-column-content-scroll{
@@ -531,10 +550,12 @@
     height: 14px;
     float: left;
     background: url('https://static.weezeel.com/app/8/open.png') no-repeat;
+    background-size: 14px 13px;
 }
 
 .wz-app-8 .message.unread .message-icon{
     background: url('https://static.weezeel.com/app/8/mail_active.png') no-repeat;
+    background-size: 14px 12px;
 }
 
 .wz-app-8 .message-clip{
@@ -543,6 +564,7 @@
     height: 14px;
     display: none;
     background: url('https://static.weezeel.com/app/8/clip.png') no-repeat;
+    background-size: 14px 13px;
 }
 
 .wz-app-8 .message-clip.attached{
@@ -551,6 +573,7 @@
 
 .wz-app-8 .message.selected .message-clip.attached{
     background: url('https://static.weezeel.com/app/8/clip_white.png') no-repeat;
+    background-size: 14px 13px;
 }
 
 .wz-app-8 .message-date{
@@ -589,10 +612,12 @@
     height: 14px;
     float: left;
     background: url('https://static.weezeel.com/app/8/star.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .message-star.active{
     background: url('https://static.weezeel.com/app/8/star_active.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .message-subject{
@@ -642,6 +667,7 @@
 .wz-app-8 nav figure.options-reply i{
     margin-top: 2px;
     background: url('https://static.weezeel.com/app/8/reply.png') no-repeat;
+    background-size: 14px 9px;
 }
 
 .wz-app-8 nav figure.options-more{
@@ -658,6 +684,7 @@
     height: 6px;
     margin-top: 4px;
     background: url('https://static.weezeel.com/app/8/arrow.png') no-repeat;
+    background-size: 9px 6px;
 }
 
 .wz-app-8 .content-origin{
@@ -712,6 +739,7 @@
     margin-left: 8px;
     display: block;
     background: url('https://static.weezeel.com/app/8/display.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .content-origin-date{
@@ -802,6 +830,7 @@
     float: left;
     margin-top: 1px;
     background: url('https://static.weezeel.com/app/8/file.png') no-repeat;
+    background-size: 11px 13px;
 }
 
 .wz-app-8 .content-attachments .light{
