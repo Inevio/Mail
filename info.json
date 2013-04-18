@@ -62,8 +62,8 @@
             
             "template" : "new.html",
 
-            "maxizable" : false,
-            "resizable" : false,
+            "maxizable" : true,
+            "resizable" : true,
 
             "width"  : {
 
@@ -83,6 +83,36 @@
 
             "css"    : ["new.css"],
             "script" : ["new.js"]
+
+        },
+        
+        "account" : {
+
+            "description" : "",
+            
+            "template" : "account.html",
+
+            "maxizable" : false,
+            "resizable" : false,
+
+            "width"  : {
+
+                "default" : 560,
+                "min"     : 0,
+                "max"     : 0
+
+            },
+
+            "height" : {
+
+                "default" : 305,
+                "min"     : 0,
+                "max"     : 0
+
+            },
+
+            "css"    : ["account.css"],
+            "script" : ["account.js"]
 
         }
 

@@ -45,7 +45,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         })
 
         .on( 'click', '.add-account', function(){
-            alert('I\'m sorry but weeMail isn\'t working right now.');
+            wz.app.createWindow(8, null, 'account');
         });
     
     if( attachments.children().size() < 3 ){

@@ -1,5 +1,5 @@
 
-<section class="wz-win-menu wz-win-menu-radius wz-dragger">
+<section class="wz-win-menu wz-win-menu-radius wz-dragger wz-fit-x">
 
     <span class="wz-dragger">New message</span>
     
@@ -9,29 +9,38 @@
 
 </section>
 
-<section class="content">
-    <article class="content-left">
-        <article class="content-to">
-            <span>To:</span>
-            <input type="email" />
+<section class="content wz-fit">
+
+    <div class="content-left-container wz-fit-x">
+
+        <article class="content-left">
+            <article class="content-to">
+                <span>To:</span>
+                <input type="email" />
+            </article>
+            <article class="content-subject">
+                <span>Subject:</span>
+                <input type="text" />
+            </article>
+            <article class="content-from">
+                <span>From:</span>
+                <input type="email" />
+            </article>
         </article>
-        <article class="content-subject">
-            <span>Subject:</span>
-            <input type="text" />
-        </article>
-        <article class="content-from">
-            <span>From:</span>
-            <input type="email" />
-        </article>
+
+        <figure class="content-send">
+            <i></i>
+            <span>Send</span>
+        </figure>
+
+    </div>
+
+    <article class="content-compose wz-fit" contenteditable="true">
     </article>
-    <figure class="content-send">
-        <i></i>
-        <span>Send</span>
-    </figure>
-    <article class="content-compose" contenteditable="true">
-    </article>
+
     <article class="content-attachments">
         <i></i>
         <span>Attach a file</span>
     </article>
+
 </section>

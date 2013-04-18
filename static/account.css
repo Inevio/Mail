@@ -1,0 +1,214 @@
+
+.wz-app-8-account{
+    background: #FFF;
+}
+
+.wz-app-8-account .wz-scroll-slider{
+    width: 5px;
+}
+
+.wz-app-8-account .wz-scroll-bar{
+    width: 5px;
+}
+
+.wz-app-8-account .wz-win-minimize{
+    width: 16px;
+    height: 3px;
+    float: right;
+    margin-top: 19px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/min.png') no-repeat;
+    background-size: 16px 3px;
+}
+
+.wz-app-8-account .wz-win-maximize{
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/max.png') no-repeat;
+    background-size: 15px 16px
+}
+
+.wz-app-8-account .wz-win-close{
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/close.png') no-repeat;
+    background-size: 15px 15px;
+}
+
+.wz-app-8-account .wz-win-menu{
+    
+    width: 560px;
+    height: 39px;
+    padding: 0px;
+    background: #54728C;
+    border-bottom: 1px solid #466176;
+    
+}
+
+.wz-app-8-account .wz-win-menu span{
+    
+    width: 130px;
+    float: left;
+    font-size: 16px;
+    color: #FFF;
+    margin-left: 16px;
+    margin-top: 13px;
+    
+}
+
+.wz-app-8-account .content{
+    width: 500px;
+    height: 185px;
+    padding: 40px 30px;
+}
+
+.wz-app-8-account input{
+
+    width: 230px;
+    float: left;
+    margin-top: -3px;
+    border-radius: 3px;
+    border: 1px solid #DDD; 
+    font-size: 14px;
+    color: #5D5D5D;
+    padding: 3px 5px 3px 5px;
+    
+}
+
+.wz-app-8-account input:focus{
+    border: 1px solid #50BDFF;
+}
+
+.wz-app-8-account button{
+
+    border-radius: 2px;
+    border-top: 1px solid #4B4B4D;
+    padding: 10px 25px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 1px 1px #AAA;
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    font-size: 16px;
+    color: #FFF;
+    cursor: pointer;
+    
+    background-image: -moz-linear-gradient(50% 0% -90deg,rgb(54,54,57) 0%,rgb(39,39,41) 100%); 
+    background-image: -webkit-linear-gradient(-90deg,rgb(54,54,57) 0%,rgb(39,39,41) 100%);
+    background-image: -o-linear-gradient(-90deg,rgb(54,54,57) 0%,rgb(39,39,41) 100%);
+    background-image: linear-gradient(0deg,rgb(39,39,41) 0%,rgb(54,54,57) 100%);
+
+}
+
+.wz-app-8-account button:hover{
+
+    border-top: 1px solid #5D5D60;
+    
+    background-image: -moz-linear-gradient(50% 0% -90deg,rgb(75,75,77) 0%,rgb(55,55,56) 100%); 
+    background-image: -webkit-linear-gradient(-90deg,rgb(75,75,77) 0%,rgb(55,55,56) 100%);
+    background-image: -o-linear-gradient(-90deg,rgb(75,75,77) 0%,rgb(55,55,56) 100%);
+    background-image: linear-gradient(0deg,rgb(55,55,56) 0%,rgb(75,75,77) 100%);
+
+}
+
+.wz-app-8-account button.big{
+    padding: 10px 40px;
+}
+
+.wz-app-8-account button.active{
+
+    border-top: 1px solid #50BDFF;
+    
+    background-image: -moz-linear-gradient(50% 0% -90deg,rgb(60,181,255) 0%,rgb(44,153,255) 100%); 
+    background-image: -webkit-linear-gradient(-90deg,rgb(60,181,255) 0%,rgb(44,153,255) 100%);
+    background-image: -o-linear-gradient(-90deg,rgb(60,181,255) 0%,rgb(44,153,255) 100%);
+    background-image: linear-gradient(0deg,rgb(44,153,255) 0%,rgb(60,181,255) 100%);
+
+}
+
+.wz-app-8-account button.active:hover{
+
+    border-top: 1px solid #60CBFF;
+    
+    background-image: -moz-linear-gradient(50% 0% -90deg,rgb(77,197,255) 0%,rgb(56,175,255) 100%); 
+    background-image: -webkit-linear-gradient(-90deg,rgb(77,197,255) 0%,rgb(56,175,255) 100%);
+    background-image: -o-linear-gradient(-90deg,rgb(77,197,255) 0%,rgb(56,175,255) 100%);
+    background-image: linear-gradient(0deg,rgb(56,175,255) 0%,rgb(77,197,255) 100%);
+
+}
+
+.wz-app-8-account button.disabled{
+
+    border-top: 1px solid #333334;
+    background: rgba(58,58,59,0.2);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.4);
+    color: #666;  
+    cursor: default;
+
+}
+
+.wz-app-8-account button.disabled:hover{
+
+    border-top: 1px solid #333334;
+    background: rgba(58,58,59,0.2);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.4);  
+
+}
+
+.wz-app-8-account button.warning{
+
+    border-top: 1px solid #A14C53;
+    background: #96383F;
+
+}
+
+.wz-app-8-account button.warning:hover{
+
+    border-top: 1px solid #AB5E65;
+    background: #A14C53;
+
+}
+
+.wz-app-8-account .description{
+
+    font-size: 17.4px;
+    color: #666;
+    float: left;
+    margin-bottom: 15px;
+    text-align: justify;
+
+}
+
+.wz-app-8-account .data{
+
+    width: 100%;
+    float: left;
+    margin-top: 15px;
+
+}
+
+.wz-app-8-account span{
+    margin-left: 0;
+}
+
+.wz-app-8-account .data span{
+
+    font-size: 16px;
+    float: left;
+    color: #666;
+
+}
+
+.wz-app-8-account .data input{
+    float: right;
+}
+
+.wz-app-8-account button{
+    float: right;
+}
