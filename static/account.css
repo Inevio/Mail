@@ -213,6 +213,6 @@
     float: right;
 }
 
-.wz-app-8-account .smtp-secure input, .imap-secure input{
+.wz-app-8-account .smtp-secure input, .wz-app-8-account .imap-secure input{
     cursor: pointer;
 }
