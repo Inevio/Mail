@@ -212,3 +212,7 @@
 .wz-app-8-account button{
     float: right;
 }
+
+.wz-app-8-account .smtp-secure input, .imap-secure input{
+    cursor: pointer;
+}
