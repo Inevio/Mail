@@ -63,6 +63,26 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         
         .on( 'click', '.options-reply, .new-mail', function(){
             wz.app.createWindow(8, null, 'new');
+        })
+
+        .on( 'contextmenu', '.account', function(){
+
+            wz.menu()
+
+                .add( 'Renombrar cuenta', function(){
+
+                })
+
+                .add( 'Cambiar configuración', function(){
+
+                })
+
+                .add( 'Eliminar cuenta', function() {
+
+                }, 'warning')
+
+                .render();
+
         });
 
     addAccount
