@@ -1,7 +1,28 @@
 
 wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     
-    var attachments = $('.content-attachments', win);
+    var attachments = $( '.content-attachments', win );
+    var mailColumn = $( '.left-column-content-scroll', win );
+    var mailAccount = $( '.account.prototype', mailColumn );
+    var addAccount = $( '.add-account', mailColumn );
+
+    wz.mail.getAccounts( function( error, accounts ){
+
+        if( accounts.length ){
+
+            mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).children( 'span' ).text( 'General' );
+
+            for( var i = 0 ; i < accounts.length ; i++ ){
+                mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).children( 'span' ).text( accounts[i].username );
+            }
+
+            addAccount.appendTo( mailColumn );
+
+        }else{
+            addAccount.find( 'span' ).text( 'Add an account' );
+        }
+
+    });
     
     $(win)
     
@@ -42,9 +63,11 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         
         .on( 'click', '.options-reply, .new-mail', function(){
             wz.app.createWindow(8, null, 'new');
-        })
+        });
 
-        .on( 'click', '.add-account', function(){
+    addAccount
+
+        .on( 'click', function(){
             wz.app.createWindow(8, null, 'account');
         });
     

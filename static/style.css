@@ -295,23 +295,27 @@
     float: left;
     margin-left: 9px;
     margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
 }
 
 .wz-app-8 .add-account i{
     width: 14px;
     height: 14px;
-    float: left;
     margin-top: 10px;
-    margin-left: 30px;
+    margin-bottom: -2px;
     background: url('https://static.weezeel.com/app/8/plus.png') no-repeat;
     background-size: 14px 14px;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .wz-app-8 .add-account span{
-    float: left;
-    margin-top: 10px;
+    float: none;
     font-size: 14px;
     color: #5D5D5D;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .wz-app-8 .inbox i{
