@@ -72,10 +72,10 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                         password : pass,
                         smtp_host : smtpHost,
                         smtp_port : smtpPort,
-                        smtp_secure : false,
+                        smtp_secure : smtpSecure,
                         imap_host : imapHost,
                         imap_port : imapPort,
-                        imap_secure : false
+                        imap_secure : imapSecure
                     },
 
                     function( error, details ){
