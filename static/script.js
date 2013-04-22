@@ -83,6 +83,13 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                 .render();
 
+        })
+
+        .on( 'contextmenu', '.account article', function( e ){
+
+            e.stopPropagation();
+            return false;
+
         });
 
     addAccount
