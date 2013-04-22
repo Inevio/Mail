@@ -66,8 +66,9 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
         			if( error ){
         				console.log( error );
                         console.log( details );
+                        alert( 'I\'m sorry but an error has occur' );
         			}else{
-        				wz.app.closeWindow( win.data( 'win-id' ) );
+        				wz.app.closeWindow( win );
         				wz.banner()
         					.title( 'Mail account added' )
         					.text( email + ' ' + 'has been added to weeMail' )
