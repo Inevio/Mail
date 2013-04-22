@@ -11,6 +11,8 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 	var imapHost = '';
 	var imapPort = 0;
     var imapSecure = false;
+
+    $( '.mail', content ).find( 'input' ).focus();
     
     win
     
@@ -31,6 +33,7 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                 var object = $( '.username', content );
 
                 object.find( 'input' ).val( '' );
+                object.find( 'input' ).focus();
                 object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'smtp-host' ).find( 'span' ).text( 'Servidor SMTP:' );
                 object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'smtp-port' ).find( 'span' ).text( 'Puerto SMTP:' );
                 $( '.prototype', content ).clone().appendTo( content ).removeClass( 'prototype' ).addClass( 'smtp-secure' ).find( 'span' ).text( 'Conexión SMTP segura:' );
@@ -107,5 +110,13 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
             }        	
 
         })
+
+        .key( 'enter', function( e ){
+
+            if( $( e.target ).is( 'input' ) ){
+                $( 'button', win ).click();
+            }
+
+        });
     
 });
