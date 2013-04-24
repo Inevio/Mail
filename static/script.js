@@ -99,13 +99,13 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         });
     
     if( attachments.children().size() < 3 ){
-        attachments.height( 60 );
+        attachments.height( 66 );
         $('.content-message').height( 244 );
     }else if( attachments.children().size() === 3 ){
-        attachments.height( 85 );
+        attachments.height( 88 );
         $('.content-message').height( 222 );
     }else{
-        attachments.height( 110 );
+        attachments.height( 118 );
         $('.content-message').height( 192 );
     }
 
