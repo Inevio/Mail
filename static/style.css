@@ -236,6 +236,11 @@
     margin-top: 11px;
     margin-left: 8px;
     color: #5D5D5D;
+    min-height: 9px;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .wz-app-8 .account figure{
@@ -246,7 +251,8 @@
     padding: 5px;
     border-radius: 2px;
     background: #E45857;
-    border: 1px solid #C14142; 
+    border: 1px solid #C14142;
+    max-width: 23px;
 }
 
 .wz-app-8 .account figure.hidden{

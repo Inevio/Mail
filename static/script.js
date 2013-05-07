@@ -13,7 +13,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).children( 'span' ).text( 'General' );
 
             for( var i = 0 ; i < accounts.length ; i++ ){
-                mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).children( 'span' ).text( accounts[i].username );
+                mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).children( 'span' ).text( accounts[i].description );
             }
 
             addAccount.appendTo( mailColumn );
