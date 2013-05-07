@@ -64,8 +64,27 @@
 
 .wz-app-8-account .content{
     width: 500px;
-    height: 185px;
-    padding: 40px 30px;
+    height: 220px;
+    padding: 40px 30px 30px;
+}
+
+.wz-app-8-account select{
+
+    width: 242px;
+    float: right;
+    margin-top: -3px;
+    border-radius: 3px;
+    border: 1px solid #DDD; 
+    font-size: 14px;
+    color: #5D5D5D;
+    padding: 3px 5px 3px 106px;
+    
+}
+
+.wz-app-8-account select:focus{
+
+    border: 1px solid #50BDFF;
+    
 }
 
 .wz-app-8-account input{
@@ -83,6 +102,12 @@
 
 .wz-app-8-account input:focus{
     border: 1px solid #50BDFF;
+}
+
+.wz-app-8-account .checkbox input{
+
+    cursor: default;
+    
 }
 
 .wz-app-8-account button{

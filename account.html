@@ -12,9 +12,14 @@
 
     <span class="description">Introduce la dirección de correo electrónico y la contraseña de la cuenta que quieras añadir.</span>
 
+    <article class="data name">
+        <span>Nombre a mostrar en los correos:</span>
+        <input>
+    </article>
+
     <article class="data mail">
         <span>Dirección de correo electrónico:</span>
-        <input>
+        <input type="email">
     </article>
     
     <article class="data pass">
@@ -24,9 +29,17 @@
 
     <button class="next active">Siguiente</button>
 
-    <article class="data prototype">
+    <article class="data prototype checkbox">
         <span></span>
         <input type="checkbox">
+    </article>
+
+    <article class="data prototype select">
+        <span></span>
+        <select>
+            <option value="imap">IMAP</option>
+            <option value="pop">POP</option>
+        </select>
     </article>
 
 </section>
