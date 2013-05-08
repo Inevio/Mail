@@ -217,16 +217,14 @@
     width: 0px; 
     height: 0px; 
     float: left;
-    margin-top: 13px;
-    margin-left: 14px;
+    margin: 13px 1px 0px 14px;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-left: 6px solid #AAA;
 }
 
 .wz-app-8 .account.display .arrow{
-    margin-top: 16px;
-    margin-left: 11px;
+    margin: 16px 0px 0px 11px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 6px solid #AAA;
@@ -243,9 +241,39 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .account figure{
+.wz-app-8 .mailbox{
+    width: 180px;
+    height: 35px;
+    float: left;
+}
+
+.wz-app-8 .mailbox:hover{
+    background: rgba(117,169,209,0.3);
+}
+
+.wz-app-8 .mailbox:nth-child(4){
+    margin-top: 10px;
+}
+
+.wz-app-8 .mailbox span{
+    float: left;
+    margin-left: 8px;
+    margin-top: 10px;
+}   
+
+.wz-app-8 .mailbox i{
+    width: 14px;
+    height: 14px;
+    float: left;
+    margin-left: 28px;
+    margin-top: 11px;
+    display: block;
+}
+
+.wz-app-8 .bullet{
+    height: 9px;
     float: right;
-    margin-top: 9px;
+    margin-top: 7px;
     margin-right: 10px;
     line-height: 8px;
     padding: 5px;
@@ -255,42 +283,17 @@
     max-width: 23px;
 }
 
-.wz-app-8 .account figure.hidden{
+.wz-app-8 .bullet.big{
+    margin-top: 9px;
+}
+
+.wz-app-8 .bullet.hidden{
     display: none;
 }
 
-.wz-app-8 .account figure span{
+.wz-app-8 .bullet span{
     margin: 0px;
     color: #FFF;
-}
-
-.wz-app-8 .account article{
-    width: 178px;
-    height: 35px;
-    float: left;
-}
-
-.wz-app-8 .account article:hover{
-    background: rgba(117,169,209,0.3);
-}
-
-.wz-app-8 .account article:nth-child(4){
-    margin-top: 10px;
-}
-
-.wz-app-8 .account article span{
-    float: left;
-    margin-left: 8px;
-    margin-top: 10px;
-}   
-
-.wz-app-8 .account article i{
-    width: 14px;
-    height: 14px;
-    float: left;
-    margin-left: 28px;
-    margin-top: 11px;
-    display: block;
 }
 
 .wz-app-8 .add-account{
@@ -351,6 +354,11 @@
 .wz-app-8 .trash i{
     background: url('https://static.weezeel.com/app/8/trash.png') no-repeat;
     background-size: 11px 14px;
+}
+
+.wz-app-8 .spam i{
+    background: url('https://static.weezeel.com/app/8/spam.png') no-repeat;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .middle-column-top span{

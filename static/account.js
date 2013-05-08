@@ -20,7 +20,6 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
     var whichName = function(){
 
-
         win.transition( { 'height' : '256' }, 250);
         content.transition( { 'height' : '146' }, 250);
 
@@ -66,13 +65,31 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
     var finish = function(){
 
-        wz.app.closeWindow( win );
-        wz.banner()
-            .title( 'Mail account added' )
-            .text( email + ' ' + 'has been added to weeMail' )
-            .image( 'https://static.weezeel.com/app/8/envelope.png' )
-            .render();
+        if( params ){
 
+            wz.app.closeWindow( win );
+            wz.banner()
+                .title( 'Account name changed' )
+                .text( email + ' ' + 'is now called' + ' ' + description )
+                .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                .render();
+
+        }else{
+
+            wz.app.closeWindow( win );
+            wz.banner()
+                .title( 'Mail account added' )
+                .text( email + ' ' + 'has been added to weeMail' )
+                .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                .render();
+
+        }
+
+    }
+
+    if( params ){
+        email = params;
+        whichName();
     }
     
     win

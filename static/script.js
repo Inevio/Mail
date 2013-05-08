@@ -10,10 +10,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         if( accounts.length ){
 
-            mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).children( 'span' ).text( 'General' );
+            mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( 'General' );
 
             for( var i = 0 ; i < accounts.length ; i++ ){
-                mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).children( 'span' ).text( accounts[i].description );
+                mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).data({ 'mail' : accounts[i].address , 'id' : accounts[i].id }).children( 'span' ).text( accounts[i].description );
             }
 
             addAccount.appendTo( mailColumn );
@@ -62,26 +62,49 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         })
         
         .on( 'click', '.options-reply, .new-mail', function(){
-            wz.app.createWindow(8, null, 'new');
+            wz.app.createWindow( 8, $( 'content-origin-mail' ).text(), 'new' );
         })
 
         .on( 'contextmenu', '.account', function(){
 
-            wz.menu()
+            var mailData = $( this ).data( 'mail' );
+            var idData = $( this ).data( 'id' );
 
-                .add( 'Renombrar cuenta', function(){
+            if( !$( this ).hasClass( 'general' ) ){
 
-                })
+                wz.menu()
 
-                .add( 'Cambiar configuración', function(){
+                    .add( 'Renombrar cuenta', function(){
+                        wz.app.createWindow( 8, mailData, 'account' );
+                    })
 
-                })
+                    .add( 'Cambiar configuración', function(){
+                        
+                    })
 
-                .add( 'Eliminar cuenta', function() {
+                    .add( 'Eliminar cuenta', function() {
 
-                }, 'warning')
+                        wz.mail.removeAccount( idData, function( error ){
 
-                .render();
+                            if( error ){
+                                console.log( error );
+                            }else{
+
+                                wz.banner()
+                                    .title( 'Mail account deleted' )
+                                    .text( mailData + ' ' + 'has been successfully deleted' )
+                                    .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                                    .render();
+
+                            }
+
+                        });
+
+                    }, 'warning')
+
+                    .render();
+
+            }                
 
         })
 
