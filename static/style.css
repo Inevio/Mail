@@ -234,8 +234,8 @@
     margin-top: 11px;
     margin-left: 8px;
     color: #5D5D5D;
-    min-height: 9px;
     max-width: 100px;
+    height: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -252,7 +252,7 @@
 }
 
 .wz-app-8 .mailbox:nth-child(5){
-    margin-top: 10px;
+    margin-top: 13px;
 }
 
 .wz-app-8 .mailbox span{
@@ -743,12 +743,22 @@
     float: left;
     font-size: 15px;
     color: #5D5D5D;
+    max-width: 290px;
+    height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .wz-app-8 .content-origin-mail{
     float: left;
     font-size: 14px;
     color: #A3B6C5;
+    max-width: 275px;
+    height: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .wz-app-8 .content-origin-display{
@@ -772,7 +782,7 @@
     margin-left: 8px;
 }
 
-.wz-app-8 .right-column-content.attachements .message-clip{
+.wz-app-8 .right-column-content.attachments .message-clip{
     display: block;
 }
 
@@ -782,16 +792,17 @@
 
 .wz-app-8 .content-message{
     width: 540px;
-    height: 352px;
+    height: 315px;
     float: left;
     margin-top: 20px;
 }
 
-.wz-app-8 .right-column-content.attachements .content-message{
+.wz-app-8 .right-column-content.attachments .content-message{
     height: 181px;
 }
 
 .wz-app-8 .content-message-text{
+    width: 520px;
     padding-right: 20px;
     padding-bottom: 20px;
     margin-left: 0px;
@@ -816,7 +827,7 @@
     float: left;
 }
 
-.wz-app-8 .right-column-content.attachements .content-attachments{
+.wz-app-8 .right-column-content.attachments .content-attachments{
     display: block;
 }   
 
@@ -856,34 +867,34 @@
     color: #AAA;
 }
 
-.wz-app-8 span.content-attachements-view{
+.wz-app-8 span.content-attachments-view{
     float: right;
     color: #AAA;
     cursor: pointer;
 }
 
-.wz-app-8 .content-attachements-view:hover{
+.wz-app-8 .content-attachments-view:hover{
     color: #5D5D5D;
 }
 
-.wz-app-8 span.content-attachements-download{
+.wz-app-8 span.content-attachments-download{
     float: right;
     margin-right: 8px;
     color: #AAA;
     cursor: pointer;
 }
 
-.wz-app-8 .content-attachements-download:hover{
+.wz-app-8 .content-attachments-download:hover{
     color: #5D5D5D;
 }
 
-.wz-app-8 span.content-attachements-import{
+.wz-app-8 span.content-attachments-import{
     float: right;
     margin-right: 8px;
     color: #AAA;
     cursor: pointer;
 }
 
-.wz-app-8 .content-attachements-import:hover{
+.wz-app-8 .content-attachments-import:hover{
     color: #5D5D5D;
 }

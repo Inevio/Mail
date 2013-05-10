@@ -6,9 +6,18 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     var mailAccount = $( '.account.prototype', mailColumn );
     var addAccount = $( '.add-account', mailColumn );
     var messagesColumn = $( '.middle-column-content-scroll', win );
-    var accountSqueleton = $();
-    var mailboxSqueleton = $();
+    var messagePrototype = $( '.message.prototype', messagesColumn );
     var messageSqueleton = $();
+
+    var contentSubject = $( '.mail-subject', win );
+    var contentColumn = $( '.right-column-content', win );
+    var contentName = $( '.content-origin-name', contentColumn );
+    var contentMail = $( '.content-origin-mail', contentColumn );
+    var contentDate = $( '.content-origin-date', contentColumn );
+    var contentStar = $( '.message-star', contentColumn );
+    var contentMessage = $( '.content-message', contentColumn );
+    var contentMessageText = $( '.content-message-text', contentMessage );
+    var contentHr = $( 'hr', contentColumn );
 
     wz.mail.getAccounts( function( error, accounts ){
 
@@ -18,19 +27,19 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( 'General' );
 
-            for( var i = 0 ; i < accounts.length ; i++ ){
+            accounts.map( function( element ){ 
 
-                accountSqueleton = mailAccount.clone();
+                var accountSqueleton = mailAccount.clone();
 
                 accountSqueleton
                     .removeClass( 'prototype' )
                     .appendTo( mailColumn )
-                    .data({ 'mail' : accounts[i].address , 'id' : accounts[i].id })
-                    .children( 'span' ).text( accounts[i].description );
+                    .data({ 'mail' : element.address , 'id' : element.id })
+                    .children( 'span' ).text( element.description );
 
-                accounts[i].getBoxes( false, function( error, boxes ){
+                element.getBoxes( false, function( error, boxes ){
 
-                    mailboxSqueleton = accountSqueleton.find( '.mailbox.prototype' );
+                    var mailboxSqueleton = accountSqueleton.find( '.mailbox.prototype' );
 
                     if( error ){
                         console.log( error );
@@ -112,7 +121,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                 });
 
-            }
+            })
 
             addAccount.appendTo( mailColumn );
 
@@ -125,36 +134,47 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     var toDate = function( date ){
 
         var sentToday = false;
-        var userDate = new Date();
-        var userDateInfo = userDate.getDate() + '' + userDate.getMonth() + '' + userDate.getFullYear();
+        var sentYesterday = false;
+
+        var todayDate = new Date();
+        var todayDateInfo = todayDate.getDate() + '' + todayDate.getMonth() + '' + todayDate.getFullYear();
+
+        var yesterdayDate = new Date( todayDate.getTime() - 86400000 );
+        var yesterdayDateInfo = yesterdayDate.getDate() + '' + yesterdayDate.getMonth() + '' + yesterdayDate.getFullYear();
 
         var sentDate = new Date( date );
-        if( userDateInfo !== ( sentDate.getDate() + '' + sentDate.getMonth() + '' + sentDate.getFullYear() ) ){
-            
-            var sentDay = sentDate.getDate();
-                if( sentDay < 10 ){ sentDay = '0' + sentDay }
-            var sentMonth = sentDate.getMonth() + 1;
-                if( sentMonth < 10 ){ sentMonth = '0' + sentMonth }
-            var sentYear = sentDate.getFullYear();
-                
-        }else{
-            
-            sentToday = true;
-            
-            var sentHour = sentDate.getHours();
-                if( sentHour < 10 ){ sentHour = '0' + sentHour }
-            var sentMinute = sentDate.getMinutes();
-                if( sentMinute < 10 ){ sentMinute = '0' + sentMinute }
-            var sentSecond = sentDate.getSeconds();
-                if( sentSecond < 10 ){ sentSecond = '0' + sentSecond }
-                
-        }
 
-        if( sentToday ){
-            return({ 'sentToday' : sentToday, 'sentHour' : sentHour, 'sentMinute' : sentMinute, 'sentSecond' : sentSecond });
-        }else{
-            return({ 'sentToday' : sentToday, 'sentDay' : sentDay, 'sentMonth' : sentMonth, 'sentYear' : sentYear });
+        if( todayDateInfo === ( sentDate.getDate() + '' + sentDate.getMonth() + '' + sentDate.getFullYear() ) ){
+            sentToday = true;
+        }else if( yesterdayDateInfo === ( sentDate.getDate() + '' + sentDate.getMonth() + '' + sentDate.getFullYear() ) ){
+            sentYesterday = true;
         }
+ 
+        var sentDay = sentDate.getDate();
+            if( sentDay < 10 ){ sentDay = '0' + sentDay }
+        var sentMonth = sentDate.getMonth() + 1;
+            if( sentMonth < 10 ){ sentMonth = '0' + sentMonth }
+        var sentYear = sentDate.getFullYear();
+        
+        var sentHour = sentDate.getHours();
+            if( sentHour < 10 ){ sentHour = '0' + sentHour }
+        var sentMinute = sentDate.getMinutes();
+            if( sentMinute < 10 ){ sentMinute = '0' + sentMinute }
+        var sentSecond = sentDate.getSeconds();
+            if( sentSecond < 10 ){ sentSecond = '0' + sentSecond }
+
+        return({ 
+
+            'sentToday' : sentToday,
+            'sentYesterday' : sentYesterday, 
+            'sentHour' : sentHour, 
+            'sentMinute' : sentMinute, 
+            'sentSecond' : sentSecond, 
+            'sentDay' : sentDay, 
+            'sentMonth' : sentMonth, 
+            'sentYear' : sentYear
+
+        });
 
     }
 
@@ -174,18 +194,23 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                         messagesColumn.children().not( '.prototype' ).remove();
 
-                        messageSqueleton = $( '.message.prototype', messagesColumn );
-
                         for( var i = 0 ; i < list.length ; i++ ){
 
-                            messageSqueleton
-                                .clone()
-                                .removeClass( 'prototype' )
-                                .data( 'message', list[i] )
-                                .appendTo( messagesColumn );
+                            messageSqueleton = messagePrototype
+                                                        .clone()
+                                                        .removeClass( 'prototype' )
+                                                        .data( 'message', list[i] )
+                                                        .appendTo( messagesColumn );
 
-                            console.log( list[i] );
+                            if( !list[i].isSeen() ){
+                                messageSqueleton.addClass( 'unread' );
+                            }
+
                             messageSqueleton.find( '.message-origin' ).text( list[i].from.name );
+
+                            if( list[i].attachments.length ){
+                                messageSqueleton.find( '.message-clip' ).addClass( 'attached' );
+                            }
 
                             var messageDate = toDate( list[i].date.getTime() );
 
@@ -206,6 +231,74 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             }
 
         })
+
+    }
+
+    var showMessage = function( message ){
+
+        contentSubject.text( message.title );
+        contentName.text( message.from.name );
+        contentMail.text( message.from.address );
+
+        if( message.isFlagged() ){
+            contentStar.addClass( 'active' );
+        }else{
+            contentStar.removeClass( 'active' );
+        }
+
+        attachments.children().not( '.content-attachments-title' ).remove();
+
+        if( message.attachments.length ){
+
+            contentColumn.addClass( 'attachments' );
+
+            if( attachments.children().size() < 3 ){
+
+                attachments.height( 66 );
+                contentMessage.height( 244 );
+
+            }else if( attachments.children().size() === 3 ){
+
+                attachments.height( 88 );
+                contentMessage.height( 222 );
+
+            }else{
+
+                attachments.height( 118 );
+                contentMessage.height( 192 );
+
+            }
+
+        }else{
+
+            contentColumn.removeClass( 'attachments' );   
+            contentMessage.height( 315 );
+            contentHr.css( 'margin-bottom', 15 );
+
+        }
+
+        var messageDate = toDate( message.date.getTime() );
+
+        if( messageDate.sentToday ){
+            contentDate.text( 'Hoy a las ' + messageDate.sentHour + ':' + messageDate.sentMinute );
+        }else if( messageDate.sentYesterday ){
+            contentDate.text( 'Ayer a las ' + messageDate.sentHour + ':' + messageDate.sentMinute );
+        }else{
+            contentDate.text( messageDate.sentDay + '/' + messageDate.sentMonth + ', ' + messageDate.sentHour + ':' + messageDate.sentMinute );
+        }
+
+        message.getFullMessage( function( error, fullMessage ){
+
+            contentMessageText.contents().find( 'body' ).html( fullMessage.message );
+
+            contentMessageText.contents().on( 'mousewheel', function( event, delta, deltaX, deltaY ){
+                contentMessage.scrollTop( contentMessage.scrollTop() + ( deltaY * -20 ) );
+                contentMessage.scrollLeft( contentMessage.scrollLeft() + ( deltaX * -20 ) );
+            });
+
+            contentMessageText.height( contentMessageText.contents().find( 'html' ).height() );
+
+        });       
 
     }
     
@@ -238,6 +331,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         .on( 'click', '.message', function(){
 
             if( !$(this).hasClass('selected') ){
+
+                showMessage( $(this).data( 'message' ) );
 
                 $('.selected').removeClass('selected');
                 $(this).addClass('selected');
@@ -325,22 +420,5 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         .on( 'click', function(){
             wz.app.createWindow(8, null, 'account');
         });
-    
-    if( attachments.children().size() < 3 ){
-
-        attachments.height( 66 );
-        $('.content-message').height( 244 );
-
-    }else if( attachments.children().size() === 3 ){
-
-        attachments.height( 88 );
-        $('.content-message').height( 222 );
-
-    }else{
-
-        attachments.height( 118 );
-        $('.content-message').height( 192 );
-
-    }
 
 });
