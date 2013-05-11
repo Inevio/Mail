@@ -3,10 +3,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     
     var attachments = $( '.content-attachments', win );
     var mailColumn = $( '.left-column-content-scroll', win );
-    var mailAccount = $( '.account.prototype', mailColumn );
+    var mailAccount = $( '.account.wz-prototype', mailColumn );
     var addAccount = $( '.add-account', mailColumn );
     var messagesColumn = $( '.middle-column-content-scroll', win );
-    var messagePrototype = $( '.message.prototype', messagesColumn );
+    var messagePrototype = $( '.message.wz-prototype', messagesColumn );
     var messageSqueleton = $();
 
     var contentSubject = $( '.mail-subject', win );
@@ -25,21 +25,21 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             console.log( error );
         }else if( accounts.length ){
 
-            mailAccount.clone().removeClass( 'prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( 'General' );
+            mailAccount.clone().removeClass( 'wz-prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( 'General' );
 
             accounts.map( function( element ){ 
 
                 var accountSqueleton = mailAccount.clone();
 
                 accountSqueleton
-                    .removeClass( 'prototype' )
+                    .removeClass( 'wz-prototype' )
                     .appendTo( mailColumn )
                     .data({ 'mail' : element.address , 'id' : element.id })
                     .children( 'span' ).text( element.description );
 
                 element.getBoxes( false, function( error, boxes ){
 
-                    var mailboxSqueleton = accountSqueleton.find( '.mailbox.prototype' );
+                    var mailboxSqueleton = accountSqueleton.find( '.mailbox.wz-prototype' );
 
                     if( error ){
                         console.log( error );
@@ -49,7 +49,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                             mailboxSqueleton
                                 .clone()
-                                .removeClass( 'prototype' )
+                                .removeClass( 'wz-prototype' )
                                 .addClass( 'inbox' )
                                 .data( 'path', boxes.inbox[0].path )
                                 .appendTo( accountSqueleton )
@@ -61,7 +61,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                             mailboxSqueleton
                                 .clone()
-                                .removeClass( 'prototype' )
+                                .removeClass( 'wz-prototype' )
                                 .addClass( 'starred' )
                                 .data( 'path', boxes.flagged[0].path )  
                                 .appendTo( accountSqueleton )
@@ -73,7 +73,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                             mailboxSqueleton
                                 .clone()
-                                .removeClass( 'prototype' )
+                                .removeClass( 'wz-prototype' )
                                 .addClass( 'sent' )
                                 .data( 'path', boxes.sent[0].path )
                                 .appendTo( accountSqueleton )
@@ -85,7 +85,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                             mailboxSqueleton
                                 .clone()
-                                .removeClass( 'prototype' )
+                                .removeClass( 'wz-prototype' )
                                 .addClass( 'drafts' )
                                 .data( 'path', boxes.drafts[0].path )
                                 .appendTo( accountSqueleton )
@@ -97,7 +97,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                             mailboxSqueleton
                                 .clone()
-                                .removeClass( 'prototype' )
+                                .removeClass( 'wz-prototype' )
                                 .addClass( 'spam' )
                                 .data( 'path', boxes.junk[0].path )
                                 .appendTo( accountSqueleton )
@@ -109,7 +109,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                             mailboxSqueleton
                                 .clone()
-                                .removeClass( 'prototype' )
+                                .removeClass( 'wz-prototype' )
                                 .addClass( 'trash' )
                                 .data( 'path', boxes.trash[0].path )
                                 .appendTo( accountSqueleton )
@@ -192,13 +192,13 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                         console.log( error );
                     }else{
 
-                        messagesColumn.children().not( '.prototype' ).remove();
+                        messagesColumn.children().not( '.wz-prototype' ).remove();
 
                         for( var i = 0 ; i < list.length ; i++ ){
 
                             messageSqueleton = messagePrototype
                                                         .clone()
-                                                        .removeClass( 'prototype' )
+                                                        .removeClass( 'wz-prototype' )
                                                         .data( 'message', list[i] )
                                                         .appendTo( messagesColumn );
 

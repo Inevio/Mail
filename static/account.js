@@ -51,13 +51,13 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
         object.find( 'input' ).val( '' );
         object.find( 'input' ).focus();
-        $( '.prototype.select', content ).clone().appendTo( content ).removeClass( 'prototype' ).addClass( 'in-protocol' ).find( 'span' ).text( 'Conexión entrante:' );
+        $( '.wz-prototype.select', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-protocol' ).find( 'span' ).text( 'Conexión entrante:' );
         object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-host' ).find( 'span' ).text( 'Servidor entrante:' );
         object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-port' ).find( 'span' ).text( 'Puerto entrante:' );
-        $( '.prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'prototype' ).addClass( 'in-secure' ).find( 'span' ).text( 'Conexión entrante segura:' );
+        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-secure' ).find( 'span' ).text( 'Conexión entrante segura:' );
         object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-host' ).find( 'span' ).text( 'Servidor saliente:' );
         object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-port' ).find( 'span' ).text( 'Puerto saliente:' );
-        $( '.prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'prototype' ).addClass( 'out-secure' ).find( 'span' ).text( 'Conexión saliente segura:' );
+        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'out-secure' ).find( 'span' ).text( 'Conexión saliente segura:' );
 
         $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'save' ).text( 'Guardar' );
 
