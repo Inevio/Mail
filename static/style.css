@@ -63,25 +63,13 @@
     background: #54728C;
 }
 
-.wz-app-8 .left-column-top img{
-    width: 24px;
-    height: 24px;
-    float: left;
-    margin-left: 9px;
-    margin-top: 7px;
-    border-radius: 13px;
-    background: #F00;
-    border: 1px solid #FFF;
-    display: block;
-}
-
 .wz-app-8 .left-column-top span{
-    width: 136px;
-    height: 15px;
+    width: 145px;
+    height: 16px;
     float: left;
-    margin-left: 7px;
+    margin-left: 20px;
     margin-top: 13px;
-    font-size: 14px;
+    font-size: 15px;
     color: #FFF;
     overflow: hidden;
     text-overflow: ellipsis;

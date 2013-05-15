@@ -2,6 +2,8 @@
 wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     
     var attachments = $( '.content-attachments', win );
+    var openedAccount = $( '.left-column-top span', win );
+    var openedMailbox = $( '.middle-column-top span', win );
     var mailColumn = $( '.left-column-content-scroll', win );
     var mailAccount = $( '.account.wz-prototype', mailColumn );
     var addAccount = $( '.add-account', mailColumn );
@@ -311,6 +313,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             }else{
 
+                openedAccount.text( $(this).children( 'span' ).text() );
                 $('.display').transition({ height: 38 }, 250).removeClass('display');
                 $(this).addClass('display');
                 $(this).transition({ height: 250 }, 250);
@@ -321,6 +324,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         
         .on( 'click', '.mailbox', function(e){
 
+            openedMailbox.text( $(this).children( 'span' ).text() );
             showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'path' ) );
             e.stopPropagation();
 
