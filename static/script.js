@@ -25,7 +25,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             console.log( error );
         }else if( accounts.length ){
 
-            mailAccount.clone().removeClass( 'wz-prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( 'General' );
+            mailAccount.clone().removeClass( 'wz-prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( lang.general );
 
             accounts.map( function( element ){ 
 
@@ -53,7 +53,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                                 .addClass( 'inbox' )
                                 .data( 'path', boxes.inbox[0].path )
                                 .appendTo( accountSqueleton )
-                                .children( 'span' ).text( 'Inbox' );
+                                .children( 'span' ).text( lang.inbox );
 
                         }
 
@@ -65,7 +65,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                                 .addClass( 'starred' )
                                 .data( 'path', boxes.flagged[0].path )  
                                 .appendTo( accountSqueleton )
-                                .children( 'span' ).text( 'Starred' );
+                                .children( 'span' ).text( lang.starred );
 
                         }
 
@@ -77,7 +77,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                                 .addClass( 'sent' )
                                 .data( 'path', boxes.sent[0].path )
                                 .appendTo( accountSqueleton )
-                                .children( 'span' ).text( 'Sent' );
+                                .children( 'span' ).text( lang.sent );
 
                         }
 
@@ -89,7 +89,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                                 .addClass( 'drafts' )
                                 .data( 'path', boxes.drafts[0].path )
                                 .appendTo( accountSqueleton )
-                                .children( 'span' ).text( 'Drafts' );
+                                .children( 'span' ).text( lang.drafts );
 
                         }
 
@@ -101,7 +101,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                                 .addClass( 'spam' )
                                 .data( 'path', boxes.junk[0].path )
                                 .appendTo( accountSqueleton )
-                                .children( 'span' ).text( 'Spam' );
+                                .children( 'span' ).text( lang.spam );
 
                         }
 
@@ -113,7 +113,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                                 .addClass( 'trash' )
                                 .data( 'path', boxes.trash[0].path )
                                 .appendTo( accountSqueleton )
-                                .children( 'span' ).text( 'Trash' );
+                                .children( 'span' ).text( lang.trash );
 
                         }
 
@@ -125,8 +125,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             addAccount.appendTo( mailColumn );
 
-        }else{
-            addAccount.find( 'span' ).text( 'Add an account' );
         }
 
     });
@@ -280,9 +278,9 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         var messageDate = toDate( message.date.getTime() );
 
         if( messageDate.sentToday ){
-            contentDate.text( 'Hoy a las ' + messageDate.sentHour + ':' + messageDate.sentMinute );
+            contentDate.text( lang.today + ' ' + messageDate.sentHour + ':' + messageDate.sentMinute );
         }else if( messageDate.sentYesterday ){
-            contentDate.text( 'Ayer a las ' + messageDate.sentHour + ':' + messageDate.sentMinute );
+            contentDate.text( lang.yesterday + ' ' + messageDate.sentHour + ':' + messageDate.sentMinute );
         }else{
             contentDate.text( messageDate.sentDay + '/' + messageDate.sentMonth + ', ' + messageDate.sentHour + ':' + messageDate.sentMinute );
         }
@@ -374,15 +372,15 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                 wz.menu()
 
-                    .add( 'Renombrar cuenta', function(){
+                    .add( lang.renameAccount, function(){
                         wz.app.createWindow( 8, mailData, 'account' );
                     })
 
-                    .add( 'Cambiar configuración', function(){
+                    .add( lang.changeConfig, function(){
                         
                     })
 
-                    .add( 'Eliminar cuenta', function() {
+                    .add( lang.deleteAccount, function() {
 
                         wz.mail.removeAccount( idData, function( error ){
 
@@ -391,8 +389,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                             }else{
 
                                 wz.banner()
-                                    .title( 'Mail account deleted' )
-                                    .text( mailData + ' ' + 'has been successfully deleted' )
+                                    .title( lang.accountDeleted )
+                                    .text( mailData + ' ' + lang.deleteSuccesfull )
                                     .image( 'https://static.weezeel.com/app/8/envelope.png' )
                                     .render();
 
@@ -420,5 +418,13 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         .on( 'click', function(){
             wz.app.createWindow(8, null, 'account');
         });
+
+    $( '.new-mail span', win ).text( lang.newEmail );
+    $( '.add-account span', win ).text( lang.addAccount );
+    $( '.content-attachments-title span', win ).not( '.light' ).text( lang.attachments );
+    $( '.content-attachments-view', win ).text( lang.view );
+    $( '.content-attachments-download', win ).text( lang.download );
+    $( '.content-attachments-import', win ).text( lang.import );
+    $( '.middle-column-top input', win ).attr( 'placeholder', lang.search );
 
 });

@@ -23,15 +23,15 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
         win.transition( { 'height' : '256' }, 250);
         content.transition( { 'height' : '146' }, 250);
 
-        $( '.description', content ).text( '¿Con qué nombre quieres que se muestre tu cuenta de correo en la barra lateral?' );
+        $( '.description', content ).text( lang.whichName );
 
-        $( '.name', content ).removeClass( 'name' ).addClass( 'account-name' ).find( 'span' ).text( 'Nombre de la cuenta:' );
-        $( '.username', content ).removeClass( 'username' ).addClass( 'account-name' ).find( 'span' ).text( 'Nombre de la cuenta:' );
+        $( '.name', content ).removeClass( 'name' ).addClass( 'account-name' ).find( 'span' ).text( lang.accountName + ':' );
+        $( '.username', content ).removeClass( 'username' ).addClass( 'account-name' ).find( 'span' ).text( lang.accountName + ':' );
 
         $( '.account-name', content ).find( 'input' ).val( email ).focus();
 
-        $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'finish' ).text( 'Terminar' );
-        $( '.save', content ).appendTo( content ).removeClass( 'save' ).addClass( 'finish' ).text( 'Terminar' );
+        $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'finish' ).text( lang.finish );
+        $( '.save', content ).appendTo( content ).removeClass( 'save' ).addClass( 'finish' ).text( lang.finish );
 
         content.children().not( '.finish , .account-name, .description' ).remove();
 
@@ -42,8 +42,8 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
         win.transition( { 'height' : '502' }, 250);
         content.transition( { 'height' : '392' }, 250);
 
-        $( '.description', content ).text( 'Rellena los siguientes datos sobre tu cuenta de correo para terminar.' );
-        $( '.name', content ).removeClass( 'name' ).addClass( 'username' ).find( 'span' ).text( 'Nombre de usuario:' );
+        $( '.description', content ).text( lang.accountData );
+        $( '.name', content ).removeClass( 'name' ).addClass( 'username' ).find( 'span' ).text( lang.username + ':' );
         $( '.mail', content ).remove();
         $( '.pass', content ).remove();
 
@@ -51,15 +51,15 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
         object.find( 'input' ).val( '' );
         object.find( 'input' ).focus();
-        $( '.wz-prototype.select', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-protocol' ).find( 'span' ).text( 'Conexión entrante:' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-host' ).find( 'span' ).text( 'Servidor entrante:' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-port' ).find( 'span' ).text( 'Puerto entrante:' );
-        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-secure' ).find( 'span' ).text( 'Conexión entrante segura:' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-host' ).find( 'span' ).text( 'Servidor saliente:' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-port' ).find( 'span' ).text( 'Puerto saliente:' );
-        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'out-secure' ).find( 'span' ).text( 'Conexión saliente segura:' );
+        $( '.wz-prototype.select', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-protocol' ).find( 'span' ).text( lang.inProtocol + ':' );
+        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-host' ).find( 'span' ).text( lang.inHost + ':' );
+        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-port' ).find( 'span' ).text( lang.inPort + ':' );
+        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-secure' ).find( 'span' ).text( lang.inSecure + ':' );
+        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-host' ).find( 'span' ).text( lang.outHost + ':' );
+        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-port' ).find( 'span' ).text( lang.outPort + ':' );
+        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'out-secure' ).find( 'span' ).text( lang.outSecure + ':' );
 
-        $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'save' ).text( 'Guardar' );
+        $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'save' ).text( lang.save );
 
     }
 
@@ -69,8 +69,8 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
             wz.app.closeWindow( win );
             wz.banner()
-                .title( 'Account name changed' )
-                .text( email + ' ' + 'is now called' + ' ' + description )
+                .title( lang.nameChanged )
+                .text( email + ' ' + lang.nowCalled + ' ' + description )
                 .image( 'https://static.weezeel.com/app/8/envelope.png' )
                 .render();
 
@@ -78,8 +78,8 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
             wz.app.closeWindow( win );
             wz.banner()
-                .title( 'Mail account added' )
-                .text( email + ' ' + 'has been added to weeMail' )
+                .title( lang.accountAdded )
+                .text( email + ' ' + lang.beenAdded )
                 .image( 'https://static.weezeel.com/app/8/envelope.png' )
                 .render();
 
@@ -118,7 +118,7 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
                                 console.log( error );
                                 console.log( details );
-                                alert( 'I\'m sorry but an error has occur' );
+                                alert( lang.error );
 
                             }else{
 
@@ -137,11 +137,11 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                 );
 
             }else if( !mailExpresion.test( email ) ){
-                alert( 'Please introduce your mail correctly' );
+                alert( lang.mailError );
             }else if( !pass ){
-                alert( 'Please introduce your password' );
+                alert( lang.passwordError );
             }else if( !name ){
-                alert( 'Please introduce your name' );
+                alert( lang.nameError );
             }   	
 
         })
@@ -162,15 +162,15 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                 whichName();
 
             }else if( !username ){
-                alert( 'Please introduce your username' );
+                alert( lang.usernameError );
             }else if( !outHost ){
-                alert( 'Please introduce your SMTP host' );
+                alert( lang.outHostError );
             }else if( isNaN( outPort ) || outPort < 1 || outPort > 65535 ){
-                alert( 'Please introduce a correct SMTP port' );
+                alert( lang.outPortError );
             }else if( !inHost ){
-                alert( 'Please introduce your IMAP host' );
+                alert( lang.inHostError );
             }else if( isNaN( inPort ) || inPort < 1 || inPort > 65535 ){
-                alert( 'Please introduce a correct IMAP port' );
+                alert( lang.inPortError );
             }        	
 
         })
@@ -204,7 +204,7 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
                             console.log( error );
                             console.log( details );
-                            alert( 'I\'m sorry but an error has occur' );
+                            alert( lang.error );
 
                         }else{
                             
@@ -270,5 +270,12 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
             }
 
         });
+
+    $( '.wz-win-menu span', win ).text( lang.addAccount );
+    $( '.description', win ).text( lang.accountAddress );
+    $( '.name span', win ).text( lang.name + ':' );
+    $( '.mail span', win ).text( lang.address + ':' );
+    $( '.pass span', win ).text( lang.password + ':' );
+    $( '.next', win ).text( lang.next );
     
 });
