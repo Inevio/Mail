@@ -17,18 +17,18 @@
     float: right;
     margin-top: 19px;
     margin-right: 23px;
-    background: url('https://static.weezeel.com/app/8/min.png') no-repeat;
-    background-size: 16px 3px;
+    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -62px -29px;
+    background-size: 177px 40px;
 }
 
 .wz-app-8-account .wz-win-maximize{
-    width: 16px;
+    width: 14px;
     height: 16px;
     float: right;
     margin-top: 13px;
     margin-right: 23px;
-    background: url('https://static.weezeel.com/app/8/max.png') no-repeat;
-    background-size: 15px 16px
+    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -135px -13px;
+    background-size: 177px 40px;
 }
 
 .wz-app-8-account .wz-win-close{
@@ -37,8 +37,8 @@
     float: right;
     margin-top: 13px;
     margin-right: 23px;
-    background: url('https://static.weezeel.com/app/8/close.png') no-repeat;
-    background-size: 15px 15px;
+    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -93px -11px;
+    background-size: 177px 40px;
 }
 
 .wz-app-8-account .wz-win-menu{
