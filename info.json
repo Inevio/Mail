@@ -114,6 +114,36 @@
             "css"    : ["account.css"],
             "script" : ["account.js"]
 
+        },
+        
+        "hosting" : {
+
+            "description" : "",
+            
+            "template" : "hosting.html",
+
+            "maxizable" : false,
+            "resizable" : false,
+
+            "width"  : {
+
+                "default" : 816,
+                "min"     : 0,
+                "max"     : 0
+
+            },
+
+            "height" : {
+
+                "default" : 346,
+                "min"     : 0,
+                "max"     : 0
+
+            },
+
+            "css"    : ["hosting.css"],
+            "script" : ["hosting.js"]
+
         }
 
     }

@@ -1,0 +1,115 @@
+
+.wz-app-8-hosting{
+    background: #FFF;
+}
+
+.wz-app-8-hosting .wz-scroll-slider{
+    width: 5px;
+}
+
+.wz-app-8-hosting .wz-scroll-bar{
+    width: 5px;
+}
+
+.wz-app-8-hosting .wz-win-minimize{
+    width: 16px;
+    height: 3px;
+    float: right;
+    margin-top: 19px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -62px -29px;
+    background-size: 177px 40px;
+}
+
+.wz-app-8-hosting .wz-win-maximize{
+    width: 14px;
+    height: 16px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -135px -13px;
+    background-size: 177px 40px;
+}
+
+.wz-app-8-hosting .wz-win-close{
+    width: 16px;
+    height: 16px;
+    float: right;
+    margin-top: 13px;
+    margin-right: 23px;
+    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -93px -11px;
+    background-size: 177px 40px;
+}
+
+.wz-app-8-hosting .wz-win-menu{
+    
+    width: 816px;
+    height: 39px;
+    padding: 0px;
+    background: #54728C;
+    border-bottom: 1px solid #466176;
+    
+}
+
+.wz-app-8-hosting .wz-win-menu span{
+    
+    width: 130px;
+    float: left;
+    font-size: 16px;
+    color: #FFF;
+    margin-left: 16px;
+    margin-top: 13px;
+    
+}
+
+.wz-app-8-hosting .content{
+    width: 756px;
+    height: 246px;
+    padding: 30px;
+}
+
+.wz-app-8-hosting .hosting-title{
+    width: 756px;
+    float: left;
+    font-size: 17px;
+    color: #666;
+    margin-bottom: 25px;
+    margin-left: 0px;
+}
+
+.wz-app-8-hosting .hosting-image{
+    width: 250px;
+    height: 100px;
+    float: left;
+    border: 1px solid #54728C;
+}
+
+.wz-app-8-hosting .hosting-image.gmail{
+    background: url('https://static.weezeel.com/app/8/gmail.png') no-repeat;
+    cursor: pointer;
+}
+
+.wz-app-8-hosting .hosting-image.hotmail{
+    background: url('https://static.weezeel.com/app/8/hotmail_disabled.png') no-repeat;
+}
+
+.wz-app-8-hosting .hosting-image.outlook{
+    background: url('https://static.weezeel.com/app/8/outlook_disabled.png') no-repeat;
+}
+
+.wz-app-8-hosting .hosting-image.yahoo{
+    background: url('https://static.weezeel.com/app/8/yahoo_disabled.png') no-repeat;
+}
+
+.wz-app-8-hosting .hosting-image.aol{
+    background: url('https://static.weezeel.com/app/8/aol_disabled.png') no-repeat;
+}
+
+.wz-app-8-hosting .hosting-image-other{
+    width: 250px;
+    text-align: center;
+    margin: 29px 0;
+    font-size: 42px;
+    color: #54728C;
+    cursor: pointer;
+}

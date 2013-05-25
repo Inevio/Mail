@@ -420,7 +420,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     addAccount
 
         .on( 'click', function(){
-            wz.app.createWindow(8, null, 'account');
+            wz.app.createWindow(8, null, 'hosting');
         });
 
     $( '.new-mail span', win ).text( lang.newEmail );
