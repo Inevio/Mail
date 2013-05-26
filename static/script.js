@@ -199,6 +199,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                             messageSqueleton = messagePrototype
                                                         .clone()
                                                         .removeClass( 'wz-prototype' )
+                                                        .addClass( 'message-' + list[i].id )
                                                         .data( 'message', list[i] )
                                                         .appendTo( messagesColumn );
 
@@ -220,6 +221,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                                 messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth );
                             }
 
+                            if( list[i].isFlagged() ){
+                                messageSqueleton.find( '.message-star' ).addClass( 'active' );
+                            }
+
                             messageSqueleton.find( '.message-subject' ).text( list[i].title );
 
                         }
@@ -239,6 +244,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         contentSubject.text( message.title );
         contentName.text( message.from.name );
         contentMail.text( message.from.address );
+
+        message.markAsSeen( function( error ){
+            if( error ){
+                alert( error );
+            }
+        });
 
         if( message.isFlagged() ){
             contentStar.addClass( 'active' );
@@ -354,10 +365,20 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             if( $(this).hasClass('active') ){
 
                 $(this).removeClass('active');
+                $(this).parents( '.message' ).data( 'message' ).unmarkAsFlagged( function( error ){
+                    if( error ){
+                        alert( error );
+                    }
+                });
 
             }else{
 
                 $(this).addClass('active');
+                $(this).parents( '.message' ).data( 'message' ).markAsFlagged( function( error ){
+                    if( error ){
+                        alert( error );
+                    }
+                });
 
             }
 
@@ -365,6 +386,42 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         
         .on( 'click', '.options-reply, .new-mail', function(){
             wz.app.createWindow( 8, $( 'content-origin-mail' ).text(), 'new' );
+        })
+
+        .on( 'click', '.options-spam', function(){
+
+            console.log( 'spam', $( '.selected', messagesColumn ).data( 'message' ) );
+
+            $( '.selected', messagesColumn ).data( 'message' ).moveToSpam( function( error ){
+
+                console.log( $(this) );
+
+                if( error ){
+                    alert( error );
+                }else{
+                    $(this).remove();
+                }
+
+            });
+
+        })
+
+        .on( 'click', '.options-trash', function(){
+
+            console.log( 'trash' );
+
+            $( '.selected', messagesColumn ).data( 'message' ).moveToTrash( function( error ){
+
+                console.log( $(this) );
+
+                if( error ){
+                    alert( error );
+                }else{
+                    $(this).remove();
+                }
+
+            });
+
         })
 
         .on( 'contextmenu', '.account', function(){
@@ -414,6 +471,24 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             e.stopPropagation();
             return false;
+
+        })
+
+        .on( 'mail-messageMarkedAsSeen', function( e, message ){
+
+            $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
+
+        })
+
+        .on( 'mail-messageUnmarkedAsSeen', function( e, message ){
+
+            $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
+
+        })
+
+        .on( 'mail-messageRemoved', function( e, message ){
+
+            $( '.message-' + message, messagesColumn ).remove();
 
         });
 
