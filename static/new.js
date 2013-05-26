@@ -40,8 +40,8 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
                         }else{
 
                             wz.banner()
-                                .title( 'Mail sent' )
-                                .text( 'Your mail has been sent' )
+                                .title( lang.mailSent )
+                                .text( lang.beenSent )
                                 .image( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
@@ -54,9 +54,9 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
                  )
 
             }else if( $( '.content-to input', win ).val() ){
-                alert( 'Please introduce receiver address' );
+                alert( lang.introduceTo );
             }else if( $( '.content-from option:selected', win ).text() ){
-                alert( 'Please introduce your address' );
+                alert( lang.introduceFrom );
             }
 
         });

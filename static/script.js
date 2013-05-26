@@ -425,19 +425,19 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         })
 
         .on( 'click', '.options-display', function(){
-            alert( 'Not working' );
+            alert( lang.notWorking );
         })
 
         .on( 'click', '.options-refresh', function(){
-            alert( 'Not working' );
+            alert( lang.notWorking );
         })
 
         .on( 'click', '.options-folder', function(){
-            alert( 'Not working' );
+            alert( lang.notWorking );
         })
 
         .on( 'click', '.options-label', function(){
-            alert( 'Not working' );
+            alert( lang.notWorking );
         })
 
         .on( 'contextmenu', '.account', function(){

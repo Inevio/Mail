@@ -59,6 +59,11 @@
 	"inHostError" : "Please introduce your inbound host",
 	"inPortError" : "Please introduce a correct inbound port",
 	"chooseServer" : "Choose which account you want to add",
-	"chooseOther" : "Other..."
+	"chooseOther" : "Other...",
+	"mailSent" : "Mail sent",
+	"beenSent" : "Your mail has been sent",
+	"introduceTo" : "Please introduce receiver address",
+	"introduceFrom" : "Please select your address",
+	"notWorking" : "Not working"
 	
 }

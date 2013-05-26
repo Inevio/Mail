@@ -59,6 +59,11 @@
 	"inHostError" : "Por favor introduce tu servidor de entrada de correo",
 	"inPortError" : "Por favor introduce un puerto de entrada correcto",
 	"chooseServer" : "Elige qué tipo de cuenta quieres añadir",
-	"chooseOther" : "Otro..."
+	"chooseOther" : "Otro...",
+	"mailSent" : "Correo enviado",
+	"beenSent" : "Tu correo ha sido enviado",
+	"introduceTo" : "Por favor introduce el destinatario",
+	"introduceFrom" : "Por favor elige tu correo",
+	"notWorking" : "No funciona"
 	
 }
