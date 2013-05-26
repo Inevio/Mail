@@ -57,6 +57,8 @@
 	"outHostError" : "Por favor introduce tu servidor de salida de correo",
 	"outPortError" : "Por favor introduce un puerto de salida correcto",
 	"inHostError" : "Por favor introduce tu servidor de entrada de correo",
-	"inPortError" : "Por favor introduce un puerto de entrada correcto"
+	"inPortError" : "Por favor introduce un puerto de entrada correcto",
+	"chooseServer" : "Elige qué tipo de cuenta quieres añadir",
+	"chooseOther" : "Otro..."
 	
 }

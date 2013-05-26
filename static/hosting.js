@@ -15,6 +15,9 @@ wz.app.addScript( 8, 'hosting', function( win, app, lang, params ){
             wz.app.createWindow( 8, params, 'account' );
             wz.app.closeWindow( win );
 
-        })
+        });
+
+    $( '.hosting-title', win ).text( lang.chooseServer );
+    $( '.hosting-image-other', win ).text( lang.chooseOther );
     
 });

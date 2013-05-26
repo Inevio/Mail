@@ -57,6 +57,8 @@
 	"outHostError" : "Please introduce your outbound host",
 	"outPortError" : "Please introduce a correct outbound port",
 	"inHostError" : "Please introduce your inbound host",
-	"inPortError" : "Please introduce a correct inbound port"
+	"inPortError" : "Please introduce a correct inbound port",
+	"chooseServer" : "Choose which account you want to add",
+	"chooseOther" : "Other..."
 	
 }
