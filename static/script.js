@@ -384,8 +384,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         })
         
-        .on( 'click', '.options-reply, .new-mail', function(){
-            wz.app.createWindow( 8, $( 'content-origin-mail' ).text(), 'new' );
+        .on( 'click', '.options-reply', function(){
+            wz.app.createWindow( 8, contentMail.text(), 'new' );
+        })
+
+        .on( 'click', '.new-mail', function(){
+            wz.app.createWindow( 8, '', 'new' );
         })
 
         .on( 'click', '.options-spam', function(){
