@@ -85,6 +85,18 @@
     border: 1px solid #50BDFF;
 }
 
+.wz-app-8-new form{
+    float: left;
+}
+
+.wz-app-8-new select{
+
+    width: 242px;
+    height: 22px;
+    color: #5D5D5D;
+    
+}
+
 .wz-app-8-new .content-compose{
 
     width: 458px;
