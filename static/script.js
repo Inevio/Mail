@@ -21,115 +21,123 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     var contentMessageText = $( '.content-message-text', contentMessage );
     var contentHr = $( 'hr', contentColumn );
 
-    wz.mail.getAccounts( function( error, accounts ){
+    var getAccounts = function(){
 
-        if( error ){
-            console.log( error );
-        }else if( accounts.length ){
+        mailColumn.children().not( '.wz-prototype, .add-account' ).remove();
 
-            mailAccount.clone().removeClass( 'wz-prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( lang.general );
+        wz.mail.getAccounts( function( error, accounts ){
 
-            accounts.map( function( element ){ 
+            if( error ){
+                console.log( error );
+            }else if( accounts.length ){
 
-                var accountSqueleton = mailAccount.clone();
+                mailAccount.clone().removeClass( 'wz-prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( lang.general );
 
-                accountSqueleton
-                    .removeClass( 'wz-prototype' )
-                    .appendTo( mailColumn )
-                    .data({ 'mail' : element.address , 'id' : element.id })
-                    .children( 'span' ).text( element.description );
+                accounts.map( function( element ){ 
 
-                element.getBoxes( false, function( error, boxes ){
+                    var accountSqueleton = mailAccount.clone();
 
-                    var mailboxSqueleton = accountSqueleton.find( '.mailbox.wz-prototype' );
+                    accountSqueleton
+                        .removeClass( 'wz-prototype' )
+                        .appendTo( mailColumn )
+                        .data({ 'mail' : element.address , 'id' : element.id })
+                        .children( 'span' ).text( element.description );
 
-                    if( error ){
-                        console.log( error );
-                    }else{
+                    element.getBoxes( false, function( error, boxes ){
 
-                        if( boxes.inbox ){
+                        var mailboxSqueleton = accountSqueleton.find( '.mailbox.wz-prototype' );
 
-                            mailboxSqueleton
-                                .clone()
-                                .removeClass( 'wz-prototype' )
-                                .addClass( 'inbox' )
-                                .data( 'path', boxes.inbox[0].path )
-                                .appendTo( accountSqueleton )
-                                .children( 'span' ).text( lang.inbox );
+                        if( error ){
+                            console.log( error );
+                        }else{
+
+                            if( boxes.inbox ){
+
+                                mailboxSqueleton
+                                    .clone()
+                                    .removeClass( 'wz-prototype' )
+                                    .addClass( 'inbox' )
+                                    .data( 'path', boxes.inbox[0].path )
+                                    .appendTo( accountSqueleton )
+                                    .children( 'span' ).text( lang.inbox );
+
+                            }
+
+                            if( boxes.flagged ){
+
+                                mailboxSqueleton
+                                    .clone()
+                                    .removeClass( 'wz-prototype' )
+                                    .addClass( 'starred' )
+                                    .data( 'path', boxes.flagged[0].path )  
+                                    .appendTo( accountSqueleton )
+                                    .children( 'span' ).text( lang.starred );
+
+                            }
+
+                            if( boxes.sent ){
+
+                                mailboxSqueleton
+                                    .clone()
+                                    .removeClass( 'wz-prototype' )
+                                    .addClass( 'sent' )
+                                    .data( 'path', boxes.sent[0].path )
+                                    .appendTo( accountSqueleton )
+                                    .children( 'span' ).text( lang.sent );
+
+                            }
+
+                            if( boxes.drafts ){
+
+                                mailboxSqueleton
+                                    .clone()
+                                    .removeClass( 'wz-prototype' )
+                                    .addClass( 'drafts' )
+                                    .data( 'path', boxes.drafts[0].path )
+                                    .appendTo( accountSqueleton )
+                                    .children( 'span' ).text( lang.drafts );
+
+                            }
+
+                            if( boxes.junk ){
+
+                                mailboxSqueleton
+                                    .clone()
+                                    .removeClass( 'wz-prototype' )
+                                    .addClass( 'spam' )
+                                    .data( 'path', boxes.junk[0].path )
+                                    .appendTo( accountSqueleton )
+                                    .children( 'span' ).text( lang.spam );
+
+                            }
+
+                            if( boxes.trash ){
+
+                                mailboxSqueleton
+                                    .clone()
+                                    .removeClass( 'wz-prototype' )
+                                    .addClass( 'trash' )
+                                    .data( 'path', boxes.trash[0].path )
+                                    .appendTo( accountSqueleton )
+                                    .children( 'span' ).text( lang.trash );
+
+                            }
 
                         }
 
-                        if( boxes.flagged ){
+                    });
 
-                            mailboxSqueleton
-                                .clone()
-                                .removeClass( 'wz-prototype' )
-                                .addClass( 'starred' )
-                                .data( 'path', boxes.flagged[0].path )  
-                                .appendTo( accountSqueleton )
-                                .children( 'span' ).text( lang.starred );
+                })
 
-                        }
+                addAccount.appendTo( mailColumn );
 
-                        if( boxes.sent ){
+            }
 
-                            mailboxSqueleton
-                                .clone()
-                                .removeClass( 'wz-prototype' )
-                                .addClass( 'sent' )
-                                .data( 'path', boxes.sent[0].path )
-                                .appendTo( accountSqueleton )
-                                .children( 'span' ).text( lang.sent );
+        });
 
-                        }
+    }
 
-                        if( boxes.drafts ){
-
-                            mailboxSqueleton
-                                .clone()
-                                .removeClass( 'wz-prototype' )
-                                .addClass( 'drafts' )
-                                .data( 'path', boxes.drafts[0].path )
-                                .appendTo( accountSqueleton )
-                                .children( 'span' ).text( lang.drafts );
-
-                        }
-
-                        if( boxes.junk ){
-
-                            mailboxSqueleton
-                                .clone()
-                                .removeClass( 'wz-prototype' )
-                                .addClass( 'spam' )
-                                .data( 'path', boxes.junk[0].path )
-                                .appendTo( accountSqueleton )
-                                .children( 'span' ).text( lang.spam );
-
-                        }
-
-                        if( boxes.trash ){
-
-                            mailboxSqueleton
-                                .clone()
-                                .removeClass( 'wz-prototype' )
-                                .addClass( 'trash' )
-                                .data( 'path', boxes.trash[0].path )
-                                .appendTo( accountSqueleton )
-                                .children( 'span' ).text( lang.trash );
-
-                        }
-
-                    }
-
-                });
-
-            })
-
-            addAccount.appendTo( mailColumn );
-
-        }
-
-    });
+    getAccounts();
 
     var toDate = function( date ){
 
@@ -312,6 +320,63 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         });       
 
     }
+
+    var appendMessage = function( message ){
+
+        console.log( message );
+
+        messageSqueleton = messagePrototype
+                                    .clone()
+                                    .removeClass( 'wz-prototype' )
+                                    .addClass( 'message-' + message.id )
+                                    .data( 'message', message )
+                                    .appendTo( messagesColumn );
+
+        console.log( 1 );
+
+        if( !message.isSeen() ){
+            messageSqueleton.addClass( 'unread' );
+        }
+
+        console.log( 2 );
+
+        messageSqueleton.find( '.message-origin' ).text( message.from.name );
+
+        console.log( 3 );
+
+        if( message.attachments.length ){
+            messageSqueleton.find( '.message-clip' ).addClass( 'attached' );
+        }
+
+        console.log( 4 );
+
+        var messageDate = toDate( message.date.getTime() );
+
+        console.log( 5 );
+
+        if( messageDate.sentToday ){
+            messageSqueleton.find( '.message-date' ).text( messageDate.sentHour + ':' + messageDate.sentMinute );
+        }else{
+            messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth );
+        }
+
+        console.log( 6 );
+
+        if( message.isFlagged() ){
+            messageSqueleton.find( '.message-star' ).addClass( 'active' );
+        }
+
+        console.log( 7 );
+
+        messageSqueleton.find( '.message-subject' ).text( message.title );
+
+        console.log( 8 );
+
+        messagesColumn.find( '.message:last-child' ).remove();
+
+        console.log( 9 );
+
+    }
     
     $(win)
     
@@ -396,8 +461,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             $( '.selected', messagesColumn ).data( 'message' ).moveToSpam( function( error ){
 
-                console.log( $(this) );
-
                 if( error ){
                     alert( error );
                 }else{
@@ -411,8 +474,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         .on( 'click', '.options-trash', function(){
 
             $( '.selected', messagesColumn ).data( 'message' ).moveToTrash( function( error ){
-
-                console.log( $(this) );
 
                 if( error ){
                     alert( error );
@@ -505,6 +566,18 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         .on( 'mail-messageRemoved', function( e, message ){
 
             $( '.message-' + message, messagesColumn ).remove();
+
+        })
+
+        /*.on( 'mail-newMessage', function( e, message ){
+
+            appendMessage( message );
+
+        })*/
+
+        .on( 'mail-accountAdded', function( e, mailAccount ){
+
+            getAccounts();
 
         });
 
