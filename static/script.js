@@ -390,8 +390,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         .on( 'click', '.options-spam', function(){
 
-            console.log( 'spam', $( '.selected', messagesColumn ).data( 'message' ) );
-
             $( '.selected', messagesColumn ).data( 'message' ).moveToSpam( function( error ){
 
                 console.log( $(this) );
@@ -408,8 +406,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         .on( 'click', '.options-trash', function(){
 
-            console.log( 'trash' );
-
             $( '.selected', messagesColumn ).data( 'message' ).moveToTrash( function( error ){
 
                 console.log( $(this) );
@@ -422,6 +418,22 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             });
 
+        })
+
+        .on( 'click', '.options-display', function(){
+            alert( 'Not working' );
+        })
+
+        .on( 'click', '.options-refresh', function(){
+            alert( 'Not working' );
+        })
+
+        .on( 'click', '.options-folder', function(){
+            alert( 'Not working' );
+        })
+
+        .on( 'click', '.options-label', function(){
+            alert( 'Not working' );
         })
 
         .on( 'contextmenu', '.account', function(){
