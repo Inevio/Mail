@@ -63,6 +63,7 @@
 	"mailSent" : "Mail sent",
 	"beenSent" : "Your mail has been sent",
 	"introduceTo" : "Please introduce receiver address",
+	"introduceToCorrect" : "Please introduce a valid receiver address",
 	"introduceFrom" : "Please select your address",
 	"notWorking" : "Not working"
 	

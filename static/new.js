@@ -1,6 +1,8 @@
 
 wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
+    var mailExpresion = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     wz.mail.getAccounts( function( error, accounts ){
 
         for( var i = 0 ; i < accounts.length ; i++ ){
@@ -21,7 +23,7 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
         .on( 'click', '.content-send', function(){
 
             
-            if( $( '.content-to input', win ).val() && $( '.content-from option:selected', win ).text() ){
+            if( mailExpresion.test( $( '.content-to input', win ).val() ) && $( '.content-from option:selected', win ).text() ){
 
                 $( '.content-from option:selected', win ).data( 'account' ).send( 
 
@@ -53,9 +55,11 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
                  )
 
-            }else if( $( '.content-to input', win ).val() ){
+            }else if( !$( '.content-to input', win ).val() ){
                 alert( lang.introduceTo );
-            }else if( $( '.content-from option:selected', win ).text() ){
+            }else if( !mailExpresion.test( $( '.content-to input', win ).val() ) ){
+                alert( lang.introduceToCorrect );
+            }else if( !$( '.content-from option:selected', win ).text() ){
                 alert( lang.introduceFrom );
             }
 
