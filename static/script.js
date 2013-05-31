@@ -1,142 +1,181 @@
 
 wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     
-    var attachments = $( '.content-attachments', win );
-    var openedAccount = $( '.left-column-top span', win );
-    var openedMailbox = $( '.middle-column-top span', win );
-    var mailColumn = $( '.left-column-content-scroll', win );
-    var mailAccount = $( '.account.wz-prototype', mailColumn );
-    var addAccount = $( '.add-account', mailColumn );
-    var messagesColumn = $( '.middle-column-content-scroll', win );
+    var attachments      = $( '.content-attachments', win );
+    var openedAccount    = $( '.left-column-top span', win );
+    var openedMailbox    = $( '.middle-column-top span', win );
+    var mailColumn       = $( '.left-column-content-scroll', win );
+    var mailAccount      = $( '.account.wz-prototype', mailColumn );
+    var addAccount       = $( '.add-account', mailColumn );
+    var messagesColumn   = $( '.middle-column-content-scroll', win );
     var messagePrototype = $( '.message.wz-prototype', messagesColumn );
 
-    var contentSubject = $( '.mail-subject', win );
-    var contentColumn = $( '.right-column-content', win );
-    var contentName = $( '.content-origin-name', contentColumn );
-    var contentMail = $( '.content-origin-mail', contentColumn );
-    var contentDate = $( '.content-origin-date', contentColumn );
-    var contentStar = $( '.message-star', contentColumn );
-    var contentMessage = $( '.content-message', contentColumn );
+    var contentSubject     = $( '.mail-subject', win );
+    var contentColumn      = $( '.right-column-content', win );
+    var contentName        = $( '.content-origin-name', contentColumn );
+    var contentMail        = $( '.content-origin-mail', contentColumn );
+    var contentDate        = $( '.content-origin-date', contentColumn );
+    var contentStar        = $( '.message-star', contentColumn );
+    var contentMessage     = $( '.content-message', contentColumn );
     var contentMessageText = $( '.content-message-text', contentMessage );
-    var contentHr = $( 'hr', contentColumn );
+    var contentHr          = $( 'hr', contentColumn );
+
+    var _accountItem = function( element ){
+
+        var item = mailAccount.clone().removeClass( 'wz-prototype' );
+
+        if( element.inProtocol === 'common' ){
+
+            item
+                .addClass( 'general' )
+                .children( 'span' )
+                .text( lang.general );
+
+        }else{
+
+            item
+                .data( {
+
+                    mail : element.address,
+                    id   : element.id
+
+                } )
+                .children( 'span' )
+                .text( element.description );
+
+        }
+
+        _accountItemBoxes( element, item );
+
+        return item;
+
+    };
+
+    var _accountItemBoxes = function( element, item ){
+
+        element.getBoxes( false, function( error, boxes ){
+
+            if( error ){
+                console.log( error );
+                return false;
+            }
+
+            var boxPrototype = item.find( '.mailbox.wz-prototype' );
+            var boxesList    = [];
+            var tmp          = null;
+
+            if( boxes.inbox ){
+
+                tmp = boxPrototype
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .addClass( 'inbox' )
+                    .data( 'path', boxes.inbox[ 0 ].path );
+
+                tmp.children( 'span' ).text( lang.inbox );
+
+                boxesList.push( tmp );
+
+            }
+
+            if( boxes.flagged ){
+
+                tmp = boxPrototype
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .addClass( 'starred' )
+                    .data( 'path', boxes.flagged[ 0 ].path );
+
+                tmp.children( 'span' ).text( lang.starred );
+
+                boxesList.push( tmp );
+
+            }
+
+            if( boxes.sent ){
+
+                tmp = boxPrototype
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .addClass( 'sent' )
+                    .data( 'path', boxes.sent[ 0 ].path );
+
+                tmp.children( 'span' ).text( lang.sent );
+
+                boxesList.push( tmp );
+
+            }
+
+            if( boxes.drafts ){
+
+                tmp = boxPrototype
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .addClass( 'drafts' )
+                    .data( 'path', boxes.drafts[ 0 ].path );
+
+                tmp.children( 'span' ).text( lang.drafts );
+
+                boxesList.push( tmp );
+
+            }
+
+            if( boxes.junk ){
+
+                tmp = boxPrototype
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .addClass( 'spam' )
+                    .data( 'path', boxes.junk[ 0 ].path );
+
+                tmp.children( 'span' ).text( lang.spam );
+
+                boxesList.push( tmp );
+
+            }
+
+            if( boxes.trash ){
+
+                tmp = boxPrototype
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .addClass( 'trash' )
+                    .data( 'path', boxes.trash[ 0 ].path );
+
+                tmp.children( 'span' ).text( lang.trash );
+
+                boxesList.push( tmp );
+
+            }
+
+            item.append( boxesList );
+
+        });
+
+    };
 
     var getAccounts = function(){
 
-        mailColumn.children().not( '.wz-prototype, .add-account' ).remove();
+        mailColumn.children().not( mailAccount ).not( addAccount ).remove();
 
         wz.mail.getAccounts( function( error, accounts ){
 
             if( error ){
                 console.log( error );
-            }else if( accounts.length ){
-
-                mailAccount.clone().removeClass( 'wz-prototype' ).appendTo( mailColumn ).addClass( 'general' ).children( 'span' ).text( lang.general );
-
-                accounts.map( function( element ){ 
-
-                    var accountSqueleton = mailAccount.clone();
-
-                    accountSqueleton
-                        .removeClass( 'wz-prototype' )
-                        .appendTo( mailColumn )
-                        .data({ 'mail' : element.address , 'id' : element.id })
-                        .children( 'span' ).text( element.description );
-
-                    element.getBoxes( false, function( error, boxes ){
-
-                        var mailboxSqueleton = accountSqueleton.find( '.mailbox.wz-prototype' );
-
-                        if( error ){
-                            console.log( error );
-                        }else{
-
-                            if( boxes.inbox ){
-
-                                mailboxSqueleton
-                                    .clone()
-                                    .removeClass( 'wz-prototype' )
-                                    .addClass( 'inbox' )
-                                    .data( 'path', boxes.inbox[0].path )
-                                    .appendTo( accountSqueleton )
-                                    .children( 'span' ).text( lang.inbox );
-
-                            }
-
-                            if( boxes.flagged ){
-
-                                mailboxSqueleton
-                                    .clone()
-                                    .removeClass( 'wz-prototype' )
-                                    .addClass( 'starred' )
-                                    .data( 'path', boxes.flagged[0].path )  
-                                    .appendTo( accountSqueleton )
-                                    .children( 'span' ).text( lang.starred );
-
-                            }
-
-                            if( boxes.sent ){
-
-                                mailboxSqueleton
-                                    .clone()
-                                    .removeClass( 'wz-prototype' )
-                                    .addClass( 'sent' )
-                                    .data( 'path', boxes.sent[0].path )
-                                    .appendTo( accountSqueleton )
-                                    .children( 'span' ).text( lang.sent );
-
-                            }
-
-                            if( boxes.drafts ){
-
-                                mailboxSqueleton
-                                    .clone()
-                                    .removeClass( 'wz-prototype' )
-                                    .addClass( 'drafts' )
-                                    .data( 'path', boxes.drafts[0].path )
-                                    .appendTo( accountSqueleton )
-                                    .children( 'span' ).text( lang.drafts );
-
-                            }
-
-                            if( boxes.junk ){
-
-                                mailboxSqueleton
-                                    .clone()
-                                    .removeClass( 'wz-prototype' )
-                                    .addClass( 'spam' )
-                                    .data( 'path', boxes.junk[0].path )
-                                    .appendTo( accountSqueleton )
-                                    .children( 'span' ).text( lang.spam );
-
-                            }
-
-                            if( boxes.trash ){
-
-                                mailboxSqueleton
-                                    .clone()
-                                    .removeClass( 'wz-prototype' )
-                                    .addClass( 'trash' )
-                                    .data( 'path', boxes.trash[0].path )
-                                    .appendTo( accountSqueleton )
-                                    .children( 'span' ).text( lang.trash );
-
-                            }
-
-                        }
-
-                    });
-
-                })
-
-                addAccount.appendTo( mailColumn );
-
+                return false;
             }
+
+            var list = [];
+
+            for( var i = 0, j = accounts.length; i < j; i++ ){
+                list.push( _accountItem( accounts[ i ] ) );
+            }
+
+            addAccount.before( list );
 
         });
 
     }
-
-    getAccounts();
 
     var toDate = function( date ){
 
@@ -228,11 +267,11 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                         messageSqueleton.find( '.message-star' ).addClass( 'active' );
                     }
 
-                    if( list[ i ].attachments.length ){
+                    if( list[ i ].hasAttachments() ){
                         messageSqueleton.find( '.message-clip' ).addClass( 'attached' );
                     }
 
-                    messageDate = toDate( list[ i ].date.getTime() );
+                    messageDate = toDate( list[ i ].time.getTime() );
 
                     if( messageDate.sentToday ){
                         messageSqueleton.find( '.message-date' ).text( messageDate.sentHour + ':' + messageDate.sentMinute );
@@ -304,7 +343,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         }
 
-        var messageDate = toDate( message.date.getTime() );
+        var messageDate = toDate( message.time.getTime() );
 
         if( messageDate.sentToday ){
             contentDate.text( lang.today + ' ' + messageDate.sentHour + ':' + messageDate.sentMinute );
@@ -358,7 +397,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         console.log( 4 );
 
-        var messageDate = toDate( message.date.getTime() );
+        var messageDate = toDate( message.time.getTime() );
 
         console.log( 5 );
 
@@ -594,6 +633,9 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         .on( 'click', function(){
             wz.app.createWindow(8, null, 'hosting');
         });
+
+    // Start App
+    getAccounts();
 
     $( '.new-mail span', win ).text( lang.newEmail );
     $( '.add-account span', win ).text( lang.addAccount );
