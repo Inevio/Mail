@@ -28,6 +28,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             item
                 .addClass( 'general' )
+                .data( {
+
+                    mail : 'common',
+                    id   : 'common'
+
+                } )
                 .children( 'span' )
                 .text( lang.general );
 
