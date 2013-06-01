@@ -639,6 +639,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             $( '.message-' + message, messagesColumn ).remove();
         })
 
+        .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
+            messagesColumn.children( '.message-' + messageId ).remove();
+        })
+
         /*.on( 'mail-newMessage', function( e, message ){
 
             appendMessage( message );
