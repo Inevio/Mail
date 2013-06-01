@@ -620,21 +620,23 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         })
 
         .on( 'mail-messageMarkedAsSeen', function( e, message ){
-
             $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
-
         })
 
         .on( 'mail-messageUnmarkedAsSeen', function( e, message ){
-
             $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
+        })
 
+        .on( 'mail-messageMarkedAsFlagged', function( e, message ){
+            $( '.message-' + message.id + ' .message-star', messagesColumn ).addClass( 'active' );
+        })
+
+        .on( 'mail-messageUnmarkedAsFlagged', function( e, message ){
+            $( '.message-' + message.id + ' .message-star', messagesColumn ).removeClass( 'active' );
         })
 
         .on( 'mail-messageRemoved', function( e, message ){
-
             $( '.message-' + message, messagesColumn ).remove();
-
         })
 
         /*.on( 'mail-newMessage', function( e, message ){
