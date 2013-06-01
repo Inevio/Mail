@@ -437,25 +437,34 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     }
     
-    $(win)
-    
-        .on( 'click', '.account', function(){
+    $( win )
+    .on( 'click', '.account', function(){
 
-            if( $(this).hasClass('display') ){
+        var minHeight = 38;
+        var height    = minHeight;
 
-                $(this).removeClass('display');
-                $(this).transition({ height: 38 }, 250);
+        $( '.mailbox:not(.wz-prototype)', this ).each( function(){
+            height += $( this ).outerHeight( true );
+        });
 
-            }else{
+        if( $( this ).hasClass('display') ){
 
-                openedAccount.text( $(this).children( 'span' ).text() );
-                $('.display').transition({ height: 38 }, 250).removeClass('display');
-                $(this).addClass('display');
-                $(this).transition({ height: 250 }, 250);
+            $( this ).removeClass('display');
+            $( this ).transition( { height: minHeight }, 250 );
 
-            }
+        }else{
 
-        })
+            openedAccount.text( $( this ).children( 'span' ).text() );
+
+            $('.display').transition( { height: minHeight }, 250 ).removeClass('display');
+
+            $( this )
+                .addClass('display')
+                .transition( { height: height }, 250 );
+
+        }
+
+    })
         
         .on( 'click', '.mailbox', function(e){
 
