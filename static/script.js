@@ -20,6 +20,20 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     var contentMessageText = $( '.content-message-text', contentMessage );
     var contentHr          = $( 'hr', contentColumn );
 
+    var _accountOptionsHeight = function( item ){
+
+        item = $( item );
+
+        var height = 0;
+
+        $( '.mailbox:not(.wz-prototype)', item ).each( function(){
+            height += $( this ).outerHeight( true );
+        });
+
+        return height;
+
+    };
+
     var _accountItem = function( element ){
 
         var item = mailAccount.clone().removeClass( 'wz-prototype' );
@@ -156,6 +170,24 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             item.append( boxesList );
 
+            if( element.inProtocol === 'common' ){
+
+                var common = $( '.account:not( .wz-prototype )', mailColumn ).first();
+
+                if( !common.size() ){
+                    return false;
+                }
+
+                common
+                    .addClass('display')
+                    .height( _accountOptionsHeight( common ) + 38 )
+                    .find('.inbox')
+                        .click();
+
+                openedAccount.text( item.children( 'span' ).text() );
+
+            }
+
         });
 
     };
@@ -181,7 +213,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         });
 
-    }
+    };
 
     var toDate = function( date ){
 
@@ -228,7 +260,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         });
 
-    }
+    };
 
     var showMails = function( id, path ){
 
@@ -298,7 +330,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         });
 
-    }
+    };
 
     var showMessage = function( message ){
 
@@ -378,7 +410,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         });       
 
-    }
+    };
 
     var appendMessage = function( message ){
 
@@ -435,17 +467,13 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         console.log( 9 );
 
-    }
+    };
     
     $( win )
     .on( 'click', '.account', function(){
 
         var minHeight = 38;
-        var height    = minHeight;
-
-        $( '.mailbox:not(.wz-prototype)', this ).each( function(){
-            height += $( this ).outerHeight( true );
-        });
+        var height    = minHeight + _accountOptionsHeight( this );
 
         if( $( this ).hasClass('display') ){
 
