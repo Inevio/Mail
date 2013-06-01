@@ -307,9 +307,11 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         contentMail.text( message.from.address );
 
         message.markAsSeen( function( error ){
+
             if( error ){
                 alert( error );
             }
+
         });
 
         if( message.isFlagged() ){
@@ -320,7 +322,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         attachments.children().not( '.content-attachments-title' ).remove();
 
-        if( message.attachments.length ){
+        if( message.hasAttachments() ){
 
             contentColumn.addClass( 'attachments' );
 
@@ -360,6 +362,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         }
 
         message.getFullMessage( function( error, fullMessage ){
+
+            if( error ){
+                return false;
+            }
 
             contentMessageText.contents().find( 'body' ).html( fullMessage.message );
 
