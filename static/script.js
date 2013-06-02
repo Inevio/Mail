@@ -75,6 +75,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         element.getBoxes( false, function( error, boxes ){
 
+            console.log( boxes );
+
             if( error ){
                 console.log( error );
                 return false;
@@ -167,6 +169,16 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 boxesList.push( tmp );
 
             }
+
+            if( boxes.normal ){
+
+                for( var i in boxes.normal ){
+                    console.log( boxes.normal[ i ] );
+                }
+
+            }
+
+            console.log( boxes.normal );
 
             item.append( boxesList );
 
@@ -715,6 +727,14 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             getAccounts();
 
+        })
+
+        .on( 'mail-boxAdded', function( e, mailBox, accountId ){
+            console.log( mailBox, accountId );
+        })
+
+        .on( 'mail-boxRemoved', function( e, boxId, accountId ){
+            console.log( boxId, accountId );
         });
 
     addAccount
