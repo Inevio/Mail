@@ -192,6 +192,40 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     };
 
+    var _basicStyle = function(){
+
+        var size   = {};
+        var result = '<style>';
+
+        size['400'] = 400;
+        size['300'] = 200;
+        size['500'] = 500;
+        size['700'] = 700;
+
+        Object.keys( size ).forEach( function( key ){
+
+            result += '@font-face {' +
+                'font-weight: ' +key + ';' +
+                'font-style: normal;' +
+                "font-family: 'Effra';" +
+                "src: url('https://static.weezeel.com/font/effra_" + size[ key ] + ".eot');" +
+                "src: url('https://static.weezeel.com/font/effra_" + size[ key ] + ".eot?#iefix') format('embedded-opentype')," +
+                "url('https://static.weezeel.com/font/effra_" + size[ key ] + ".woff') format('woff')," +
+                "url('https://static.weezeel.com/font/effra_" + size[ key ] + ".ttf') format('truetype')," +
+                "url('https://static.weezeel.com/font/effra_" + size[ key ] + ".svg#effra_400regular') format('svg');" +
+                '}';
+
+        });
+
+        result += '* {' +
+            'font-family: "Effra", Helvetica, Arial, sans-serif;' +
+            'font-size: 14px;' +
+            '}';
+
+        return  result + '</style>';
+
+    };
+
     var getAccounts = function(){
 
         mailColumn.children().not( mailAccount ).not( addAccount ).remove();
@@ -399,7 +433,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 return false;
             }
 
-            contentMessageText.contents().find( 'body' ).html( fullMessage.message );
+            contentMessageText.contents().find( 'body' ).html( _basicStyle() + fullMessage.message );
 
             contentMessageText.contents().on( 'mousewheel', function( event, delta, deltaX, deltaY ){
                 contentMessage.scrollTop( contentMessage.scrollTop() + ( deltaY * -20 ) );
