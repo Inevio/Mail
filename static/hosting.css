@@ -89,7 +89,8 @@
 }
 
 .wz-app-8-hosting .hosting-image.yahoo{
-    background: url('https://static.weezeel.com/app/8/servers/yahoo_disabled.png') no-repeat;
+    background: url('https://static.weezeel.com/app/8/servers/yahoo.png') no-repeat;
+    cursor: pointer;
 }
 
 .wz-app-8-hosting .hosting-image.aol{
