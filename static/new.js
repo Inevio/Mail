@@ -5,23 +5,30 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
     wz.mail.getAccounts( function( error, accounts ){
 
-        for( var i = 0 ; i < accounts.length ; i++ ){
+        var optionProto = $( '.content-from option.wz-prototype', win );
 
-            $( '.content-from option.prototype', win )
-                                            .clone()
-                                            .removeClass( 'prototype' )
-                                            .text( accounts[i].address )
-                                            .data( 'account', accounts[i] )
-                                            .appendTo( $( '.content-from select', win ) );
+        for( var i = 0, j = accounts.length; i < j; i++ ){
+
+            if( accounts[ i ].inProtocol !== 'common' ){
+
+                optionProto
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .text( accounts[ i ].address )
+                    .data( 'account', accounts[ i ] )
+                    .appendTo( $( '.content-from select', win ) );
+
+            }
 
         }
+
+        optionProto.remove();
 
     });
     
     win
     
         .on( 'click', '.content-send', function(){
-
             
             if( mailExpresion.test( $( '.content-to input', win ).val() ) && $( '.content-from option:selected', win ).text() ){
 
