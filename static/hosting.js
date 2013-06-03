@@ -10,7 +10,7 @@ wz.app.addScript( 8, 'hosting', function( win, app, lang, params ){
 
         })
 
-        .on( 'click', '.yahoo, .other', function(){
+        .on( 'click', '.yahoo, .hotmail, .outlook, .other', function(){
 
             wz.app.createWindow( 8, params, 'account' );
             wz.app.closeWindow( win );
