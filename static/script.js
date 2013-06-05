@@ -540,202 +540,202 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
         
-        .on( 'click', '.mailbox', function(e){
+    .on( 'click', '.mailbox', function(e){
 
-            openedMailbox.text( $(this).children( 'span' ).text() );
-            showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'path' ) );
-            e.stopPropagation();
+        openedMailbox.text( $(this).children( 'span' ).text() );
+        showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'path' ) );
+        e.stopPropagation();
 
-        })
-        
-        .on( 'click', '.message', function(){
+    })
+    
+    .on( 'click', '.message', function(){
 
-            if( !$(this).hasClass('selected') ){
+        if( !$(this).hasClass('selected') ){
 
-                showMessage( $(this).data( 'message' ) );
+            showMessage( $(this).data( 'message' ) );
 
-                $('.selected').removeClass('selected');
-                $(this).addClass('selected');
+            $('.selected').removeClass('selected');
+            $(this).addClass('selected');
 
-            }       
+        }       
 
-        })
-        
-        .on( 'click', 'input', function(e){
-            e.stopPropagation();
-        })
-        
-        .on( 'click', '.message-star', function(e){
+    })
+    
+    .on( 'click', 'input', function(e){
+        e.stopPropagation();
+    })
+    
+    .on( 'click', '.message-star', function(e){
 
-            e.stopPropagation();
+        e.stopPropagation();
 
-            if( $(this).hasClass('active') ){
+        if( $(this).hasClass('active') ){
 
-                $(this).removeClass('active');
-                $(this).parents( '.message' ).data( 'message' ).unmarkAsFlagged( function( error ){
-                    if( error ){
-                        alert( error );
-                    }
-                });
+            $(this).removeClass('active');
+            $(this).parents( '.message' ).data( 'message' ).unmarkAsFlagged( function( error ){
+                if( error ){
+                    alert( error );
+                }
+            });
 
+        }else{
+
+            $(this).addClass('active');
+            $(this).parents( '.message' ).data( 'message' ).markAsFlagged( function( error ){
+                if( error ){
+                    alert( error );
+                }
+            });
+
+        }
+
+    })
+    
+    .on( 'click', '.options-reply', function(){
+        wz.app.createWindow( 8, contentMail.text(), 'new' );
+    })
+
+    .on( 'click', '.new-mail', function(){
+        wz.app.createWindow( 8, '', 'new' );
+    })
+
+    .on( 'click', '.options-spam', function(){
+
+        $( '.selected', messagesColumn ).data( 'message' ).moveToSpam( function( error ){
+
+            if( error ){
+                alert( error );
             }else{
-
-                $(this).addClass('active');
-                $(this).parents( '.message' ).data( 'message' ).markAsFlagged( function( error ){
-                    if( error ){
-                        alert( error );
-                    }
-                });
-
+                $(this).remove();
             }
 
-        })
-        
-        .on( 'click', '.options-reply', function(){
-            wz.app.createWindow( 8, contentMail.text(), 'new' );
-        })
-
-        .on( 'click', '.new-mail', function(){
-            wz.app.createWindow( 8, '', 'new' );
-        })
-
-        .on( 'click', '.options-spam', function(){
-
-            $( '.selected', messagesColumn ).data( 'message' ).moveToSpam( function( error ){
-
-                if( error ){
-                    alert( error );
-                }else{
-                    $(this).remove();
-                }
-
-            });
-
-        })
-
-        .on( 'click', '.options-trash', function(){
-
-            $( '.selected', messagesColumn ).data( 'message' ).moveToTrash( function( error ){
-
-                if( error ){
-                    alert( error );
-                }else{
-                    $(this).remove();
-                }
-
-            });
-
-        })
-
-        .on( 'click', '.options-display', function(){
-            alert( lang.notWorking );
-        })
-
-        .on( 'click', '.options-refresh', function(){
-            alert( lang.notWorking );
-        })
-
-        .on( 'click', '.options-folder', function(){
-            alert( lang.notWorking );
-        })
-
-        .on( 'click', '.options-label', function(){
-            alert( lang.notWorking );
-        })
-
-        .on( 'contextmenu', '.account', function(){
-
-            var mailData = $( this ).data( 'mail' );
-            var idData = $( this ).data( 'id' );
-
-            if( !$( this ).hasClass( 'general' ) ){
-
-                wz.menu()
-
-                    .add( lang.renameAccount, function(){
-                        wz.app.createWindow( 8, mailData, 'account' );
-                    })
-
-                    .add( lang.changeConfig, function(){
-                        
-                    })
-
-                    .add( lang.deleteAccount, function() {
-
-                        wz.mail.removeAccount( idData, function( error ){
-
-                            if( error ){
-                                console.log( error );
-                            }else{
-
-                                wz.banner()
-                                    .title( lang.accountDeleted )
-                                    .text( mailData + ' ' + lang.deleteSuccesfull )
-                                    .image( 'https://static.weezeel.com/app/8/envelope.png' )
-                                    .render();
-
-                            }
-
-                        });
-
-                    }, 'warning')
-
-                    .render();
-
-            }                
-
-        })
-
-        .on( 'contextmenu', '.account article', function( e ){
-
-            e.stopPropagation();
-            return false;
-
-        })
-
-        .on( 'mail-messageMarkedAsSeen', function( e, message ){
-            $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
-        })
-
-        .on( 'mail-messageUnmarkedAsSeen', function( e, message ){
-            $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
-        })
-
-        .on( 'mail-messageMarkedAsFlagged', function( e, message ){
-            $( '.message-' + message.id + ' .message-star', messagesColumn ).addClass( 'active' );
-        })
-
-        .on( 'mail-messageUnmarkedAsFlagged', function( e, message ){
-            $( '.message-' + message.id + ' .message-star', messagesColumn ).removeClass( 'active' );
-        })
-
-        .on( 'mail-messageRemoved', function( e, message ){
-            $( '.message-' + message, messagesColumn ).remove();
-        })
-
-        .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
-            messagesColumn.children( '.message-' + messageId ).remove();
-        })
-
-        /*.on( 'mail-newMessage', function( e, message ){
-
-            appendMessage( message );
-
-        })*/
-
-        .on( 'mail-accountAdded', function( e, mailAccount ){
-
-            getAccounts();
-
-        })
-
-        .on( 'mail-boxAdded', function( e, mailBox, accountId ){
-            console.log( mailBox, accountId );
-        })
-
-        .on( 'mail-boxRemoved', function( e, boxId, accountId ){
-            console.log( boxId, accountId );
         });
+
+    })
+
+    .on( 'click', '.options-trash', function(){
+
+        $( '.selected', messagesColumn ).data( 'message' ).moveToTrash( function( error ){
+
+            if( error ){
+                alert( error );
+            }else{
+                $(this).remove();
+            }
+
+        });
+
+    })
+
+    .on( 'click', '.options-display', function(){
+        alert( lang.notWorking );
+    })
+
+    .on( 'click', '.options-refresh', function(){
+        alert( lang.notWorking );
+    })
+
+    .on( 'click', '.options-folder', function(){
+        alert( lang.notWorking );
+    })
+
+    .on( 'click', '.options-label', function(){
+        alert( lang.notWorking );
+    })
+
+    .on( 'contextmenu', '.account', function(){
+
+        var mailData = $( this ).data( 'mail' );
+        var idData = $( this ).data( 'id' );
+
+        if( !$( this ).hasClass( 'general' ) ){
+
+            wz.menu()
+
+                .add( lang.renameAccount, function(){
+                    wz.app.createWindow( 8, mailData, 'account' );
+                })
+
+                .add( lang.changeConfig, function(){
+                    
+                })
+
+                .add( lang.deleteAccount, function() {
+
+                    wz.mail.removeAccount( idData, function( error ){
+
+                        if( error ){
+                            console.log( error );
+                        }else{
+
+                            wz.banner()
+                                .title( lang.accountDeleted )
+                                .text( mailData + ' ' + lang.deleteSuccesfull )
+                                .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                                .render();
+
+                        }
+
+                    });
+
+                }, 'warning')
+
+                .render();
+
+        }                
+
+    })
+
+    .on( 'contextmenu', '.account article', function( e ){
+
+        e.stopPropagation();
+        return false;
+
+    })
+
+    .on( 'mail-messageMarkedAsSeen', function( e, message ){
+        $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
+    })
+
+    .on( 'mail-messageUnmarkedAsSeen', function( e, message ){
+        $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
+    })
+
+    .on( 'mail-messageMarkedAsFlagged', function( e, message ){
+        $( '.message-' + message.id + ' .message-star', messagesColumn ).addClass( 'active' );
+    })
+
+    .on( 'mail-messageUnmarkedAsFlagged', function( e, message ){
+        $( '.message-' + message.id + ' .message-star', messagesColumn ).removeClass( 'active' );
+    })
+
+    .on( 'mail-messageRemoved', function( e, message ){
+        $( '.message-' + message, messagesColumn ).remove();
+    })
+
+    .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
+        messagesColumn.children( '.message-' + messageId ).remove();
+    })
+
+    /*.on( 'mail-newMessage', function( e, message ){
+
+        appendMessage( message );
+
+    })*/
+
+    .on( 'mail-accountAdded', function( e, mailAccount ){
+
+        getAccounts();
+
+    })
+
+    .on( 'mail-boxAdded', function( e, mailBox, accountId ){
+        console.log( mailBox, accountId );
+    })
+
+    .on( 'mail-boxRemoved', function( e, boxId, accountId ){
+        console.log( boxId, accountId );
+    });
 
     addAccount
 
