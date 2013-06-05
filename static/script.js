@@ -92,7 +92,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     .clone()
                     .removeClass( 'wz-prototype' )
                     .addClass( 'inbox' )
-                    .data( 'path', boxes.inbox[ 0 ].path );
+                    .data( 'path', boxes.inbox[ 0 ].path )
+                    .data( 'id', boxes.inbox[ 0 ].id );
 
                 tmp.children( 'span' ).text( lang.inbox );
 
@@ -106,7 +107,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     .clone()
                     .removeClass( 'wz-prototype' )
                     .addClass( 'starred' )
-                    .data( 'path', boxes.flagged[ 0 ].path );
+                    .data( 'path', boxes.flagged[ 0 ].path )
+                    .data( 'id', boxes.flagged[ 0 ].id );
 
                 tmp.children( 'span' ).text( lang.starred );
 
@@ -120,7 +122,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     .clone()
                     .removeClass( 'wz-prototype' )
                     .addClass( 'sent' )
-                    .data( 'path', boxes.sent[ 0 ].path );
+                    .data( 'path', boxes.sent[ 0 ].path )
+                    .data( 'id', boxes.sent[ 0 ].id );
 
                 tmp.children( 'span' ).text( lang.sent );
 
@@ -134,7 +137,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     .clone()
                     .removeClass( 'wz-prototype' )
                     .addClass( 'drafts' )
-                    .data( 'path', boxes.drafts[ 0 ].path );
+                    .data( 'path', boxes.drafts[ 0 ].path )
+                    .data( 'id', boxes.drafts[ 0 ].id );
 
                 tmp.children( 'span' ).text( lang.drafts );
 
@@ -148,7 +152,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     .clone()
                     .removeClass( 'wz-prototype' )
                     .addClass( 'spam' )
-                    .data( 'path', boxes.junk[ 0 ].path );
+                    .data( 'path', boxes.junk[ 0 ].path )
+                    .data( 'id', boxes.junk[ 0 ].id );
 
                 tmp.children( 'span' ).text( lang.spam );
 
@@ -162,7 +167,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     .clone()
                     .removeClass( 'wz-prototype' )
                     .addClass( 'trash' )
-                    .data( 'path', boxes.trash[ 0 ].path );
+                    .data( 'path', boxes.trash[ 0 ].path )
+                    .data( 'id', boxes.trash[ 0 ].id );
 
                 tmp.children( 'span' ).text( lang.trash );
 
@@ -209,6 +215,9 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         var size   = {};
         var result = '<style>';
 
+        // To Do
+        
+        /*
         size['400'] = 400;
         size['300'] = 200;
         size['500'] = 500;
@@ -227,7 +236,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 "url('https://static.weezeel.com/font/effra_" + size[ key ] + ".svg#effra_400regular') format('svg');" +
                 '}';
 
-        });
+        });*/
 
         result += '* {' +
             'font-family: "Effra", Helvetica, Arial, sans-serif;' +
@@ -308,7 +317,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     };
 
-    var showMails = function( id, path ){
+    var showMails = function( id, boxId ){
 
         wz.mail( id, function( error, account ){
 
@@ -317,7 +326,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 return false;
             }
 
-            account.getMessagesFromBox( path, function( error, list ){
+            account.getMessagesFromBox( boxId, function( error, list ){
 
                 if( error ){
                     console.log( error );
@@ -543,7 +552,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     .on( 'click', '.mailbox', function(e){
 
         openedMailbox.text( $(this).children( 'span' ).text() );
-        showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'path' ) );
+        showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ) );
         e.stopPropagation();
 
     })
