@@ -722,15 +722,17 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         $( '.message-' + message, messagesColumn ).remove();
     })
 
+    .on( 'mail-messageIn', function( e, accountId, message, boxId ){
+        console.log( accountId, message, boxId );
+    })
+
     .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
         messagesColumn.children( '.message-' + messageId ).remove();
     })
 
-    /*.on( 'mail-newMessage', function( e, message ){
-
-        appendMessage( message );
-
-    })*/
+    .on( 'mail-newMessage', function( e, message ){
+        console.log( message, arguments );
+    })
 
     .on( 'mail-accountAdded', function( e, mailAccount ){
 
