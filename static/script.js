@@ -725,7 +725,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
 
     .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
-        messagesColumn.children( '.message-' + messageId ).remove();
+        messagesColumn.children( '.account-' + accountId + '-message-' + messageId ).remove();
     })
 
     .on( 'mail-newMessage', function( e, message ){
