@@ -497,7 +497,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         console.log( 9 );
 
     };
-    
+
     $( win )
     .on( 'click', '.account', function(){
 
@@ -522,7 +522,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         }
 
     })
-        
+
     .on( 'click', '.mailbox', function(e){
 
         openedMailbox.text( $(this).children( 'span' ).text() );
@@ -696,9 +696,14 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         $( '.message-' + message, messagesColumn ).remove();
     })
 
-    .on( 'mail-messageIn', function( e, accountId, message, boxId ){
+    .on( 'mail-messageIn', function( e, accountId, message, boxId, boxType ){
 
-        if( !isAccountOpened( accountId ) || !isBoxOpened( boxId ) ){
+        if(
+
+            ( !isAccountOpened( 'common' ) || !isBoxOpened( boxType ) ) &&
+            ( !isAccountOpened( accountId ) || !isBoxOpened( boxType ) )
+
+        ){
             return false;
         }
 
