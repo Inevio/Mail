@@ -54,6 +54,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         }else{
 
             item
+                .addClass( 'account-' + element.id )
                 .data( {
 
                     mail : element.address,
@@ -87,104 +88,36 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             var tmp          = null;
 
             if( boxes.inbox ){
-
-                tmp = boxPrototype
-                    .clone()
-                    .removeClass( 'wz-prototype' )
-                    .addClass( 'inbox' )
-                    .data( 'path', boxes.inbox[ 0 ].path )
-                    .data( 'id', boxes.inbox[ 0 ].id );
-
-                tmp.children( 'span' ).text( lang.inbox );
-
-                boxesList.push( tmp );
-
+                boxesList.push( _boxItem( boxes.inbox[ 0 ], boxPrototype, 'inbox', lang.inbox ) );
             }
 
             if( boxes.flagged ){
-
-                tmp = boxPrototype
-                    .clone()
-                    .removeClass( 'wz-prototype' )
-                    .addClass( 'starred' )
-                    .data( 'path', boxes.flagged[ 0 ].path )
-                    .data( 'id', boxes.flagged[ 0 ].id );
-
-                tmp.children( 'span' ).text( lang.starred );
-
-                boxesList.push( tmp );
-
+                boxesList.push( _boxItem( boxes.flagged[ 0 ], boxPrototype, 'starred', lang.starred ) );
             }
 
             if( boxes.sent ){
-
-                tmp = boxPrototype
-                    .clone()
-                    .removeClass( 'wz-prototype' )
-                    .addClass( 'sent' )
-                    .data( 'path', boxes.sent[ 0 ].path )
-                    .data( 'id', boxes.sent[ 0 ].id );
-
-                tmp.children( 'span' ).text( lang.sent );
-
-                boxesList.push( tmp );
-
+                boxesList.push( _boxItem( boxes.sent[ 0 ], boxPrototype, 'sent', lang.sent ) );
             }
 
             if( boxes.drafts ){
-
-                tmp = boxPrototype
-                    .clone()
-                    .removeClass( 'wz-prototype' )
-                    .addClass( 'drafts' )
-                    .data( 'path', boxes.drafts[ 0 ].path )
-                    .data( 'id', boxes.drafts[ 0 ].id );
-
-                tmp.children( 'span' ).text( lang.drafts );
-
-                boxesList.push( tmp );
-
+                boxesList.push( _boxItem( boxes.drafts[ 0 ], boxPrototype, 'drafts', lang.drafts ) );
             }
 
             if( boxes.junk ){
-
-                tmp = boxPrototype
-                    .clone()
-                    .removeClass( 'wz-prototype' )
-                    .addClass( 'spam' )
-                    .data( 'path', boxes.junk[ 0 ].path )
-                    .data( 'id', boxes.junk[ 0 ].id );
-
-                tmp.children( 'span' ).text( lang.spam );
-
-                boxesList.push( tmp );
-
+                boxesList.push( _boxItem( boxes.junk[ 0 ], boxPrototype, 'spam', lang.spam ) );
             }
 
             if( boxes.trash ){
-
-                tmp = boxPrototype
-                    .clone()
-                    .removeClass( 'wz-prototype' )
-                    .addClass( 'trash' )
-                    .data( 'path', boxes.trash[ 0 ].path )
-                    .data( 'id', boxes.trash[ 0 ].id );
-
-                tmp.children( 'span' ).text( lang.trash );
-
-                boxesList.push( tmp );
-
+                boxesList.push( _boxItem( boxes.trash[ 0 ], boxPrototype, 'trash', lang.trash ) );
             }
 
             if( boxes.normal ){
 
                 for( var i in boxes.normal ){
-                    console.log( boxes.normal[ i ] );
+                    boxesList.push( _boxItem( boxes.normal[ i ], boxPrototype, 'normal', boxes.normal[ i ].name ) );
                 }
 
             }
-
-            console.log( boxes.normal );
 
             item.append( boxesList );
 
@@ -244,6 +177,23 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             '}';
 
         return  result + '</style>';
+
+    };
+
+    var _boxItem = function( object, prototype, classes, text ){
+
+        var tmp = prototype
+                    .clone()
+                    .removeClass( 'wz-prototype' )
+                    .addClass( classes )
+                    .addClass( 'box-' + object.id )
+                    .addClass( 'account-' + object.accountId + '-box-' + object.id )
+                    .data( 'path', object.path )
+                    .data( 'id', object.id );
+
+        tmp.children( 'span' ).text( text );
+
+        return tmp;
 
     };
 
@@ -741,11 +691,39 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
 
     .on( 'mail-boxAdded', function( e, mailBox, accountId ){
-        console.log( mailBox, accountId );
+
+        var accountItem = $( '.account-' + accountId, mailColumn );
+        var boxItem     = null;
+
+        if( !accountItem.size() ){
+            return false;
+        }
+
+        boxItem = _boxItem( mailBox, accountItem.children('.wz-prototype'), 'normal', mailBox.name );
+
+        accountItem.append( boxItem );
+
+        if( accountItem.hasClass('display') ){
+            accountItem.animate( { height : '+=' + boxItem.outerHeight( true ) }, 150 );
+        }
+
     })
 
     .on( 'mail-boxRemoved', function( e, boxId, accountId ){
-        console.log( boxId, accountId );
+
+        var boxItem     = $( '.account-' + accountId + '-box-' + boxId, mailColumn );
+        var accountItem = boxItem.parent();
+
+        if( !boxItem.size() ){
+            return false;
+        }
+
+        boxItem.fadeOut( 150, function(){
+            $( this ).remove();
+        });
+
+        accountItem.delay( 50 ).animate( { height : '-=' + boxItem.outerHeight( true ) }, 150 );
+
     });
 
     addAccount

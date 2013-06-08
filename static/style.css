@@ -360,6 +360,13 @@
     background-size: 177px 40px;
 }
 
+.wz-app-8 .normal i{
+    height: 11px;
+    margin-top: 10px;
+    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -93px 0;
+    background-size: 177px 40px;
+}
+
 .wz-app-8 .middle-column-top span{
     width: 80px;
     height: 15px;
