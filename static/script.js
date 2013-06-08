@@ -20,6 +20,9 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     var contentMessageText = $( '.content-message-text', contentMessage );
     var contentHr          = $( 'hr', contentColumn );
 
+    var _accountOpened = 0;
+    var _folderOpened  = 0;
+
     var _accountOptionsHeight = function( item ){
 
         item = $( item );
@@ -197,6 +200,44 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     };
 
+    var _messageItem = function( item ){
+
+        var messageSqueleton = messagePrototype.clone();
+
+        messageSqueleton
+            .removeClass( 'wz-prototype' )
+            .addClass( 'message-' + item.id )
+            .addClass( 'account-' + item.accountId + '-message-' + item.id )
+            .data( 'message', item )
+            .data( 'message-time', item.time );
+
+        messageSqueleton.find( '.message-origin' ).text( item.from.name );
+        messageSqueleton.find( '.message-subject' ).text( item.title );
+
+        if( !item.isSeen() ){
+            messageSqueleton.addClass( 'unread' );
+        }
+
+        if( item.isFlagged() ){
+            messageSqueleton.find( '.message-star' ).addClass( 'active' );
+        }
+
+        if( item.hasAttachments() ){
+            messageSqueleton.find( '.message-clip' ).addClass( 'attached' );
+        }
+
+        messageDate = toDate( item.time.getTime() );
+
+        if( messageDate.sentToday ){
+            messageSqueleton.find( '.message-date' ).text( messageDate.sentHour + ':' + messageDate.sentMinute );
+        }else{
+            messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth );
+        }
+
+        return messageSqueleton;
+
+    };
+
     var getAccounts = function(){
 
         mailColumn.children().not( mailAccount ).not( addAccount ).remove();
@@ -218,6 +259,18 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         });
 
+    };
+
+    var isAccountOpened = function( id ){
+        return id === _accountOpened;
+    };
+
+    var isBoxOpened = function( id ){
+        return id === _folderOpened;
+    };
+
+    var messagesInList = function(){
+        return messagesColumn.children().not( messagePrototype );
     };
 
     var toDate = function( date ){
@@ -276,6 +329,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 return false;
             }
 
+            _accountOpened = id;
+
             account.getMessagesFromBox( boxId, function( error, list ){
 
                 if( error ){
@@ -283,47 +338,16 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     return false;
                 }
 
-                // Limpiamos la columna
-                messagesColumn.children().not( messagePrototype ).remove();
+                _folderOpened = boxId;
 
-                var messageSqueleton = null;
-                var messageDate      = null;
-                var messageList      = [];
+                // Limpiamos la columna
+                messagesInList().remove();
+
+                var messageDate = null;
+                var messageList = [];
 
                 for( var i = 0, j = list.length ; i < j ; i++ ){
-
-                    messageSqueleton = messagePrototype.clone();
-
-                    messageSqueleton
-                        .removeClass( 'wz-prototype' )
-                        .addClass( 'message-' + list[ i ].id )
-                        .data( 'message', list[ i ] );
-
-                    messageSqueleton.find( '.message-origin' ).text( list[ i ].from.name );
-                    messageSqueleton.find( '.message-subject' ).text( list[ i ].title );
-
-                    if( !list[ i ].isSeen() ){
-                        messageSqueleton.addClass( 'unread' );
-                    }
-
-                    if( list[ i ].isFlagged() ){
-                        messageSqueleton.find( '.message-star' ).addClass( 'active' );
-                    }
-
-                    if( list[ i ].hasAttachments() ){
-                        messageSqueleton.find( '.message-clip' ).addClass( 'attached' );
-                    }
-
-                    messageDate = toDate( list[ i ].time.getTime() );
-
-                    if( messageDate.sentToday ){
-                        messageSqueleton.find( '.message-date' ).text( messageDate.sentHour + ':' + messageDate.sentMinute );
-                    }else{
-                        messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth );
-                    }
-
-                    messageList.push( messageSqueleton );
-
+                    messageList.push( _messageItem( list[ i ] ) );
                 }
 
                 messagesColumn.append( messageList );
@@ -673,7 +697,26 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
 
     .on( 'mail-messageIn', function( e, accountId, message, boxId ){
-        console.log( accountId, message, boxId );
+
+        if( !isAccountOpened( accountId ) || !isBoxOpened( boxId ) ){
+            return false;
+        }
+
+        var item = _messageItem( message );
+        var list = messagesInList();
+
+        list.each( function( index ){
+
+            if( $( this ).data('message-time') < message.time ){
+
+                $( this ).before( _messageItem( message ) );
+
+                return false;
+
+            }
+
+        });
+
     })
 
     .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
