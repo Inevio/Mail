@@ -65,6 +65,7 @@
 	"introduceTo" : "Please introduce receiver address",
 	"introduceToCorrect" : "Please introduce a valid receiver address",
 	"introduceFrom" : "Please select your address",
-	"notWorking" : "Not working"
+	"notWorking" : "Not working",
+	"synchronizing" : "Synchronizing"
 	
 }

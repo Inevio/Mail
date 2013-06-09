@@ -22,6 +22,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     var _accountOpened = 0;
     var _folderOpened  = 0;
+    var _loadingMore   = false;
 
     var _accountOptionsHeight = function( item ){
 
@@ -69,6 +70,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         }
 
+        item.find('.synchronizing span').text( lang.synchronizing );
+
         _accountItemBoxes( element, item );
 
         return item;
@@ -79,50 +82,21 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         element.getBoxes( false, function( error, boxes ){
 
-            console.log( boxes );
-
             if( error ){
                 console.log( error );
                 return false;
             }
 
             var boxPrototype = item.find( '.mailbox.wz-prototype' );
-            var boxesList    = [];
             var tmp          = null;
 
-            if( boxes.inbox ){
-                boxesList.push( _boxItem( boxes.inbox[ 0 ], boxPrototype, 'inbox', lang.inbox ) );
-            }
+            for( var i in boxes ){
 
-            if( boxes.flagged ){
-                boxesList.push( _boxItem( boxes.flagged[ 0 ], boxPrototype, 'starred', lang.starred ) );
-            }
-
-            if( boxes.sent ){
-                boxesList.push( _boxItem( boxes.sent[ 0 ], boxPrototype, 'sent', lang.sent ) );
-            }
-
-            if( boxes.drafts ){
-                boxesList.push( _boxItem( boxes.drafts[ 0 ], boxPrototype, 'drafts', lang.drafts ) );
-            }
-
-            if( boxes.junk ){
-                boxesList.push( _boxItem( boxes.junk[ 0 ], boxPrototype, 'spam', lang.spam ) );
-            }
-
-            if( boxes.trash ){
-                boxesList.push( _boxItem( boxes.trash[ 0 ], boxPrototype, 'trash', lang.trash ) );
-            }
-
-            if( boxes.normal ){
-
-                for( var i in boxes.normal ){
-                    boxesList.push( _boxItem( boxes.normal[ i ], boxPrototype, 'normal', boxes.normal[ i ].name ) );
+                if( i !== 'normal' && i !== 'allMail' ){
+                    insertBox( _boxItem( boxes[ i ][ 0 ], boxPrototype ), item );
                 }
 
             }
-
-            item.append( boxesList );
 
             if( element.inProtocol === 'common' ){
 
@@ -183,7 +157,68 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     };
 
-    var _boxItem = function( object, prototype, classes, text ){
+    var _boxItem = function( object, prototype ){
+
+        var text    = object.name;
+        var classes = 'normal';
+        var status  = 10;
+
+        switch( object.type ){
+
+            case 'normal' :
+                break;
+            case 'inbox':
+
+                text    = lang.inbox;
+                classes = 'inbox';
+                status  = 0;
+
+                break;
+
+            case 'flagged' :
+                
+                text    = lang.starred;
+                classes = 'starred';
+                status  = 1;
+
+                break;
+
+            case 'sent' :
+                
+                text    = lang.sent;
+                classes = 'sent';
+                status  = 2;
+
+                break;
+
+            case 'drafts' :
+                
+                text    = lang.drafts;
+                classes = 'drafts';
+                status  = 3;
+
+                break;
+
+            case 'junk' :
+                
+                text    = lang.spam;
+                classes = 'spam';
+                status  = 4;
+
+                break;
+
+            case 'trash' :
+                
+                text    = lang.trash;
+                classes = 'trash';
+                status  = 5;
+
+                break;
+
+            default :
+                break;
+
+        }
 
         var tmp = prototype
                     .clone()
@@ -191,8 +226,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     .addClass( classes )
                     .addClass( 'box-' + object.id )
                     .addClass( 'account-' + object.accountId + '-box-' + object.id )
+                    .data( 'type', classes )
                     .data( 'path', object.path )
-                    .data( 'id', object.id );
+                    .data( 'id', object.id )
+                    .data( 'order', status );
 
         tmp.children( 'span' ).text( text );
 
@@ -343,7 +380,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 // Limpiamos la columna
                 messagesInList().remove();
 
-                var messageDate = null;
                 var messageList = [];
 
                 for( var i = 0, j = list.length ; i < j ; i++ ){
@@ -353,7 +389,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 messagesColumn.append( messageList );
 
                 // Nullify
-                messageList = messageSqueleton = messageDate = null;
+                messageList = messageSqueleton = null;
 
             });
 
@@ -495,6 +531,42 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         messagesColumn.find( '.message:last-child' ).remove();
 
         console.log( 9 );
+
+    };
+
+    var insertBox = function( boxObj, accountObj ){
+
+        var boxes = accountObj.children().not('.wz-prototype, .synchronizing');
+
+        if( boxes.filter( '.box-' + boxObj.data('id') ).size() || boxes.filter( '.' + boxObj.data('type') ).size() ){
+            return false;
+        }
+
+        accountObj.children('.synchronizing').remove();
+
+        if( boxes.size() === 0 ){
+            accountObj.prepend( accountObj );
+        }else{
+
+            var inserted = false;
+
+            boxes.each( function(){
+
+                if( $( this ).data('order') > boxObj.data('order') ){
+
+                    $( this ).before( boxObj );
+                    inserted = true;
+                    return false;
+
+                }
+
+            });
+
+            if( !inserted ){
+                boxes.last().after( boxObj );
+            }
+
+        }
 
     };
 
@@ -676,6 +748,44 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
 
+    .on( 'mousewheel', '.middle-column-content-scroll', function( e ){
+
+        if( !_loadingMore && ( this.offsetHeight * 1.5 ) + this.scrollTop > this.scrollHeight ){
+
+            _loadingMore = true;
+
+            var nowAccount = _accountOpened;
+            var nowFolder  = _folderOpened;
+
+            wz.mail( _accountOpened, function( error, account ){
+
+                var size = messagesColumn.children().not('.wz-prototype').size();
+
+                account.getMessagesFromBox( nowFolder, 20, parseInt( size / 20, 10 ), function( error, list ){
+
+                    if( error ){
+                        _loadingMore = false;
+                        return false;
+                    }
+
+                    var messageList = [];
+
+                    for( var i = 0, j = list.length ; i < j ; i++ ){
+                        messageList.push( _messageItem( list[ i ] ) );
+                    }
+
+                    messagesColumn.append( messageList );
+                    
+                    _loadingMore = false;
+
+                });
+
+            });
+           
+        }
+
+    })
+
     .on( 'mail-messageMarkedAsSeen', function( e, message ){
         $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
     })
@@ -740,6 +850,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'mail-boxAdded', function( e, mailBox, accountId ){
 
+        if( mailBox.type === 'normal' || mailBox.type === 'allMail' ){
+            return false;
+        }
+
         var accountItem = $( '.account-' + accountId, mailColumn );
         var boxItem     = null;
 
@@ -747,9 +861,9 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             return false;
         }
 
-        boxItem = _boxItem( mailBox, accountItem.children('.wz-prototype'), 'normal', mailBox.name );
+        boxItem = _boxItem( mailBox, accountItem.children('.wz-prototype') );
 
-        accountItem.append( boxItem );
+        insertBox( boxItem, accountItem );
 
         if( accountItem.hasClass('display') ){
             accountItem.animate( { height : '+=' + boxItem.outerHeight( true ) }, 150 );
@@ -775,10 +889,9 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     });
 
     addAccount
-
-        .on( 'click', function(){
-            wz.app.createWindow(8, null, 'hosting');
-        });
+    .on( 'click', function(){
+        wz.app.createWindow( 8, null, 'hosting' );
+    });
 
     // Start App
     getAccounts();

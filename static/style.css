@@ -243,7 +243,7 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .mailbox{
+.wz-app-8 .mailbox, .wz-app-8 .synchronizing{
     width: 180px;
     height: 35px;
     float: left;
@@ -253,7 +253,11 @@
     background: rgba(117,169,209,0.3);
 }
 
-.wz-app-8 .mailbox:nth-child(5){
+.wz-app-8 .synchronizing:hover{
+    background: none;
+}
+
+.wz-app-8 .mailbox:nth-child(4){
     margin-top: 13px;
 }
 
@@ -326,6 +330,12 @@
     color: #5D5D5D;
     display: inline-block;
     cursor: pointer;
+}
+
+.wz-app-8 .synchronizing i{
+    margin-top: 9px;
+    background: url('https://static.weezeel.com/app/8/synchronizing.gif') no-repeat 0 0;
+    background-size: 14px 14px;
 }
 
 .wz-app-8 .inbox i{

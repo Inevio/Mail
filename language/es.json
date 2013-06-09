@@ -65,6 +65,7 @@
 	"introduceTo" : "Por favor introduce el destinatario",
 	"introduceToCorrect" : "Por favor introduce un correo de destinatario válido",
 	"introduceFrom" : "Por favor elige tu correo",
-	"notWorking" : "No funciona"
+	"notWorking" : "No funciona",
+	"synchronizing" : "Sincronizando"
 	
 }
