@@ -843,8 +843,22 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
 
     .on( 'mail-accountAdded', function( e, mailAccount ){
-
         getAccounts();
+    })
+
+    .on( 'mail-accountRemoved', function( e, accountId ){
+        
+        $( '.account-' + accountId, mailColumn ).transition( { height : 0 }, 150, function(){
+            $( this ).remove();
+        });
+
+        if( $( '.account', mailColumn ).size() - 1 === 1 ){
+
+            $( '.account', mailColumn ).transition( { height : 0 }, 150, function(){
+                $( this ).remove();
+            });
+            
+        }
 
     })
 
