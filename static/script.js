@@ -811,7 +811,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         if(
 
             ( !isAccountOpened( 'common' ) || !isBoxOpened( boxType ) ) &&
-            ( !isAccountOpened( accountId ) || !isBoxOpened( boxType ) )
+            ( !isAccountOpened( accountId ) || !isBoxOpened( boxId ) )
 
         ){
             return false;
@@ -820,17 +820,25 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         var item = _messageItem( message );
         var list = messagesInList();
 
+        var inserted = false;
+
         list.each( function( index ){
 
             if( $( this ).data('message-time') < message.time ){
 
                 $( this ).before( _messageItem( message ) );
 
+                inserted = true;
+
                 return false;
 
             }
 
         });
+
+        if( !inserted ){
+            messagesColumn.append( _messageItem( message ) );
+        }
 
     })
 
