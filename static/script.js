@@ -244,6 +244,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         messageSqueleton
             .removeClass( 'wz-prototype' )
             .addClass( 'message-' + item.id )
+            .addClass( 'account-' + item.accountId + '-message' )
             .addClass( 'account-' + item.accountId + '-message-' + item.id )
             .data( 'message', item )
             .data( 'message-time', item.time );
@@ -856,18 +857,26 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'mail-accountRemoved', function( e, accountId ){
         
-        $( '.account-' + accountId, mailColumn ).transition( { height : 0 }, 150, function(){
-            $( this ).remove();
-        });
+        $( '.account-' + accountId, mailColumn )
+            .addClass('removed')
+            .transition( { height : 0 }, 150, function(){
+                $( this ).remove();
+            });
 
-        if( $( '.account', mailColumn ).size() - 1 === 1 ){
+        if( $( '.account', mailColumn ).not('.removed, .wz-prototype, .general').size() <= 1 ){
 
-            $( '.account', mailColumn ).transition( { height : 0 }, 150, function(){
+            $( '.account.general', mailColumn ).transition( { height : 0 }, 150, function(){
                 $( this ).remove();
             });
             
         }
 
+        $( '.account-' + accountId + '-message', messagesColumn ).remove();
+
+    })
+
+    .on( 'mail-accountRemoveFinished', function( e, accountId ){
+        $( '.account-' + accountId + '-message', messagesColumn ).remove();
     })
 
     .on( 'mail-boxAdded', function( e, mailBox, accountId ){
