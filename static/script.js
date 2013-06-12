@@ -944,6 +944,30 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             messagesColumn.children(':not(.wz-prototype):first').click();
         }
 
+    })
+
+    .key( 'backspace, del', function( e ){
+
+        if( $( e.target ).is('input') ){
+            return false;
+        }
+
+        var message = messagesColumn.children('.selected');
+
+        if( !message.size() ){
+            return false;
+        }
+
+        message.prev().not('.wz-prototype').click();
+
+        message.data('message').moveToTrash( function( error ){
+
+            if( error ){
+                console.log( error );
+            }
+
+        });
+
     });
 
     addAccount
