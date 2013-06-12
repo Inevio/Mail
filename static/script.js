@@ -908,6 +908,42 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         accountItem.delay( 50 ).animate( { height : '-=' + boxItem.outerHeight( true ) }, 150 );
 
+    })
+
+    .key( 'down', function(){
+
+        var target = messagesColumn.children('.selected');
+
+        if( target.size() ){
+
+            target = target.next();
+
+            if( target.size() ){
+                target.click();
+            }
+
+        }else{
+            messagesColumn.children(':not(.wz-prototype):first').click();
+        }
+
+    })
+
+    .key( 'up', function(){
+
+        var target = messagesColumn.children('.selected');
+
+        if( target.size() ){
+
+            target = target.prev().not('.wz-prototype');
+
+            if( target.size() ){
+                target.click();
+            }
+
+        }else{
+            messagesColumn.children(':not(.wz-prototype):first').click();
+        }
+
     });
 
     addAccount
