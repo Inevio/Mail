@@ -1,53 +1,53 @@
 
-.wz-app-8{
+.wz-win{
     background: #FFF;
 }
 
-.wz-app-8 .wz-scroll-slider{
+.wz-scroll-slider{
     width: 5px;
 }
 
-.wz-app-8 .wz-scroll-bar{
+.wz-scroll-bar{
     width: 5px;
 }
 
-.wz-app-8 .wz-win-minimize, .wz-app-8 .wz-win-maximize, .wz-app-8 .wz-win-close{
+.wz-win-minimize, .wz-win-maximize, .wz-win-close{
     float: right;
     margin-top: 6px;
     width: 15px;
     height: 15px;
 }
 
-.wz-app-8 .wz-win-minimize:hover, .wz-app-8 .wz-win-maximize:hover, .wz-app-8 .wz-win-close:hover{
+.wz-win-minimize:hover, .wz-win-maximize:hover, .wz-win-close:hover{
     border: 1px solid #EEE;
 }
 
-.wz-app-8 .wz-win-close{
+.wz-win-close{
     padding-right: 5px;
     padding-left: 7px;
     margin-right: 15px
 }
 
-.wz-app-8 .wz-win-minimize i, .wz-app-8 .wz-win-maximize i, .wz-app-8 .wz-win-close i{
+.wz-win-minimize i, .wz-win-maximize i, .wz-win-close i{
     width: 15px;
     height: 15px;
     background: url("https://static.weezeel.com/app/8/buttons.png") no-repeat;
     background-size: 43px 15px;
 }
 
-.wz-app-8 .wz-win-minimize i{
+.wz-win-minimize i{
     background-position: 0 0;
 }
 
-.wz-app-8 .wz-win-maximize i{
+.wz-win-maximize i{
     background-position: -15px 0;
 }
 
-.wz-app-8 .wz-win-close i{
+.wz-win-close i{
     background-position: -30px 0;
 }
 
-.wz-app-8 hr{
+hr{
     width: 520px;
     float: left;
     border: none;
@@ -55,14 +55,14 @@
     margin: 20px 20px 20px 0;
 }
 
-.wz-app-8 .left-column{
+.left-column{
     width: 180px;
     height: 540px;
     float: left;
     background: #F9F9F9;
 }
 
-.wz-app-8 .left-column-top{
+.left-column-top{
     width: 180px;
     height: 39px;
     float: left;
@@ -70,7 +70,7 @@
     background: #54728C;
 }
 
-.wz-app-8 .left-column-top span{
+.left-column-top span{
     width: 145px;
     height: 16px;
     float: left;
@@ -83,23 +83,23 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .left-column-content{
+.left-column-content{
     width: 180px;
     height: 500px;
     float: left;
 }
 
-.wz-app-8 .left-column-content-scroll{
+.left-column-content-scroll{
     height: 429px;
 }
 
-.wz-app-8 .middle-column{
+.middle-column{
     width: 250px;
     height: 540px;
     float: left;
 }
 
-.wz-app-8 .middle-column-top{
+.middle-column-top{
     width: 250px;
     height: 39px;
     float: left;
@@ -107,19 +107,19 @@
     background: #54728C;
 }
 
-.wz-app-8 .middle-column-content{
+.middle-column-content{
     width: 250px;
     height: 500px;
     float: left;
 }
 
-.wz-app-8 .right-column{
+.right-column{
     width: 560px;
     height: 540px;
     float: left;
 }
 
-.wz-app-8 .right-column-top{
+.right-column-top{
     width: 560px;
     height: 39px;
     float: left;
@@ -127,21 +127,21 @@
     background: #54728C;
 }
 
-.wz-app-8 .right-column-content{
+.right-column-content{
     width: 540px;
     height: 481px;
     padding: 19px 0 0 20px;
     float: left;
 }
 
-.wz-app-8 .separator{
+.separator{
     width: 5px;
     height: 540px;
     float: left;
     background: #ECECEC;
 }
 
-.wz-app-8 .separator-top{
+.separator-top{
     width: 3px;
     height: 40px;
     float: left;
@@ -150,7 +150,7 @@
     border-right: 1px solid #466176;
 }
 
-.wz-app-8 .separator-content{
+.separator-content{
     width: 3px;
     height: 500px;
     float: left;
@@ -158,7 +158,7 @@
     border-right: 1px solid #DADADA;
 }
 
-.wz-app-8 .new-mail{
+.new-mail{
     width: 100px;
     height: 15px;
     margin: 19px;
@@ -168,7 +168,7 @@
     border: 1px solid #C14142;
 }
 
-.wz-app-8 .new-mail i{
+.new-mail i{
     width: 16px;
     height: 16px;
     float: left;
@@ -176,18 +176,18 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 span{
+span{
     float: left;
     margin-left: 8px;
     font-size: 14px;
     color: #FFF;
 }
 
-.wz-app-8 .new-mail span{
+.new-mail span{
     margin-top: 2px;
 }
 
-.wz-app-8 .account{
+.account{
     width: 180px;
     height: 38px;
     border-top: 1px solid rgba(60,60,60,0);
@@ -196,19 +196,19 @@
     overflow: hidden;
 }
 
-.wz-app-8 .account:hover{
+.account:hover{
     background: rgba(117,169,209,0.3);
     border-top: 1px solid #75A9D1;
     border-bottom: 1px solid #75A9D1;
 }
 
-.wz-app-8 .account.display:hover{
+.account.display:hover{
     background: none;
     border-top: 1px solid rgba(60,60,60,0);
     border-bottom: 1px solid rgba(60,60,60,0);
 }
 
-.wz-app-8 .account .arrow{
+.account .arrow{
     width: 0px; 
     height: 0px; 
     float: left;
@@ -218,14 +218,14 @@
     border-left: 6px solid #AAA;
 }
 
-.wz-app-8 .account.display .arrow{
+.account.display .arrow{
     margin: 16px 0px 0px 11px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 6px solid #AAA;
 }
 
-.wz-app-8 .account span{
+.account span{
     margin-top: 11px;
     margin-left: 8px;
     color: #5D5D5D;
@@ -236,31 +236,31 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .mailbox, .wz-app-8 .synchronizing{
+.mailbox, .synchronizing{
     width: 180px;
     height: 35px;
     float: left;
 }
 
-.wz-app-8 .mailbox:hover{
+.mailbox:hover{
     background: rgba(117,169,209,0.3);
 }
 
-.wz-app-8 .synchronizing:hover{
+.synchronizing:hover{
     background: none;
 }
 
-.wz-app-8 .mailbox:nth-child(4){
+.mailbox:nth-child(4){
     margin-top: 13px;
 }
 
-.wz-app-8 .mailbox span{
+.mailbox span{
     float: left;
     margin-left: 8px;
     margin-top: 10px;
 }   
 
-.wz-app-8 .mailbox i{
+.mailbox i{
     width: 14px;
     height: 14px;
     float: left;
@@ -269,7 +269,7 @@
     display: block;
 }
 
-.wz-app-8 .bullet{
+.bullet{
     height: 9px;
     float: right;
     margin-top: 7px;
@@ -282,20 +282,20 @@
     max-width: 23px;
 }
 
-.wz-app-8 .bullet.big{
+.bullet.big{
     margin-top: 9px;
 }
 
-.wz-app-8 .bullet.hidden{
+.bullet.hidden{
     display: none;
 }
 
-.wz-app-8 .bullet span{
+.bullet span{
     margin: 0px;
     color: #FFF;
 }
 
-.wz-app-8 .add-account{
+.add-account{
     width: 160px;
     height: 38px;
     border-top: 1px solid #DADADA;
@@ -306,7 +306,7 @@
     cursor: pointer;
 }
 
-.wz-app-8 .add-account i{
+.add-account i{
     width: 14px;
     height: 13px;
     margin-top: 10px;
@@ -317,7 +317,7 @@
     cursor: pointer;
 }
 
-.wz-app-8 .add-account span{
+.add-account span{
     float: none;
     font-size: 14px;
     color: #5D5D5D;
@@ -325,52 +325,52 @@
     cursor: pointer;
 }
 
-.wz-app-8 .synchronizing i{
+.synchronizing i{
     margin-top: 9px;
     background: url('https://static.weezeel.com/app/8/synchronizing.gif') no-repeat 0 0;
     background-size: 14px 14px;
 }
 
-.wz-app-8 .inbox i{
+.inbox i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -79px 0;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .starred i{
+.starred i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -135px 0;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .sent i{
+.sent i{
     height: 10px;
     margin-top: 13px;
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -121px 0;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .drafts i{
+.drafts i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -42px -26px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .trash i{
+.trash i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -123px -23px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .spam i{
+.spam i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -109px -23px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .normal i{
+.normal i{
     height: 11px;
     margin-top: 10px;
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -93px 0;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .middle-column-top span{
+.middle-column-top span{
     width: 80px;
     height: 15px;
     float: left;
@@ -383,7 +383,7 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .middle-column-top input{
+.middle-column-top input{
     width: 110px;
     height: 15px;
     float: left;
@@ -396,39 +396,39 @@
     color: #4D4D4D;
 }
 
-.wz-app-8 .middle-column-top input::-webkit-input-placeholder {
+.middle-column-top input::-webkit-input-placeholder {
     font-size: 13px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .middle-column-top input:-moz-placeholder { /* Firefox 18- */
+.middle-column-top input:-moz-placeholder { /* Firefox 18- */
     font-size: 13px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .middle-column-top input::-moz-placeholder {  /* Firefox 19+ */
+.middle-column-top input::-moz-placeholder {  /* Firefox 19+ */
     font-size: 13px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .middle-column-top input:-ms-input-placeholder {  
+.middle-column-top input:-ms-input-placeholder {  
     font-size: 13px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .middle-column-top input:placeholder{
+.middle-column-top input:placeholder{
     font-size: 13px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .middle-column-content nav{
+.middle-column-content nav{
     width: 212px;
     height: 33px;
     padding: 19px;
     float: left;
 }
 
-.wz-app-8 nav figure{
+nav figure{
     width: 22px;
     height: 22px;
     padding-top: 9px;
@@ -439,22 +439,22 @@
     border-right: none;
 }
 
-.wz-app-8 nav figure:hover{
+nav figure:hover{
     background: #E6E6E6;
     /*box-shadow: inset 0px 0px 4px #FEA100;*/
 }
 
-.wz-app-8 nav figure:first-child{
+nav figure:first-child{
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
 
-.wz-app-8 nav figure.options-folder{
+nav figure.options-folder{
     width: 32px;
     padding-left: 6px;
 }
 
-.wz-app-8 nav figure.options-label{
+nav figure.options-label{
     width: 32px;
     padding-left: 6px;
     border-top-right-radius: 2px;
@@ -462,34 +462,34 @@
     border-right: 1px solid #DADADA; 
 }
 
-.wz-app-8 nav figure i{
+nav figure i{
     width: 14px;
     height: 14px;
     float: left;
     display: block;
 }
 
-.wz-app-8 nav figure.options-display i{
+nav figure.options-display i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -163px 0;
     background-size: 177px 40px;
 }
 
-.wz-app-8 nav figure.options-refresh i{
+nav figure.options-refresh i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -28px -26px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 nav figure.options-spam i{
+nav figure.options-spam i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -109px -23px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 nav figure.options-trash i{
+nav figure.options-trash i{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -123px -23px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 nav figure.options-folder i{
+nav figure.options-folder i{
     width: 9px;
     height: 5px;
     margin-left: 2px;
@@ -498,7 +498,7 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 nav figure.options-folder i:first-child{
+nav figure.options-folder i:first-child{
     width: 14px;
     height: 11px;
     margin-left: 2px;
@@ -507,7 +507,7 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 nav figure.options-label i{
+nav figure.options-label i{
     width: 9px;
     height: 5px;
     margin-left: 2px;
@@ -516,7 +516,7 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 figure.options-label i:first-child{
+figure.options-label i:first-child{
     width: 14px;
     height: 14px;
     margin-left: 2px;
@@ -525,21 +525,21 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 .middle-column-content-scroll{
+.middle-column-content-scroll{
     width: 240px;
     height: 429px;
     margin: 0 auto;
 }
 
-.wz-app-8 .middle-column-content-scroll .wz-scroll-slider{
+.middle-column-content-scroll .wz-scroll-slider{
     margin-right: 0px;
 }
 
-.wz-app-8 .middle-column-content-scroll .wz-scroll-bar{
+.middle-column-content-scroll .wz-scroll-bar{
     margin-right: 0px;
 }
 
-.wz-app-8 .message{
+.message{
     width: 212px;
     height: 42px;
     float: left;
@@ -549,29 +549,29 @@
     border: 1px solid rgba(60,60,60,0);
 }
 
-.wz-app-8 .message:hover{
+.message:hover{
     border: 1px solid rgba(84,114,140,0.3);
     background: rgba(84,114,140,0.1);
 }
 
-.wz-app-8 .message.selected{
+.message.selected{
     background: #54728C;
 }
 
-.wz-app-8 .message-top{
+.message-top{
     width: 208px;
     height: 20px;
     float: left;
 }
 
-.wz-app-8 .message-middle{
+.message-middle{
     width: 218px;
     height: 20px;
     float: left;
     margin-top: 7px;
 }
 
-.wz-app-8 .message-icon{
+.message-icon{
     width: 14px;
     height: 13px;
     float: left;
@@ -579,13 +579,13 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 .message.unread .message-icon{
+.message.unread .message-icon{
     height: 10px;
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -107px 0;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .message-clip{
+.message-clip{
     float: right;
     width: 14px;
     height: 13px;
@@ -594,31 +594,31 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 .message-clip.attached{
+.message-clip.attached{
     display: block;
 }
 
-.wz-app-8 .message.selected .message-clip.attached{
+.message.selected .message-clip.attached{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat 0 -25px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .message-date{
+.message-date{
     float: right;
     font-size: 13px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .message.selected .message-date{
+.message.selected .message-date{
     color: #FFF;
 }
 
-.wz-app-8 .message-top input{
+.message-top input{
     float: left;
     cursor: default;
 }
 
-.wz-app-8 .message-origin{
+.message-origin{
     width: 125px;
     height: 14px;
     float: left;
@@ -630,11 +630,11 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .message.selected .message-origin{
+.message.selected .message-origin{
     color: #FFF;
 }
 
-.wz-app-8 .message-star{
+.message-star{
     width: 14px;
     height: 13px;
     float: left;
@@ -642,12 +642,12 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 .message-star.active{
+.message-star.active{
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -149px 0;
     background-size: 177px 40px;
 }
 
-.wz-app-8 .message-subject{
+.message-subject{
     width: 195px;
     height: 14px;
     float: left;
@@ -659,15 +659,15 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .message.selected .message-subject{
+.message.selected .message-subject{
     color: #FFF;
 }
 
-.wz-app-8 .message.unread span{
+.message.unread span{
     font-weight: 500;
 }
 
-.wz-app-8 .mail-subject{
+.mail-subject{
     width: 400px;
     float: left;
     margin-top: 13px;
@@ -680,26 +680,26 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .right-column-content nav{
+.right-column-content nav{
     width: 520px;
     height: 33px;
     float: left;
     margin-right: 20px;
 }
 
-.wz-app-8 nav figure.options-reply{
+nav figure.options-reply{
     float: right;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
 
-.wz-app-8 nav figure.options-reply i{
+nav figure.options-reply i{
     margin-top: 2px;
     background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -78px -27px;
     background-size: 177px 40px;
 }
 
-.wz-app-8 nav figure.options-more{
+nav figure.options-more{
     width: 14px;
     float: right;
     padding-left: 6px;
@@ -708,7 +708,7 @@
     border-right: 1px solid #DADADA;
 }
 
-.wz-app-8 nav figure.options-more i{
+nav figure.options-more i{
     width: 9px;
     height: 5px;
     margin-top: 4px;
@@ -716,7 +716,7 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 .content-origin{
+.content-origin{
     width: 520px;
     float: left;
     margin-right: 20px;
@@ -724,32 +724,32 @@
     border-bottom: 1px solid #DADADA;
 }
 
-.wz-app-8 .content-origin img{
+.content-origin img{
     width: 34px;
     height: 34px;
     float: left;
     border-radius: 18px;
 }
 
-.wz-app-8 .content-origin-right{
+.content-origin-right{
     width: 476px;
     float: left;
     padding-left: 10px;
 }
 
-.wz-app-8 .content-origin-top{
+.content-origin-top{
     width: 100%;
     height: 18px;
     float: left;
 }
 
-.wz-app-8 .content-origin-bottom{
+.content-origin-bottom{
     width: 100%;
     height: 16px;
     float: left;
 }
 
-.wz-app-8 .content-origin-name{
+.content-origin-name{
     float: left;
     font-size: 15px;
     color: #5D5D5D;
@@ -760,7 +760,7 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .content-origin-mail{
+.content-origin-mail{
     float: left;
     font-size: 14px;
     color: #A3B6C5;
@@ -771,7 +771,7 @@
     white-space: nowrap;
 }
 
-.wz-app-8 .content-origin-display{
+.content-origin-display{
     width: 14px;
     height: 14px;
     float: left;
@@ -781,37 +781,37 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 .content-origin-date{
+.content-origin-date{
     float: right;
     font-size: 14px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .content-origin .message-clip{
+.content-origin .message-clip{
     float: right;
     margin-left: 8px;
 }
 
-.wz-app-8 .right-column-content.attachments .message-clip{
+.right-column-content.attachments .message-clip{
     display: block;
 }
 
-.wz-app-8 .content-origin-bottom .message-star{
+.content-origin-bottom .message-star{
     float: right;
 }
 
-.wz-app-8 .content-message{
+.content-message{
     width: 540px;
     height: 315px;
     float: left;
     margin-top: 20px;
 }
 
-.wz-app-8 .right-column-content.attachments .content-message{
+.right-column-content.attachments .content-message{
     height: 181px;
 }
 
-.wz-app-8 .content-message-text{
+.content-message-text{
     width: 520px;
     padding-right: 20px;
     padding-bottom: 20px;
@@ -822,26 +822,26 @@
     text-align: justify;
 }
 
-.wz-app-8 .right-column-content .wz-scroll-slider{
+.right-column-content .wz-scroll-slider{
     margin-right: 8px;
 }
 
-.wz-app-8 .right-column-content .wz-scroll-bar{
+.right-column-content .wz-scroll-bar{
     margin-right: 8px;
 }
 
-.wz-app-8 .content-attachments{
+.content-attachments{
     display: none;
     width: 540px;
     height: 118px;
     float: left;
 }
 
-.wz-app-8 .right-column-content.attachments .content-attachments{
+.right-column-content.attachments .content-attachments{
     display: block;
 }   
 
-.wz-app-8 .content-attachments article{
+.content-attachments article{
     width: 520px;
     float: left;
     padding-right: 20px;
@@ -849,22 +849,22 @@
     margin-top: 10px;
 }
 
-.wz-app-8 .content-attachments article:first-child{
+.content-attachments article:first-child{
     margin-top: 0px;
     margin-bottom: 10px;
 }
 
-.wz-app-8 .content-attachments span{
+.content-attachments span{
     float: left;
     font-size: 14px;
     color: #5D5D5D;
 }
 
-.wz-app-8 .content-attachments span:first-child{
+.content-attachments span:first-child{
     margin-left: 0px;
 }
 
-.wz-app-8 .content-attachments article i{
+.content-attachments article i{
     width: 11px;
     height: 13px;
     float: left;
@@ -873,38 +873,38 @@
     background-size: 177px 40px;
 }
 
-.wz-app-8 .content-attachments .light{
+.content-attachments .light{
     color: #AAA;
 }
 
-.wz-app-8 span.content-attachments-view{
+span.content-attachments-view{
     float: right;
     margin-right: 8px;
     color: #AAA;
     cursor: pointer;
 }
 
-.wz-app-8 .content-attachments-view:hover{
+.content-attachments-view:hover{
     color: #5D5D5D;
 }
 
-.wz-app-8 span.content-attachments-download{
+span.content-attachments-download{
     float: right;
     margin-right: 8px;
     color: #AAA;
     cursor: pointer;
 }
 
-.wz-app-8 .content-attachments-download:hover{
+.content-attachments-download:hover{
     color: #5D5D5D;
 }
 
-.wz-app-8 span.content-attachments-import{
+span.content-attachments-import{
     float: right;
     color: #AAA;
     cursor: pointer;
 }
 
-.wz-app-8 .content-attachments-import:hover{
+.content-attachments-import:hover{
     color: #5D5D5D;
 }

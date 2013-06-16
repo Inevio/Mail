@@ -1,53 +1,53 @@
 
-.wz-app-8-hosting{
+.wz-win{
     background: #FFF;
 }
 
-.wz-app-8-hosting .wz-scroll-slider{
+.wz-scroll-slider{
     width: 5px;
 }
 
-.wz-app-8-hosting .wz-scroll-bar{
+.wz-scroll-bar{
     width: 5px;
 }
 
-.wz-app-8-hosting .wz-win-minimize, .wz-app-8-hosting .wz-win-maximize, .wz-app-8-hosting .wz-win-close{
+.wz-win-minimize, .wz-win-maximize, .wz-win-close{
     float: right;
     margin-top: 6px;
     width: 15px;
     height: 15px;
 }
 
-.wz-app-8-hosting .wz-win-minimize:hover, .wz-app-8-hosting .wz-win-maximize:hover, .wz-app-8-hosting .wz-win-close:hover{
+.wz-win-minimize:hover, .wz-win-maximize:hover, .wz-win-close:hover{
     border: 1px solid #EEE;
 }
 
-.wz-app-8-hosting .wz-win-close{
+.wz-win-close{
     padding-right: 5px;
     padding-left: 7px;
     margin-right: 20px
 }
 
-.wz-app-8-hosting .wz-win-minimize i, .wz-app-8-hosting .wz-win-maximize i, .wz-app-8-hosting .wz-win-close i{
+.wz-win-minimize i, .wz-win-maximize i, .wz-win-close i{
     width: 15px;
     height: 15px;
     background: url("https://static.weezeel.com/app/8/buttons.png") no-repeat;
     background-size: 43px 15px;
 }
 
-.wz-app-8-hosting .wz-win-minimize i{
+.wz-win-minimize i{
     background-position: 0 0;
 }
 
-.wz-app-8-hosting .wz-win-maximize i{
+.wz-win-maximize i{
     background-position: -15px 0;
 }
 
-.wz-app-8-hosting .wz-win-close i{
+.wz-win-close i{
     background-position: -30px 0;
 }
 
-.wz-app-8-hosting .wz-win-menu{
+.wz-win-menu{
     
     width: 816px;
     height: 39px;
@@ -57,7 +57,7 @@
     
 }
 
-.wz-app-8-hosting .wz-win-menu span{
+.wz-win-menu span{
     
     width: 500px;
     float: left;
@@ -68,44 +68,44 @@
     
 }
 
-.wz-app-8-hosting .content{
+.content{
     width: 756px;
     height: 215px;
     padding: 30px;
 }
 
-.wz-app-8-hosting .hosting-image{
+.hosting-image{
     width: 250px;
     height: 100px;
     float: left;
     border: 1px solid #54728C;
 }
 
-.wz-app-8-hosting .hosting-image.gmail{
+.hosting-image.gmail{
     background: url('https://static.weezeel.com/app/8/servers/gmail.png') no-repeat;
     cursor: pointer;
 }
 
-.wz-app-8-hosting .hosting-image.hotmail{
+.hosting-image.hotmail{
     background: url('https://static.weezeel.com/app/8/servers/hotmail.png') no-repeat;
     cursor: pointer;
 }
 
-.wz-app-8-hosting .hosting-image.outlook{
+.hosting-image.outlook{
     background: url('https://static.weezeel.com/app/8/servers/outlook.png') no-repeat;
     cursor: pointer;
 }
 
-.wz-app-8-hosting .hosting-image.yahoo{
+.hosting-image.yahoo{
     background: url('https://static.weezeel.com/app/8/servers/yahoo.png') no-repeat;
     cursor: pointer;
 }
 
-.wz-app-8-hosting .hosting-image.aol{
+.hosting-image.aol{
     background: url('https://static.weezeel.com/app/8/servers/aol_disabled.png') no-repeat;
 }
 
-.wz-app-8-hosting .hosting-image-other{
+.hosting-image-other{
     width: 250px;
     text-align: center;
     margin: 29px 0;
