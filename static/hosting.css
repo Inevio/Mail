@@ -11,25 +11,40 @@
     width: 5px;
 }
 
+.wz-app-8-hosting .wz-win-minimize, .wz-app-8-hosting .wz-win-maximize, .wz-app-8-hosting .wz-win-close{
+    float: right;
+    margin-top: 6px;
+    width: 15px;
+    height: 15px;
+}
+
+.wz-app-8-hosting .wz-win-minimize:hover, .wz-app-8-hosting .wz-win-maximize:hover, .wz-app-8-hosting .wz-win-close:hover{
+    border: 1px solid #EEE;
+}
+
+.wz-app-8-hosting .wz-win-close{
+    padding-right: 5px;
+    padding-left: 7px;
+    margin-right: 20px
+}
+
+.wz-app-8-hosting .wz-win-minimize i, .wz-app-8-hosting .wz-win-maximize i, .wz-app-8-hosting .wz-win-close i{
+    width: 15px;
+    height: 15px;
+    background: url("https://static.weezeel.com/app/8/buttons.png") no-repeat;
+    background-size: 43px 15px;
+}
+
 .wz-app-8-hosting .wz-win-minimize i{
-    width: 16px;
-    height: 3px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -62px -29px;
-    background-size: 177px 40px;
+    background-position: 0 0;
 }
 
 .wz-app-8-hosting .wz-win-maximize i{
-    width: 14px;
-    height: 16px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -135px -13px;
-    background-size: 177px 40px;
+    background-position: -15px 0;
 }
 
 .wz-app-8-hosting .wz-win-close i{
-    width: 16px;
-    height: 16px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -93px -11px;
-    background-size: 177px 40px;
+    background-position: -30px 0;
 }
 
 .wz-app-8-hosting .wz-win-menu{
@@ -44,7 +59,7 @@
 
 .wz-app-8-hosting .wz-win-menu span{
     
-    width: 130px;
+    width: 500px;
     float: left;
     font-size: 16px;
     color: #FFF;
@@ -55,17 +70,8 @@
 
 .wz-app-8-hosting .content{
     width: 756px;
-    height: 246px;
+    height: 215px;
     padding: 30px;
-}
-
-.wz-app-8-hosting .hosting-title{
-    width: 756px;
-    float: left;
-    font-size: 17px;
-    color: #666;
-    margin-bottom: 25px;
-    margin-left: 0px;
 }
 
 .wz-app-8-hosting .hosting-image{
