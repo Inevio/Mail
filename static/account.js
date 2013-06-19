@@ -116,9 +116,7 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
                             if( details.indexOf( 'ACCOUNT CAN NOT BE AUTOCONFIGURED' ) === -1 ){
 
-                                console.log( error );
-                                console.log( details );
-                                alert( lang.error );
+                                alert( lang.error, null, win.data().win );
 
                             }else{
 
@@ -137,11 +135,11 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                 );
 
             }else if( !mailExpresion.test( email ) ){
-                alert( lang.mailError );
+                alert( lang.mailError, null, win.data().win );
             }else if( !pass ){
-                alert( lang.passwordError );
+                alert( lang.passwordError, null, win.data().win );
             }else if( !name ){
-                alert( lang.nameError );
+                alert( lang.nameError, null, win.data().win );
             }   	
 
         })
@@ -162,15 +160,15 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                 whichName();
 
             }else if( !username ){
-                alert( lang.usernameError );
+                alert( lang.usernameError, null, win.data().win );
             }else if( !outHost ){
-                alert( lang.outHostError );
+                alert( lang.outHostError, null, win.data().win );
             }else if( isNaN( outPort ) || outPort < 1 || outPort > 65535 ){
-                alert( lang.outPortError );
+                alert( lang.outPortError, null, win.data().win );
             }else if( !inHost ){
-                alert( lang.inHostError );
+                alert( lang.inHostError, null, win.data().win );
             }else if( isNaN( inPort ) || inPort < 1 || inPort > 65535 ){
-                alert( lang.inPortError );
+                alert( lang.inPortError, null, win.data().win );
             }        	
 
         })
@@ -202,9 +200,7 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
 
                         if( error ){
 
-                            console.log( error );
-                            console.log( details );
-                            alert( lang.error );
+                            alert( lang.error, null, win.data().win );
 
                         }else{
                             
@@ -221,7 +217,7 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                 wz.mail.getAccounts( function( error, accounts ){
 
                     if( error ){
-                        console.log( error );
+                        alert( error, null, win.data().win );
                     }else{
 
                         var account = {};
@@ -242,7 +238,7 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
                             account.changeDescription( description, function( error ){
 
                                 if( error ){
-                                    console.log( error );
+                                    alert( error, null, win.data().win );
                                 }else{
                                     finish();
                                 }

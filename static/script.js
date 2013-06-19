@@ -83,7 +83,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         element.getBoxes( false, function( error, boxes ){
 
             if( error ){
-                console.log( error );
+                alert( error, null, win.data().win );
                 return false;
             }
 
@@ -283,7 +283,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         wz.mail.getAccounts( function( error, accounts ){
 
             if( error ){
-                console.log( error );
+                alert( error, null, win.data().win );
                 return false;
             }
 
@@ -363,7 +363,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         wz.mail( id, function( error, account ){
 
             if( error ){
-                console.log( error );
+                alert( error, null, win.data().win );
                 return false;
             }
 
@@ -372,7 +372,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             account.getMessagesFromBox( boxId, function( error, list ){
 
                 if( error ){
-                    console.log( error );
+                    alert( error, null, win.data().win );
                     return false;
                 }
 
@@ -407,7 +407,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         message.markAsSeen( function( error ){
 
             if( error ){
-                alert( error );
+                alert( error, null, win.data().win );
             }
 
         });
@@ -630,7 +630,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             $(this).removeClass('active');
             $(this).parents( '.message' ).data( 'message' ).unmarkAsFlagged( function( error ){
                 if( error ){
-                    alert( error );
+                    alert( error, null, win.data().win );
                 }
             });
 
@@ -639,7 +639,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             $(this).addClass('active');
             $(this).parents( '.message' ).data( 'message' ).markAsFlagged( function( error ){
                 if( error ){
-                    alert( error );
+                    alert( error, null, win.data().win );
                 }
             });
 
@@ -660,7 +660,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         $( '.selected', messagesColumn ).data( 'message' ).moveToSpam( function( error ){
 
             if( error ){
-                alert( error );
+                alert( error, null, win.data().win );
             }else{
                 $(this).remove();
             }
@@ -674,7 +674,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         $( '.selected', messagesColumn ).data( 'message' ).moveToTrash( function( error ){
 
             if( error ){
-                alert( error );
+                alert( error, null, win.data().win );
             }else{
                 $(this).remove();
             }
@@ -684,19 +684,19 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
 
     .on( 'click', '.options-display', function(){
-        alert( lang.notWorking );
+        alert( lang.notWorking, null, win.data().win );
     })
 
     .on( 'click', '.options-refresh', function(){
-        alert( lang.notWorking );
+        alert( lang.notWorking, null, win.data().win );
     })
 
     .on( 'click', '.options-folder', function(){
-        alert( lang.notWorking );
+        alert( lang.notWorking, null, win.data().win);
     })
 
     .on( 'click', '.options-label', function(){
-        alert( lang.notWorking );
+        alert( lang.notWorking, null, win.data().win );
     })
 
     .on( 'contextmenu', '.account', function(){
@@ -721,7 +721,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                     wz.mail.removeAccount( idData, function( error ){
 
                         if( error ){
-                            console.log( error );
+                            alert( error, null, win.data().win );
                         }else{
 
                             wz.banner()
@@ -972,7 +972,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         message.data('message').moveToTrash( function( error ){
 
             if( error ){
-                console.log( error );
+                alert( error, null, win.data().win );
             }
 
         });

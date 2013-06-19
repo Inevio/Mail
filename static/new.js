@@ -45,7 +45,7 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
                     function( error ){
 
                         if( error ){
-                            alert( error );
+                            alert( error, null, win.data().win );
                         }else{
 
                             wz.banner()
@@ -63,11 +63,11 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
                  )
 
             }else if( !$( '.content-to input', win ).val() ){
-                alert( lang.introduceTo );
+                alert( lang.introduceTo, null, win.data().win );
             }else if( !mailExpresion.test( $( '.content-to input', win ).val() ) ){
-                alert( lang.introduceToCorrect );
+                alert( lang.introduceToCorrect, null, win.data().win );
             }else if( !$( '.content-from option:selected', win ).text() ){
-                alert( lang.introduceFrom );
+                alert( lang.introduceFrom, null, win.data().win );
             }
 
         });
