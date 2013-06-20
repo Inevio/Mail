@@ -572,6 +572,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     };
 
     $( win )
+
     .on( 'click', '.account', function(){
 
         var minHeight = 38;
@@ -604,16 +605,40 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
     
-    .on( 'click', '.message', function(){
+    .on( 'click', '.message', function( e ){
 
-        if( !$(this).hasClass('selected') ){
+        if( e.ctrlKey || e.metaKey ){
 
-            showMessage( $(this).data( 'message' ) );
+            if( $( this ).hasClass( 'selected' ) ){
+                $( this ).removeClass( 'selected' );
+            }else{
+                $( '.last-selected', messagesColumn ).removeClass( 'last-selected' );
+                $( this ).addClass( 'selected last-selected' );
+                showMessage( $( this ).data( 'message' ) );
+            }       
 
-            $('.selected').removeClass('selected');
-            $(this).addClass('selected');
+        }else if( e.shiftKey ){
 
-        }       
+            var messages = $( '.message', messagesColumn );
+            var begin = messages.index( this );
+            var final = messages.index( messages.filter( '.last-selected' ) );
+            
+            if( begin < final ){
+                var row = messages.slice( begin, final + 1 ).addClass( 'selected' );
+            }else{
+                var row = messages.slice( final, begin + 1 ).addClass( 'selected' );
+            }
+            
+            messages.not( row ).removeClass( 'selected' );
+
+        }else{
+
+            $( '.selected', messagesColumn ).removeClass( 'selected' );
+            $( '.last-selected', messagesColumn ).removeClass( 'last-selected' );
+            $( this ).addClass( 'selected last-selected' );
+            showMessage( $( this ).data( 'message' ) );
+
+        }      
 
     })
     
