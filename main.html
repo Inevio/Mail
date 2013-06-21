@@ -49,28 +49,30 @@
     </article>
     <section class="middle-column-content wz-fit-y">
     
-        <nav>
-            <figure class="options-display">
+        <nav class="middle-column-content-nav">
+            <figure class="options-unread middle">
                 <i></i>
             </figure>
-            <figure class="options-refresh">
+            <figure class="options-read middle">
                 <i></i>
             </figure>
-            <figure class="options-spam">
+            <figure class="options-spam middle">
                 <i></i>
             </figure>
-            <figure class="options-trash">
-                <i></i>
-            </figure>
-            <figure class="options-folder">
-                <i></i>
-                <i></i>
-            </figure>
-            <figure class="options-label">
-                <i></i>
+            <figure class="options-trash middle">
                 <i></i>
             </figure>
         </nav>
+
+        <article class="middle-column-pages">
+            <span class="middle-column-pages-actual">1 - 20</span>
+            <figure class="wz-win-option middle-column-pages-prev">
+                <i></i>
+            </figure>
+            <figure class="wz-win-option middle-column-pages-next">
+                <i></i>
+            </figure>
+        </article>
         
         <article class="middle-column-content-scroll wz-scroll wz-fit-y">
 
@@ -103,6 +105,7 @@
 </section>
 
 <section class="right-column wz-fit">
+
     <article class="right-column-top wz-dragger wz-fit-x">
         <span class="mail-subject wz-dragger"></span>
         <figure class="wz-win-close">
@@ -115,29 +118,39 @@
             <i></i>
         </figure>      
     </article>
+
     <section class="right-column-content attachments wz-fit">
-        <nav class="wz-fit-x">
-            <figure class="options-spam">
+
+        <nav class="right-column-content-nav">
+            <figure class="options-unread right">
                 <i></i>
             </figure>
-            <figure class="options-trash">
+            <figure class="options-read right">
                 <i></i>
             </figure>
-            <figure class="options-folder">
-                <i></i>
+            <figure class="options-spam right">
                 <i></i>
             </figure>
-            <figure class="options-label">
+            <figure class="options-trash right">
                 <i></i>
+            </figure>
+            <figure class="options-prev right">
+                <i></i>
+            </figure>
+            <figure class="options-next right">
+                <i></i>
+            </figure>
+        </nav>
+
+        <nav class="right-column-content-answer">
+            <figure class="options-reply">
                 <i></i>
             </figure>
             <figure class="options-more">
                 <i></i>
             </figure>
-            <figure class="options-reply">
-                <i></i>
-            </figure>            
         </nav>
+
         <article class="content-origin wz-fit-x">
             <img src="https://static.weezeel.com/image/silhouette/silhouette.c_32.png" />
             <article class="content-origin-right wz-fit-x">
@@ -153,9 +166,11 @@
                 </article>
             </article>
         </article>
+
         <article class="content-message wz-scroll wz-fit">
             <iframe scrolling="no" sandbox=" allow-same-origin allow-top-navigation allow-forms " class="content-message-text wz-fit-x"></iframe>
         </article>
+
         <hr class="wz-fit-x" />
 
         <!--

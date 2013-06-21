@@ -680,48 +680,56 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         wz.app.createWindow( 8, '', 'new' );
     })
 
-    .on( 'click', '.options-spam', function(){
+    .on( 'click', '.options-spam.middle', function(){
 
         $( '.selected', messagesColumn ).data( 'message' ).moveToSpam( function( error ){
 
             if( error ){
                 alert( error, null, win.data().win );
             }else{
-                $(this).remove();
+                $( '.selected', messagesColumn ).remove();
             }
 
         });
 
     })
 
-    .on( 'click', '.options-trash', function(){
+    .on( 'click', '.options-trash.middle', function(){
 
         $( '.selected', messagesColumn ).data( 'message' ).moveToTrash( function( error ){
 
             if( error ){
                 alert( error, null, win.data().win );
             }else{
-                $(this).remove();
+                $( '.selected', messagesColumn ).remove();
             }
 
         });
 
     })
 
-    .on( 'click', '.options-display', function(){
-        alert( lang.notWorking, null, win.data().win );
+    .on( 'click', '.options-unread.middle', function(){
+
+        $( '.selected', messagesColumn ).data( 'message' ).unmarkAsSeen( function( error ){
+
+            if( error ){
+                alert( error, null, win.data().win );
+            }
+
+        });
+
     })
 
-    .on( 'click', '.options-refresh', function(){
-        alert( lang.notWorking, null, win.data().win );
-    })
+    .on( 'click', '.options-read.middle', function(){
 
-    .on( 'click', '.options-folder', function(){
-        alert( lang.notWorking, null, win.data().win);
-    })
+        $( '.selected', messagesColumn ).data( 'message' ).markAsSeen( function( error ){
 
-    .on( 'click', '.options-label', function(){
-        alert( lang.notWorking, null, win.data().win );
+            if( error ){
+                alert( error, null, win.data().win );
+            }
+
+        });
+
     })
 
     .on( 'contextmenu', '.account', function(){
