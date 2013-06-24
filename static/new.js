@@ -1,6 +1,8 @@
 
 wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
+    console.log( params )
+
     var mailExpresion = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     wz.mail.getAccounts( function( error, accounts ){
@@ -25,6 +27,15 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
         optionProto.remove();
 
     });
+
+    $( '.content-to input', win ).val( params.to );
+
+    if( params.subject ){
+        $( '.content-subject input', win ).val( params.reply? params.subject : 'Re: ' + params.subject );
+    }
+    
+    //$( '.content-compose', win ).html( params.message );
+
     
     win
     
@@ -38,13 +49,14 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
                         to : $( '.content-to input', win ).val(),
                         subject : $( '.content-subject input', win ).val(),
-                        content : $( '.content-compose', win ).text()
+                        content : $( '.content-compose', win ).html()
 
                     },
 
                     function( error ){
 
                         if( error ){
+                            console.log( error );
                             alert( error, null, win.data().win );
                         }else{
 
@@ -74,7 +86,6 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
     $( '.wz-win-menu span', win ).text( lang.newEmail );
     $( '.content-to span', win ).text( lang.to + ':' );
-    $( '.content-to input', win ).val( params );
     $( '.content-subject span', win ).text( lang.subject + ':' );
     $( '.content-from span', win ).text( lang.from + ':' );
     $( '.content-send span', win ).text( lang.send );

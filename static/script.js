@@ -12,8 +12,11 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     var contentSubject     = $( '.mail-subject', win );
     var contentColumn      = $( '.right-column-content', win );
+    var contentReplyMode   = $( '.right-column-content-reply-mode', contentColumn );
+    var contentReceivers   = $( '.right-column-content-receivers', contentColumn );
     var contentName        = $( '.content-origin-name', contentColumn );
     var contentMail        = $( '.content-origin-mail', contentColumn );
+    var contentDisplay     = $( '.content-origin-display', contentColumn );
     var contentDate        = $( '.content-origin-date', contentColumn );
     var contentStar        = $( '.message-star', contentColumn );
     var contentMessage     = $( '.content-message', contentColumn );
@@ -412,12 +415,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         });
 
-        if( message.isFlagged() ){
-            contentStar.addClass( 'active' );
-        }else{
-            contentStar.removeClass( 'active' );
-        }
-
         attachments.children().not( '.content-attachments-title' ).remove();
 
         if( message.hasAttachments() ){
@@ -449,7 +446,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         }
 
-        contentColumn.data( 'message', message );
+        contentColumn.removeClass().addClass( 'message-' + message.id + ' right-column-content parent wz-fit' ).data( 'message', message );
 
         var messageDate = toDate( message.time.getTime() );
 
@@ -463,6 +460,20 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         message.getFullMessage( function( error, fullMessage ){
 
+            if( fullMessage.isFlagged() ){
+                contentStar.addClass( 'active' );
+            }else{
+                contentStar.removeClass( 'active' );
+            }
+
+            if( fullMessage.cc.length || fullMessage.bcc.length ){
+                contentDisplay.css( 'display', 'block' );
+                $( '.reply-mode-reply-all', contentReplyMode ).css( 'display', 'block' );
+            }else{
+                contentDisplay.css( 'display', 'none' );
+                $( '.reply-mode-reply-all', contentReplyMode ).css( 'display', 'none' );
+            }
+
             if( error ){
                 return false;
             }
@@ -475,6 +486,30 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             });
 
             contentMessageText.height( contentMessageText.contents().find( 'html' ).height() );
+
+            if( fullMessage.isSpam() ){
+                $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'none' );
+            }else{
+                $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'block' );
+            }
+
+            if( fullMessage.cc.length ){
+                $( '.receivers-cc', contentReceivers ).css( 'display', 'block' );
+                $( '.receivers-cc', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+                for( var i = 0 ; i < fullMessage.cc.length ; i++ ){
+                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address ) );
+                }
+            }
+
+            if( fullMessage.bcc.length ){
+                $( '.receivers-cco', contentReceivers ).css( 'display', 'block' );
+                $( '.receivers-cco', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+                for( var i = 0 ; i < fullMessage.bcc.length ; i++ ){
+                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address ) );
+                }
+            }
+
+            contentColumn.data( 'message', fullMessage );
 
         });       
 
@@ -599,11 +634,15 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
 
-    .on( 'click', '.mailbox', function(e){
+    .on( 'click', '.mailbox', function( e ){
 
         openedMailbox.text( $(this).children( 'span' ).text() );
         showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ) );
+        $( '.active', mailColumn ).removeClass( 'active' );
+        $( this ).addClass( 'active' );
         e.stopPropagation();
+        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
 
     })
     
@@ -644,13 +683,17 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
     
-    .on( 'click', 'input', function(e){
+    .on( 'click', 'input', function( e ){
         e.stopPropagation();
+        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
     })
     
-    .on( 'click', '.message-star', function(e){
+    .on( 'click', '.message-star', function( e ){
 
         e.stopPropagation();
+        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
 
         if( $(this).hasClass('active') ){
 
@@ -675,7 +718,58 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
     
     .on( 'click', '.options-reply', function(){
-        wz.app.createWindow( 8, contentMail.text(), 'new' );
+
+        wz.app.createWindow(
+            8, 
+            { 
+                to: contentColumn.data().message.from.address,
+                cc: null,
+                subject: contentColumn.data().message.title,
+                message: contentColumn.data().message.message,
+                reply: contentColumn.data().message.inReplyTo
+            },
+            'new'
+        );
+
+    })
+
+    .on( 'click', '.reply-mode-reply', function(){
+        $( '.options-reply', contentColumn ).click();
+    })
+
+    .on( 'click', '.reply-mode-reply-all', function(){
+        
+        var receivers = [];
+
+        for( var i = 0 ; i < contentColumn.data().message.cc.length ; i++ ){
+            receivers.push( contentColumn.data().message.cc[ i ] );
+
+        }
+
+        wz.app.createWindow(
+            8, 
+            { 
+                to: contentColumn.data().message.from.address,
+                cc: receivers,
+                subject: contentColumn.data().message.title,
+                message: contentColumn.data().message.message,
+                reply: contentColumn.data().message.inReplyTo
+            },
+            'new'
+        );
+
+    })
+
+    .on( 'click', '.reply-mode-mark-unread', function(){
+        $( '.options-unread', contentColumn ).click();
+    })
+
+    .on( 'click', '.reply-mode-spam', function(){
+        $( '.options-spam', contentColumn ).click();
+    })
+
+    .on( 'click', '.reply-mode-delete', function(){
+        $( '.options-trash', contentColumn ).click();
     })
 
     .on( 'click', '.new-mail', function(){
@@ -850,6 +944,43 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
 
+    .on( 'click', '.options-more', function( e ){
+
+        if( contentReplyMode.hasClass( 'reply-mode-displayed' ) ){
+            contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+        }else{
+            contentReplyMode.addClass( 'reply-mode-displayed' ).css( 'display', 'block' );
+        }
+
+        e.stopPropagation();
+        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+
+    })
+
+    .on( 'click', '.content-origin-display', function( e ){
+
+        if( contentReceivers.hasClass( 'content-receivers-displayed' ) ){
+            contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+        }else{
+            contentReceivers.addClass( 'content-receivers-displayed' ).css( 'display', 'block' );
+        }
+
+        e.stopPropagation();
+        ontentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+
+    })
+
+    .on( 'click', '.right-column-content-receivers', function( e ){
+        e.stopPropagation();
+    })
+
+    .on( 'click', function(){
+
+        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+
+    })
+
     .on( 'contextmenu', '.account', function(){
 
         var mailData = $( this ).data( 'mail' );
@@ -896,6 +1027,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     .on( 'contextmenu', '.account article', function( e ){
 
         e.stopPropagation();
+        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
         return false;
 
     })
@@ -999,7 +1132,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
 
     .on( 'mail-newMessage', function( e, message ){
-        console.log( message, arguments );
+        //console.log( message, arguments );
     })
 
     .on( 'mail-accountAdded', function( e, mailAccount ){
@@ -1070,16 +1203,17 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
 
-    .key( 'down', function(){
+    .key( 'down', function( e ){
 
-        var target = messagesColumn.children('.selected');
+        var target = messagesColumn.children('.selected').last();
+        e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
 
         if( target.size() ){
 
             target = target.next();
 
             if( target.size() ){
-                target.click();
+                target.trigger( e );
             }
 
         }else{
@@ -1088,16 +1222,17 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
 
-    .key( 'up', function(){
+    .key( 'up', function( e ){
 
         var target = messagesColumn.children('.selected');
+        e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
 
         if( target.size() ){
 
             target = target.prev().not('.wz-prototype');
 
             if( target.size() ){
-                target.click();
+                target.trigger( e );
             }
 
         }else{
