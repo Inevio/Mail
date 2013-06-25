@@ -444,12 +444,12 @@ nav figure{
 }
 
 nav figure:hover{
-    border: 1px solid #54728C;
+    border: 1px solid #DADADA;
     border-right: none;
 }
 
 nav figure:hover + figure{
-    border-left: 1px solid #54728C;
+    border-left: 1px solid #DADADA;
 }
 
 nav figure:first-child{
@@ -464,6 +464,32 @@ nav figure:last-child{
 }
 
 nav figure:last-child:hover{
+    border: 1px solid #DADADA;
+}
+
+.box-shown nav figure.middle:hover{
+    border: 1px solid #54728C;
+    border-right: none;
+}
+
+.box-shown nav figure.middle:hover + figure{
+    border-left: 1px solid #54728C;
+}
+
+.box-shown nav figure.middle:last-child:hover{
+    border: 1px solid #54728C;
+}
+
+.message-shown nav figure.right:hover{
+    border: 1px solid #54728C;
+    border-right: none;
+}
+
+.message-shown nav figure.right:hover + figure{
+    border-left: 1px solid #54728C;
+}
+
+.message-shown nav figure.right:last-child:hover{
     border: 1px solid #54728C;
 }
 
@@ -575,6 +601,10 @@ figure.options-label i:first-child{
 }
 
 .middle-column-pages-prev:hover{
+    border: 1px solid transparent;
+}
+
+.box-shown .middle-column-pages-prev:hover{
     border: 1px solid #54728C;
 }
 
@@ -599,6 +629,10 @@ figure.options-label i:first-child{
 }
 
 .middle-column-pages-next:hover{
+    border: 1px solid transparent;
+}
+
+.box-shown .middle-column-pages-next:hover{
     border: 1px solid #54728C;
 }
 
@@ -774,6 +808,7 @@ figure.options-label i:first-child{
 
 .right-column-content-receivers{
     width: 280px;
+    max-height: 300px;
     padding-top: 15px;
     position: fixed;
     top: 158px;
@@ -781,6 +816,13 @@ figure.options-label i:first-child{
     border: 1px solid #54728C;
     border-radius: 2px;
     z-index: 1;
+    display: none;
+}
+
+.receivers-to{
+    width: 100%;
+    float: left;
+    margin-bottom: 15px;
     display: none;
 }
 
@@ -842,10 +884,14 @@ figure.options-label i:first-child{
 }
 
 .right-column-content-nav{
+    width: 540px;
+    float: left;
+}
+
+.right-column-content-options{
     width: 200px;
     height: 33px;
     float: left;
-    margin-right: 265px;
 }
 
 .options-prev{

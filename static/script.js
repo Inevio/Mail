@@ -4,10 +4,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     var attachments      = $( '.content-attachments', win );
     var openedAccount    = $( '.left-column-top span', win );
     var openedMailbox    = $( '.middle-column-top span', win );
-    var mailColumn       = $( '.left-column-content-scroll', win );
+    var mailZone         = $( '.left-column-content', win );
+    var mailColumn       = $( '.left-column-content-scroll', mailZone );
     var mailAccount      = $( '.account.wz-prototype', mailColumn );
     var addAccount       = $( '.add-account', mailColumn );
-    var messagesColumn   = $( '.middle-column-content-scroll', win );
+    var messagesZone     = $( '.middle-column-content', win );
+    var messagesColumn   = $( '.middle-column-content-scroll', messagesZone );
     var messagePrototype = $( '.message.wz-prototype', messagesColumn );
 
     var contentSubject     = $( '.mail-subject', win );
@@ -22,6 +24,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     var contentMessage     = $( '.content-message', contentColumn );
     var contentMessageText = $( '.content-message-text', contentMessage );
     var contentHr          = $( 'hr', contentColumn );
+
+    var myAccount = null;
 
     var _accountOpened = 0;
     var _folderOpened  = 0;
@@ -298,6 +302,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             addAccount.before( list );
 
+            if( accounts.length ){
+                mailZone.addClass( 'account-shown' );
+            }
+
         });
 
     };
@@ -395,11 +403,74 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 // Nullify
                 messageList = messageSqueleton = null;
 
+                messagesZone.addClass( 'box-shown' );
+
             });
 
         });
 
     };
+
+    var showReceptors = function( fullMessage ){
+
+        if( fullMessage.to.length > 1 ){
+
+            $( '.receivers-to', contentReceivers ).css( 'display', 'block' );
+            $( '.receivers-to', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+
+            for( var i = 0 ; i < fullMessage.to.length ; i++ ){
+
+                if( myAccount === fullMessage.to[ i ].address  ){
+                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address + ' ' + '(Yo)' ) );
+                }else{
+                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address ) );                        
+                }
+                
+            }
+
+        }else{
+            $( '.receivers-to', contentReceivers ).css( 'display', 'none' );
+        }
+
+        if( fullMessage.cc.length ){
+
+            $( '.receivers-cc', contentReceivers ).css( 'display', 'block' );
+            $( '.receivers-cc', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+
+            for( var i = 0 ; i < fullMessage.cc.length ; i++ ){
+
+                if( myAccount === fullMessage.cc[ i ].address  ){
+                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address + ' ' + '(Yo)' ) );
+                }else{
+                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address ) );                        
+                }
+
+            }
+
+        }else{
+            $( '.receivers-cc', contentReceivers ).css( 'display', 'none' );
+        }
+
+        if( fullMessage.bcc.length ){
+
+            $( '.receivers-cco', contentReceivers ).css( 'display', 'block' );
+            $( '.receivers-cco', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+
+            for( var i = 0 ; i < fullMessage.bcc.length ; i++ ){
+
+                if( myAccount === fullMessage.bcc[ i ].address  ){
+                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address + ' ' + '(Yo)' ) );
+                }else{
+                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address ) );                        
+                }
+
+            }
+
+        }else{
+            $( '.receivers-cco', contentReceivers ).css( 'display', 'none' );
+        }
+
+    }
 
     var showMessage = function( message ){
 
@@ -446,7 +517,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         }
 
-        contentColumn.removeClass().addClass( 'message-' + message.id + ' right-column-content parent wz-fit' ).data( 'message', message );
+        contentColumn.removeClass().addClass( 'message-' + message.id + ' right-column-content message-shown parent wz-fit' ).data( 'message', message );
 
         var messageDate = toDate( message.time.getTime() );
 
@@ -466,7 +537,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 contentStar.removeClass( 'active' );
             }
 
-            if( fullMessage.cc.length || fullMessage.bcc.length ){
+            if( fullMessage.to.length > 1 || fullMessage.cc.length || fullMessage.bcc.length ){
                 contentDisplay.css( 'display', 'block' );
                 $( '.reply-mode-reply-all', contentReplyMode ).css( 'display', 'block' );
             }else{
@@ -493,21 +564,17 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'block' );
             }
 
-            if( fullMessage.cc.length ){
-                $( '.receivers-cc', contentReceivers ).css( 'display', 'block' );
-                $( '.receivers-cc', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
-                for( var i = 0 ; i < fullMessage.cc.length ; i++ ){
-                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address ) );
-                }
-            }
+            wz.mail( fullMessage.accountId, function( error, account ){
 
-            if( fullMessage.bcc.length ){
-                $( '.receivers-cco', contentReceivers ).css( 'display', 'block' );
-                $( '.receivers-cco', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
-                for( var i = 0 ; i < fullMessage.bcc.length ; i++ ){
-                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address ) );
+                if( error ){
+                    alert( error, null, win.data().win );
+                    return false;
                 }
-            }
+
+                myAccount = account.address;
+                showReceptors( fullMessage );
+
+            });
 
             contentColumn.data( 'message', fullMessage );
 
@@ -656,7 +723,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 $( '.last-selected', messagesColumn ).removeClass( 'last-selected' );
                 $( this ).addClass( 'selected last-selected' );
                 showMessage( $( this ).data( 'message' ) );
-            }       
+            }
 
         }else if( e.shiftKey ){
 
@@ -679,7 +746,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             $( this ).addClass( 'selected last-selected' );
             showMessage( $( this ).data( 'message' ) );
 
-        }      
+        }
 
     })
     
@@ -719,17 +786,21 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     
     .on( 'click', '.options-reply', function(){
 
-        wz.app.createWindow(
-            8, 
-            { 
-                to: contentColumn.data().message.from.address,
-                cc: null,
-                subject: contentColumn.data().message.title,
-                message: contentColumn.data().message.message,
-                reply: contentColumn.data().message.inReplyTo
-            },
-            'new'
-        );
+        if( contentColumn.hasClass( 'message-shown' ) ){
+
+            wz.app.createWindow(
+                8, 
+                { 
+                    to: [ contentColumn.data().message.from.address ],
+                    cc: null,
+                    subject: contentColumn.data().message.title,
+                    message: contentColumn.data().message.message,
+                    reply: contentColumn.data().message.inReplyTo
+                },
+                'new'
+            );
+
+        }
 
     })
 
@@ -741,16 +812,25 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         
         var receivers = [];
 
-        for( var i = 0 ; i < contentColumn.data().message.cc.length ; i++ ){
-            receivers.push( contentColumn.data().message.cc[ i ] );
+        for( var i = 0 ; i < contentColumn.data().message.to.length ; i++ ){
+            if( myAccount !== contentColumn.data().message.to[ i ].address ){
+                receivers.push( contentColumn.data().message.to[ i ].address );
+            }
+        }
 
+        var cc = [];
+
+        for( var i = 0 ; i < contentColumn.data().message.cc.length ; i++ ){
+            if( myAccount !== contentColumn.data().message.cc[ i ].address ){
+                cc.push( contentColumn.data().message.cc[ i ].address );
+            }
         }
 
         wz.app.createWindow(
             8, 
             { 
-                to: contentColumn.data().message.from.address,
-                cc: receivers,
+                to: receivers,
+                cc: cc,
                 subject: contentColumn.data().message.title,
                 message: contentColumn.data().message.message,
                 reply: contentColumn.data().message.inReplyTo
@@ -773,7 +853,11 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     })
 
     .on( 'click', '.new-mail', function(){
-        wz.app.createWindow( 8, '', 'new' );
+        if( mailZone.hasClass( 'account-shown' ) ){
+            wz.app.createWindow( 8, '', 'new' );
+        }else{
+            alert( 'Añade una cuenta para poder mandar correos', null, win.data().win );
+        }
     })
 
     .on( 'click', '.options-spam.middle', function(){
@@ -803,22 +887,26 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'click', '.options-spam.right', function(){
 
-        var messageSpamPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
-        var messageSpamNext = $( '.last-selected', messagesColumn ).next();
+        if( contentColumn.hasClass( 'message-shown' ) ){
 
-        contentColumn.data( 'message' ).moveToSpam( function( error ){
+            var messageSpamPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+            var messageSpamNext = $( '.last-selected', messagesColumn ).next();
 
-            if( error ){
-                alert( error, null, win.data().win );
-            }else{
-                if( messageSpamPrev.size() ){
-                    messageSpamPrev.click();
-                }else if( messageSpamNext.size() ){
-                    messageSpamNext.click();
+            contentColumn.data( 'message' ).moveToSpam( function( error ){
+
+                if( error ){
+                    alert( error, null, win.data().win );
+                }else{
+                    if( messageSpamPrev.size() ){
+                        messageSpamPrev.click();
+                    }else if( messageSpamNext.size() ){
+                        messageSpamNext.click();
+                    }
                 }
-            }
 
-        });
+            });
+
+        }
 
     })
 
@@ -849,22 +937,26 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'click', '.options-trash.right', function(){
 
-        var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
-        var messageTrashNext = $( '.last-selected', messagesColumn ).next();
+        if( contentColumn.hasClass( 'message-shown' ) ){
 
-        contentColumn.data( 'message' ).moveToTrash( function( error ){
+            var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+            var messageTrashNext = $( '.last-selected', messagesColumn ).next();
 
-            if( error ){
-                alert( error, null, win.data().win );
-            }else{
-                if( messageTrashPrev.size() ){
-                    messageTrashPrev.click();
-                }else if( messageTrashNext.size() ){
-                    messageTrashNext.click();
+            contentColumn.data( 'message' ).moveToTrash( function( error ){
+
+                if( error ){
+                    alert( error, null, win.data().win );
+                }else{
+                    if( messageTrashPrev.size() ){
+                        messageTrashPrev.click();
+                    }else if( messageTrashNext.size() ){
+                        messageTrashNext.click();
+                    }
                 }
-            }
 
-        });
+            });
+
+        }
 
     })
 
@@ -886,13 +978,17 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'click', '.options-unread.right', function(){
 
-        contentColumn.data( 'message' ).unmarkAsSeen( function( error ){
+        if( contentColumn.hasClass( 'message-shown' ) ){
 
-            if( error ){
-                alert( error, null, win.data().win );
-            }
+            contentColumn.data( 'message' ).unmarkAsSeen( function( error ){
 
-        });
+                if( error ){
+                    alert( error, null, win.data().win );
+                }
+
+            });
+
+        }
 
     })
 
@@ -914,22 +1010,30 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'click', '.options-read.right', function(){
 
-        contentColumn.data( 'message' ).markAsSeen( function( error ){
+        if( contentColumn.hasClass( 'message-shown' ) ){
 
-            if( error ){
-                alert( error, null, win.data().win );
-            }
+            contentColumn.data( 'message' ).markAsSeen( function( error ){
 
-        });
+                if( error ){
+                    alert( error, null, win.data().win );
+                }
+
+            });
+
+        }
 
     })
 
     .on( 'click', '.options-prev.right', function(){
 
-        var prevMessage = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+        if( contentColumn.hasClass( 'message-shown' ) ){
 
-        if( prevMessage.size() ){
-            prevMessage.click();
+            var prevMessage = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+
+            if( prevMessage.size() ){
+                prevMessage.click();
+            }
+
         }
 
     })
@@ -946,14 +1050,18 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'click', '.options-more', function( e ){
 
-        if( contentReplyMode.hasClass( 'reply-mode-displayed' ) ){
-            contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
-        }else{
-            contentReplyMode.addClass( 'reply-mode-displayed' ).css( 'display', 'block' );
-        }
+        if( contentColumn.hasClass( 'message-shown' ) ){
 
-        e.stopPropagation();
-        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+            if( contentReplyMode.hasClass( 'reply-mode-displayed' ) ){
+                contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+            }else{
+                contentReplyMode.addClass( 'reply-mode-displayed' ).css( 'display', 'block' );
+            }
+
+            e.stopPropagation();
+            contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+
+        }
 
     })
 
@@ -966,7 +1074,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         }
 
         e.stopPropagation();
-        ontentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
 
     })
 
@@ -1147,7 +1255,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 $( this ).remove();
             });
 
-        if( $( '.account', mailColumn ).not('.removed, .wz-prototype, .general').size() <= 1 ){
+        if( $( '.account', mailColumn ).not('.removed, .wz-prototype, .general').size() < 1 ){
 
             $( '.account.general', mailColumn ).transition( { height : 0 }, 150, function(){
                 $( this ).remove();

@@ -145,6 +145,28 @@ select{
     margin-top: 8px;
 }
 
+.content-cc{
+    float: left;
+    clear: left;
+    margin-top: 8px;
+    display: none;
+}
+
+.show .content-cc{
+    display: block;
+}
+
+.content-cco{
+    float: left;
+    clear: left;
+    margin-top: 8px;
+    display: none;
+}
+
+.show .content-cco{
+    display: block;
+}
+
 .content-subject{
     float: left;
     clear: left;
@@ -185,9 +207,28 @@ select{
     height: 100px;
 }
 
+.content-left-container.show{
+    height: 150px;
+}
+
 
 .content-left{
     float: left;
+}
+
+span.content-show{
+    float: left;
+    color: #AAA;
+    width: auto;
+    margin: 11px 9px;
+}
+
+span.content-show:hover{
+    color: #5D5D5D;
+}
+
+.show span.content-show{
+    color: #54728C;
 }
 
 .content-attachments{

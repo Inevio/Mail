@@ -107,6 +107,7 @@
 
 .hosting-image-other{
     width: 250px;
+    float: left;
     text-align: center;
     margin: 29px 0;
     font-size: 42px;

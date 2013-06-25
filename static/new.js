@@ -1,8 +1,6 @@
 
 wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
-    console.log( params )
-
     var mailExpresion = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     wz.mail.getAccounts( function( error, accounts ){
@@ -28,16 +26,56 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
 
     });
 
-    $( '.content-to input', win ).val( params.to );
+    if( params.to ){
 
-    if( params.subject ){
-        $( '.content-subject input', win ).val( params.reply? params.subject : 'Re: ' + params.subject );
+        var to = params.to[ 0 ];
+
+        for( var i = 1 ; i < params.to.length ; i++ ){
+
+            to = to + ', ' + params.to[ i ];
+
+        }
+
+        $( '.content-to input', win ).val( to );
+
+        if( params.cc ){
+
+            $( '.content-left-container', win ).addClass( 'show' );
+            win.transition({ height : '+=40' }, 100 );
+
+            var cc = params.cc[ 0 ];
+
+            for( var i = 1 ; i < params.cc.length ; i++ ){
+
+                cc = cc + ', ' + params.cc[ i ];
+
+            }
+
+            $( '.content-cc input', win ).val( cc );
+
+        }
+
+        if( params.subject ){
+            $( '.content-subject input', win ).val( params.reply? params.subject : 'Re: ' + params.subject );
+        }
+        
+        //$( '.content-compose', win ).html( params.message );
+
     }
     
-    //$( '.content-compose', win ).html( params.message );
-
-    
     win
+
+        .on( 'click', '.content-show', function(){
+
+            if( $( '.content-left-container', win ).hasClass( 'show' ) ){
+                $( '.content-left-container', win ).removeClass( 'show' );
+                win.transition({ height : '-=40' }, 100 );
+            }else{
+                $( '.content-left-container', win ).addClass( 'show' );
+                win.transition({ height : '+=40' }, 100 );
+            }
+
+        })
     
         .on( 'click', '.content-send', function(){
             
