@@ -661,13 +661,13 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         }else if( e.shiftKey ){
 
             var messages = $( '.message', messagesColumn );
-            var begin = messages.index( this );
-            var final = messages.index( messages.filter( '.last-selected' ) );
+            var beginRow = messages.index( this );
+            var finalRow = messages.index( messages.filter( '.last-selected' ) );
             
-            if( begin < final ){
-                var row = messages.slice( begin, final + 1 ).addClass( 'selected' );
+            if( beginRow < finalRow ){
+                var row = messages.slice( beginRow, finalRow + 1 ).addClass( 'selected' );
             }else{
-                var row = messages.slice( final, begin + 1 ).addClass( 'selected' );
+                var row = messages.slice( finalRow, beginRow + 1 ).addClass( 'selected' );
             }
             
             messages.not( row ).removeClass( 'selected' );
@@ -1205,7 +1205,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .key( 'down', function( e ){
 
-        var target = messagesColumn.children('.selected').last();
+        if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
+            var target = messagesColumn.children('.selected').last();
+        }else{
+            var target = messagesColumn.children('.selected').first();
+        }
+
         e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
 
         if( target.size() ){
@@ -1224,7 +1229,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .key( 'up', function( e ){
 
-        var target = messagesColumn.children('.selected');
+        if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
+            var target = messagesColumn.children('.selected').last();
+        }else{
+            var target = messagesColumn.children('.selected').first();
+        }
+
         e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
 
         if( target.size() ){
