@@ -319,7 +319,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     };
 
     var messagesInList = function(){
-        return messagesColumn.children().not( messagePrototype );
+        return messagesColumn.children().not( messagePrototype ).not( '.middle-column-content-none' );
     };
 
     var toDate = function( date ){
@@ -862,7 +862,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'click', '.options-spam.middle', function(){
 
-        var messageSpamPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+        var messageSpamPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
         var messageSpamNext = $( '.last-selected', messagesColumn ).next();
 
         $( '.selected', messagesColumn ).each( function(){
@@ -889,7 +889,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         if( contentColumn.hasClass( 'message-shown' ) ){
 
-            var messageSpamPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+            var messageSpamPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
             var messageSpamNext = $( '.last-selected', messagesColumn ).next();
 
             contentColumn.data( 'message' ).moveToSpam( function( error ){
@@ -912,7 +912,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'click', '.options-trash.middle', function(){
 
-        var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+        var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
         var messageTrashNext = $( '.last-selected', messagesColumn ).next();
 
         $( '.selected', messagesColumn ).each( function(){
@@ -939,7 +939,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         if( contentColumn.hasClass( 'message-shown' ) ){
 
-            var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+            var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
             var messageTrashNext = $( '.last-selected', messagesColumn ).next();
 
             contentColumn.data( 'message' ).moveToTrash( function( error ){
@@ -1028,7 +1028,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         if( contentColumn.hasClass( 'message-shown' ) ){
 
-            var prevMessage = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype');
+            var prevMessage = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
 
             if( prevMessage.size() ){
                 prevMessage.click();
@@ -1116,7 +1116,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
                             wz.banner()
                                 .title( lang.accountDeleted )
-                                .text( mailData + ' ' + lang.deleteSuccesfull )
+                                .text( mailData + ' ' + lang.deleteSuccesful )
                                 .image( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
@@ -1152,7 +1152,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             wz.mail( _accountOpened, function( error, account ){
 
-                var size = messagesColumn.children().not('.wz-prototype').size();
+                var size = messagesColumn.children().not('.wz-prototype .middle-column-content-none').size();
 
                 account.getMessagesFromBox( nowFolder, 20, parseInt( size / 20, 10 ), function( error, list ){
 
@@ -1330,7 +1330,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             }
 
         }else{
-            messagesColumn.children(':not(.wz-prototype):first').click();
+            messagesColumn.children( ':not( .wz-prototype, .middle-column-content-none ):first' ).click();
         }
 
     })
@@ -1347,14 +1347,14 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         if( target.size() ){
 
-            target = target.prev().not('.wz-prototype');
+            target = target.prev().not('.wz-prototype, .middle-column-content-none');
 
             if( target.size() ){
                 target.trigger( e );
             }
 
         }else{
-            messagesColumn.children(':not(.wz-prototype):first').click();
+            messagesColumn.children(':not( .wz-prototype, .middle-column-content-none ):first' ).click();
         }
 
     })
@@ -1371,7 +1371,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             return false;
         }
 
-        message.prev().not('.wz-prototype').click();
+        message.prev().not('.wz-prototype, .middle-column-content-none').click();
 
         message.data('message').moveToTrash( function( error ){
 

@@ -666,6 +666,18 @@ figure.options-label i:first-child{
     margin-right: 0px;
 }
 
+.middle-column-content-none{
+    width: 100%;
+    margin: 155px 0 0;
+    text-align: center;
+    font-size: 22px;
+    color: rgba( 0, 0, 0, 0.3 );
+}
+
+.box-shown .middle-column-content-none{
+    display: none;
+}
+
 .message{
     width: 212px;
     height: 42px;
@@ -1042,6 +1054,18 @@ figure.options-label i:first-child{
     height: 181px;
 }
 
+.content-message-none{
+    width: 100%;
+    margin: 75px 0 0;
+    text-align: center;
+    font-size: 25px;
+    color: rgba( 0, 0, 0, 0.3 );
+}
+
+.message-shown .content-message-none{
+    display: none;
+}
+
 .content-message-text{
     width: 520px;
     padding-right: 20px;
@@ -1051,6 +1075,11 @@ figure.options-label i:first-child{
     line-height: 17px;
     color: #5D5D5D;
     text-align: justify;
+    display: none;
+}
+
+.message-shown .content-message-text{
+    display: block;
 }
 
 .right-column-content .wz-scroll-slider{
