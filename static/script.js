@@ -1381,6 +1381,69 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         });
 
+    })
+
+    .key( 'enter', function( e ){
+
+        if( $( e.target ).is('input') ){
+
+            if( _accountOpened === 'common' ){
+
+                wz.mail.search( $( e.target ).val(), 'all', 'all', function( error, messages ){
+
+                    if( error ){
+                        alert( error, null, win.data().win );
+                        return false;
+                    }
+
+                    // Limpiamos la columna
+                    messagesInList().remove();
+
+                    var messageList = [];
+
+                    for( var i = 0, j = messages.length ; i < j ; i++ ){
+                        messageList.push( _messageItem( messages[ i ] ) );
+                    }
+
+                    messagesColumn.append( messageList );
+
+                });
+
+            }else{
+
+                wz.mail( _accountOpened, function( error, account ){
+
+                    if( error ){
+                        alert( error, null, win.data().win );
+                        return false;
+                    }
+
+                    account.search( $( e.target ).val(), 'all', function( error, messages ){
+
+                        if( error ){
+                            alert( error, null, win.data().win );
+                            return false;
+                        }
+
+                        // Limpiamos la columna
+                        messagesInList().remove();
+
+                        var messageList = [];
+
+                        for( var i = 0, j = messages.length ; i < j ; i++ ){
+                            messageList.push( _messageItem( messages[ i ] ) );
+                        }
+
+                        messagesColumn.append( messageList );
+
+                    });
+
+                });
+
+            }
+
+        }
+
     });
 
     addAccount
