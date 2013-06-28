@@ -23,6 +23,8 @@
 	"deleteSuccessful" : "has been successfully deleted",
 	"search" : "Search...",
 	"to" : "To",
+	"cc" : "CC",
+	"cco" : "BCC",
 	"subject" : "Subject",
 	"from" : "From",
 	"send" : "Send",
@@ -66,6 +68,15 @@
 	"introduceToCorrect" : "Please introduce a valid receiver address",
 	"introduceFrom" : "Please select your address",
 	"notWorking" : "Not working",
-	"synchronizing" : "Synchronizing"
+	"syncing" : "Syncing",
+	"noBoxOpened" : "No box opened",
+	"noMessageOpened" : "No message opened",
+	"reply" : "Reply",
+	"replyToAll" : "Reply to all",
+	"forward" : "Forward",
+	"markAsUnread" : "Mark as unread",
+	"marAsSpam" : "Mark as spam",
+	"moveToTrash" : "Move to trash",
+	"createAccountToSend" : "Add an account to start sending mails"
 	
 }

@@ -236,7 +236,7 @@ span{
     white-space: nowrap;
 }
 
-.mailbox, .synchronizing{
+.mailbox, .syncing{
     width: 180px;
     height: 35px;
     float: left;
@@ -251,7 +251,7 @@ span{
     box-shadow: -2px 0 0 #54728C inset;
 }
 
-.synchronizing:hover{
+.syncing:hover{
     background: none;
 }
 
@@ -330,9 +330,9 @@ span{
     cursor: pointer;
 }
 
-.synchronizing i{
+.syncing i{
     margin-top: 9px;
-    background: url('https://static.weezeel.com/app/8/synchronizing.gif') no-repeat 0 0;
+    background: url('https://static.weezeel.com/app/8/syncing.gif') no-repeat 0 0;
     background-size: 14px 14px;
 }
 

@@ -77,7 +77,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         }
 
-        item.find('.synchronizing span').text( lang.synchronizing );
+        item.find('.syncing span').text( lang.syncing );
 
         _accountItemBoxes( element, item );
 
@@ -641,13 +641,13 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     var insertBox = function( boxObj, accountObj ){
 
-        var boxes = accountObj.children().not('.wz-prototype, .synchronizing');
+        var boxes = accountObj.children().not('.wz-prototype, .syncing');
 
         if( boxes.filter( '.box-' + boxObj.data('id') ).size() || boxes.filter( '.' + boxObj.data('type') ).size() ){
             return false;
         }
 
-        accountObj.children('.synchronizing').remove();
+        accountObj.children('.syncing').remove();
 
         if( boxes.size() === 0 ){
             accountObj.prepend( accountObj );
@@ -856,7 +856,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         if( mailZone.hasClass( 'account-shown' ) ){
             wz.app.createWindow( 8, '', 'new' );
         }else{
-            alert( 'Añade una cuenta para poder mandar correos', null, win.data().win );
+            alert( lang.createAccountToSend, null, win.data().win );
         }
     })
 
@@ -1454,12 +1454,24 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     // Start App
     getAccounts();
 
-    $( '.new-mail span', win ).text( lang.newEmail );
-    $( '.add-account span', win ).text( lang.addAccount );
-    $( '.content-attachments-title span', win ).not( '.light' ).text( lang.attachments );
-    $( '.content-attachments-view', win ).text( lang.view );
-    $( '.content-attachments-download', win ).text( lang.download );
-    $( '.content-attachments-import', win ).text( lang.import );
-    $( '.middle-column-top input', win ).attr( 'placeholder', lang.search );
+    $( '.new-mail span', mailZone ).text( lang.newEmail );
+    $( '.add-account span', mailColumn ).text( lang.addAccount );
+    $( '.content-attachments-title span', contentColumn ).not( '.light' ).text( lang.attachments );
+    $( '.content-attachments-view', contentColumn ).text( lang.view );
+    $( '.content-attachments-download', contentColumn ).text( lang.download );
+    $( '.content-attachments-import', contentColumn ).text( lang.import );
+    $( '.middle-column-top input', contentColumn ).attr( 'placeholder', lang.search );
+    $( '.middle-column-pages-actual', messagesZone ).text( '1 - 20' );
+    $( '.receivers-to .receivers-title', contentReceivers ).text( lang.to + ':' );
+    $( '.receivers-cc .receivers-title', contentReceivers ).text( lang.cc + ':' );
+    $( '.receivers-cco .receivers-title', contentReceivers ).text( lang.cco + ':' );
+    $( '.middle-column-content-none', messagesColumn ).text( lang.noBoxOpened );
+    $( '.content-message-none', contentMessage ).text( lang.noMessageOpened );
+    $( '.reply-mode-reply span', contentReplyMode ).text( lang.reply );
+    $( '.reply-mode-reply-all span', contentReplyMode ).text( lang.replyToAll );
+    $( '.reply-mode-forward span', contentReplyMode ).text( lang.forward );
+    $( '.reply-mode-mark-unread span', contentReplyMode ).text( lang.markAsUnread );
+    $( '.reply-mode-spam span', contentReplyMode ).text( lang.markAsSpam );
+    $( '.reply-mode-delete span', contentReplyMode ).text( lang.moveToTrash );
 
 });
