@@ -50,7 +50,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         var item = mailAccount.clone().removeClass( 'wz-prototype' );
 
         if( element.inProtocol === 'common' ){
-
+            
             item
                 .addClass( 'general' )
                 .data( {
@@ -61,6 +61,14 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 } )
                 .children( 'span' )
                 .text( lang.general );
+
+            wz.mail( 'common', function( error, account ){
+
+                if( account.unread ){
+                    item.children( '.bullet' ).text( account.unread );
+                }                
+
+            });
 
         }else{
 
@@ -75,6 +83,10 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
                 .children( 'span' )
                 .text( element.description );
 
+            if( element.unread ){
+                item.children( '.bullet' ).text( element.unread );
+            } 
+            
         }
 
         item.find('.syncing span').text( lang.syncing );
@@ -240,6 +252,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         tmp.children( 'span' ).text( text );
 
+        console.log( object.name, object.unread );
+
+        if( object.unread ){
+            tmp.children( '.bullet' ).text( object.unread );
+        }
+        
         return tmp;
 
     };
@@ -676,6 +694,66 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         }
 
     };
+
+    var mailsUnread = function( accountId ){
+
+        wz.mail( accountId, function( error, account ){
+
+            if( error ){
+                alert( error, null, win.data().win );
+                return false;
+            }
+
+            $( '.account-' + accountId ).children( '.bullet' ).text( account.unread );
+
+            account.getBoxList( function( error, list ){
+
+                if( error ){
+                    alert( error, null, win.data().win );
+                    return false;
+                }
+
+                for( var i = 0 ; i < list.length ; i++ ){
+
+                    if( list[ i ].unread ){
+                        $( '.box-' + list[ i ].id ).children( '.bullet' ).text( list[ i ].unread );
+                    }
+
+                }
+
+            });
+
+        });
+
+        wz.mail( 'common', function( error, account ){
+
+            if( error ){
+                alert( error, null, win.data().win );
+                return false;
+            }
+
+            $( '.general' ).children( '.bullet' ).text( account.unread );
+
+            account.getBoxList( function( error, list ){
+
+                if( error ){
+                    alert( error, null, win.data().win );
+                    return false;
+                }
+
+                for( var i = 0 ; i < list.length ; i++ ){
+
+                    if( list[ i ].unread ){
+                        $( '.box-' + list[ i ].id ).children( '.bullet' ).text( list[ i ].unread );
+                    }
+
+                }
+
+            });
+
+        });
+
+    }
 
     $( win )
 
@@ -1145,10 +1223,12 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'mail-messageMarkedAsSeen', function( e, message ){
         $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
+        mailsUnread( message.accountId );
     })
 
     .on( 'mail-messageUnmarkedAsSeen', function( e, message ){
         $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
+        mailsUnread( message.accountId );
     })
 
     .on( 'mail-messageMarkedAsFlagged', function( e, message ){
@@ -1161,6 +1241,7 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     .on( 'mail-messageRemoved', function( e, message ){
         $( '.message-' + message, messagesColumn ).remove();
+        mailsUnread( message.accountId );
     })
 
     .on( 'mail-messageIn', function( e, accountId, message, boxId, boxType ){
@@ -1197,6 +1278,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             messagesColumn.append( _messageItem( message ) );
         }
 
+        mailsUnread( accountId );
+
     })
 
     .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
@@ -1229,6 +1312,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
         $( '.account-' + accountId + '-message', messagesColumn ).remove();
 
+        mailsUnread( accountId );
+
     })
 
     .on( 'mail-accountRemoveFinished', function( e, accountId ){
@@ -1256,6 +1341,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
             accountItem.animate( { height : '+=' + boxItem.outerHeight( true ) }, 150 );
         }
 
+        mailsUnread( accountId );
+
     })
 
     .on( 'mail-boxRemoved', function( e, boxId, accountId ){
@@ -1272,6 +1359,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
         });
 
         accountItem.delay( 50 ).animate( { height : '-=' + boxItem.outerHeight( true ) }, 150 );
+
+        mailsUnread( accountId );
 
     })
 

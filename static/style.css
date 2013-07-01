@@ -285,19 +285,16 @@ span{
     background: #E45857;
     border: 1px solid #C14142;
     max-width: 23px;
+    color: #FFF;
+    font-size: 14px;
 }
 
 .bullet.big{
-    margin-top: 9px;
+    margin-top: 6px;
 }
 
-.bullet.hidden{
+.bullet:empty{
     display: none;
-}
-
-.bullet span{
-    margin: 0px;
-    color: #FFF;
 }
 
 .add-account{
