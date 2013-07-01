@@ -1141,44 +1141,6 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
     })
 
-    .on( 'mousewheel', '.middle-column-content-scroll', function( e ){
-
-        if( !_loadingMore && ( this.offsetHeight * 1.5 ) + this.scrollTop > this.scrollHeight ){
-
-            _loadingMore = true;
-
-            var nowAccount = _accountOpened;
-            var nowFolder  = _folderOpened;
-
-            wz.mail( _accountOpened, function( error, account ){
-
-                var size = messagesColumn.children().not('.wz-prototype .middle-column-content-none').size();
-
-                account.getMessagesFromBox( nowFolder, 20, parseInt( size / 20, 10 ), function( error, list ){
-
-                    if( error ){
-                        _loadingMore = false;
-                        return false;
-                    }
-
-                    var messageList = [];
-
-                    for( var i = 0, j = list.length ; i < j ; i++ ){
-                        messageList.push( _messageItem( list[ i ] ) );
-                    }
-
-                    messagesColumn.append( messageList );
-                    
-                    _loadingMore = false;
-
-                });
-
-            });
-           
-        }
-
-    })
-
     .on( 'mail-messageMarkedAsSeen', function( e, message ){
         $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
     })
