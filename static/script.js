@@ -304,6 +304,8 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
 
             if( accounts.length ){
                 mailZone.addClass( 'account-shown' );
+            }else{
+                wz.app.createWindow( 8, null, 'hosting' );
             }
 
         });
