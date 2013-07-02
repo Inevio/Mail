@@ -52,7 +52,7 @@ hr{
     float: left;
     border: none;
     border-bottom: 1px solid #DADADA;
-    margin: 20px 20px 20px 0;
+    margin: 20px 0;
 }
 
 .left-column{
@@ -128,9 +128,9 @@ hr{
 }
 
 .right-column-content{
-    width: 540px;
+    width: 520px;
     height: 481px;
-    padding: 19px 0 0 20px;
+    padding: 19px 20px 0;
     float: left;
 }
 
@@ -893,7 +893,7 @@ figure.options-label i:first-child{
 }
 
 .right-column-content-nav{
-    width: 540px;
+    width: 520px;
     float: left;
 }
 
@@ -933,7 +933,6 @@ figure.options-label i:first-child{
 
 .right-column-content-answer{
     float: right;
-    margin-right: 20px;
 }
 
 .options-reply i{
@@ -958,7 +957,6 @@ figure.options-label i:first-child{
 .content-origin{
     width: 520px;
     float: left;
-    margin-right: 20px;
     padding: 21px 0px 20px 0px;
     border-bottom: 1px solid #DADADA;
 }
@@ -1041,7 +1039,7 @@ figure.options-label i:first-child{
 }
 
 .content-message{
-    width: 540px;
+    width: 520px;
     height: 315px;
     float: left;
     margin-top: 20px;
@@ -1065,7 +1063,6 @@ figure.options-label i:first-child{
 
 .content-message-text{
     width: 520px;
-    padding-right: 20px;
     padding-bottom: 20px;
     margin-left: 0px;
     font-size: 14px;
