@@ -1,5 +1,3 @@
-
-wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     
     var attachments      = $( '.content-attachments', win );
     var openedAccount    = $( '.left-column-top span', win );
@@ -1526,5 +1524,3 @@ wz.app.addScript( 8, 'main', function( win, app, lang, params ){
     $( '.reply-mode-mark-unread span', contentReplyMode ).text( lang.markAsUnread );
     $( '.reply-mode-spam span', contentReplyMode ).text( lang.markAsSpam );
     $( '.reply-mode-delete span', contentReplyMode ).text( lang.moveToTrash );
-
-});

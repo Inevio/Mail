@@ -1,6 +1,4 @@
 
-wz.app.addScript( 8, 'hosting', function( win, app, lang, params ){
-
 	$(win)
 
         .on( 'click', '.gmail', function(){
@@ -19,5 +17,3 @@ wz.app.addScript( 8, 'hosting', function( win, app, lang, params ){
 
     $( '.hosting-title', win ).text( lang.chooseServer );
     $( '.hosting-image-other', win ).text( lang.chooseOther );
-    
-});

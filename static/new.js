@@ -1,6 +1,4 @@
 
-wz.app.addScript( 8, 'new', function( win, app, lang, params ){
-
     var mailExpresion = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     wz.mail.getAccounts( function( error, accounts ){
@@ -127,5 +125,3 @@ wz.app.addScript( 8, 'new', function( win, app, lang, params ){
     $( '.content-subject span', win ).text( lang.subject + ':' );
     $( '.content-from span', win ).text( lang.from + ':' );
     $( '.content-send span', win ).text( lang.send );
-    
-});

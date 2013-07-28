@@ -1,6 +1,4 @@
 
-wz.app.addScript( 8, 'account', function( win, app, lang, params ){
-
 	var content = $( '.content', win );
 	var email = '';
 	var pass = '';
@@ -273,5 +271,3 @@ wz.app.addScript( 8, 'account', function( win, app, lang, params ){
     $( '.mail span', win ).text( lang.address + ':' );
     $( '.pass span', win ).text( lang.password + ':' );
     $( '.next', win ).text( lang.next );
-    
-});
