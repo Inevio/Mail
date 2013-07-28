@@ -146,6 +146,30 @@
 
         }
 
+    },
+
+    "permissions" : {
+
+        "mail" : {
+
+            "account" : {
+
+                "modify" : true,
+                "read"   : true
+
+            },
+
+            "message" : {
+
+                "modify" : true,
+                "read"   : true
+
+            },
+
+            "send" : true
+
+        }
+
     }
 
 }
