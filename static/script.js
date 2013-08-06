@@ -50,7 +50,7 @@
         if( element.inProtocol === 'common' ){
             
             item
-                .addClass( 'general' )
+                .addClass( 'general account-common' )
                 .data( {
 
                     mail : 'common',
@@ -112,24 +112,6 @@
                 if( i !== 'normal' && i !== 'allMail' ){
                     insertBox( _boxItem( boxes[ i ][ 0 ], boxPrototype ), item );
                 }
-
-            }
-
-            if( element.inProtocol === 'common' ){
-
-                var common = $( '.account:not( .wz-prototype )', mailColumn ).first();
-
-                if( !common.size() ){
-                    return false;
-                }
-
-                common
-                    .addClass('display')
-                    .height( _accountOptionsHeight( common ) + 38 )
-                    .find('.inbox')
-                        .click();
-
-                openedAccount.text( item.children( 'span' ).text() );
 
             }
 
@@ -320,6 +302,7 @@
 
             if( accounts.length ){
                 mailZone.addClass( 'account-shown' );
+                showLastMessage();
             }else{
                 wz.app.createWindow( 8, null, 'hosting' );
             }
@@ -422,6 +405,7 @@
                 messageList = messageSqueleton = null;
 
                 messagesZone.addClass( 'box-shown' );
+                win.trigger( 'messages-shown' );
 
             });
 
@@ -546,6 +530,8 @@
         }else{
             contentDate.text( messageDate.sentDay + '/' + messageDate.sentMonth + ', ' + messageDate.sentHour + ':' + messageDate.sentMinute );
         }
+
+        wql.changeOpened( [ message.id, $( '.mailbox.active', mailColumn ).data( 'id' ), $( '.account.display', mailColumn ).data( 'id' ) ] );
 
         message.getFullMessage( function( error, fullMessage ){
 
@@ -751,7 +737,35 @@
 
         });
 
-    }
+    };
+
+    var showLastMessage = function(){
+
+        wql.getOpened( function( error, result ){
+
+            if( result.length ){
+
+                $( '.account-' + result[0].account, mailColumn ).click();
+                $( '.box-' + result[0].box, mailColumn ).click();
+
+                win.on( 'messages-shown', function( e ){
+                    $( '.message' + result[0].message, messagesColumn ).addClass( 'selected last-selected' );
+                    win.off( e );
+                });
+                
+                wz.mail.getMessage( result[0].message, function( error, message ){
+                    showMessage( message );
+                });
+
+            }else{
+
+                wql.insertOpened();
+
+            }
+
+        });
+
+    };
 
     $( win )
 
@@ -1495,6 +1509,10 @@
 
         }
 
+    })
+
+    .on( 'wz-resize', function(){
+        wql.changeSize( [ win.width(), win.height() ] );
     });
 
     addAccount
@@ -1504,6 +1522,26 @@
 
     // Start App
     getAccounts();
+
+    wql.getConfig( function( error, result ){
+
+        if( result.length ){
+
+            if( result[0].width !== win.width() && result[0].height !== win.height() ){
+                wz.fit( win, result[0].width - win.width(), result[0].height - win.height() );
+            }else if( result[0].width !== win.width() ){
+                wz.fit( win, result[0].width - win.width(), 0 );
+            }else if( result[0].height !== win.height() ){
+                wz.fit( win, 0, result[0].height - win.height() );
+            }
+
+        }else{
+
+            wql.insertConfig();
+
+        }
+
+    });
 
     $( '.new-mail span', mailZone ).text( lang.newEmail );
     $( '.add-account span', mailColumn ).text( lang.addAccount );
