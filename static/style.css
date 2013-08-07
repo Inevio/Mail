@@ -13,38 +13,15 @@
 
 .wz-win-minimize, .wz-win-maximize, .wz-win-close{
     float: right;
-    margin-top: 6px;
-    width: 15px;
-    height: 15px;
+    margin-top: 9px;
+}
+
+.wz-win-close{
+    margin-right: 20px;
 }
 
 .wz-win-minimize:hover, .wz-win-maximize:hover, .wz-win-close:hover{
     border: 1px solid #EEE;
-}
-
-.wz-win-close{
-    padding-right: 5px;
-    padding-left: 7px;
-    margin-right: 15px
-}
-
-.wz-win-minimize i, .wz-win-maximize i, .wz-win-close i{
-    width: 15px;
-    height: 15px;
-    background: url("https://static.weezeel.com/app/8/buttons.png") no-repeat;
-    background-size: 43px 15px;
-}
-
-.wz-win-minimize i{
-    background-position: 0 0;
-}
-
-.wz-win-maximize i{
-    background-position: -15px 0;
-}
-
-.wz-win-close i{
-    background-position: -30px 0;
 }
 
 hr{
