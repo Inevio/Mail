@@ -115,6 +115,8 @@
 
             }
 
+            win.trigger( 'boxes-shown', [ element.id ] );
+
         });
 
     };
@@ -688,7 +690,9 @@
                 return false;
             }
 
-            $( '.account-' + accountId ).children( '.bullet' ).text( account.unread );
+            if( account.unread ){
+                $( '.account-' + accountId ).children( '.bullet' ).text( account.unread );
+            }
 
             account.getBoxList( function( error, list ){
 
@@ -745,16 +749,29 @@
 
             if( result.length ){
 
-                $( '.account-' + result[0].account, mailColumn ).click();
-                $( '.box-' + result[0].box, mailColumn ).click();
+                win.on( 'boxes-shown', function( e, elementId ){
+
+                    if( elementId == result[0].account ){
+
+                        $( '.account-' + result[0].account, mailColumn ).click();
+                        $( '.box-' + result[0].box, mailColumn ).click();
+
+                        win.off( e );
+
+                    }
+
+                });
 
                 win.on( 'messages-shown', function( e ){
-                    $( '.message' + result[0].message, messagesColumn ).addClass( 'selected last-selected' );
+
+                    $( '.message-' + result[0].message, messagesColumn ).addClass( 'selected last-selected' );
+
+                    wz.mail.getMessage( result[0].message, function( error, message ){
+                        showMessage( message );
+                    });
+
                     win.off( e );
-                });
-                
-                wz.mail.getMessage( result[0].message, function( error, message ){
-                    showMessage( message );
+
                 });
 
             }else{
@@ -1208,7 +1225,7 @@
 
                             wz.banner()
                                 .title( lang.accountDeleted )
-                                .text( mailData + ' ' + lang.deleteSuccesful )
+                                .text( mailData + ' ' + lang.deleteSuccessful )
                                 .image( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
@@ -1303,7 +1320,10 @@
     })
 
     .on( 'mail-accountAdded', function( e, mailAccount ){
-        getAccounts();
+
+        addAccount.before( _accountItem( mailAccount ) );
+        mailZone.addClass( 'account-shown' );
+
     })
 
     .on( 'mail-accountRemoved', function( e, accountId ){
@@ -1323,8 +1343,6 @@
         }
 
         $( '.account-' + accountId + '-message', messagesColumn ).remove();
-
-        mailsUnread( accountId );
 
     })
 
@@ -1511,7 +1529,7 @@
 
     })
 
-    .on( 'wz-resize', function(){
+    .on( 'wz-resize-end', function(){
         wql.changeSize( [ win.width(), win.height() ] );
     });
 
@@ -1522,26 +1540,6 @@
 
     // Start App
     getAccounts();
-
-    wql.getConfig( function( error, result ){
-
-        if( result.length ){
-
-            if( result[0].width !== win.width() && result[0].height !== win.height() ){
-                wz.fit( win, result[0].width - win.width(), result[0].height - win.height() );
-            }else if( result[0].width !== win.width() ){
-                wz.fit( win, result[0].width - win.width(), 0 );
-            }else if( result[0].height !== win.height() ){
-                wz.fit( win, 0, result[0].height - win.height() );
-            }
-
-        }else{
-
-            wql.insertConfig();
-
-        }
-
-    });
 
     $( '.new-mail span', mailZone ).text( lang.newEmail );
     $( '.add-account span', mailColumn ).text( lang.addAccount );
