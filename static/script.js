@@ -373,6 +373,23 @@
 
     };
 
+    // Inserta la cuenta Common si no existe
+    var showCommonAccount = function(){
+
+        wz.mail.getAccounts( function( e, list ){
+            
+            if( list.length > 1 ){
+
+                if( !mailColumn.children('general').length ){
+                    mailAccount.after( _accountItem( list[ 0 ] ) );
+                }
+
+            }
+
+        });
+
+    };
+
     // Muestra la lista de correos
     var showMails = function( id, boxId, page ){
 
@@ -1387,6 +1404,10 @@
 
         addAccount.before( _accountItem( mailAccount ) );
         mailZone.addClass( 'account-shown' );
+
+        if( !mailColumn.children('.general').length ){
+            showCommonAccount();
+        }
 
     })
 
