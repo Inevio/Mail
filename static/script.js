@@ -27,6 +27,7 @@
 
     var _accountOpened = 0;
     var _folderOpened  = 0;
+    var _pageOpened    = 0;
     var _loadingMore   = false;
 
     var _accountOptionsHeight = function( item ){
@@ -372,7 +373,14 @@
 
     };
 
-    var showMails = function( id, boxId ){
+    // Muestra la lista de correos
+    var showMails = function( id, boxId, page ){
+
+        page = parseInt( page, 10 );
+
+        if( !page || page < 0 ){
+            page = 0;
+        }
 
         wz.mail( id, function( error, account ){
 
@@ -383,7 +391,7 @@
 
             _accountOpened = id;
 
-            account.getMessagesFromBox( boxId, function( error, list ){
+            account.getMessagesFromBox( boxId, 20, page, function( error, list ){
 
                 if( error ){
                     alert( error, null, win.data().win );
@@ -391,6 +399,9 @@
                 }
 
                 _folderOpened = boxId;
+                _pageOpened   = page;
+
+                $( '.middle-column-pages-actual', messagesZone ).text( ( ( page * 20 ) + 1 ) + ' - ' + ( ( page + 1 ) * 20 ) );
 
                 // Limpiamos la columna
                 messagesInList().remove();
@@ -784,8 +795,30 @@
 
     };
 
-    $( win )
+    var translateUI = function(){
 
+        $( '.new-mail span', mailZone ).text( lang.newEmail );
+        $( '.add-account span', mailColumn ).text( lang.addAccount );
+        $( '.content-attachments-title span', contentColumn ).not( '.light' ).text( lang.attachments );
+        $( '.content-attachments-view', contentColumn ).text( lang.view );
+        $( '.content-attachments-download', contentColumn ).text( lang.download );
+        $( '.content-attachments-import', contentColumn ).text( lang.import );
+        $( '.middle-column-top input', contentColumn ).attr( 'placeholder', lang.search );
+        $( '.receivers-to .receivers-title', contentReceivers ).text( lang.to + ':' );
+        $( '.receivers-cc .receivers-title', contentReceivers ).text( lang.cc + ':' );
+        $( '.receivers-cco .receivers-title', contentReceivers ).text( lang.cco + ':' );
+        $( '.middle-column-content-none', messagesColumn ).text( lang.noBoxOpened );
+        $( '.content-message-none', contentMessage ).text( lang.noMessageOpened );
+        $( '.reply-mode-reply span', contentReplyMode ).text( lang.reply );
+        $( '.reply-mode-reply-all span', contentReplyMode ).text( lang.replyToAll );
+        $( '.reply-mode-forward span', contentReplyMode ).text( lang.forward );
+        $( '.reply-mode-mark-unread span', contentReplyMode ).text( lang.markAsUnread );
+        $( '.reply-mode-spam span', contentReplyMode ).text( lang.markAsSpam );
+        $( '.reply-mode-delete span', contentReplyMode ).text( lang.moveToTrash );
+
+    };
+
+    win
     .on( 'click', '.account', function(){
 
         var minHeight = 38;
@@ -1191,6 +1224,37 @@
         e.stopPropagation();
     })
 
+    // Anterior página de mensajes
+    .on( 'click', '.middle-column-pages-prev', function(){
+
+        var page = _pageOpened - 1;
+
+        if( page < 0 ){
+            page = 0;
+        }
+
+        if( page !== _pageOpened ){
+            showMails( _accountOpened, _folderOpened, page );
+        }
+        
+    })
+
+    // Siguiente página de mensajes
+    .on( 'click', '.middle-column-pages-next', function(){
+
+        var page = _pageOpened + 1;
+
+        if( page < 0 ){
+            page = 0;
+        }
+
+        if( page !== _pageOpened ){
+            showMails( _accountOpened, _folderOpened, page );
+        }
+
+    })
+
+    // Oculta los desplegables de Receptores y Modos de respuesta
     .on( 'click', function(){
 
         contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
@@ -1540,23 +1604,4 @@
 
     // Start App
     getAccounts();
-
-    $( '.new-mail span', mailZone ).text( lang.newEmail );
-    $( '.add-account span', mailColumn ).text( lang.addAccount );
-    $( '.content-attachments-title span', contentColumn ).not( '.light' ).text( lang.attachments );
-    $( '.content-attachments-view', contentColumn ).text( lang.view );
-    $( '.content-attachments-download', contentColumn ).text( lang.download );
-    $( '.content-attachments-import', contentColumn ).text( lang.import );
-    $( '.middle-column-top input', contentColumn ).attr( 'placeholder', lang.search );
-    $( '.middle-column-pages-actual', messagesZone ).text( '1 - 20' );
-    $( '.receivers-to .receivers-title', contentReceivers ).text( lang.to + ':' );
-    $( '.receivers-cc .receivers-title', contentReceivers ).text( lang.cc + ':' );
-    $( '.receivers-cco .receivers-title', contentReceivers ).text( lang.cco + ':' );
-    $( '.middle-column-content-none', messagesColumn ).text( lang.noBoxOpened );
-    $( '.content-message-none', contentMessage ).text( lang.noMessageOpened );
-    $( '.reply-mode-reply span', contentReplyMode ).text( lang.reply );
-    $( '.reply-mode-reply-all span', contentReplyMode ).text( lang.replyToAll );
-    $( '.reply-mode-forward span', contentReplyMode ).text( lang.forward );
-    $( '.reply-mode-mark-unread span', contentReplyMode ).text( lang.markAsUnread );
-    $( '.reply-mode-spam span', contentReplyMode ).text( lang.markAsSpam );
-    $( '.reply-mode-delete span', contentReplyMode ).text( lang.moveToTrash );
+    translateUI();
