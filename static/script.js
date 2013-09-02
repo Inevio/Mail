@@ -1307,7 +1307,7 @@
                             wz.banner()
                                 .title( lang.accountDeleted )
                                 .text( mailData + ' ' + lang.deleteSuccessful )
-                                .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
                         }

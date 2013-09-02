@@ -69,7 +69,7 @@
             wz.banner()
                 .title( lang.nameChanged )
                 .text( email + ' ' + lang.nowCalled + ' ' + description )
-                .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                 .render();
 
         }else{
@@ -78,7 +78,7 @@
             wz.banner()
                 .title( lang.accountAdded )
                 .text( email + ' ' + lang.beenAdded )
-                .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                 .render();
 
         }

@@ -99,7 +99,7 @@
                             wz.banner()
                                 .title( lang.mailSent )
                                 .text( lang.beenSent )
-                                .image( 'https://static.weezeel.com/app/8/envelope.png' )
+                                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
                             wz.app.closeWindow( win );
