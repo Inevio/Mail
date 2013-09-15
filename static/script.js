@@ -235,8 +235,6 @@
 
         tmp.children( 'span' ).text( text );
 
-        console.log( object.name, object.unread );
-
         if( object.unread ){
             tmp.children( '.bullet' ).text( object.unread );
         }
@@ -453,7 +451,7 @@
             for( var i = 0 ; i < fullMessage.to.length ; i++ ){
 
                 if( myAccount === fullMessage.to[ i ].address  ){
-                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address + ' ' + '(Yo)' ) );
+                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address + ' ' + '(' + lang.me + ')' ) );
                 }else{
                     $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address ) );                        
                 }
@@ -472,7 +470,7 @@
             for( var i = 0 ; i < fullMessage.cc.length ; i++ ){
 
                 if( myAccount === fullMessage.cc[ i ].address  ){
-                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address + ' ' + '(Yo)' ) );
+                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address + ' ' + '(' + lang.me + ')' ) );
                 }else{
                     $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address ) );                        
                 }
@@ -491,7 +489,7 @@
             for( var i = 0 ; i < fullMessage.bcc.length ; i++ ){
 
                 if( myAccount === fullMessage.bcc[ i ].address  ){
-                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address + ' ' + '(Yo)' ) );
+                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address + ' ' + '(' + lang.me + ')' ) );
                 }else{
                     $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address ) );                        
                 }
@@ -518,13 +516,17 @@
 
         });
 
-        attachments.children().not( '.content-attachments-title' ).remove();
+        contentColumn.removeClass().addClass( 'message-' + message.id + ' right-column-content message-shown parent wz-fit' ).data( 'message', message );
+
+        //attachments.children().not( '.content-attachments-title' ).remove();
+
+        contentMessage.height( 312 );
 
         if( message.hasAttachments() ){
 
             contentColumn.addClass( 'attachments' );
 
-            if( attachments.children().size() < 3 ){
+            /*if( attachments.children().size() < 3 ){
 
                 attachments.height( 66 );
                 contentMessage.height( 244 );
@@ -539,17 +541,15 @@
                 attachments.height( 118 );
                 contentMessage.height( 192 );
 
-            }
+            }*/
 
         }else{
 
             contentColumn.removeClass( 'attachments' );   
-            contentMessage.height( 315 );
-            contentHr.css( 'margin-bottom', 15 );
+            //contentMessage.height( 315 );
+            //contentHr.css( 'margin-bottom', 15 );
 
         }
-
-        contentColumn.removeClass().addClass( 'message-' + message.id + ' right-column-content message-shown parent wz-fit' ).data( 'message', message );
 
         var messageDate = toDate( message.time.getTime() );
 
@@ -618,8 +618,6 @@
 
     var appendMessage = function( message ){
 
-        console.log( message );
-
         var messageSqueleton = messagePrototype
                                     .clone()
                                     .removeClass( 'wz-prototype' )
@@ -627,27 +625,17 @@
                                     .data( 'message', message )
                                     .appendTo( messagesColumn );
 
-        console.log( 1 );
-
         if( !message.isSeen() ){
             messageSqueleton.addClass( 'unread' );
         }
 
-        console.log( 2 );
-
         messageSqueleton.find( '.message-origin' ).text( message.from.name );
-
-        console.log( 3 );
 
         if( message.attachments.length ){
             messageSqueleton.find( '.message-clip' ).addClass( 'attached' );
         }
 
-        console.log( 4 );
-
         var messageDate = toDate( message.time.getTime() );
-
-        console.log( 5 );
 
         if( messageDate.sentToday ){
             messageSqueleton.find( '.message-date' ).text( messageDate.sentHour + ':' + messageDate.sentMinute );
@@ -655,21 +643,13 @@
             messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth );
         }
 
-        console.log( 6 );
-
         if( message.isFlagged() ){
             messageSqueleton.find( '.message-star' ).addClass( 'active' );
         }
 
-        console.log( 7 );
-
         messageSqueleton.find( '.message-subject' ).text( message.title );
 
-        console.log( 8 );
-
         messagesColumn.find( '.message:last-child' ).remove();
-
-        console.log( 9 );
 
     };
 
@@ -748,7 +728,9 @@
                 return false;
             }
 
-            $( '.general' ).children( '.bullet' ).text( account.unread );
+            if( account.unread ){
+                $( '.general' ).children( '.bullet' ).text( account.unread );
+            }
 
             account.getBoxList( function( error, list ){
 
@@ -1424,6 +1406,11 @@
             $( '.account.general', mailColumn ).transition( { height : 0 }, 150, function(){
                 $( this ).remove();
             });
+
+            contentColumn.removeClass( 'message-shown' );
+            messagesZone.removeClass( 'box-shown' );
+
+            wz.app.createWindow( 8, null, 'hosting' );
             
         }
 

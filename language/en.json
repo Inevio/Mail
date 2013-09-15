@@ -25,6 +25,7 @@
 	"to" : "To",
 	"cc" : "CC",
 	"cco" : "BCC",
+	"me" : "Me",
 	"subject" : "Subject",
 	"from" : "From",
 	"send" : "Send",
