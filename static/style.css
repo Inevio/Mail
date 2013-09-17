@@ -808,21 +808,21 @@ figure.options-label i:first-child{
 .receivers-to{
     width: 100%;
     float: left;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: none;
 }
 
 .receivers-cc{
     width: 100%;
     float: left;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: none;
 }
 
 .receivers-cco{
     width: 100%;
     float: left;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: none;
 }
 
