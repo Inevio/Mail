@@ -443,7 +443,7 @@
 
     var showReceptors = function( fullMessage ){
 
-        if( fullMessage.to.length > 1 ){
+        if( fullMessage.to.length ){
 
             $( '.receivers-to', contentReceivers ).css( 'display', 'block' );
             $( '.receivers-to', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
@@ -952,6 +952,8 @@
     .on( 'click', '.reply-mode-reply-all', function(){
         
         var receivers = [];
+
+        receivers.push( contentColumn.data().message.from.address );
 
         for( var i = 0 ; i < contentColumn.data().message.to.length ; i++ ){
             if( myAccount !== contentColumn.data().message.to[ i ].address ){

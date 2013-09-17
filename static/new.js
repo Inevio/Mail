@@ -77,13 +77,15 @@
     
         .on( 'click', '.content-send', function(){
             
-            if( mailExpresion.test( $( '.content-to input', win ).val() ) && $( '.content-from option:selected', win ).text() ){
+            if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
 
                 $( '.content-from option:selected', win ).data( 'account' ).send( 
 
                     {
 
                         to : $( '.content-to input', win ).val(),
+                        cc : $( '.content-cc input', win ).val(),
+                        bcc : $( '.content-cco input', win ).val(),
                         subject : $( '.content-subject input', win ).val(),
                         content : $( '.content-compose', win ).html()
 
