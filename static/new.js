@@ -63,64 +63,64 @@
     
     win
 
-        .on( 'click', '.content-show', function(){
+    .on( 'click', '.content-show', function(){
 
-            if( $( '.content-left-container', win ).hasClass( 'show' ) ){
-                $( '.content-left-container', win ).removeClass( 'show' );
-                win.transition({ height : '-=40' }, 100 );
-            }else{
-                $( '.content-left-container', win ).addClass( 'show' );
-                win.transition({ height : '+=40' }, 100 );
-            }
+        if( $( '.content-left-container', win ).hasClass( 'show' ) ){
+            $( '.content-left-container', win ).removeClass( 'show' );
+            win.transition({ height : '-=40' }, 100 );
+        }else{
+            $( '.content-left-container', win ).addClass( 'show' );
+            win.transition({ height : '+=40' }, 100 );
+        }
 
-        })
-    
-        .on( 'click', '.content-send', function(){
-            
-            if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
+    })
 
-                $( '.content-from option:selected', win ).data( 'account' ).send( 
+    .on( 'click', '.content-send', function(){
+        
+        if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
 
-                    {
+            $( '.content-from option:selected', win ).data( 'account' ).send( 
 
-                        to : $( '.content-to input', win ).val(),
-                        cc : $( '.content-cc input', win ).val(),
-                        bcc : $( '.content-cco input', win ).val(),
-                        subject : $( '.content-subject input', win ).val(),
-                        content : $( '.content-compose', win ).html()
+                {
 
-                    },
+                    to : $( '.content-to input', win ).val(),
+                    cc : $( '.content-cc input', win ).val(),
+                    bcc : $( '.content-cco input', win ).val(),
+                    subject : $( '.content-subject input', win ).val(),
+                    content : $( '.content-compose', win ).html()
 
-                    function( error ){
+                },
 
-                        if( error ){
-                            console.log( error );
-                            alert( error, null, win.data().win );
-                        }else{
+                function( error ){
 
-                            wz.banner()
-                                .title( lang.mailSent )
-                                .text( lang.beenSent )
-                                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
-                                .render();
+                    if( error ){
+                        console.log( error );
+                        alert( error, null, win.data().win );
+                    }else{
 
-                            wz.app.closeWindow( win );
+                        wz.banner()
+                            .title( lang.mailSent )
+                            .text( lang.beenSent )
+                            .icon( 'https://static.weezeel.com/app/8/envelope.png' )
+                            .render();
 
-                        }
+                        wz.app.closeWindow( win );
 
                     }
 
-                 )
+                }
 
-            }else if( !$( '.content-to input', win ).val() ){
-                alert( lang.introduceTo, null, win.data().win );
-            }else if( !mailExpresion.test( $( '.content-to input', win ).val() ) ){
-                alert( lang.introduceToCorrect, null, win.data().win );
-            }else if( !$( '.content-from option:selected', win ).text() ){
-                alert( lang.introduceFrom, null, win.data().win );
-            }
+             )
 
-        });
+        }else if( !$( '.content-to input', win ).val() ){
+            alert( lang.introduceTo, null, win.data().win );
+        }else if( !mailExpresion.test( $( '.content-to input', win ).val() ) ){
+            alert( lang.introduceToCorrect, null, win.data().win );
+        }else if( !$( '.content-from option:selected', win ).text() ){
+            alert( lang.introduceFrom, null, win.data().win );
+        }
+
+    });
 
     $( '.wz-win-menu span', win ).text( lang.newEmail );
     $( '.content-to span', win ).text( lang.to + ':' );
