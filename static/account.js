@@ -37,7 +37,7 @@
 
     var moreData = function(){
 
-        win.transition( { 'height' : '502' }, 250);
+        win.transition( { 'height' : '455' }, 250);
         content.transition( { 'height' : '392' }, 250);
 
         $( '.description', content ).text( lang.accountData );
@@ -49,7 +49,7 @@
 
         object.find( 'input' ).val( '' );
         object.find( 'input' ).focus();
-        $( '.wz-prototype.select', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-protocol' ).find( 'span' ).text( lang.inProtocol + ':' );
+        //$( '.wz-prototype.select', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-protocol' ).find( 'span' ).text( lang.inProtocol + ':' );
         object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-host' ).find( 'span' ).text( lang.inHost + ':' );
         object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-port' ).find( 'span' ).text( lang.inPort + ':' );
         $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-secure' ).find( 'span' ).text( lang.inSecure + ':' );
