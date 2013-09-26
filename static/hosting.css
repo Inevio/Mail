@@ -64,13 +64,13 @@
 }
 
 .hosting-image.hotmail{
-    background: url('https://static.weezeel.com/app/8/servers/hotmail_disabled.png') no-repeat;
-    /*cursor: pointer;*/
+    background: url('https://static.weezeel.com/app/8/servers/hotmail.png') no-repeat;
+    cursor: pointer;
 }
 
 .hosting-image.outlook{
-    background: url('https://static.weezeel.com/app/8/servers/outlook_disabled.png') no-repeat;
-    /*cursor: pointer;*/
+    background: url('https://static.weezeel.com/app/8/servers/outlook.png') no-repeat;
+    cursor: pointer;
 }
 
 .hosting-image.yahoo{
