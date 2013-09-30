@@ -1284,9 +1284,9 @@
 
                     wz.mail.removeAccount( idData, function( error ){
 
-                        if( error ){
+                        /*if( error ){
                             alert( error, null, win.data().win );
-                        }else{
+                        }else{*/
 
                             wz.banner()
                                 .title( lang.accountDeleted )
@@ -1294,7 +1294,7 @@
                                 .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
-                        }
+                        //}
 
                     });
 
@@ -1465,6 +1465,14 @@
         accountItem.delay( 50 ).animate( { height : '-=' + boxItem.outerHeight( true ) }, 150 );
 
         mailsUnread( accountId );
+
+    })
+
+    .on( 'mail-accountParamChanged', function( e, accountId, type, value ){
+
+        if( type === 'description' ){
+            $( '.account-' + accountId, mailColumn ).children( 'span' ).text( value );
+        }
 
     })
 
