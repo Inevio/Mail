@@ -1284,9 +1284,9 @@
 
                     wz.mail.removeAccount( idData, function( error ){
 
-                        /*if( error ){
-                            alert( error, null, win.data().win );
-                        }else{*/
+                        if( error ){
+                            alert( error );
+                        }else{
 
                             wz.banner()
                                 .title( lang.accountDeleted )
@@ -1294,7 +1294,7 @@
                                 .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
-                        //}
+                        }
 
                     });
 
