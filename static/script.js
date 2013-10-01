@@ -21,14 +21,14 @@
     var contentStar        = $( '.message-star', contentColumn );
     var contentMessage     = $( '.content-message', contentColumn );
     var contentMessageText = $( '.content-message-text', contentMessage );
-    var contentHr          = $( 'hr', contentColumn );
+    //var contentHr          = $( 'hr', contentColumn );
 
     var myAccount = null;
 
     var _accountOpened = 0;
     var _folderOpened  = 0;
     var _pageOpened    = 0;
-    var _loadingMore   = false;
+    //var _loadingMore   = false;
 
     var _accountOptionsHeight = function( item ){
 
@@ -63,9 +63,14 @@
 
             wz.mail( 'common', function( error, account ){
 
+                if( error ){
+                    alert( error );
+                    return false;
+                }
+
                 if( account.unread ){
                     item.children( '.bullet' ).text( account.unread );
-                }                
+                }
 
             });
 
@@ -84,7 +89,7 @@
 
             if( element.unread ){
                 item.children( '.bullet' ).text( element.unread );
-            } 
+            }
             
         }
 
@@ -101,12 +106,11 @@
         element.getBoxes( false, function( error, boxes ){
 
             if( error ){
-                alert( error, null, win.data().win );
+                alert( error );
                 return false;
             }
 
             var boxPrototype = item.find( '.mailbox.wz-prototype' );
-            var tmp          = null;
 
             for( var i in boxes ){
 
@@ -124,38 +128,14 @@
 
     var _basicStyle = function(){
 
-        var size   = {};
         var result = '<style>';
-
-        // To Do
-        
-        /*
-        size['400'] = 400;
-        size['300'] = 200;
-        size['500'] = 500;
-        size['700'] = 700;
-
-        Object.keys( size ).forEach( function( key ){
-
-            result += '@font-face {' +
-                'font-weight: ' +key + ';' +
-                'font-style: normal;' +
-                "font-family: 'Effra';" +
-                "src: url('https://static.weezeel.com/font/effra_" + size[ key ] + ".eot');" +
-                "src: url('https://static.weezeel.com/font/effra_" + size[ key ] + ".eot?#iefix') format('embedded-opentype')," +
-                "url('https://static.weezeel.com/font/effra_" + size[ key ] + ".woff') format('woff')," +
-                "url('https://static.weezeel.com/font/effra_" + size[ key ] + ".ttf') format('truetype')," +
-                "url('https://static.weezeel.com/font/effra_" + size[ key ] + ".svg#effra_400regular') format('svg');" +
-                '}';
-
-        });*/
 
         result += '* {' +
             'font-family: "Effra", Helvetica, Arial, sans-serif;' +
             'font-size: 14px;' +
             '}';
 
-        return  result + '</style>';
+        return result + '</style>';
 
     };
 
@@ -289,7 +269,7 @@
         wz.mail.getAccounts( function( error, accounts ){
 
             if( error ){
-                alert( error, null, win.data().win );
+                alert( error );
                 return false;
             }
 
@@ -326,56 +306,37 @@
 
     var toDate = function( date ){
 
-        var sentToday = false;
-        var sentYesterday = false;
+        var todayDate         = new Date();
+        var todayDateInfo     = todayDate.format('dmY');
+        var yesterdayDate     = new Date( Date.now() - 86400000 );
+        var yesterdayDateInfo = yesterdayDate.format('dmY');
+        var sentDate          = new Date( date );
 
-        var todayDate = new Date();
-        var todayDateInfo = todayDate.getDate() + '' + todayDate.getMonth() + '' + todayDate.getFullYear();
+        return {
 
-        var yesterdayDate = new Date( todayDate.getTime() - 86400000 );
-        var yesterdayDateInfo = yesterdayDate.getDate() + '' + yesterdayDate.getMonth() + '' + yesterdayDate.getFullYear();
+            'sentToday'     : todayDateInfo === sentDate.format('dmY'),
+            'sentYesterday' : yesterdayDateInfo === sentDate.format('dmY'),
+            'sentHour'      : sentDate.format('H'),
+            'sentMinute'    : sentDate.format('i'),
+            'sentSecond'    : sentDate.format('s'),
+            'sentDay'       : sentDate.format('d'),
+            'sentMonth'     : sentDate.format('m'),
+            'sentYear'      : sentDate.format('Y')
 
-        var sentDate = new Date( date );
-
-        if( todayDateInfo === ( sentDate.getDate() + '' + sentDate.getMonth() + '' + sentDate.getFullYear() ) ){
-            sentToday = true;
-        }else if( yesterdayDateInfo === ( sentDate.getDate() + '' + sentDate.getMonth() + '' + sentDate.getFullYear() ) ){
-            sentYesterday = true;
-        }
- 
-        var sentDay = sentDate.getDate();
-            if( sentDay < 10 ){ sentDay = '0' + sentDay }
-        var sentMonth = sentDate.getMonth() + 1;
-            if( sentMonth < 10 ){ sentMonth = '0' + sentMonth }
-        var sentYear = sentDate.getFullYear();
-        
-        var sentHour = sentDate.getHours();
-            if( sentHour < 10 ){ sentHour = '0' + sentHour }
-        var sentMinute = sentDate.getMinutes();
-            if( sentMinute < 10 ){ sentMinute = '0' + sentMinute }
-        var sentSecond = sentDate.getSeconds();
-            if( sentSecond < 10 ){ sentSecond = '0' + sentSecond }
-
-        return({ 
-
-            'sentToday' : sentToday,
-            'sentYesterday' : sentYesterday, 
-            'sentHour' : sentHour, 
-            'sentMinute' : sentMinute, 
-            'sentSecond' : sentSecond, 
-            'sentDay' : sentDay, 
-            'sentMonth' : sentMonth, 
-            'sentYear' : sentYear
-
-        });
+        };
 
     };
 
     // Inserta la cuenta Common si no existe
     var showCommonAccount = function(){
 
-        wz.mail.getAccounts( function( e, list ){
+        wz.mail.getAccounts( function( error, list ){
             
+            if( error ){
+                alert( error );
+                return false;
+            }
+
             if( list.length > 1 ){
 
                 if( !mailColumn.children('general').length ){
@@ -393,7 +354,7 @@
 
         page = parseInt( page, 10 );
 
-        if( !page || page < 0 ){
+        if( isNaN( page ) || page < 0 ){
             page = 0;
         }
 
@@ -423,17 +384,17 @@
 
                 var messageList = [];
 
-                for( var i = 0, j = list.length ; i < j ; i++ ){
+                for( var i = 0, j = list.length; i < j ; i++ ){
                     messageList.push( _messageItem( list[ i ] ) );
                 }
 
                 messagesColumn.append( messageList );
 
-                // Nullify
-                messageList = messageSqueleton = null;
-
                 messagesZone.addClass( 'box-shown' );
                 win.trigger( 'messages-shown' );
+
+                // Nullify
+                messageList = list = account = null;
 
             });
 
@@ -448,12 +409,14 @@
             $( '.receivers-to', contentReceivers ).css( 'display', 'block' );
             $( '.receivers-to', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
 
-            for( var i = 0 ; i < fullMessage.to.length ; i++ ){
+            for( var i = 0, j = fullMessage.to.length; i < j; i++ ){
 
                 if( myAccount === fullMessage.to[ i ].address  ){
+
                     $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address + ' ' + '(' + lang.me + ')' ) );
+                
                 }else{
-                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address ) );                        
+                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address ) );
                 }
                 
             }
@@ -467,12 +430,12 @@
             $( '.receivers-cc', contentReceivers ).css( 'display', 'block' );
             $( '.receivers-cc', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
 
-            for( var i = 0 ; i < fullMessage.cc.length ; i++ ){
+            for( var k = 0, l = fullMessage.cc.length; k < l ; k++ ){
 
-                if( myAccount === fullMessage.cc[ i ].address  ){
-                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address + ' ' + '(' + lang.me + ')' ) );
+                if( myAccount === fullMessage.cc[ k ].address  ){
+                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ k ].address + ' ' + '(' + lang.me + ')' ) );
                 }else{
-                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ i ].address ) );                        
+                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ k ].address ) );
                 }
 
             }
@@ -486,12 +449,12 @@
             $( '.receivers-cco', contentReceivers ).css( 'display', 'block' );
             $( '.receivers-cco', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
 
-            for( var i = 0 ; i < fullMessage.bcc.length ; i++ ){
+            for( var m = 0, n = fullMessage.bcc.length; m < n; m++ ){
 
-                if( myAccount === fullMessage.bcc[ i ].address  ){
-                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address + ' ' + '(' + lang.me + ')' ) );
+                if( myAccount === fullMessage.bcc[ m ].address  ){
+                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ m ].address + ' ' + '(' + lang.me + ')' ) );
                 }else{
-                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ i ].address ) );                        
+                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ m ].address ) );
                 }
 
             }
@@ -500,7 +463,7 @@
             $( '.receivers-cco', contentReceivers ).css( 'display', 'none' );
         }
 
-    }
+    };
 
     var showMessage = function( message ){
 
@@ -511,16 +474,17 @@
         message.markAsSeen( function( error ){
 
             if( error ){
-                alert( error, null, win.data().win );
+                alert( error );
             }
 
         });
 
-        contentColumn.removeClass().addClass( 'message-' + message.id + ' right-column-content message-shown parent wz-fit' ).data( 'message', message );
+        contentColumn
+            .removeClass()
+            .addClass( 'message-' + message.id + ' right-column-content message-shown parent wz-fit' )
+            .data( 'message', message );
 
-        //attachments.children().not( '.content-attachments-title' ).remove();
-
-        contentMessage.height( 312 );
+        contentMessage.height( 312 ); // To Do -> Automatizar esto
 
         if( message.hasAttachments() ){
 
@@ -528,26 +492,26 @@
 
             /*if( attachments.children().size() < 3 ){
 
-                attachments.height( 66 );
-                contentMessage.height( 244 );
+                attachments.height( 66 ); // To Do -> Automatizar esto
+                contentMessage.height( 244 ); // To Do -> Automatizar esto
 
             }else if( attachments.children().size() === 3 ){
 
-                attachments.height( 88 );
-                contentMessage.height( 222 );
+                attachments.height( 88 ); // To Do -> Automatizar esto
+                contentMessage.height( 222 ); // To Do -> Automatizar esto
 
             }else{
 
-                attachments.height( 118 );
-                contentMessage.height( 192 );
+                attachments.height( 118 ); // To Do -> Automatizar esto
+                contentMessage.height( 192 ); // To Do -> Automatizar esto
 
             }*/
 
         }else{
 
-            contentColumn.removeClass( 'attachments' );   
-            //contentMessage.height( 315 );
-            //contentHr.css( 'margin-bottom', 15 );
+            contentColumn.removeClass( 'attachments' );
+            //contentMessage.height( 315 ); // To Do -> Automatizar esto
+            //contentHr.css( 'margin-bottom', 15 ); // To Do -> Automatizar esto
 
         }
 
@@ -565,6 +529,11 @@
 
         message.getFullMessage( function( error, fullMessage ){
 
+            if( error ){
+                alert( error );
+                return false;
+            }
+
             if( fullMessage.isFlagged() ){
                 contentStar.addClass( 'active' );
             }else{
@@ -572,22 +541,24 @@
             }
 
             if( fullMessage.to.length > 1 || fullMessage.cc.length || fullMessage.bcc.length ){
+
                 contentDisplay.css( 'display', 'block' );
                 $( '.reply-mode-reply-all', contentReplyMode ).css( 'display', 'block' );
+
             }else{
+
                 contentDisplay.css( 'display', 'none' );
                 $( '.reply-mode-reply-all', contentReplyMode ).css( 'display', 'none' );
-            }
 
-            if( error ){
-                return false;
             }
 
             contentMessageText.contents().find( 'body' ).html( _basicStyle() + fullMessage.message );
 
-            contentMessageText.contents().on( 'mousewheel', function( event, delta, deltaX, deltaY ){
-                contentMessage.scrollTop( contentMessage.scrollTop() + ( deltaY * -20 ) );
+            contentMessageText.contents().on( 'mousewheel', function( e, d, deltaX, deltaY ){
+
+                contentMessage.scrollTop(  contentMessage.scrollTop()  + ( deltaY * -20 ) );
                 contentMessage.scrollLeft( contentMessage.scrollLeft() + ( deltaX * -20 ) );
+
             });
 
             contentMessageText.height( contentMessageText.contents().find( 'html' ).height() );
@@ -601,7 +572,7 @@
             wz.mail( fullMessage.accountId, function( error, account ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                     return false;
                 }
 
@@ -612,24 +583,27 @@
 
             contentColumn.data( 'message', fullMessage );
 
-        });       
+        });
 
     };
 
+    /*
     var appendMessage = function( message ){
 
-        var messageSqueleton = messagePrototype
-                                    .clone()
-                                    .removeClass( 'wz-prototype' )
-                                    .addClass( 'message-' + message.id )
-                                    .data( 'message', message )
-                                    .appendTo( messagesColumn );
+        var messageSqueleton = messagePrototype.clone();
+
+        messageSqueleton
+            .removeClass( 'wz-prototype' )
+            .addClass( 'message-' + message.id )
+            .data( 'message', message )
+            .appendTo( messagesColumn );
+
+        messageSqueleton.find( '.message-origin' ).text( message.from.name );
+        messageSqueleton.find( '.message-subject' ).text( message.title );
 
         if( !message.isSeen() ){
             messageSqueleton.addClass( 'unread' );
         }
-
-        messageSqueleton.find( '.message-origin' ).text( message.from.name );
 
         if( message.attachments.length ){
             messageSqueleton.find( '.message-clip' ).addClass( 'attached' );
@@ -647,11 +621,10 @@
             messageSqueleton.find( '.message-star' ).addClass( 'active' );
         }
 
-        messageSqueleton.find( '.message-subject' ).text( message.title );
-
         messagesColumn.find( '.message:last-child' ).remove();
 
     };
+    */
 
     var insertBox = function( boxObj, accountObj ){
 
@@ -694,7 +667,7 @@
         wz.mail( accountId, function( error, account ){
 
             if( error ){
-                alert( error, null, win.data().win );
+                alert( error );
                 return false;
             }
 
@@ -705,11 +678,11 @@
             account.getBoxList( function( error, list ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                     return false;
                 }
 
-                for( var i = 0 ; i < list.length ; i++ ){
+                for( var i = 0, j = list.length; i < j; i++ ){
 
                     if( list[ i ].unread ){
                         $( '.box-' + list[ i ].id ).children( '.bullet' ).text( list[ i ].unread );
@@ -724,7 +697,7 @@
         wz.mail( 'common', function( error, account ){
 
             if( error ){
-                alert( error, null, win.data().win );
+                alert( error );
                 return false;
             }
 
@@ -735,11 +708,11 @@
             account.getBoxList( function( error, list ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                     return false;
                 }
 
-                for( var i = 0 ; i < list.length ; i++ ){
+                for( var i = 0, j = list.length; i < j ; i++ ){
 
                     if( list[ i ].unread ){
                         $( '.box-' + list[ i ].id ).children( '.bullet' ).text( list[ i ].unread );
@@ -757,14 +730,19 @@
 
         wql.getOpened( function( error, result ){
 
+            if( error ){
+                alert( error );
+                return false;
+            }
+
             if( result.length ){
 
                 win.on( 'boxes-shown', function( e, elementId ){
 
-                    if( elementId == result[0].account ){
+                    if( elementId == result[ 0 ].account ){
 
-                        $( '.account-' + result[0].account, mailColumn ).click();
-                        $( '.box-' + result[0].box, mailColumn ).click();
+                        $( '.account-' + result[ 0 ].account, mailColumn ).click();
+                        $( '.box-' + result[ 0 ].box, mailColumn ).click();
 
                         win.off( e );
 
@@ -774,10 +752,17 @@
 
                 win.on( 'messages-shown', function( e ){
 
-                    $( '.message-' + result[0].message, messagesColumn ).addClass( 'selected last-selected' );
+                    $( '.message-' + result[ 0 ].message, messagesColumn ).addClass( 'selected last-selected' );
 
-                    wz.mail.getMessage( result[0].message, function( error, message ){
+                    wz.mail.getMessage( result[ 0 ].message, function( error, message ){
+
+                        if( error ){
+                            alert( error );
+                            return false;
+                        }
+
                         showMessage( message );
+
                     });
 
                     win.off( e );
@@ -825,14 +810,17 @@
 
         if( $( this ).hasClass('display') ){
 
-            $( this ).removeClass('display');
-            $( this ).transition( { height: minHeight }, 250 );
+            $( this )
+                .removeClass('display')
+                .transition( { height: minHeight }, 250 );
 
         }else{
 
             openedAccount.text( $( this ).children( 'span' ).text() );
 
-            $('.display').transition( { height: minHeight }, 250 ).removeClass('display');
+            $('.display')
+                .removeClass('display')
+                .transition( { height: minHeight }, 250 );
 
             $( this )
                 .addClass('display')
@@ -844,11 +832,12 @@
 
     .on( 'click', '.mailbox', function( e ){
 
+        e.stopPropagation();
+
         openedMailbox.text( $(this).children( 'span' ).text() );
         showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ) );
         $( '.active', mailColumn ).removeClass( 'active' );
         $( this ).addClass( 'active' );
-        e.stopPropagation();
         contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
         contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
 
@@ -871,11 +860,12 @@
             var messages = $( '.message', messagesColumn );
             var beginRow = messages.index( this );
             var finalRow = messages.index( messages.filter( '.last-selected' ) );
+            var row      = null;
             
             if( beginRow < finalRow ){
-                var row = messages.slice( beginRow, finalRow + 1 ).addClass( 'selected' );
+                row = messages.slice( beginRow, finalRow + 1 ).addClass( 'selected' );
             }else{
-                var row = messages.slice( finalRow, beginRow + 1 ).addClass( 'selected' );
+                row = messages.slice( finalRow, beginRow + 1 ).addClass( 'selected' );
             }
             
             messages.not( row ).removeClass( 'selected' );
@@ -930,13 +920,13 @@
         if( contentColumn.hasClass( 'message-shown' ) ){
 
             wz.app.createWindow(
-                8, 
-                { 
-                    to: [ contentColumn.data().message.from.address ],
-                    cc: null,
-                    subject: contentColumn.data().message.title,
-                    message: contentColumn.data().message.message,
-                    reply: contentColumn.data().message.inReplyTo
+                8,
+                {
+                    to      : [ contentColumn.data().message.from.address ],
+                    cc      : null,
+                    subject : contentColumn.data().message.title,
+                    message : contentColumn.data().message.message,
+                    reply   : contentColumn.data().message.inReplyTo
                 },
                 'new'
             );
@@ -955,28 +945,34 @@
 
         receivers.push( contentColumn.data().message.from.address );
 
-        for( var i = 0 ; i < contentColumn.data().message.to.length ; i++ ){
-            if( myAccount !== contentColumn.data().message.to[ i ].address ){
-                receivers.push( contentColumn.data().message.to[ i ].address );
+        var data = contentColumn.data();
+
+        for( var i = 0, j = data.message.to.length; i < j; i++ ){
+
+            if( myAccount !== data.message.to[ i ].address ){
+                receivers.push( data.message.to[ i ].address );
             }
+
         }
 
         var cc = [];
 
-        for( var i = 0 ; i < contentColumn.data().message.cc.length ; i++ ){
-            if( myAccount !== contentColumn.data().message.cc[ i ].address ){
-                cc.push( contentColumn.data().message.cc[ i ].address );
+        for( var k = 0, l = data.message.cc.length; k < l; k++ ){
+
+            if( myAccount !== data.message.cc[ i ].address ){
+                cc.push( data.message.cc[ i ].address );
             }
+
         }
 
         wz.app.createWindow(
-            8, 
-            { 
-                to: receivers,
-                cc: cc,
-                subject: contentColumn.data().message.title,
-                message: contentColumn.data().message.message,
-                reply: contentColumn.data().message.inReplyTo
+            8,
+            {
+                to      : receivers,
+                cc      : cc,
+                subject : data.message.title,
+                message : data.message.message,
+                reply   : data.message.inReplyTo
             },
             'new'
         );
@@ -996,11 +992,13 @@
     })
 
     .on( 'click', '.new-mail', function(){
+
         if( mailZone.hasClass( 'account-shown' ) ){
             wz.app.createWindow( 8, '', 'new' );
         }else{
-            alert( lang.createAccountToSend, null, win.data().win );
+            alert( lang.createAccountToSend );
         }
+
     })
 
     .on( 'click', '.options-spam.middle', function(){
@@ -1013,16 +1011,18 @@
             $( this ).data( 'message' ).moveToSpam( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }else{
+
                     if( messageSpamPrev.size() ){
                         messageSpamPrev.click();
                     }else if( messageSpamNext.size() ){
                         messageSpamNext.click();
                     }
+
                 }
 
-            })
+            });
 
         });
 
@@ -1038,13 +1038,15 @@
             contentColumn.data( 'message' ).moveToSpam( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }else{
+
                     if( messageSpamPrev.size() ){
                         messageSpamPrev.click();
                     }else if( messageSpamNext.size() ){
                         messageSpamNext.click();
                     }
+
                 }
 
             });
@@ -1063,16 +1065,18 @@
             $( this ).data( 'message' ).moveToTrash( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }else{
+
                     if( messageTrashPrev.size() ){
                         messageTrashPrev.click();
                     }else if( messageTrashNext.size() ){
                         messageTrashNext.click();
                     }
+
                 }
 
-            })
+            });
 
         });
 
@@ -1088,13 +1092,15 @@
             contentColumn.data( 'message' ).moveToTrash( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }else{
+
                     if( messageTrashPrev.size() ){
                         messageTrashPrev.click();
                     }else if( messageTrashNext.size() ){
                         messageTrashNext.click();
                     }
+
                 }
 
             });
@@ -1110,10 +1116,10 @@
             $( this ).data( 'message' ).unmarkAsSeen( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }
 
-            })
+            });
 
         });
 
@@ -1126,7 +1132,7 @@
             contentColumn.data( 'message' ).unmarkAsSeen( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }
 
             });
@@ -1142,10 +1148,10 @@
             $( this ).data( 'message' ).markAsSeen( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }
 
-            })
+            });
 
         });
 
@@ -1158,7 +1164,7 @@
             contentColumn.data( 'message' ).markAsSeen( function( error ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }
 
             });
@@ -1195,13 +1201,14 @@
 
         if( contentColumn.hasClass( 'message-shown' ) ){
 
+            e.stopPropagation();
+
             if( contentReplyMode.hasClass( 'reply-mode-displayed' ) ){
                 contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
             }else{
                 contentReplyMode.addClass( 'reply-mode-displayed' ).css( 'display', 'block' );
             }
 
-            e.stopPropagation();
             contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
 
         }
@@ -1210,13 +1217,14 @@
 
     .on( 'click', '.content-origin-display', function( e ){
 
+        e.stopPropagation();
+
         if( contentReceivers.hasClass( 'content-receivers-displayed' ) ){
             contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
         }else{
             contentReceivers.addClass( 'content-receivers-displayed' ).css( 'display', 'block' );
         }
 
-        e.stopPropagation();
         contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
 
     })
@@ -1266,7 +1274,7 @@
     .on( 'contextmenu', '.account', function(){
 
         var mailData = $( this ).data( 'mail' );
-        var idData = $( this ).data( 'id' );
+        var idData   = $( this ).data( 'id' );
 
         if( !$( this ).hasClass( 'general' ) ){
 
@@ -1302,27 +1310,33 @@
 
                 .render();
 
-        }                
+        }
 
     })
 
     .on( 'contextmenu', '.account article', function( e ){
 
         e.stopPropagation();
+
         contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
         contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
-        return false;
+
+        return false; // To Do -> Es realmente necesario?
 
     })
 
     .on( 'mail-messageMarkedAsSeen', function( e, message ){
+
         $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
         mailsUnread( message.accountId );
+
     })
 
     .on( 'mail-messageUnmarkedAsSeen', function( e, message ){
+
         $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
         mailsUnread( message.accountId );
+
     })
 
     .on( 'mail-messageMarkedAsFlagged', function( e, message ){
@@ -1334,8 +1348,10 @@
     })
 
     .on( 'mail-messageRemoved', function( e, message ){
+
         $( '.message-' + message, messagesColumn ).remove();
         mailsUnread( message.accountId );
+
     })
 
     .on( 'mail-messageIn', function( e, accountId, message, boxId, boxType ){
@@ -1349,12 +1365,10 @@
             return false;
         }
 
-        var item = _messageItem( message );
-        var list = messagesInList();
-
+        var list     = messagesInList();
         var inserted = false;
 
-        list.each( function( index ){
+        list.each( function(){
 
             if( $( this ).data('message-time') < message.time ){
 
@@ -1376,12 +1390,12 @@
 
     })
 
-    .on( 'mail-messageOut', function( e, accountId, messageId, boxId ){
+    .on( 'mail-messageOut', function( e, accountId, messageId /*, boxId */ ){
         $( '.account-' + accountId + '-message-' + messageId, messagesColumn ).remove();
     })
 
-    .on( 'mail-newMessage', function( e, message ){
-        //console.log( message, arguments );
+    .on( 'mail-newMessage', function( /* e, message */ ){
+        // To Do
     })
 
     .on( 'mail-accountAdded', function( e, mailAccount ){
@@ -1478,10 +1492,12 @@
 
     .key( 'down', function( e ){
 
+        var target = null;
+
         if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
-            var target = messagesColumn.children('.selected').last();
+            target = messagesColumn.children('.selected').last();
         }else{
-            var target = messagesColumn.children('.selected').first();
+            target = messagesColumn.children('.selected').first();
         }
 
         e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
@@ -1502,10 +1518,12 @@
 
     .key( 'up', function( e ){
 
+        var target = null;
+
         if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
-            var target = messagesColumn.children('.selected').last();
+            target = messagesColumn.children('.selected').last();
         }else{
-            var target = messagesColumn.children('.selected').first();
+            target = messagesColumn.children('.selected').first();
         }
 
         e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
