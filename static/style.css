@@ -1017,14 +1017,17 @@ figure.options-label i:first-child{
 
 .content-message{
     width: 520px;
-    height: 315px;
+    height: 352px;
     float: left;
     margin-top: 20px;
 }
 
+
+/*
 .right-column-content.attachments .content-message{
     height: 181px;
 }
+*/
 
 .content-message-none{
     width: 100%;

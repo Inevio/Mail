@@ -484,7 +484,7 @@
             .addClass( 'message-' + message.id + ' right-column-content message-shown parent wz-fit' )
             .data( 'message', message );
 
-        contentMessage.height( 312 ); // To Do -> Automatizar esto
+        //contentMessage.height( 312 ); // To Do -> Automatizar esto
 
         if( message.hasAttachments() ){
 
@@ -554,12 +554,13 @@
 
             contentMessageText.contents().find( 'body' ).html( _basicStyle() + fullMessage.message );
 
-            contentMessageText.contents().on( 'mousewheel', function( e, d, deltaX, deltaY ){
+            if( !( /webkit/gi ).test( navigator.userAgent ) ){
 
-                contentMessage.scrollTop(  contentMessage.scrollTop()  + ( deltaY * -20 ) );
-                contentMessage.scrollLeft( contentMessage.scrollLeft() + ( deltaX * -20 ) );
+                contentMessageText.contents().on( 'mousewheel', function( e, d, deltaX, deltaY ){
+                    contentMessage.trigger( 'mousewheel', [ d, deltaX, deltaY ] );
+                });
 
-            });
+            }
 
             contentMessageText.height( contentMessageText.contents().find( 'html' ).height() );
 
