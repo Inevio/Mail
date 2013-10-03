@@ -667,65 +667,25 @@
 
     var mailsUnread = function( accountId ){
 
-        wz.mail( accountId, function( error, account ){
+        wz.mail.getCounters( function( error, list ){
 
             if( error ){
                 alert( error );
                 return false;
             }
+            
+            var i = 0;
+            var j = 0;
 
-            if( account.unread ){
-                $( '.account-' + accountId ).children( '.bullet' ).text( account.unread );
-            }else{
-                $( '.account-' + accountId ).children( '.bullet' ).text('');
+            for( i in list ){
+
+                 mailColumn.find('.account-' + i ).children( '.bullet' ).text( list[ i ].unread ? list[ i ].unread : '' );
+
+                for( j in list[ i ].folders ){
+                    mailColumn.find('.account-' + i + '-box-' + list[ i ].folders[ j ].id ).children( '.bullet' ).text( list[ i ].folders[ j ].unread ? list[ i ].folders[ j ].unread : '' );
+                }
+
             }
-
-            account.getBoxList( function( error, list ){
-
-                if( error ){
-                    alert( error );
-                    return false;
-                }
-
-                for( var i = 0, j = list.length; i < j; i++ ){
-
-                    if( list[ i ].unread ){
-                        $( '.box-' + list[ i ].id ).children( '.bullet' ).text( list[ i ].unread );
-                    }
-
-                }
-
-            });
-
-        });
-
-        wz.mail( 'common', function( error, account ){
-
-            if( error ){
-                alert( error );
-                return false;
-            }
-
-            if( account.unread ){
-                $( '.general' ).children( '.bullet' ).text( account.unread );
-            }
-
-            account.getBoxList( function( error, list ){
-
-                if( error ){
-                    alert( error );
-                    return false;
-                }
-
-                for( var i = 0, j = list.length; i < j ; i++ ){
-
-                    if( list[ i ].unread ){
-                        $( '.box-' + list[ i ].id ).children( '.bullet' ).text( list[ i ].unread );
-                    }
-
-                }
-
-            });
 
         });
 
