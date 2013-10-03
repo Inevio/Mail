@@ -562,7 +562,9 @@
 
             }
 
-            contentMessageText.height( contentMessageText.contents().find( 'html' ).height() );
+            contentMessageText
+                .css( 'height', '' )
+                .height( contentMessageText.contents().find( 'html' ).height() );
 
             if( fullMessage.isSpam() ){
                 $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'none' );
@@ -674,6 +676,8 @@
 
             if( account.unread ){
                 $( '.account-' + accountId ).children( '.bullet' ).text( account.unread );
+            }else{
+                $( '.account-' + accountId ).children( '.bullet' ).text('');
             }
 
             account.getBoxList( function( error, list ){
