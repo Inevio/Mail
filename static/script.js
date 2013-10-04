@@ -25,9 +25,12 @@
 
     var myAccount = null;
 
-    var _accountOpened = 0;
-    var _folderOpened  = 0;
-    var _pageOpened    = 0;
+    var _accountOpened      = 0;
+    var _folderOpened       = 0;
+    var _folderTypeOpened   = 'normal';
+    var _pageOpened         = 0;
+    var _lastMailFolderType = 'normal';
+
     //var _loadingMore   = false;
 
     var _accountOptionsHeight = function( item ){
@@ -350,7 +353,7 @@
     };
 
     // Muestra la lista de correos
-    var showMails = function( id, boxId, page ){
+    var showMails = function( id, boxId, boxType, page ){
 
         page = parseInt( page, 10 );
 
@@ -374,8 +377,9 @@
                     return false;
                 }
 
-                _folderOpened = boxId;
-                _pageOpened   = page;
+                _folderOpened     = boxId;
+                _folderTypeOpened = boxType;
+                _pageOpened       = page;
 
                 $( '.middle-column-pages-actual', messagesZone ).text( ( ( page * 20 ) + 1 ) + ' - ' + ( ( page + 1 ) * 20 ) );
 
@@ -466,6 +470,8 @@
     };
 
     var showMessage = function( message ){
+
+        _lastMailFolderType = _folderTypeOpened;
 
         contentSubject.text( message.title );
         contentName.text( message.from.name );
@@ -800,7 +806,7 @@
         e.stopPropagation();
 
         openedMailbox.text( $(this).children( 'span' ).text() );
-        showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ) );
+        showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ), $(this).data( 'type' ) );
         $( '.active', mailColumn ).removeClass( 'active' );
         $( this ).addClass( 'active' );
         contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
@@ -1024,26 +1030,67 @@
 
         var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
         var messageTrashNext = $( '.last-selected', messagesColumn ).next();
+        var messagesSelected = $( '.selected', messagesColumn );
 
-        $( '.selected', messagesColumn ).each( function(){
+        if( messagesSelected.length ){
 
-            $( this ).data( 'message' ).moveToTrash( function( error ){
+            if( _lastMailFolderType === 'trash' ){
 
-                if( error ){
-                    alert( error );
-                }else{
+                confirm( 'Hola Mundo', function( result ){
 
-                    if( messageTrashPrev.size() ){
-                        messageTrashPrev.click();
-                    }else if( messageTrashNext.size() ){
-                        messageTrashNext.click();
+                    if( result ){
+
+                        messagesSelected.each( function(){
+
+                            $( this ).data('message').remove( function( error ){
+
+                                if( error ){
+                                    alert( error );
+                                }else{
+
+                                    // To Do -> Esto tiene pinta de bucle excesivo
+                                    if( messageTrashPrev.size() ){
+                                        messageTrashPrev.click();
+                                    }else if( messageTrashNext.size() ){
+                                        messageTrashNext.click();
+                                    }
+
+                                }
+
+                            });
+
+                        });
+
                     }
 
-                }
+                });
 
-            });
+            }else{
 
-        });
+                messagesSelected.each( function(){
+
+                    $( this ).data( 'message' ).moveToTrash( function( error ){
+
+                        if( error ){
+                            alert( error );
+                        }else{
+
+                            // To Do -> Esto tiene pinta de bucle excesivo
+                            if( messageTrashPrev.size() ){
+                                messageTrashPrev.click();
+                            }else if( messageTrashNext.size() ){
+                                messageTrashNext.click();
+                            }
+
+                        }
+
+                    });
+
+                });
+
+            }
+
+        }
 
     })
 
@@ -1054,21 +1101,47 @@
             var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
             var messageTrashNext = $( '.last-selected', messagesColumn ).next();
 
-            contentColumn.data( 'message' ).moveToTrash( function( error ){
+            if( _lastMailFolderType === 'trash' ){
+            
+                confirm( 'Hola Mundo', function( result ){
 
-                if( error ){
-                    alert( error );
-                }else{
+                    contentColumn.data( 'message' ).remove( function( error ){
 
-                    if( messageTrashPrev.size() ){
-                        messageTrashPrev.click();
-                    }else if( messageTrashNext.size() ){
-                        messageTrashNext.click();
+                        if( error ){
+                            alert( error );
+                        }else{
+
+                            if( messageTrashPrev.size() ){
+                                messageTrashPrev.click();
+                            }else if( messageTrashNext.size() ){
+                                messageTrashNext.click();
+                            }
+
+                        }
+
+                    });
+
+                });
+
+            }else{
+
+                contentColumn.data( 'message' ).moveToTrash( function( error ){
+
+                    if( error ){
+                        alert( error );
+                    }else{
+
+                        if( messageTrashPrev.size() ){
+                            messageTrashPrev.click();
+                        }else if( messageTrashNext.size() ){
+                            messageTrashNext.click();
+                        }
+
                     }
 
-                }
+                });
 
-            });
+            }
 
         }
 
@@ -1208,7 +1281,7 @@
         }
 
         if( page !== _pageOpened ){
-            showMails( _accountOpened, _folderOpened, page );
+            showMails( _accountOpened, _folderOpened, _folderTypeOpened, page );
         }
         
     })
@@ -1223,7 +1296,7 @@
         }
 
         if( page !== _pageOpened ){
-            showMails( _accountOpened, _folderOpened, page );
+            showMails( _accountOpened, _folderOpened, _folderTypeOpened, page );
         }
 
     })
@@ -1513,21 +1586,7 @@
             return false;
         }
 
-        var message = messagesColumn.children('.selected');
-
-        if( !message.size() ){
-            return false;
-        }
-
-        message.prev().not('.wz-prototype, .middle-column-content-none').click();
-
-        message.data('message').moveToTrash( function( error ){
-
-            if( error ){
-                alert( error, null, win.data().win );
-            }
-
-        });
+        $('.options-trash.middle').click();
 
     })
 
