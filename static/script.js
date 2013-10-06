@@ -1396,32 +1396,32 @@
 
         if(
 
-            ( !isAccountOpened( 'common' ) || !isBoxOpened( boxType ) ) &&
-            ( !isAccountOpened( accountId ) || !isBoxOpened( boxId ) )
+            ( isAccountOpened( 'common' ) && isBoxOpened( boxType ) ) ||
+            ( isAccountOpened( accountId ) && isBoxOpened( boxId ) )
 
         ){
-            return false;
-        }
+            
+            var list     = messagesInList();
+            var inserted = false;
 
-        var list     = messagesInList();
-        var inserted = false;
+            list.each( function(){
 
-        list.each( function(){
+                if( $( this ).data('message-time') < message.time ){
 
-            if( $( this ).data('message-time') < message.time ){
+                    $( this ).before( _messageItem( message ) );
 
-                $( this ).before( _messageItem( message ) );
+                    inserted = true;
 
-                inserted = true;
+                    return false;
 
-                return false;
+                }
 
+            });
+
+            if( !inserted ){
+                messagesColumn.append( _messageItem( message ) );
             }
 
-        });
-
-        if( !inserted ){
-            messagesColumn.append( _messageItem( message ) );
         }
 
         mailsUnread( accountId );
