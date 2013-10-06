@@ -39,7 +39,7 @@
 
         var height = 0;
 
-        $( '.mailbox:not(.wz-prototype)', item ).each( function(){
+        $( '.mailbox', item ).add( item.children('span') ).not('.wz-prototype').each( function(){
             height += $( this ).outerHeight( true );
         });
 
@@ -776,8 +776,8 @@
     win
     .on( 'click', '.account', function(){
 
-        var minHeight = 38;
-        var height    = minHeight + _accountOptionsHeight( this );
+        var minHeight = $(this).children('span').outerHeight( true );
+        var height    = _accountOptionsHeight( this );
 
         if( $( this ).hasClass('display') ){
 
@@ -1494,7 +1494,13 @@
         insertBox( boxItem, accountItem );
 
         if( accountItem.hasClass('display') ){
-            accountItem.animate( { height : '+=' + boxItem.outerHeight( true ) }, 150 );
+
+            var size = 0;
+            boxItem.siblings('.mailbox, span').add( boxItem ).not('.wz-prototype').each(function(){
+                size += boxItem.outerHeight( true );
+            });
+
+            accountItem.stop().clearQueue().animate( { height : size }, 150 );
         }
 
         mailsUnread( accountId );
@@ -1510,11 +1516,17 @@
             return false;
         }
 
+        var size = 0;
+        
+        boxItem.siblings('.mailbox, span').not('.wz-prototype').each(function(){
+            size += boxItem.outerHeight( true );
+        });
+
         boxItem.fadeOut( 150, function(){
             $( this ).remove();
         });
 
-        accountItem.delay( 50 ).animate( { height : '-=' + boxItem.outerHeight( true ) }, 150 );
+        accountItem.delay( 50 ).accountItem.stop().clearQueue().animate( { height : height }, 150 );
 
         mailsUnread( accountId );
 

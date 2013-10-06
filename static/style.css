@@ -187,7 +187,7 @@ span{
 
 .account .arrow{
     width: 0px; 
-    height: 0px; 
+    height: 0px;
     float: left;
     margin: 13px 1px 0px 14px;
     border-top: 5px solid transparent;
@@ -203,8 +203,7 @@ span{
 }
 
 .account span{
-    margin-top: 11px;
-    margin-left: 8px;
+    margin: 11px 0px 12px 8px;
     color: #5D5D5D;
     max-width: 100px;
     height: 15px;
@@ -230,10 +229,6 @@ span{
 
 .syncing:hover{
     background: none;
-}
-
-.mailbox:nth-child(4){
-    margin-top: 13px;
 }
 
 .mailbox span{
