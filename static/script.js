@@ -787,8 +787,6 @@
 
         }else{
 
-            openedAccount.text( $( this ).children( 'span' ).text() );
-
             $('.display')
                 .removeClass('display')
                 .transition( { height: minHeight }, 250 );
@@ -805,6 +803,7 @@
 
         e.stopPropagation();
 
+        openedAccount.text( $(this).parent('.account').children( 'span' ).text() );
         openedMailbox.text( $(this).children( 'span' ).text() );
         showMails( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ), $(this).data( 'type' ) );
         $( '.active', mailColumn ).removeClass( 'active' );
