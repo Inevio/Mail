@@ -149,7 +149,7 @@ hr{
     width: 16px;
     height: 16px;
     float: left;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -63px 0;
+    background: url('@static/sprite.png') no-repeat -63px 0;
     background-size: 177px 40px;
 }
 
@@ -285,7 +285,7 @@ span{
     height: 13px;
     margin-top: 10px;
     margin-bottom: -2px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -14px -25px;
+    background: url('@static/sprite.png') no-repeat -14px -25px;
     background-size: 177px 40px;
     display: inline-block;
     cursor: pointer;
@@ -301,46 +301,46 @@ span{
 
 .syncing i{
     margin-top: 9px;
-    background: url('https://static.weezeel.com/app/8/syncing.gif') no-repeat 0 0;
+    background: url('@static/syncing.gif') no-repeat 0 0;
     background-size: 14px 14px;
 }
 
 .inbox i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -79px 0;
+    background: url('@static/sprite.png') no-repeat -79px 0;
     background-size: 177px 40px;
 }
 
 .starred i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -135px 0;
+    background: url('@static/sprite.png') no-repeat -135px 0;
     background-size: 177px 40px;
 }
 
 .sent i{
     height: 10px;
     margin-top: 13px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -121px 0;
+    background: url('@static/sprite.png') no-repeat -121px 0;
     background-size: 177px 40px;
 }
 
 .drafts i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -42px -26px;
+    background: url('@static/sprite.png') no-repeat -42px -26px;
     background-size: 177px 40px;
 }
 
 .trash i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -123px -23px;
+    background: url('@static/sprite.png') no-repeat -123px -23px;
     background-size: 177px 40px;
 }
 
 .spam i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -109px -23px;
+    background: url('@static/sprite.png') no-repeat -109px -23px;
     background-size: 177px 40px;
 }
 
 .normal i{
     height: 11px;
     margin-top: 10px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -93px 0;
+    background: url('@static/sprite.png') no-repeat -93px 0;
     background-size: 177px 40px;
 }
 
@@ -483,34 +483,34 @@ nav figure i{
 }
 
 /*nav figure.options-display i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -163px 0;
+    background: url('@static/sprite.png') no-repeat -163px 0;
     background-size: 177px 40px;
 }*/
 
 /*nav figure.options-refresh i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -28px -26px;
+    background: url('@static/sprite.png') no-repeat -28px -26px;
     background-size: 177px 40px;
 }*/
 
 .options-unread i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -121px 0;
+    background: url('@static/sprite.png') no-repeat -121px 0;
     background-size: 177px 40px;
     height: 10px;
     margin-top: 3px;
 }
 
 .options-read i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -63px -16px;
+    background: url('@static/sprite.png') no-repeat -63px -16px;
     background-size: 177px 40px;
 }
 
 .options-spam i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -109px -23px;
+    background: url('@static/sprite.png') no-repeat -109px -23px;
     background-size: 177px 40px;
 }
 
 .options-trash i{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -123px -23px;
+    background: url('@static/sprite.png') no-repeat -123px -23px;
     background-size: 177px 40px;
 }
 
@@ -519,7 +519,7 @@ nav figure i{
     height: 5px;
     margin-left: 2px;
     margin-top: 6px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -92px -27px;
+    background: url('@static/sprite.png') no-repeat -92px -27px;
     background-size: 177px 40px;
 }
 
@@ -528,7 +528,7 @@ nav figure.options-folder i:first-child{
     height: 11px;
     margin-left: 2px;
     margin-top: 2px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -93px 0;
+    background: url('@static/sprite.png') no-repeat -93px 0;
     background-size: 177px 40px;
 }*/
 
@@ -537,7 +537,7 @@ nav figure.options-folder i:first-child{
     height: 5px;
     margin-left: 2px;
     margin-top: 6px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -92px -27px;
+    background: url('@static/sprite.png') no-repeat -92px -27px;
     background-size: 177px 40px;
 }
 
@@ -546,7 +546,7 @@ figure.options-label i:first-child{
     height: 14px;
     margin-left: 2px;
     margin-top: 0px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -149px -14px;
+    background: url('@static/sprite.png') no-repeat -149px -14px;
     background-size: 177px 40px;
 }*/
 
@@ -580,7 +580,7 @@ figure.options-label i:first-child{
 .middle-column-pages-prev i{
     width: 10px;
     height: 16px;
-    background: url('https://static.weezeel.com/app/8/arrow_sprite.png') no-repeat -10px 0;
+    background: url('@static/arrow_sprite.png') no-repeat -10px 0;
     background-size: 20px 32px;
     display: block;
 }
@@ -608,7 +608,7 @@ figure.options-label i:first-child{
 .middle-column-pages-next i{
     width: 10px;
     height: 16px;
-    background: url('https://static.weezeel.com/app/8/arrow_sprite.png') no-repeat 0 0;
+    background: url('@static/arrow_sprite.png') no-repeat 0 0;
     background-size: 20px 32px;
     display: block;
 }
@@ -682,13 +682,13 @@ figure.options-label i:first-child{
     width: 14px;
     height: 13px;
     float: left;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -63px -16px;
+    background: url('@static/sprite.png') no-repeat -63px -16px;
     background-size: 177px 40px;
 }
 
 .message.unread .message-icon{
     height: 10px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -107px 0;
+    background: url('@static/sprite.png') no-repeat -107px 0;
     background-size: 177px 40px;
 }
 
@@ -697,7 +697,7 @@ figure.options-label i:first-child{
     width: 14px;
     height: 13px;
     display: none;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -79px -14px;
+    background: url('@static/sprite.png') no-repeat -79px -14px;
     background-size: 177px 40px;
 }
 
@@ -706,7 +706,7 @@ figure.options-label i:first-child{
 }
 
 .message.selected .message-clip.attached{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat 0 -25px;
+    background: url('@static/sprite.png') no-repeat 0 -25px;
     background-size: 177px 40px;
 }
 
@@ -745,12 +745,12 @@ figure.options-label i:first-child{
     width: 14px;
     height: 13px;
     float: left;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -135px 0;
+    background: url('@static/sprite.png') no-repeat -135px 0;
     background-size: 177px 40px;
 }
 
 .message-star.active{
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -149px 0;
+    background: url('@static/sprite.png') no-repeat -149px 0;
     background-size: 177px 40px;
 }
 
@@ -885,7 +885,7 @@ figure.options-label i:first-child{
 .options-prev i{
     width: 10px;
     height: 16px;
-    background: url('https://static.weezeel.com/app/8/arrow_sprite.png') no-repeat -10px 0;
+    background: url('@static/arrow_sprite.png') no-repeat -10px 0;
     background-size: 20px 32px;
 }
 
@@ -899,7 +899,7 @@ figure.options-label i:first-child{
 .options-next i{
     width: 10px;
     height: 16px;
-    background: url('https://static.weezeel.com/app/8/arrow_sprite.png') no-repeat 0 0;
+    background: url('@static/arrow_sprite.png') no-repeat 0 0;
     background-size: 20px 32px;
 }
 
@@ -909,7 +909,7 @@ figure.options-label i:first-child{
 
 .options-reply i{
     margin-top: 2px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -78px -27px;
+    background: url('@static/sprite.png') no-repeat -78px -27px;
     background-size: 177px 40px;
 }
 
@@ -922,7 +922,7 @@ figure.options-label i:first-child{
     width: 9px;
     height: 5px;
     margin-top: 4px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -92px -27px;
+    background: url('@static/sprite.png') no-repeat -92px -27px;
     background-size: 177px 40px;
 }
 
@@ -986,7 +986,7 @@ figure.options-label i:first-child{
     float: left;
     margin-left: 8px;
     display: block;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -163px -0;
+    background: url('@static/sprite.png') no-repeat -163px -0;
     background-size: 177px 40px;
     display: none;
 }
@@ -1098,7 +1098,7 @@ figure.options-label i:first-child{
     height: 13px;
     float: left;
     margin-top: 1px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -123px -10px;
+    background: url('@static/sprite.png') no-repeat -123px -10px;
     background-size: 177px 40px;
 }
 

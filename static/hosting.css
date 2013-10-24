@@ -59,27 +59,27 @@
 }
 
 .hosting-image.gmail{
-    background: url('https://static.weezeel.com/app/8/servers/gmail.png') no-repeat;
+    background: url('@static/servers/gmail.png') no-repeat;
     cursor: pointer;
 }
 
 .hosting-image.hotmail{
-    background: url('https://static.weezeel.com/app/8/servers/hotmail.png') no-repeat;
+    background: url('@static/servers/hotmail.png') no-repeat;
     cursor: pointer;
 }
 
 .hosting-image.outlook{
-    background: url('https://static.weezeel.com/app/8/servers/outlook.png') no-repeat;
+    background: url('@static/servers/outlook.png') no-repeat;
     cursor: pointer;
 }
 
 .hosting-image.yahoo{
-    background: url('https://static.weezeel.com/app/8/servers/yahoo.png') no-repeat;
+    background: url('@static/servers/yahoo.png') no-repeat;
     cursor: pointer;
 }
 
 .hosting-image.aol{
-    background: url('https://static.weezeel.com/app/8/servers/aol_disabled.png') no-repeat;
+    background: url('@static/servers/aol_disabled.png') no-repeat;
 }
 
 .hosting-image-other{

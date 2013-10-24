@@ -121,7 +121,7 @@ select{
     float: left;
     margin-top: 15px;
     margin-left: 39px;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -32px 0;
+    background: url('@static/sprite.png') no-repeat -32px 0;
     background-size: 177px 40px;
 }
 
@@ -240,6 +240,6 @@ span.content-show:hover{
     width: 14px;
     height: 13px;
     float: left;
-    background: url('https://static.weezeel.com/app/8/sprite.png') no-repeat -79px -14px;
+    background: url('@static/sprite.png') no-repeat -79px -14px;
     background-size: 177px 40px;
 }
