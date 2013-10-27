@@ -1,4 +1,5 @@
 
+    var win = $( this );
     var content = $( '.content', win );
     var email = '';
     var pass = '';
@@ -33,7 +34,7 @@
 
         content.children().not( '.finish , .account-name, .description' ).remove();
 
-    }
+    };
 
     var moreData = function(){
 

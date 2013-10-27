@@ -1,4 +1,6 @@
 
+var win = $( this );
+
     $(win)
 
     .on( 'click', '.gmail', function(){
@@ -10,7 +12,7 @@
 
     .on( 'click', '.yahoo, .hotmail, .outlook, .other', function(){
 
-        wz.app.createWindow( 8, params, 'account' );
+        wz.app.createWindow( params, 'account' );
         wz.app.closeWindow( win );
 
     });

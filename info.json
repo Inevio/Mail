@@ -3,10 +3,8 @@
 
     "name"    : "weeMail",
     "version" : "1.0",
-    "state"   : "beta",
-
-    "developer" : "wz",
-    "authKey"   : "wz",
+    "stage"   : "beta",
+    "api"     : "a100d2",
 
     "language" : {
 
@@ -15,142 +13,150 @@
 
     },
 
-    "common" : {
+    "device" : {
 
-        "css"    : [],
-        "script" : [],
-        "start"  : []
+        "desktop" : {
 
-    },
+            "primary" : "main",
+            "service" : [],
+            "common"  : {
 
-    "primary" : "main",
-
-    "window" : {
-
-        "main" : {
-
-            "description" : "",
-            
-            "template" : "main.html",
-
-            "maxizable" : true,
-            "resizable" : true,
-
-            "width"  : {
-
-                "default" : 1000,
-                "min"     : 1000,
-                "max"     : 0
+                "css"    : [],
+                "script" : [],
+                "start"  : []
 
             },
 
-            "height" : {
+            "view" : {
 
-                "default" : 540,
-                "min"     : 500,
-                "max"     : 0
+                "main" : {
 
-            },
+                    "description" : "",
+                    
+                    "template" : "main.html",
 
-            "css"    : ["style.css"],
-            "script" : ["script.js"],
-            "start"  : ["start.js"]
+                    "maxizable" : true,
+                    "resizable" : true,
 
-        },
-        
-        "new" : {
+                    "width"  : {
 
-            "description" : "",
-            
-            "template" : "new.html",
+                        "default" : 1000,
+                        "min"     : 1000,
+                        "max"     : 0
 
-            "maxizable" : true,
-            "resizable" : true,
+                    },
 
-            "width"  : {
+                    "height" : {
 
-                "default" : 560,
-                "min"     : 520,
-                "max"     : 0
+                        "default" : 540,
+                        "min"     : 500,
+                        "max"     : 0
 
-            },
+                    },
 
-            "height" : {
+                    "css"    : ["style.css"],
+                    "script" : ["script.js"],
+                    "start"  : ["start.js"]
 
-                "default" : 540,
-                "min"     : 300,
-                "max"     : 0
+                },
+                
+                "new" : {
 
-            },
+                    "description" : "",
+                    
+                    "template" : "new.html",
 
-            "css"    : ["new.css"],
-            "script" : ["new.js"]
+                    "maxizable" : true,
+                    "resizable" : true,
 
-        },
-        
-        "account" : {
+                    "width"  : {
 
-            "description" : "",
-            
-            "template" : "account.html",
+                        "default" : 560,
+                        "min"     : 520,
+                        "max"     : 0
 
-            "maxizable" : false,
-            "resizable" : false,
+                    },
 
-            "width"  : {
+                    "height" : {
 
-                "default" : 560,
-                "min"     : 0,
-                "max"     : 0
+                        "default" : 540,
+                        "min"     : 300,
+                        "max"     : 0
 
-            },
+                    },
 
-            "height" : {
+                    "css"    : ["new.css"],
+                    "script" : ["new.js"]
 
-                "default" : 330,
-                "min"     : 0,
-                "max"     : 0
+                },
+                
+                "account" : {
 
-            },
+                    "description" : "",
+                    
+                    "template" : "account.html",
 
-            "css"    : ["account.css"],
-            "script" : ["account.js"]
+                    "maxizable" : false,
+                    "resizable" : false,
 
-        },
-        
-        "hosting" : {
+                    "width"  : {
 
-            "description" : "",
-            
-            "template" : "hosting.html",
+                        "default" : 560,
+                        "min"     : 0,
+                        "max"     : 0
 
-            "maxizable" : false,
-            "resizable" : false,
+                    },
 
-            "width"  : {
+                    "height" : {
 
-                "default" : 816,
-                "min"     : 0,
-                "max"     : 0
+                        "default" : 330,
+                        "min"     : 0,
+                        "max"     : 0
 
-            },
+                    },
 
-            "height" : {
+                    "css"    : ["account.css"],
+                    "script" : ["account.js"]
 
-                "default" : 315,
-                "min"     : 0,
-                "max"     : 0
+                },
+                
+                "hosting" : {
 
-            },
+                    "description" : "",
+                    
+                    "template" : "hosting.html",
 
-            "css"    : ["hosting.css"],
-            "script" : ["hosting.js"]
+                    "maxizable" : false,
+                    "resizable" : false,
+
+                    "width"  : {
+
+                        "default" : 816,
+                        "min"     : 0,
+                        "max"     : 0
+
+                    },
+
+                    "height" : {
+
+                        "default" : 315,
+                        "min"     : 0,
+                        "max"     : 0
+
+                    },
+
+                    "css"    : ["hosting.css"],
+                    "script" : ["hosting.js"]
+
+                }
+
+            }
 
         }
 
     },
 
-    "permissions" : {
+    "permission" : {
 
         "mail" : {
 

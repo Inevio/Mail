@@ -1,4 +1,5 @@
-    
+
+    var win              = $( this );
     var attachments      = $( '.content-attachments', win );
     var openedAccount    = $( '.left-column-top span', win );
     var openedMailbox    = $( '.middle-column-top span', win );
@@ -288,7 +289,7 @@
                 mailZone.addClass( 'account-shown' );
                 showLastMessage();
             }else{
-                wz.app.createWindow( 8, null, 'hosting' );
+                wz.app.createWindow( null, 'hosting' );
             }
 
         });
@@ -883,7 +884,7 @@
         if( contentColumn.hasClass( 'message-shown' ) ){
 
             wz.app.createWindow(
-                8,
+
                 {
                     to      : [ contentColumn.data().message.from.address ],
                     cc      : null,
@@ -892,6 +893,7 @@
                     reply   : contentColumn.data().message.inReplyTo
                 },
                 'new'
+
             );
 
         }
@@ -929,7 +931,7 @@
         }
 
         wz.app.createWindow(
-            8,
+
             {
                 to      : receivers,
                 cc      : cc,
@@ -938,6 +940,7 @@
                 reply   : data.message.inReplyTo
             },
             'new'
+            
         );
 
     })
@@ -957,7 +960,7 @@
     .on( 'click', '.new-mail', function(){
 
         if( mailZone.hasClass( 'account-shown' ) ){
-            wz.app.createWindow( 8, '', 'new' );
+            wz.app.createWindow( '', 'new' );
         }else{
             alert( lang.createAccountToSend );
         }
@@ -1311,7 +1314,7 @@
             wz.menu()
 
                 .add( lang.renameAccount, function(){
-                    wz.app.createWindow( 8, mailData, 'account' );
+                    wz.app.createWindow( mailData, 'account' );
                 })
 
                 .add( lang.changeConfig, function(){
@@ -1456,7 +1459,7 @@
             contentColumn.removeClass( 'message-shown' );
             messagesZone.removeClass( 'box-shown' );
 
-            wz.app.createWindow( 8, null, 'hosting' );
+            wz.app.createWindow( null, 'hosting' );
             
         }
 
@@ -1663,7 +1666,7 @@
 
     addAccount
     .on( 'click', function(){
-        wz.app.createWindow( 8, null, 'hosting' );
+        wz.app.createWindow( null, 'hosting' );
     });
 
     // Start App
