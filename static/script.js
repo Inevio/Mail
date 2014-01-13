@@ -1313,15 +1313,15 @@
 
             wz.menu()
 
-                .add( lang.renameAccount, function(){
+                .addOption( lang.renameAccount, function(){
                     wz.app.createWindow( mailData, 'account' );
                 })
 
-                .add( lang.changeConfig, function(){
+                .addOption( lang.changeConfig, function(){
                     
                 })
 
-                .add( lang.deleteAccount, function() {
+                .addOption( lang.deleteAccount, function() {
 
                     wz.mail.removeAccount( idData, function( error ){
 
