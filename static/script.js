@@ -289,7 +289,7 @@
                 mailZone.addClass( 'account-shown' );
                 showLastMessage();
             }else{
-                wz.app.createWindow( null, 'hosting' );
+                wz.app.createView( null, 'hosting' );
             }
 
         });
@@ -883,7 +883,7 @@
 
         if( contentColumn.hasClass( 'message-shown' ) ){
 
-            wz.app.createWindow(
+            wz.app.createView(
 
                 {
                     to      : [ contentColumn.data().message.from.address ],
@@ -930,7 +930,7 @@
 
         }
 
-        wz.app.createWindow(
+        wz.app.createView(
 
             {
                 to      : receivers,
@@ -960,7 +960,7 @@
     .on( 'click', '.new-mail', function(){
 
         if( mailZone.hasClass( 'account-shown' ) ){
-            wz.app.createWindow( '', 'new' );
+            wz.app.createView( '', 'new' );
         }else{
             alert( lang.createAccountToSend );
         }
@@ -1314,7 +1314,7 @@
             wz.menu()
 
                 .addOption( lang.renameAccount, function(){
-                    wz.app.createWindow( mailData, 'account' );
+                    wz.app.createView( mailData, 'account' );
                 })
 
                 .addOption( lang.changeConfig, function(){
@@ -1459,7 +1459,7 @@
             contentColumn.removeClass( 'message-shown' );
             messagesZone.removeClass( 'box-shown' );
 
-            wz.app.createWindow( null, 'hosting' );
+            wz.app.createView( null, 'hosting' );
             
         }
 
@@ -1666,7 +1666,7 @@
 
     addAccount
     .on( 'click', function(){
-        wz.app.createWindow( null, 'hosting' );
+        wz.app.createView( null, 'hosting' );
     });
 
     // Start App

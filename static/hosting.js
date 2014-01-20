@@ -12,7 +12,7 @@ var win = $( this );
 
     .on( 'click', '.yahoo, .hotmail, .outlook, .other', function(){
 
-        wz.app.createWindow( params, 'account' );
+        wz.app.createView( params, 'account' );
         wz.app.closeWindow( win );
 
     });
