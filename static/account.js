@@ -14,7 +14,7 @@
     var outSecure = false;
     var mailExpresion = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,4}))$/;
 
-    $( '.name', content ).find( 'input' ).val( wz.info.user().fullName );
+    $( '.name', content ).find( 'input' ).val( wz.system.user().fullName );
     $( '.mail', content ).find( 'input' ).focus();
 
     var whichName = function(){
