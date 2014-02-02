@@ -105,7 +105,7 @@
                             .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                             .render();
 
-                        wz.app.closeWindow( win );
+                        wz.app.removeView( win );
 
                     }
 

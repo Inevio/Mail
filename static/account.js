@@ -66,7 +66,7 @@
 
         if( params ){
 
-            wz.app.closeWindow( win );
+            wz.app.removeView( win );
             wz.banner()
                 .title( lang.nameChanged )
                 .text( email + ' ' + lang.nowCalled + ' ' + description )
@@ -75,7 +75,7 @@
 
         }else{
 
-            wz.app.closeWindow( win );
+            wz.app.removeView( win );
             wz.banner()
                 .title( lang.accountAdded )
                 .text( email + ' ' + lang.beenAdded )
