@@ -1,5 +1,5 @@
 
-.wz-win{
+.wz-view{
     background: #FFF;
 }
 
@@ -11,20 +11,20 @@
     width: 5px;
 }
 
-.wz-win-minimize, .wz-win-maximize, .wz-win-close{
+.wz-view-minimize, .wz-view-maximize, .wz-view-close{
     float: right;
     margin-top: 9px;
 }
 
-.wz-win-close{
+.wz-view-close{
     margin-right: 20px;
 }
 
-.wz-win-minimize:hover, .wz-win-maximize:hover, .wz-win-close:hover{
+.wz-view-minimize:hover, .wz-view-maximize:hover, .wz-view-close:hover{
     border: 1px solid #EEE;
 }
 
-.wz-win-menu{
+.wz-view-menu{
     
     width: 560px;
     height: 39px;
@@ -34,7 +34,7 @@
     
 }
 
-.wz-win-menu span{
+.wz-view-menu span{
     
     width: 130px;
     float: left;

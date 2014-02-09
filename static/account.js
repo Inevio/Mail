@@ -264,7 +264,7 @@
 
     });
 
-    $( '.wz-win-menu span', win ).text( lang.addAccount );
+    $( '.wz-view-menu span', win ).text( lang.addAccount );
     $( '.description', win ).text( lang.accountAddress );
     $( '.name span', win ).text( lang.name + ':' );
     $( '.mail span', win ).text( lang.address + ':' );

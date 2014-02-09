@@ -123,7 +123,7 @@
 
     });
 
-    $( '.wz-win-menu span', win ).text( lang.newEmail );
+    $( '.wz-view-menu span', win ).text( lang.newEmail );
     $( '.content-to span', win ).text( lang.to + ':' );
     $( '.content-subject span', win ).text( lang.subject + ':' );
     $( '.content-from span', win ).text( lang.from + ':' );
