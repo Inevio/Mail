@@ -60,13 +60,13 @@
 
         $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'save' ).text( lang.save );
 
-    }
+    };
 
     var finish = function(){
 
         if( params ){
 
-            wz.app.removeView( win );
+            wz.view.remove();
             wz.banner()
                 .title( lang.nameChanged )
                 .text( email + ' ' + lang.nowCalled + ' ' + description )
@@ -75,7 +75,7 @@
 
         }else{
 
-            wz.app.removeView( win );
+            wz.view.remove();
             wz.banner()
                 .title( lang.accountAdded )
                 .text( email + ' ' + lang.beenAdded )
@@ -84,7 +84,7 @@
 
         }
 
-    }
+    };
 
     if( params ){
         email = params;
@@ -96,8 +96,8 @@
     .on( 'click', '.next', function(){
 
         email = $( '.mail', content ).find( 'input' ).val();
-        pass = $( '.pass', content ).find( 'input' ).val();
-        name = $( '.name', content ).find( 'input' ).val();
+        pass  = $( '.pass', content ).find( 'input' ).val();
+        name  = $( '.name', content ).find( 'input' ).val();
 
         if( mailExpresion.test( email ) && pass && name ){
 
@@ -139,20 +139,20 @@
             alert( lang.passwordError, null, win.data().win );
         }else if( !name ){
             alert( lang.nameError, null, win.data().win );
-        }       
+        }
 
     })
 
     .on( 'click', '.save', function(){
 
-        username = $( '.username', content ).find( 'input' ).val();
+        username   = $( '.username', content ).find( 'input' ).val();
+        inHost     = $( '.in-host', content ).find( 'input' ).val();
+        inPort     = parseInt( $( '.in-port', content ).find( 'input' ).val(), 10 );
         inProtocol = $( '.in-protocol', content ).find( 'option:selected' ).val();
-        inHost = $( '.in-host', content ).find( 'input' ).val();
-        inPort = parseInt( $( '.in-port', content ).find( 'input' ).val(), 10);
-        inSecure = $( '.in-secure', content ).find( 'input' ).is( ':checked' );
-        outHost = $( '.out-host', content ).find( 'input' ).val();
-        outPort = parseInt( $( '.out-port', content ).find( 'input' ).val(), 10);
-        outSecure = $( '.out-secure', content ).find( 'input' ).is( ':checked' );
+        inSecure   = $( '.in-secure', content ).find( 'input' ).is( ':checked' );
+        outHost    = $( '.out-host', content ).find( 'input' ).val();
+        outPort    = parseInt( $( '.out-port', content ).find( 'input' ).val(), 10 );
+        outSecure  = $( '.out-secure', content ).find( 'input' ).is( ':checked' );
 
         if( username && outHost && !isNaN( outPort ) && outPort > 1 && outPort < 65535 && inHost && !isNaN( inPort ) && inPort > 1 && inPort < 65535 ){
 
@@ -168,7 +168,7 @@
             alert( lang.inHostError, null, win.data().win );
         }else if( isNaN( inPort ) || inPort < 1 || inPort > 65535 ){
             alert( lang.inPortError, null, win.data().win );
-        }            
+        }
 
     })
 
@@ -178,33 +178,31 @@
 
         if( username ){
 
-            wz.mail.addAccount( 
+            wz.mail.addAccount(
 
                 {
-                    address : email,
-                    password : pass,
-                    name : name,
+                    
+                    address     : email,
                     description : description,
-                    username : username,
-                    inProtocol : inProtocol,
-                    inHost : inHost,
-                    inPort : inPort,
-                    inSecure : inSecure,
-                    outHost : outHost,
-                    outPort : outPort,
-                    outSecure : outSecure
+                    inHost      : inHost,
+                    inPort      : inPort,
+                    inProtocol  : inProtocol,
+                    inSecure    : inSecure,
+                    outHost     : outHost,
+                    outPort     : outPort,
+                    outSecure   : outSecure,
+                    name        : name,
+                    password    : pass,
+                    username    : username
+
                 },
 
                 function( error, details ){
 
                     if( error ){
-
                         alert( lang.error, null, win.data().win );
-
                     }else{
-                        
                         finish();
-
                     }
 
                 }

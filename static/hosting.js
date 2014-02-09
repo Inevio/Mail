@@ -6,14 +6,14 @@ var win = $( this );
     .on( 'click', '.gmail', function(){
 
         wz.mail.addGmailAccount();
-        wz.app.removeView( win );
+        wz.view.remove();
 
     })
 
     .on( 'click', '.yahoo, .hotmail, .outlook, .other', function(){
 
         wz.app.createView( params, 'account' );
-        wz.app.removeView( win );
+        wz.view.remove();
 
     });
 

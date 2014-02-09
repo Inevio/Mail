@@ -80,7 +80,7 @@
         
         if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
 
-            $( '.content-from option:selected', win ).data( 'account' ).send( 
+            $( '.content-from option:selected', win ).data( 'account' ).send(
 
                 {
 
@@ -105,13 +105,13 @@
                             .icon( 'https://static.weezeel.com/app/8/envelope.png' )
                             .render();
 
-                        wz.app.removeView( win );
+                        wz.view.remove();
 
                     }
 
                 }
 
-             )
+            );
 
         }else if( !$( '.content-to input', win ).val() ){
             alert( lang.introduceTo, null, win.data().win );
