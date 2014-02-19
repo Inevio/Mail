@@ -115,7 +115,7 @@
 
                         if( details.indexOf( 'ACCOUNT CAN NOT BE AUTOCONFIGURED' ) === -1 ){
 
-                            alert( lang.error, null, win.data().win );
+                            alert( lang.error );
 
                         }else{
 
@@ -134,11 +134,11 @@
             );
 
         }else if( !mailExpresion.test( email ) ){
-            alert( lang.mailError, null, win.data().win );
+            alert( lang.mailError );
         }else if( !pass ){
-            alert( lang.passwordError, null, win.data().win );
+            alert( lang.passwordError );
         }else if( !name ){
-            alert( lang.nameError, null, win.data().win );
+            alert( lang.nameError );
         }
 
     })
@@ -159,15 +159,15 @@
             whichName();
 
         }else if( !username ){
-            alert( lang.usernameError, null, win.data().win );
+            alert( lang.usernameError );
         }else if( !outHost ){
-            alert( lang.outHostError, null, win.data().win );
+            alert( lang.outHostError );
         }else if( isNaN( outPort ) || outPort < 1 || outPort > 65535 ){
-            alert( lang.outPortError, null, win.data().win );
+            alert( lang.outPortError );
         }else if( !inHost ){
-            alert( lang.inHostError, null, win.data().win );
+            alert( lang.inHostError );
         }else if( isNaN( inPort ) || inPort < 1 || inPort > 65535 ){
-            alert( lang.inPortError, null, win.data().win );
+            alert( lang.inPortError );
         }
 
     })
@@ -200,7 +200,7 @@
                 function( error, details ){
 
                     if( error ){
-                        alert( lang.error, null, win.data().win );
+                        alert( lang.error );
                     }else{
                         finish();
                     }
@@ -214,7 +214,7 @@
             wz.mail.getAccounts( function( error, accounts ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }else{
 
                     var account = {};
@@ -235,7 +235,7 @@
                         account.changeDescription( description, function( error ){
 
                             if( error ){
-                                alert( error, null, win.data().win );
+                                alert( error );
                             }else{
                                 finish();
                             }

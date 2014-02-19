@@ -365,7 +365,7 @@
         wz.mail( id, function( error, account ){
 
             if( error ){
-                alert( error, null, win.data().win );
+                alert( error );
                 return false;
             }
 
@@ -374,7 +374,7 @@
             account.getMessagesFromBox( boxId, 20, page, function( error, list ){
 
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                     return false;
                 }
 
@@ -862,7 +862,7 @@
             $(this).removeClass('active');
             $(this).parents( '.parent' ).data( 'message' ).unmarkAsFlagged( function( error ){
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }
             });
 
@@ -871,7 +871,7 @@
             $(this).addClass('active');
             $(this).parents( '.parent' ).data( 'message' ).markAsFlagged( function( error ){
                 if( error ){
-                    alert( error, null, win.data().win );
+                    alert( error );
                 }
             });
 
@@ -1031,7 +1031,7 @@
 
             if( _lastMailFolderType === 'trash' ){
 
-                confirm( 'Hola Mundo', function( result ){
+                confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
 
                     if( result ){
 
@@ -1098,7 +1098,7 @@
 
             if( _lastMailFolderType === 'trash' ){
             
-                confirm( 'Hola Mundo', function( result ){
+                confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
 
                     contentColumn.data( 'message' ).remove( function( error ){
 
@@ -1606,7 +1606,7 @@
                 wz.mail.search( $( e.target ).val(), 'all', 'all', function( error, messages ){
 
                     if( error ){
-                        alert( error, null, win.data().win );
+                        alert( error );
                         return false;
                     }
 
@@ -1628,14 +1628,14 @@
                 wz.mail( _accountOpened, function( error, account ){
 
                     if( error ){
-                        alert( error, null, win.data().win );
+                        alert( error );
                         return false;
                     }
 
                     account.search( $( e.target ).val(), 'all', function( error, messages ){
 
                         if( error ){
-                            alert( error, null, win.data().win );
+                            alert( error );
                             return false;
                         }
 

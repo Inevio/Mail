@@ -96,7 +96,7 @@
 
                     if( error ){
                         console.log( error );
-                        alert( error, null, win.data().win );
+                        alert( error );
                     }else{
 
                         wz.banner()
@@ -114,11 +114,11 @@
             );
 
         }else if( !$( '.content-to input', win ).val() ){
-            alert( lang.introduceTo, null, win.data().win );
+            alert( lang.introduceTo );
         }else if( !mailExpresion.test( $( '.content-to input', win ).val() ) ){
-            alert( lang.introduceToCorrect, null, win.data().win );
+            alert( lang.introduceToCorrect );
         }else if( !$( '.content-from option:selected', win ).text() ){
-            alert( lang.introduceFrom, null, win.data().win );
+            alert( lang.introduceFrom );
         }
 
     });
