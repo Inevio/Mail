@@ -1330,9 +1330,9 @@
                         }else{
 
                             wz.banner()
-                                .title( lang.accountDeleted )
-                                .text( mailData + ' ' + lang.deleteSuccessful )
-                                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
+                                .setTitle( lang.accountDeleted )
+                                .setText( mailData + ' ' + lang.deleteSuccessful )
+                                .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
                                 .render();
 
                         }

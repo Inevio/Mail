@@ -68,18 +68,18 @@
 
             wz.view.remove();
             wz.banner()
-                .title( lang.nameChanged )
-                .text( email + ' ' + lang.nowCalled + ' ' + description )
-                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
+                .setTitle( lang.nameChanged )
+                .setText( email + ' ' + lang.nowCalled + ' ' + description )
+                .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
                 .render();
 
         }else{
 
             wz.view.remove();
             wz.banner()
-                .title( lang.accountAdded )
-                .text( email + ' ' + lang.beenAdded )
-                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
+                .setTitle( lang.accountAdded )
+                .setText( email + ' ' + lang.beenAdded )
+                .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
                 .render();
 
         }

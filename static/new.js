@@ -100,9 +100,9 @@
                     }else{
 
                         wz.banner()
-                            .title( lang.mailSent )
-                            .text( lang.beenSent )
-                            .icon( 'https://static.weezeel.com/app/8/envelope.png' )
+                            .setTitle( lang.mailSent )
+                            .setText( lang.beenSent )
+                            .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
                             .render();
 
                         wz.view.remove();
