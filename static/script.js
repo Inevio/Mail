@@ -1493,36 +1493,36 @@
     });
 
     wz.mail
-    .on( 'messageMarkedAsSeen', function( e, message ){
+    .on( 'messageMarkedAsSeen', function( message ){
 
         $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
         mailsUnread( message.accountId );
 
     })
 
-    .on( 'messageUnmarkedAsSeen', function( e, message ){
+    .on( 'messageUnmarkedAsSeen', function( message ){
 
         $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
         mailsUnread( message.accountId );
 
     })
 
-    .on( 'messageMarkedAsFlagged', function( e, message ){
+    .on( 'messageMarkedAsFlagged', function( message ){
         $( '.message-' + message.id + ' .message-star', win ).addClass( 'active' );
     })
 
-    .on( 'messageUnmarkedAsFlagged', function( e, message ){
+    .on( 'messageUnmarkedAsFlagged', function( message ){
         $( '.message-' + message.id + ' .message-star', win ).removeClass( 'active' );
     })
 
-    .on( 'messageRemoved', function( e, message ){
+    .on( 'messageRemoved', function( message ){
 
         $( '.message-' + message, messagesColumn ).remove();
         mailsUnread( message.accountId );
 
     })
 
-    .on( 'messageIn', function( e, accountId, message, boxId, boxType ){
+    .on( 'messageIn', function( accountId, message, boxId, boxType ){
 
         if(
 
@@ -1558,15 +1558,15 @@
 
     })
 
-    .on( 'messageOut', function( e, accountId, messageId /*, boxId */ ){
+    .on( 'messageOut', function( accountId, messageId /*, boxId */ ){
         $( '.account-' + accountId + '-message-' + messageId, messagesColumn ).remove();
     })
 
-    .on( 'newMessage', function( /* e, message */ ){
+    .on( 'newMessage', function( /* message */ ){
         // To Do
     })
 
-    .on( 'accountAdded', function( e, mailAccount ){
+    .on( 'accountAdded', function( mailAccount ){
 
         addAccount.before( _accountItem( mailAccount ) );
         mailZone.addClass( 'account-shown' );
@@ -1577,7 +1577,7 @@
 
     })
 
-    .on( 'accountRemoved', function( e, accountId ){
+    .on( 'accountRemoved', function( accountId ){
         
         $( '.account-' + accountId, mailColumn )
             .addClass('removed')
@@ -1602,11 +1602,11 @@
 
     })
 
-    .on( 'accountRemoveFinished', function( e, accountId ){
+    .on( 'accountRemoveFinished', function( accountId ){
         $( '.account-' + accountId + '-message', messagesColumn ).remove();
     })
 
-    .on( 'boxAdded', function( e, mailBox, accountId ){
+    .on( 'boxAdded', function( mailBox, accountId ){
 
         if( mailBox.type === 'normal' || mailBox.type === 'allMail' ){
             return false;
@@ -1637,7 +1637,7 @@
 
     })
 
-    .on( 'boxRemoved', function( e, boxId, accountId ){
+    .on( 'boxRemoved', function( boxId, accountId ){
 
         var boxItem     = $( '.account-' + accountId + '-box-' + boxId, mailColumn );
         var accountItem = boxItem.parent();
@@ -1662,7 +1662,7 @@
 
     })
 
-    .on( 'accountParamChanged', function( e, accountId, type, value ){
+    .on( 'accountParamChanged', function( accountId, type, value ){
 
         if( type === 'description' ){
             $( '.account-' + accountId, mailColumn ).children( 'span' ).text( value );
