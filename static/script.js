@@ -1358,183 +1358,6 @@
 
     })
 
-    .on( 'mail-messageMarkedAsSeen', function( e, message ){
-
-        $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
-        mailsUnread( message.accountId );
-
-    })
-
-    .on( 'mail-messageUnmarkedAsSeen', function( e, message ){
-
-        $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
-        mailsUnread( message.accountId );
-
-    })
-
-    .on( 'mail-messageMarkedAsFlagged', function( e, message ){
-        $( '.message-' + message.id + ' .message-star', win ).addClass( 'active' );
-    })
-
-    .on( 'mail-messageUnmarkedAsFlagged', function( e, message ){
-        $( '.message-' + message.id + ' .message-star', win ).removeClass( 'active' );
-    })
-
-    .on( 'mail-messageRemoved', function( e, message ){
-
-        $( '.message-' + message, messagesColumn ).remove();
-        mailsUnread( message.accountId );
-
-    })
-
-    .on( 'mail-messageIn', function( e, accountId, message, boxId, boxType ){
-
-        if(
-
-            ( isAccountOpened( 'common' ) && isBoxOpened( boxType ) ) ||
-            ( isAccountOpened( accountId ) && isBoxOpened( boxId ) )
-
-        ){
-            
-            var list     = messagesInList();
-            var inserted = false;
-
-            list.each( function(){
-
-                if( $( this ).data('message-time') < message.time ){
-
-                    $( this ).before( _messageItem( message ) );
-
-                    inserted = true;
-
-                    return false;
-
-                }
-
-            });
-
-            if( !inserted ){
-                messagesColumn.append( _messageItem( message ) );
-            }
-
-        }
-
-        mailsUnread( accountId );
-
-    })
-
-    .on( 'mail-messageOut', function( e, accountId, messageId /*, boxId */ ){
-        $( '.account-' + accountId + '-message-' + messageId, messagesColumn ).remove();
-    })
-
-    .on( 'mail-newMessage', function( /* e, message */ ){
-        // To Do
-    })
-
-    .on( 'mail-accountAdded', function( e, mailAccount ){
-
-        addAccount.before( _accountItem( mailAccount ) );
-        mailZone.addClass( 'account-shown' );
-
-        if( !mailColumn.children('.general').length ){
-            showCommonAccount();
-        }
-
-    })
-
-    .on( 'mail-accountRemoved', function( e, accountId ){
-        
-        $( '.account-' + accountId, mailColumn )
-            .addClass('removed')
-            .transition( { height : 0 }, 150, function(){
-                $( this ).remove();
-            });
-
-        if( $( '.account', mailColumn ).not('.removed, .wz-prototype, .general').size() < 1 ){
-
-            $( '.account.general', mailColumn ).transition( { height : 0 }, 150, function(){
-                $( this ).remove();
-            });
-
-            contentColumn.removeClass( 'message-shown' );
-            messagesZone.removeClass( 'box-shown' );
-
-            wz.app.createView( null, 'hosting' );
-            
-        }
-
-        $( '.account-' + accountId + '-message', messagesColumn ).remove();
-
-    })
-
-    .on( 'mail-accountRemoveFinished', function( e, accountId ){
-        $( '.account-' + accountId + '-message', messagesColumn ).remove();
-    })
-
-    .on( 'mail-boxAdded', function( e, mailBox, accountId ){
-
-        if( mailBox.type === 'normal' || mailBox.type === 'allMail' ){
-            return false;
-        }
-
-        var accountItem = $( '.account-' + accountId, mailColumn );
-        var boxItem     = null;
-
-        if( !accountItem.size() ){
-            return false;
-        }
-
-        boxItem = _boxItem( mailBox, accountItem.children('.wz-prototype') );
-
-        insertBox( boxItem, accountItem );
-
-        if( accountItem.hasClass('display') ){
-
-            var size = 0;
-            boxItem.siblings('.mailbox, span').add( boxItem ).not('.wz-prototype').each(function(){
-                size += boxItem.outerHeight( true );
-            });
-
-            accountItem.stop().clearQueue().animate( { height : size }, 150 );
-        }
-
-        mailsUnread( accountId );
-
-    })
-
-    .on( 'mail-boxRemoved', function( e, boxId, accountId ){
-
-        var boxItem     = $( '.account-' + accountId + '-box-' + boxId, mailColumn );
-        var accountItem = boxItem.parent();
-
-        if( !boxItem.size() ){
-            return false;
-        }
-
-        var size = 0;
-        
-        boxItem.siblings('.mailbox, span').not('.wz-prototype').each(function(){
-            size += boxItem.outerHeight( true );
-        });
-
-        boxItem.fadeOut( 150, function(){
-            $( this ).remove();
-        });
-
-        accountItem.delay( 50 ).accountItem.stop().clearQueue().animate( { height : height }, 150 );
-
-        mailsUnread( accountId );
-
-    })
-
-    .on( 'mail-accountParamChanged', function( e, accountId, type, value ){
-
-        if( type === 'description' ){
-            $( '.account-' + accountId, mailColumn ).children( 'span' ).text( value );
-        }
-
-    })
-
     .key( 'down', function( e ){
 
         var target = null;
@@ -1667,6 +1490,184 @@
     addAccount
     .on( 'click', function(){
         wz.app.createView( null, 'hosting' );
+    });
+
+    wz.mail
+    .on( 'messageMarkedAsSeen', function( e, message ){
+
+        $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
+        mailsUnread( message.accountId );
+
+    })
+
+    .on( 'messageUnmarkedAsSeen', function( e, message ){
+
+        $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
+        mailsUnread( message.accountId );
+
+    })
+
+    .on( 'messageMarkedAsFlagged', function( e, message ){
+        $( '.message-' + message.id + ' .message-star', win ).addClass( 'active' );
+    })
+
+    .on( 'messageUnmarkedAsFlagged', function( e, message ){
+        $( '.message-' + message.id + ' .message-star', win ).removeClass( 'active' );
+    })
+
+    .on( 'messageRemoved', function( e, message ){
+
+        $( '.message-' + message, messagesColumn ).remove();
+        mailsUnread( message.accountId );
+
+    })
+
+    .on( 'messageIn', function( e, accountId, message, boxId, boxType ){
+
+        if(
+
+            ( isAccountOpened( 'common' ) && isBoxOpened( boxType ) ) ||
+            ( isAccountOpened( accountId ) && isBoxOpened( boxId ) )
+
+        ){
+            
+            var list     = messagesInList();
+            var inserted = false;
+
+            list.each( function(){
+
+                if( $( this ).data('message-time') < message.time ){
+
+                    $( this ).before( _messageItem( message ) );
+
+                    inserted = true;
+
+                    return false;
+
+                }
+
+            });
+
+            if( !inserted ){
+                messagesColumn.append( _messageItem( message ) );
+            }
+
+        }
+
+        mailsUnread( accountId );
+
+    })
+
+    .on( 'messageOut', function( e, accountId, messageId /*, boxId */ ){
+        $( '.account-' + accountId + '-message-' + messageId, messagesColumn ).remove();
+    })
+
+    .on( 'newMessage', function( /* e, message */ ){
+        // To Do
+    })
+
+    .on( 'accountAdded', function( e, mailAccount ){
+
+        addAccount.before( _accountItem( mailAccount ) );
+        mailZone.addClass( 'account-shown' );
+
+        if( !mailColumn.children('.general').length ){
+            showCommonAccount();
+        }
+
+    })
+
+    .on( 'accountRemoved', function( e, accountId ){
+        
+        $( '.account-' + accountId, mailColumn )
+            .addClass('removed')
+            .transition( { height : 0 }, 150, function(){
+                $( this ).remove();
+            });
+
+        if( $( '.account', mailColumn ).not('.removed, .wz-prototype, .general').size() < 1 ){
+
+            $( '.account.general', mailColumn ).transition( { height : 0 }, 150, function(){
+                $( this ).remove();
+            });
+
+            contentColumn.removeClass( 'message-shown' );
+            messagesZone.removeClass( 'box-shown' );
+
+            wz.app.createView( null, 'hosting' );
+            
+        }
+
+        $( '.account-' + accountId + '-message', messagesColumn ).remove();
+
+    })
+
+    .on( 'accountRemoveFinished', function( e, accountId ){
+        $( '.account-' + accountId + '-message', messagesColumn ).remove();
+    })
+
+    .on( 'boxAdded', function( e, mailBox, accountId ){
+
+        if( mailBox.type === 'normal' || mailBox.type === 'allMail' ){
+            return false;
+        }
+
+        var accountItem = $( '.account-' + accountId, mailColumn );
+        var boxItem     = null;
+
+        if( !accountItem.size() ){
+            return false;
+        }
+
+        boxItem = _boxItem( mailBox, accountItem.children('.wz-prototype') );
+
+        insertBox( boxItem, accountItem );
+
+        if( accountItem.hasClass('display') ){
+
+            var size = 0;
+            boxItem.siblings('.mailbox, span').add( boxItem ).not('.wz-prototype').each(function(){
+                size += boxItem.outerHeight( true );
+            });
+
+            accountItem.stop().clearQueue().animate( { height : size }, 150 );
+        }
+
+        mailsUnread( accountId );
+
+    })
+
+    .on( 'boxRemoved', function( e, boxId, accountId ){
+
+        var boxItem     = $( '.account-' + accountId + '-box-' + boxId, mailColumn );
+        var accountItem = boxItem.parent();
+
+        if( !boxItem.size() ){
+            return false;
+        }
+
+        var size = 0;
+        
+        boxItem.siblings('.mailbox, span').not('.wz-prototype').each(function(){
+            size += boxItem.outerHeight( true );
+        });
+
+        boxItem.fadeOut( 150, function(){
+            $( this ).remove();
+        });
+
+        accountItem.delay( 50 ).accountItem.stop().clearQueue().animate( { height : height }, 150 );
+
+        mailsUnread( accountId );
+
+    })
+
+    .on( 'accountParamChanged', function( e, accountId, type, value ){
+
+        if( type === 'description' ){
+            $( '.account-' + accountId, mailColumn ).children( 'span' ).text( value );
+        }
+
     });
 
     // Start App
