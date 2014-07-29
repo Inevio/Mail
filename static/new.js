@@ -37,6 +37,7 @@
 
         $( '.content-to input', win ).val( to );
 
+        /*
         if( params.cc ){
 
             $( '.content-left-container', win ).addClass( 'show' );
@@ -53,6 +54,7 @@
             $( '.content-cc input', win ).val( cc );
 
         }
+        */
 
         if( params.subject ){
             $( '.content-subject input', win ).val( params.reply? params.subject : 'Re: ' + params.subject );
@@ -64,6 +66,7 @@
     
     win
 
+    /*
     .on( 'click', '.content-show', function(){
 
         if( $( '.content-left-container', win ).hasClass( 'show' ) ){
@@ -75,8 +78,9 @@
         }
 
     })
+    */
 
-    .on( 'click', '.content-send', function(){
+    .on( 'click', '.content-send figure', function(){
         
         if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
 
@@ -124,7 +128,7 @@
     });
 
     $( '.wz-view-menu span', win ).text( lang.newEmail );
-    $( '.content-to span', win ).text( lang.to + ':' );
+    $( '.content-to span', win ).append( lang.to + ':' );
     $( '.content-subject span', win ).text( lang.subject + ':' );
     $( '.content-from span', win ).text( lang.from + ':' );
     $( '.content-send span', win ).text( lang.send );

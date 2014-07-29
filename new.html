@@ -2,71 +2,68 @@
 <section class="wz-view-menu wz-view-menu-radius dark wz-dragger wz-fit-x">
 
     <span class="wz-dragger"></span>
-    
-    <figure class="wz-view-close">
-        <i></i>
-    </figure>
-    <figure class="wz-view-maximize">
-        <i></i>
-    </figure>
-    <figure class="wz-view-minimize">
-        <i></i>
-    </figure>   
+
+    <section class="wz-view-menu-group right wz-dragger">
+
+        <figure class="wz-view-minimize">
+            <i></i>
+        </figure>
+
+        <figure class="wz-view-maximize">
+            <i></i>
+        </figure>
+
+        <figure class="wz-view-close">
+            <i></i>
+        </figure>
+
+    </section>
 
 </section>
 
 <section class="content wz-fit">
 
-    <div class="content-left-container wz-fit-x">
+    <section class="content-info wz-fit-x">
 
-        <article class="content-left">
-
-            <article class="content-to">
-                <span></span>
-                <input type="text" />
-            </article>
-
-            <article class="content-cc">
-                <span>CC:</span>
-                <input type="text" />
-            </article>
-
-            <article class="content-cco">
-                <span>CCO:</span>
-                <input type="text" />
-            </article>
-
-            <article class="content-subject">
-                <span></span>
-                <input type="text" />
-            </article>
-
-            <article class="content-from">
-                <span></span>
-                <form>
-                    <select>
-                        <option class="wz-prototype"></option>
-                    </select>
-                </form>
-            </article>
-
+        <article class="content-to">
+            <span><i></i></span>
+            <input class="wz-ui-input" type="text" />
         </article>
 
-        <span class="content-show">CC</span>
+        <article class="content-cc">
+            <span>CC:</span>
+            <input class="wz-ui-input" type="text" />
+        </article>
 
-        <figure class="content-send">
-            <i></i>
+        <article class="content-cco">
+            <span>CCO:</span>
+            <input class="wz-ui-input" type="text" />
+        </article>
+
+        <article class="content-subject">
             <span></span>
-        </figure>
+            <input class="wz-ui-input" type="text" />
+        </article>
 
-    </div>
+        <article class="content-from">
+            <span></span>
+            <select class="wz-ui-input">
+                <option class="wz-prototype"></option>
+            </select>
+        </article>
 
-    <article class="content-compose wz-scroll wz-fit" contenteditable="true">
+    </section>
+
+    <article class="wz-ui-input content-compose wz-scroll wz-fit" contenteditable="true">
     </article>
 
     <article class="content-attachments">
         <i></i>
         <span></span>
+    </article>
+
+    <article class="content-send">
+        <figure class="wz-ui-button blue">Send</figure>
     </article>
 
 </section>
