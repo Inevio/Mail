@@ -24,14 +24,6 @@
     border: 1px solid #EEE;
 }
 
-hr{
-    width: 520px;
-    float: left;
-    border: none;
-    border-bottom: 1px solid #DADADA;
-    margin: 20px 0;
-}
-
 .left-column{
     width: 180px;
     height: 540px;
@@ -1061,9 +1053,11 @@ figure.options-label i:first-child{
 
 .content-attachments{
     display: none;
-    width: 540px;
-    height: 118px;
+    width: 520px;
+    height: 0px;
     float: left;
+    border-top: 1px solid #dadada;
+    padding: 18px 0;
 }
 
 .right-column-content.attachments .content-attachments{
@@ -1073,7 +1067,6 @@ figure.options-label i:first-child{
 .content-attachments article{
     width: 520px;
     float: left;
-    padding-right: 20px;
     height: 16px;
     margin-top: 10px;
 }

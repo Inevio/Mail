@@ -1,15 +1,16 @@
 
-    var win              = $( this );
-    var attachments      = $( '.content-attachments', win );
-    var openedAccount    = $( '.left-column-top span', win );
-    var openedMailbox    = $( '.middle-column-top span', win );
-    var mailZone         = $( '.left-column-content', win );
-    var mailColumn       = $( '.left-column-content-scroll', mailZone );
-    var mailAccount      = $( '.account.wz-prototype', mailColumn );
-    var addAccount       = $( '.add-account', mailColumn );
-    var messagesZone     = $( '.middle-column-content', win );
-    var messagesColumn   = $( '.middle-column-content-scroll', messagesZone );
-    var messagePrototype = $( '.message.wz-prototype', messagesColumn );
+    var win                 = $( this );
+    var attachments         = $( '.content-attachments', win );
+    var attachmentPrototype = $( '.wz-prototype', attachments );
+    var openedAccount       = $( '.left-column-top span', win );
+    var openedMailbox       = $( '.middle-column-top span', win );
+    var mailZone            = $( '.left-column-content', win );
+    var mailColumn          = $( '.left-column-content-scroll', mailZone );
+    var mailAccount         = $( '.account.wz-prototype', mailColumn );
+    var addAccount          = $( '.add-account', mailColumn );
+    var messagesZone        = $( '.middle-column-content', win );
+    var messagesColumn      = $( '.middle-column-content-scroll', messagesZone );
+    var messagePrototype    = $( '.message.wz-prototype', messagesColumn );
 
     var contentSubject     = $( '.mail-subject', win );
     var contentColumn      = $( '.right-column-content', win );
@@ -22,7 +23,6 @@
     var contentStar        = $( '.message-star', contentColumn );
     var contentMessage     = $( '.content-message', contentColumn );
     var contentMessageText = $( '.content-message-text', contentMessage );
-    //var contentHr          = $( 'hr', contentColumn );
 
     var myAccount = null;
 
@@ -494,32 +494,9 @@
         //contentMessage.height( 312 ); // To Do -> Automatizar esto
 
         if( message.hasAttachments() ){
-
             contentColumn.addClass( 'attachments' );
-
-            /*if( attachments.children().size() < 3 ){
-
-                attachments.height( 66 ); // To Do -> Automatizar esto
-                contentMessage.height( 244 ); // To Do -> Automatizar esto
-
-            }else if( attachments.children().size() === 3 ){
-
-                attachments.height( 88 ); // To Do -> Automatizar esto
-                contentMessage.height( 222 ); // To Do -> Automatizar esto
-
-            }else{
-
-                attachments.height( 118 ); // To Do -> Automatizar esto
-                contentMessage.height( 192 ); // To Do -> Automatizar esto
-
-            }*/
-
         }else{
-
             contentColumn.removeClass( 'attachments' );
-            //contentMessage.height( 315 ); // To Do -> Automatizar esto
-            //contentHr.css( 'margin-bottom', 15 ); // To Do -> Automatizar esto
-
         }
 
         var messageDate = toDate( message.time.getTime() );
@@ -534,11 +511,13 @@
 
         wql.changeOpened( [ message.id, $( '.mailbox.active', mailColumn ).data( 'id' ), $( '.account.display', mailColumn ).data( 'id' ) ] );
 
+        contentMessageText.contents().find( 'body' ).empty();
+
         message.getFullMessage( function( error, fullMessage ){
 
             if( error ){
                 alert( error );
-                return false;
+                return;
             }
 
             if( fullMessage.isFlagged() ){
@@ -579,6 +558,7 @@
                 $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'block' );
             }
 
+            // To Do -> Por que se hace esto cada vez que se abre la app?
             wz.mail( fullMessage.accountId, function( error, account ){
 
                 if( error ){
@@ -592,6 +572,54 @@
             });
 
             contentColumn.data( 'message', fullMessage );
+
+            if( fullMessage.hasAttachments() ){
+
+                attachments.children('.attachment').not( attachmentPrototype ).remove();
+
+                var newAttachment;
+
+                for( var i in fullMessage.attachments ){
+
+                    newAttachment = attachmentPrototype.clone().removeClass('wz-prototype');
+
+                    newAttachment.find('.name').text( fullMessage.attachments[ i ].name );
+                    newAttachment.find('.size').text( wz.tool.bytesToUnit( fullMessage.attachments[ i ].size ) );
+
+                    newAttachment.appendTo( attachments );
+
+                }
+
+            }else{
+                contentColumn.removeClass( 'attachments' );
+            }
+
+            var availableHeight = contentColumn.height();
+            console.log( contentColumn, availableHeight );
+
+            if( fullMessage.hasAttachments() && attachments.children('.attachment').not( attachmentPrototype ).size() < 3 ){
+
+                attachments.height( 72 ); // To Do -> Automatizar esto
+
+                availableHeight -= attachments.outerHeight( true );
+
+            }else if( fullMessage.hasAttachments() && attachments.children('.attachment').not( attachmentPrototype ).size() >= 3 ){
+
+                attachments.height( 104 ); // To Do -> Automatizar esto
+
+                availableHeight -= attachments.outerHeight( true );
+
+            }
+
+            // To Do -> Seguro que podemos hacerlo con elementos en concreto y no con una búsqueda asi
+            contentColumn.children().not('.wz-fit-ignore').not( contentMessage ).not( attachments ).map( function(){
+                console.log( this );
+                availableHeight -= $( this ).outerHeight( true );
+            });
+
+            console.log( availableHeight );
+
+            contentMessage.outerHeight( availableHeight, true );
 
         });
 
