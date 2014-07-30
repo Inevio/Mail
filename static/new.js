@@ -125,6 +125,27 @@
             alert( lang.introduceFrom );
         }
 
+    })
+
+    .on( 'click', '.show-cc', function(){
+
+        var diff = 0;
+        if( $(this).hasClass('active') ){
+
+            diff -= $('.content-cc').css( 'display', 'none' ).outerHeight( true );
+            diff -= $('.content-cco').css( 'display', 'none' ).outerHeight( true );
+
+        }else{
+
+            diff += $('.content-cc').css( 'display', 'block' ).outerHeight( true );
+            diff += $('.content-cco').css( 'display', 'block' ).outerHeight( true );
+
+        }
+
+        $(this).toggleClass('active');
+
+        $('.content, .content-info').add( win ).height( diff < 0 ? '-=' + Math.abs( diff ) : '+=' + diff );
+
     });
 
     $( '.wz-view-menu span', win ).text( lang.newEmail );
