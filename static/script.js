@@ -563,7 +563,7 @@
 
                 if( error ){
                     alert( error );
-                    return false;
+                    return;
                 }
 
                 myAccount = account.address;
@@ -585,17 +585,17 @@
 
                     newAttachment.find('.name').text( fullMessage.attachments[ i ].name );
                     newAttachment.find('.size').text( wz.tool.bytesToUnit( fullMessage.attachments[ i ].size ) );
+                    newAttachment.data( 'actions', fullMessage.attachments[ i ] );
 
                     newAttachment.appendTo( attachments );
 
                 }
 
             }else{
-                contentColumn.removeClass( 'attachments' );
+                contentColumn.removeClass('attachments');
             }
 
             var availableHeight = contentColumn.height();
-            console.log( contentColumn, availableHeight );
 
             if( fullMessage.hasAttachments() && attachments.children('.attachment').not( attachmentPrototype ).size() < 3 ){
 
@@ -613,11 +613,8 @@
 
             // To Do -> Seguro que podemos hacerlo con elementos en concreto y no con una búsqueda asi
             contentColumn.children().not('.wz-fit-ignore').not( contentMessage ).not( attachments ).map( function(){
-                console.log( this );
                 availableHeight -= $( this ).outerHeight( true );
             });
-
-            console.log( availableHeight );
 
             contentMessage.outerHeight( availableHeight, true );
 
@@ -1513,6 +1510,31 @@
 
     .on( 'ui-view-resize-end', function(){
         wql.changeSize( [ win.width(), win.height() ] );
+    });
+
+    attachments
+    .on( 'click', '.content-attachments-download', function(){
+
+        $( this ).parent().data('actions').download();
+
+        wz.banner()
+            .setTitle( lang.startDownload )
+            .setText( $( this ).siblings('.name').text() )
+            .render();
+
+    })
+
+    .on( 'click', '.content-attachments-import', function(){
+        
+        $( this ).parent().data('actions').import( function(){
+            console.log( arguments );
+        });
+
+        wz.banner()
+            .setTitle( lang.startImport )
+            .setText( $( this ).siblings('.name').text() )
+            .render();
+
     });
 
     addAccount

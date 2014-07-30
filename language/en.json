@@ -78,6 +78,8 @@
     "markAsUnread" : "Mark as unread",
     "marAsSpam" : "Mark as spam",
     "moveToTrash" : "Move to trash",
-    "createAccountToSend" : "Add an account to start sending mails"
+    "createAccountToSend" : "Add an account to start sending mails",
+    "startDownload" : "Starting download...",
+    "startImport" : "Starting import..."
     
 }
