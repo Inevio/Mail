@@ -80,6 +80,8 @@
     "moveToTrash" : "Eliminar",
     "createAccountToSend" : "Añade una cuenta para poder mandar correos",
     "startDownload" : "Comenzando descarga...",
-    "startImport" : "Comenzando importación..."
+    "startImport" : "Comenzando importación...",
+    "file" : "archivo",
+    "files" : "archivos"
     
 }

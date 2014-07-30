@@ -80,6 +80,8 @@
     "moveToTrash" : "Move to trash",
     "createAccountToSend" : "Add an account to start sending mails",
     "startDownload" : "Starting download...",
-    "startImport" : "Starting import..."
+    "startImport" : "Starting import...",
+    "file" : "file",
+    "files" : "files"
     
 }

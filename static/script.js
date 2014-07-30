@@ -578,18 +578,23 @@
                 attachments.children('.attachment').not( attachmentPrototype ).remove();
 
                 var newAttachment;
+                var attachmentsSize = 0;
 
                 for( var i in fullMessage.attachments ){
 
                     newAttachment = attachmentPrototype.clone().removeClass('wz-prototype');
 
                     newAttachment.find('.name').text( fullMessage.attachments[ i ].name );
-                    newAttachment.find('.size').text( wz.tool.bytesToUnit( fullMessage.attachments[ i ].size ) );
+                    newAttachment.find('.size').text( '(' + wz.tool.bytesToUnit( fullMessage.attachments[ i ].size ) + ')' );
                     newAttachment.data( 'actions', fullMessage.attachments[ i ] );
 
                     newAttachment.appendTo( attachments );
 
+                    attachmentsSize += fullMessage.attachments[ i ].size;
+
                 }
+
+                $('.content-attachments-title .stats').text( '(' + fullMessage.attachments.length + ' ' + ( fullMessage.attachments.length !== 1 ? lang.files : lang.file ) + ', ' + wz.tool.bytesToUnit( attachmentsSize ) + ')' );
 
             }else{
                 contentColumn.removeClass('attachments');
@@ -773,7 +778,7 @@
 
         $( '.new-mail span', mailZone ).text( lang.newEmail );
         $( '.add-account span', mailColumn ).text( lang.addAccount );
-        $( '.content-attachments-title span', contentColumn ).not( '.light' ).text( lang.attachments );
+        $( '.content-attachments-title span', contentColumn ).not( '.stats' ).text( lang.attachments );
         $( '.content-attachments-view', contentColumn ).text( lang.view );
         $( '.content-attachments-download', contentColumn ).text( lang.download );
         $( '.content-attachments-import', contentColumn ).text( lang.import );
