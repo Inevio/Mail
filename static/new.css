@@ -175,11 +175,23 @@ select{
     padding-bottom: 10px;
 }
 
+.content-attachments-button{
+    border-radius: 3px;
+    display: inline-block;
+    border: 1px solid transparent;
+    padding: 5px 7px 2px;
+}
+
+.content-attachments-button:hover{
+    border-color: #cacaca;
+}
+
 .content-attachments span{
     float: left;
     font-size: 14px;
-    color: #AAA;
     cursor: pointer;
+    width: auto;
+    margin: 0;
 }
 
 .content-attachments span:hover{
@@ -192,7 +204,7 @@ select{
     float: left;
     background: url('@static/sprite.png') no-repeat -79px -14px;
     background-size: 177px 40px;
-    margin-top: 7px;
+    margin: 0 3px 0 0;
 }
 
 .content-send{

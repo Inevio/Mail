@@ -176,6 +176,14 @@
 
             "send" : true
 
+        },
+
+        "fs" : {
+
+            "create" : true,
+            "modify" : true,
+            "read"   : true
+
         }
 
     }

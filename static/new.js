@@ -65,21 +65,6 @@
     }
     
     win
-
-    /*
-    .on( 'click', '.content-show', function(){
-
-        if( $( '.content-left-container', win ).hasClass( 'show' ) ){
-            $( '.content-left-container', win ).removeClass( 'show' );
-            win.transition({ height : '-=40' }, 100 );
-        }else{
-            $( '.content-left-container', win ).addClass( 'show' );
-            win.transition({ height : '+=40' }, 100 );
-        }
-
-    })
-    */
-
     .on( 'click', '.content-send figure', function(){
         
         if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
@@ -146,10 +131,19 @@
 
         $('.content, .content-info').add( win ).height( diff < 0 ? '-=' + Math.abs( diff ) : '+=' + diff );
 
+    })
+
+    .on( 'click', '.content-attachments-button', function(){
+        
+        wz.fs.selectFile( 'root', lang.attachFile, function( error, list ){
+            console.log( error, list );
+        });
+
     });
 
-    $( '.wz-view-menu span', win ).text( lang.newEmail );
-    $( '.content-to span', win ).append( lang.to + ':' );
-    $( '.content-subject span', win ).text( lang.subject + ':' );
-    $( '.content-from span', win ).text( lang.from + ':' );
-    $( '.content-send span', win ).text( lang.send );
+    $('.wz-view-menu span').text( lang.newEmail );
+    $('.content-to span').append( lang.to + ':' );
+    $('.content-subject span').text( lang.subject + ':' );
+    $('.content-from span').text( lang.from + ':' );
+    $('.content-send span').text( lang.send );
+    $('.content-attachments span').text( lang.attachFile );
