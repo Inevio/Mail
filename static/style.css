@@ -1099,28 +1099,6 @@ figure.options-label i:first-child{
     color: #AAA;
 }
 
-span.content-attachments-view{
-    float: right;
-    margin-right: 8px;
-    color: #AAA;
-    cursor: pointer;
-}
-
-.content-attachments-view:hover{
-    color: #5D5D5D;
-}
-
-span.content-attachments-download{
-    float: right;
-    margin-right: 8px;
-    color: #AAA;
-    cursor: pointer;
-}
-
-.content-attachments-download:hover{
-    color: #5D5D5D;
-}
-
 span.content-attachments-import{
     float: right;
     color: #AAA;

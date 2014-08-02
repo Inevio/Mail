@@ -779,8 +779,6 @@
         $( '.new-mail span', mailZone ).text( lang.newEmail );
         $( '.add-account span', mailColumn ).text( lang.addAccount );
         $( '.content-attachments-title span', contentColumn ).not( '.stats' ).text( lang.attachments );
-        $( '.content-attachments-view', contentColumn ).text( lang.view );
-        $( '.content-attachments-download', contentColumn ).text( lang.download );
         $( '.content-attachments-import', contentColumn ).text( lang.import );
         $( '.middle-column-top input', contentColumn ).attr( 'placeholder', lang.search );
         $( '.receivers-to .receivers-title', contentReceivers ).text( lang.to + ':' );
@@ -1517,19 +1515,7 @@
         wql.changeSize( [ win.width(), win.height() ] );
     });
 
-    attachments
-    .on( 'click', '.content-attachments-download', function(){
-
-        $( this ).parent().data('actions').download();
-
-        wz.banner()
-            .setTitle( lang.startDownload )
-            .setText( $( this ).siblings('.name').text() )
-            .render();
-
-    })
-
-    .on( 'click', '.content-attachments-import', function(){
+    attachments.on( 'click', '.content-attachments-import', function(){
         
         $( this ).parent().data('actions').import( function(){
             console.log( arguments );

@@ -1,6 +1,10 @@
 
-    var win           = $( this );
-    var mailExpresion = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,4}))$/;
+    var win                 = $( this );
+    var content             = $('.content');
+    var mailExpresion       = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,4}))$/;
+    var attachments         = $('.content-attachments');
+    var attachmentPrototype = $('.attachment.wz-prototype');
+    var attachmentsList     = [];
 
     wz.mail.getAccounts( function( error, accounts ){
 
@@ -73,30 +77,29 @@
 
                 {
 
-                    to : $( '.content-to input', win ).val(),
-                    cc : $( '.content-cc input', win ).val(),
-                    bcc : $( '.content-cco input', win ).val(),
-                    subject : $( '.content-subject input', win ).val(),
-                    content : $( '.content-compose', win ).html()
+                    to          : $( '.content-to input', win ).val(),
+                    cc          : $( '.content-cc input', win ).val(),
+                    bcc         : $( '.content-cco input', win ).val(),
+                    subject     : $( '.content-subject input', win ).val(),
+                    content     : $( '.content-compose', win ).html(),
+                    attachments : attachmentsList
 
                 },
 
                 function( error ){
 
                     if( error ){
-                        console.log( error );
                         alert( error );
-                    }else{
-
-                        wz.banner()
-                            .setTitle( lang.mailSent )
-                            .setText( lang.beenSent )
-                            .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
-                            .render();
-
-                        wz.view.remove();
-
+                        return;
                     }
+
+                    wz.banner()
+                        .setTitle( lang.mailSent )
+                        .setText( lang.beenSent )
+                        .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
+                        .render();
+
+                    wz.view.remove();
 
                 }
 
@@ -133,10 +136,85 @@
 
     })
 
-    .on( 'click', '.content-attachments-button', function(){
+    .on( 'click', '.content-add-attachments-button', function(){
         
         wz.fs.selectFile( 'root', lang.attachFile, function( error, list ){
-            console.log( error, list );
+
+            if( error ){
+                return;
+            }
+
+            var attachmentsHeight = 0;
+            var generalHeight     = 0;
+
+            if( attachments.css('display') === 'none' ){
+
+                attachments.show();
+
+                attachmentsHeight += $('.content-attachments-title').outerHeight( true );
+                generalHeight     += attachments.outerHeight( true ) + attachmentsHeight;
+
+            }
+
+            list.map( function( item ){
+
+                var attachment = attachmentPrototype.clone().removeClass('wz-prototype');
+
+                attachment.data( 'id', item );
+                attachments.append( attachment );
+
+                attachmentsHeight += attachment.outerHeight( true );
+                generalHeight     += attachment.outerHeight( true );
+                
+                attachmentsList.push( item );
+
+                wz.fs( item, function( error, item ){
+
+                    if( error ){
+                        // To Do
+                        return;
+                    }
+
+                    attachment.find('.name').text( item.name );
+                    attachment.find('.size').text( '(' + wz.tool.bytesToUnit( item.size ) + ')' );
+
+                });
+
+            });
+
+            win.height( '+=' + generalHeight );
+            content.height( '+=' + generalHeight );
+            attachments.height( '+=' + attachmentsHeight );
+
+        });
+
+    })
+
+    .on( 'click', '.content-attachments-delete', function(){
+
+        var attachment   = $(this).parent();
+        var attachmentId = attachment.data('id');
+
+        attachments.height( '-=' + attachment.outerHeight( true ) );
+        content.height( '-=' + attachment.outerHeight( true ) );
+        win.height( '-=' + attachment.outerHeight( true ) );
+
+        attachment.remove();
+
+        if( !$('.attachment').not('.wz-prototype').length ){
+
+            win.height( '-=' + attachments.outerHeight( true ) );
+            content.height( '-=' + attachments.outerHeight( true ) );
+            attachments.height( '-=' + $('.content-attachments-title').outerHeight( true ) );
+
+            attachments.hide();
+
+        }
+
+        attachmentsList[ attachmentsList.indexOf( attachmentId ) ] = null;
+
+        attachmentsList = attachmentsList.filter( function( item ){
+            return item;
         });
 
     });
@@ -146,4 +224,6 @@
     $('.content-subject span').text( lang.subject + ':' );
     $('.content-from span').text( lang.from + ':' );
     $('.content-send span').text( lang.send );
-    $('.content-attachments span').text( lang.attachFile );
+    $('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
+    $('.content-attachments-delete').text( lang.delete );
+    $('.content-add-attachments span').text( lang.attachFile );

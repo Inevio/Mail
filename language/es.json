@@ -82,6 +82,7 @@
     "startDownload" : "Comenzando descarga...",
     "startImport" : "Comenzando importación...",
     "file" : "archivo",
-    "files" : "archivos"
+    "files" : "archivos",
+    "delete" : "Eliminar"
     
 }

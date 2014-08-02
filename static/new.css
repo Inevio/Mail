@@ -77,7 +77,7 @@ select{
     border: 1px solid #7ebe30;
 }
 
-.content span{
+.content-info span{
     width: 55px;
     height: 16px;
     float: left;
@@ -162,11 +162,68 @@ select{
 }
 
 .content-info article{
-    width: 520px;
+    width: 560px;
     padding: 0 20px;
 }
 
 .content-attachments{
+    display: none;
+    width: 560px;
+    height: 0;
+    float: left;
+    border-top: 1px solid #dadada;
+    border-bottom: 1px solid #dadada;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+.content-attachments article{
+    width: 500px;
+    float: left;
+    height: 16px;
+    margin: 10px 30px 0;
+}
+
+.content-attachments article:first-child{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.content-attachments span{
+    float: left;
+    font-size: 14px;
+    color: #5D5D5D;
+    margin-left: 8px;
+}
+
+.content-attachments span:first-child{
+    margin-left: 0px;
+}
+
+.content-attachments article i{
+    width: 11px;
+    height: 13px;
+    float: left;
+    margin-top: 1px;
+    background: url('@static/sprite.png') no-repeat -123px -10px;
+    background-size: 177px 40px;
+}
+
+.content-attachments .light{
+    color: #aaa;
+}
+
+span.content-attachments-delete{
+    float: right;
+    color: #dc513a;
+    cursor: pointer;
+}
+
+span.content-attachments-delete:hover{
+    color: #bc4431;
+}
+
+.content-add-attachments{
     display: block;
     width: 260px;
     height: 27px;
@@ -175,18 +232,18 @@ select{
     padding-bottom: 10px;
 }
 
-.content-attachments-button{
+.content-add-attachments-button{
     border-radius: 3px;
     display: inline-block;
     border: 1px solid transparent;
     padding: 5px 7px 2px;
 }
 
-.content-attachments-button:hover{
+.content-add-attachments-button:hover{
     border-color: #cacaca;
 }
 
-.content-attachments span{
+.content-add-attachments span{
     float: left;
     font-size: 14px;
     cursor: pointer;
@@ -194,11 +251,11 @@ select{
     margin: 0;
 }
 
-.content-attachments span:hover{
+.content-add-attachments span:hover{
     color: #5D5D5D;
 }
 
-.content-attachments i{
+.content-add-attachments i{
     width: 14px;
     height: 13px;
     float: left;
