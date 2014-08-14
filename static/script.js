@@ -1329,7 +1329,7 @@
                             wz.banner()
                                 .title( lang.accountDeleted )
                                 .text( mailData + ' ' + lang.deleteSuccessful )
-                                .icon( 'https://static.weezeel.com/app/8/envelope.png' )
+                                .icon( 'https://static.inevio.com/app/8/envelope.png' )
                                 .render();
 
                         }

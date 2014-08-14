@@ -101,7 +101,7 @@
                         wz.banner()
                             .title( lang.mailSent )
                             .text( lang.beenSent )
-                            .icon( 'https://static.weezeel.com/app/8/envelope.png' )
+                            .icon( 'https://static.inevio.com/app/8/envelope.png' )
                             .render();
 
                         wz.app.closeWindow( win );
