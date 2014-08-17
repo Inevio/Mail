@@ -70,7 +70,7 @@
             wz.banner()
                 .setTitle( lang.nameChanged )
                 .setText( email + ' ' + lang.nowCalled + ' ' + description )
-                .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
+                .setIcon( 'https://static.inevio.com/app/8/envelope.png' )
                 .render();
 
         }else{
@@ -79,7 +79,7 @@
             wz.banner()
                 .setTitle( lang.accountAdded )
                 .setText( email + ' ' + lang.beenAdded )
-                .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
+                .setIcon( 'https://static.inevio.com/app/8/envelope.png' )
                 .render();
 
         }

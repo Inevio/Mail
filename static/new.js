@@ -96,7 +96,7 @@
                     wz.banner()
                         .setTitle( lang.mailSent )
                         .setText( lang.beenSent )
-                        .setIcon( 'https://static.weezeel.com/app/8/envelope.png' )
+                        .setIcon( 'https://static.inevio.com/app/8/envelope.png' )
                         .render();
 
                     wz.view.remove();
