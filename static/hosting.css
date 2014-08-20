@@ -60,26 +60,31 @@
 
 .hosting-image.gmail{
     background: url('@static/servers/gmail.png') no-repeat;
+    background-size: 250px 100px;
     cursor: pointer;
 }
 
 .hosting-image.hotmail{
     background: url('@static/servers/hotmail.png') no-repeat;
+    background-size: 250px 100px;
     cursor: pointer;
 }
 
 .hosting-image.outlook{
     background: url('@static/servers/outlook.png') no-repeat;
+    background-size: 250px 100px;
     cursor: pointer;
 }
 
 .hosting-image.yahoo{
     background: url('@static/servers/yahoo.png') no-repeat;
+    background-size: 250px 100px;
     cursor: pointer;
 }
 
 .hosting-image.aol{
     background: url('@static/servers/aol_disabled.png') no-repeat;
+    background-size: 250px 100px;
 }
 
 .hosting-image-other{

@@ -1345,9 +1345,11 @@
                     wz.app.createView( mailData, 'account' );
                 })
 
+                /*
                 .addOption( lang.changeConfig, function(){
                     
                 })
+                */
 
                 .addOption( lang.deleteAccount, function() {
 
