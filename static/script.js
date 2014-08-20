@@ -550,7 +550,7 @@
 
             contentMessageText
                 .css( 'height', '' )
-                .height( contentMessageText.contents().find( 'html' ).height() );
+                .height( contentMessageText.contents().find( 'html' )[ 0 ].scrollHeight );
 
             if( fullMessage.isSpam() ){
                 $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'none' );
