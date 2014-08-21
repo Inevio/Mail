@@ -1342,14 +1342,26 @@
             wz.menu()
 
                 .addOption( lang.renameAccount, function(){
-                    wz.app.createView( mailData, 'account' );
-                })
 
-                /*
-                .addOption( lang.changeConfig, function(){
+                    wz.mail( idData, function( error, account ){
+
+                        // To Do -> Error
+                        wz.app.createView( { cmd : 'rename', account : account }, 'account' );
+
+                    });
                     
                 })
-                */
+
+                .addOption( lang.changeConfig, function(){
+                    
+                    wz.mail( idData, function( error, account ){
+
+                        // To Do -> Error
+                        wz.app.createView( { cmd : 'config', account : account }, 'account' );
+
+                    });
+
+                })
 
                 .addOption( lang.deleteAccount, function() {
 
@@ -1384,7 +1396,7 @@
         contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
         contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
 
-        return false; // To Do -> Es realmente necesario?
+        return; // To Do -> Es realmente necesario?
 
     })
 

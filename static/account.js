@@ -19,15 +19,26 @@
 
     var whichName = function(){
 
-        win.transition( { 'height' : '256' }, 250);
-        content.transition( { 'height' : '146' }, 250);
+        if( params ){
+
+            $( '.wz-view-menu span', win ).text( lang.renameAccount );
+
+            win.css( { 'height' : '256' } );
+            content.css( { 'height' : '146' } );
+
+        }else{
+
+            win.transition( { 'height' : '256' }, 250);
+            content.transition( { 'height' : '146' }, 250);
+
+        }
 
         $( '.description', content ).text( lang.whichName );
 
         $( '.name', content ).removeClass( 'name' ).addClass( 'account-name' ).find( 'span' ).text( lang.accountName + ':' );
         $( '.username', content ).removeClass( 'username' ).addClass( 'account-name' ).find( 'span' ).text( lang.accountName + ':' );
 
-        $( '.account-name', content ).find( 'input' ).val( email ).focus();
+        $( '.account-name', content ).find( 'input' ).val( params.account.description ).focus();
 
         $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'finish' ).text( lang.finish );
         $( '.save', content ).appendTo( content ).removeClass( 'save' ).addClass( 'finish' ).text( lang.finish );
@@ -38,8 +49,19 @@
 
     var moreData = function(){
 
-        win.transition( { 'height' : '455' }, 250);
-        content.transition( { 'height' : '392' }, 250);
+        if( params ){
+
+            $( '.wz-view-menu span', win ).text( lang.changeConfig );
+
+            win.css( { 'height' : '455' } );
+            content.css( { 'height' : '392' } );
+
+        }else{
+
+            win.transition( { 'height' : '455' }, 250);
+            content.transition( { 'height' : '392' }, 250);
+
+        }
 
         $( '.description', content ).text( lang.accountData );
         $( '.name', content ).removeClass( 'name' ).addClass( 'username' ).find( 'span' ).text( lang.username + ':' );
@@ -59,6 +81,18 @@
         $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'out-secure' ).find( 'span' ).text( lang.outSecure + ':' );
 
         $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'save' ).text( lang.save );
+
+        if( params ){
+
+            $('.username input').val( params.account.username );
+            $('.in-host input').val( params.account.inHost );
+            $('.in-port input').val( params.account.inPort );
+            $('.in-secure input').attr( 'checked', !!params.account.inSecure );
+            $('.out-host input').val( params.account.outHost );
+            $('.out-port input').val( params.account.outPort );
+            $('.out-secure input').attr( 'checked', !!params.account.outSecure );
+
+        }
 
     };
 
@@ -86,13 +120,7 @@
 
     };
 
-    if( params ){
-        email = params;
-        whichName();
-    }
-    
     win
-    
     .on( 'click', '.next', function(){
 
         email = $( '.mail', content ).find( 'input' ).val();
@@ -176,7 +204,7 @@
 
         description = $( '.account-name', content ).find( 'input' ).val();
 
-        if( username ){
+        if( !params ){
 
             wz.mail.addAccount(
 
@@ -211,46 +239,23 @@
 
         }else{
 
-            wz.mail.getAccounts( function( error, accounts ){
+            if( description !== params.account.description ){
 
-                if( error ){
-                    alert( error );
-                }else{
+                params.account.changeDescription( description, function( error ){
 
-                    var account = {};
-
-                    for( var i = 0 ; i < accounts.length ; i++ ){
-
-                        if( accounts[i].address === email ){
-
-                            account = accounts[i];
-                            break;
-
-                        }
-
+                    if( error ){
+                        alert( error );
+                    }else{
+                        finish();
                     }
 
-                    if( description !== account.description ){
+                });
 
-                        account.changeDescription( description, function( error ){
+            }else{
 
-                            if( error ){
-                                alert( error );
-                            }else{
-                                finish();
-                            }
+                finish();
 
-                        });
-
-                    }else{
-
-                        finish();
-
-                    }         
-
-                }
-
-            });
+            }
 
         }
 
@@ -270,3 +275,13 @@
     $( '.mail span', win ).text( lang.address + ':' );
     $( '.pass span', win ).text( lang.password + ':' );
     $( '.next', win ).text( lang.next );
+
+    if( params ){
+
+        if( params.cmd === 'rename' ){
+            whichName();
+        }else{
+            moreData();
+        }
+        
+    }
