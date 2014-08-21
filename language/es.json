@@ -52,7 +52,7 @@
     "nowCalled" : "ahora se llama",
     "accountAdded" : "Cuenta de correo añadida",
     "beenAdded" : "ha sido añadida a weeMail",
-    "error" : "Lo siento pero ha habido un error",
+    "error" : "Lo siento pero ha ocurrido un error",
     "mailError" : "Por favor introduce correctamente tu correo electrónico",
     "passwordError" : "Por favor introduce tu contraseña",
     "nameError" : "Por favor introduce tu nombre",
