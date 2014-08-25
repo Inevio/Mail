@@ -1,5 +1,6 @@
 
     var win = $( this );
+    var account = null;
     var content = $( '.content', win );
     var email = '';
     var pass = '';
@@ -8,6 +9,7 @@
     var username = '';
     var inHost = '';
     var inPort = 0;
+    var inProtocol = '';
     var inSecure = false;
     var outHost = '';
     var outPort = 0;
@@ -38,7 +40,7 @@
         $( '.name', content ).removeClass( 'name' ).addClass( 'account-name' ).find( 'span' ).text( lang.accountName + ':' );
         $( '.username', content ).removeClass( 'username' ).addClass( 'account-name' ).find( 'span' ).text( lang.accountName + ':' );
 
-        $( '.account-name', content ).find( 'input' ).val( params.account.description ).focus();
+        $( '.account-name', content ).find( 'input' ).val( params ? params.account.description : '' ).focus();
 
         $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'finish' ).text( lang.finish );
         $( '.save', content ).appendTo( content ).removeClass( 'save' ).addClass( 'finish' ).text( lang.finish );
@@ -153,6 +155,8 @@
 
                     }else{
 
+                        account = details;
+
                         whichName();
 
                     }
@@ -204,7 +208,7 @@
 
         description = $( '.account-name', content ).find( 'input' ).val();
 
-        if( !params ){
+        if( !params && !account ){
 
             wz.mail.addAccount(
 
@@ -236,6 +240,18 @@
                 }
 
             );
+
+        }else if( !params ){
+
+            account.changeDescription( description, function( error ){
+
+                if( error ){
+                    alert( error );
+                }else{
+                    finish();
+                }
+
+            });
 
         }else{
 
