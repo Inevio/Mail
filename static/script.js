@@ -762,7 +762,7 @@
                     .siblings('.message')
                         .removeClass('selected last-selected');
 
-                wz.mail.getMessage( result[ 0 ].message, function( error, message ){
+                wz.mail.getMessage( result[ 0 ].box, result[ 0 ].message, function( error, message ){
                     showMessage( message );
                 });
 
@@ -1570,10 +1570,10 @@
         $( '.message-' + message.id + ' .message-star', win ).removeClass( 'active' );
     })
 
-    .on( 'messageRemoved', function( message ){
+    .on( 'messageRemoved', function( messageId, accountId ){
 
-        $( '.message-' + message, messagesColumn ).remove();
-        mailsUnread( message.accountId );
+        $( '.message-' + messageId, messagesColumn ).remove();
+        mailsUnread( accountId );
 
     })
 
