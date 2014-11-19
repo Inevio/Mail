@@ -24,19 +24,15 @@ var contentStar         = $('.message-star', contentColumn );
 var contentMessage      = $('.content-message', contentColumn );
 var contentMessageText  = $('.content-message-text', contentMessage );
 
-/*
-var myAccount = null;
-*/
+
+    var myAccount = null;
 
 var _accountOpened      = 0;
-/*
-var _folderOpened       = 0;
-var _folderTypeOpened   = 'normal';
-var _pageOpened         = 0;
-var _lastMailFolderType = 'normal';
+    var _folderOpened       = 0;
+    var _folderTypeOpened   = 'normal';
+    var _pageOpened         = 0;
+    var _lastMailFolderType = 'normal';
 
-//var _loadingMore   = false;
-*/
 var _accountOptionsHeight = function( item ){
 
     item = $( item );
@@ -309,7 +305,7 @@ var getAccounts = function(){
     });
 
 };
-/*
+
     var isAccountOpened = function( id ){
         return id === _accountOpened;
     };
@@ -317,7 +313,7 @@ var getAccounts = function(){
     var isBoxOpened = function( id ){
         return id === _folderOpened;
     };
-*/
+
 var getMessagesInList = function(){
     return messagesColumn.children().not( messagePrototype ).not( '.middle-column-content-none' );
 };
@@ -345,7 +341,6 @@ var toDate = function( date ){
 
 };
 
-/*
     // Inserta la cuenta Common si no existe
     var showCommonAccount = function(){
 
@@ -367,7 +362,6 @@ var toDate = function( date ){
         });
 
     };
-*/
 
 // Muestra la lista de correos
 var showMailsList = function( id, boxId, boxType, page ){
@@ -425,7 +419,6 @@ var showMailsList = function( id, boxId, boxType, page ){
 
 };
 
-/*
     var showReceptors = function( fullMessage ){
 
         if( fullMessage.to.length ){
@@ -488,7 +481,6 @@ var showMailsList = function( id, boxId, boxType, page ){
         }
 
     };
-*/
 
 var showMessage = function( message ){
 
@@ -659,7 +651,6 @@ var showMessage = function( message ){
 
 };
 
-/*
     var appendMessage = function( message ){
 
         var messageSqueleton = messagePrototype.clone();
@@ -696,7 +687,6 @@ var showMessage = function( message ){
         messagesColumn.find( '.message:last-child' ).remove();
 
     };
-*/
 
 var insertBox = function( boxObj, accountObj ){
 
@@ -736,7 +726,7 @@ var insertBox = function( boxObj, accountObj ){
     }
 
 };
-/*
+
     var mailsUnread = function( accountId ){
 
         wz.mail.getCounters( function( error, list ){
@@ -808,7 +798,7 @@ var insertBox = function( boxObj, accountObj ){
         });
 
     };
-*/
+
 var translateUI = function(){
 
     $( '.new-mail span', mailZone ).text( lang.newEmail );
@@ -908,7 +898,6 @@ win
 
 })
 
-/*
     .on( 'click', 'input', function( e ){
         e.stopPropagation();
         contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
@@ -1649,11 +1638,11 @@ win
 
     })
 
-    .on( 'messageOut', function( accountId, messageId /*, boxId *//* ){
+    .on( 'messageOut', function( accountId, messageId /*, boxId */ ){
         $( '.account-' + accountId + '-message-' + messageId, messagesColumn ).remove();
     })
 
-    .on( 'newMessage', function( /* message *//* ){
+    .on( 'newMessage', function( /* message */ ){
         // To Do
     })
 
@@ -1760,7 +1749,6 @@ win
         }
 
     });
-*/
 
 // Start App
 getAccounts();
