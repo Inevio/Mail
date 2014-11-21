@@ -1538,6 +1538,7 @@
         wz.banner()
             .setTitle( lang.startImport )
             .setText( $( this ).siblings('.name').text() )
+            .setIcon( 'https://static.inevio.com/app/8/import.png' )
             .render();
 
     });
