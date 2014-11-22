@@ -34,6 +34,10 @@
 
     //var _loadingMore   = false;
 
+    var _formatId = function(id){
+        return id.replace(/ /g,"-");
+    }
+
     var _accountOptionsHeight = function( item ){
 
         item = $( item );
@@ -143,6 +147,7 @@
 
     };
 
+
     var _boxItem = function( object, prototype ){
 
         var text    = object.name;
@@ -210,8 +215,8 @@
                     .clone()
                     .removeClass( 'wz-prototype' )
                     .addClass( classes )
-                    .addClass( 'box-' + object.id )
-                    .addClass( 'account-' + object.accountId + '-box-' + object.id )
+                    .addClass( 'box-' + _formatId(object.id) )
+                    .addClass( 'account-' + object.accountId + '-box-' + _formatId(object.id) )
                     .data( 'type', classes )
                     .data( 'path', object.path )
                     .data( 'id', object.id )
@@ -704,23 +709,18 @@
 
     var mailsUnread = function( accountId ){
 
-        wz.mail.getCounters( function( error, list ){
+        wz.mail.getCounters(accountId, function( error, object ){
 
             if( error ){
                 alert( error );
                 return false;
             }
-            
-            var i = 0;
-            var j = 0;
 
-            for( i in list ){
+            mailColumn.find('.account-' + accountId ).children( '.bullet' ).text( object.unread || '' );
 
-                 mailColumn.find('.account-' + i ).children( '.bullet' ).text( list[ i ].unread ? list[ i ].unread : '' );
+            for( var i in object.folders ){
 
-                for( j in list[ i ].folders ){
-                    mailColumn.find('.account-' + i + '-box-' + list[ i ].folders[ j ].id ).children( '.bullet' ).text( list[ i ].folders[ j ].unread ? list[ i ].folders[ j ].unread : '' );
-                }
+                mailColumn.find('.account-' + accountId + '-box-' + _formatId(i) ).children( '.bullet' ).text( object.folders[ i ].unread || '' );
 
             }
 
@@ -747,7 +747,7 @@
                 if( elementId == result[ 0 ].account ){
 
                     $( '.account-' + result[ 0 ].account, mailColumn ).click();
-                    $( '.box-' + result[ 0 ].box, mailColumn ).click();
+                    $( '.box-' + _formatId(result[0].box), mailColumn ).click();
 
                     win.off( e );
 
@@ -1695,7 +1695,7 @@
 
     .on( 'boxRemoved', function( boxId, accountId ){
 
-        var boxItem     = $( '.account-' + accountId + '-box-' + boxId, mailColumn );
+        var boxItem     = $( '.account-' + accountId + '-box-' + _formatId(boxId), mailColumn );
         var accountItem = boxItem.parent();
 
         if( !boxItem.size() ){
