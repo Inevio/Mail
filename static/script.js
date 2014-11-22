@@ -33,24 +33,22 @@ var _accountOpened      = 0;
     var _pageOpened         = 0;
     var _lastMailFolderType = 'normal';
 
-var _accountOptionsHeight = function( item ){
-
     var _formatId = function(id){
         return id.replace(/ /g,"-");
-    }
+    };
 
     var _accountOptionsHeight = function( item ){
-    item = $( item );
+        item = $( item );
 
-    var height = 0;
+        var height = 0;
 
-    $( '.mailbox', item ).add( item.children('span') ).not('.wz-prototype').each( function(){
-        height += $( this ).outerHeight( true );
-    });
+        $( '.mailbox', item ).add( item.children('span') ).not('.wz-prototype').each( function(){
+            height += $( this ).outerHeight( true );
+        });
 
-    return height;
+        return height;
 
-};
+    };
 
 var _accountItem = function( account ){
 
@@ -217,7 +215,7 @@ var _boxItem = function( box, item ){
     }
 
     item
-        .addClass( classes + ' box-' + _formatId(box.id) + ' account-' + box.accountId + '-box-' + formatId(box.id) )
+        .addClass( classes + ' box-' + _formatId(box.id) + ' account-' + box.accountId + '-box-' + _formatId(box.id) )
         .data({
             id    : box.id,
             order : order,
