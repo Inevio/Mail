@@ -34,7 +34,7 @@ var _accountOpened      = 0;
     var _lastMailFolderType = 'normal';
 
     var _formatId = function(id){
-        return id.replace(/ /g,"-");
+        return id.replace(/ |\.|#|<|>/g,"-");
     };
 
     var _accountOptionsHeight = function( item ){
@@ -115,21 +115,14 @@ var _accountItemBoxes = function( account, item ){
 
     account.getBoxes( false, function( error, boxes ){
 
-        console.log( error, boxes );
-
         if( error ){
-            alert( error );
-            return;
+            return alert( error );
         }
 
         var boxPrototype = item.find( '.mailbox.wz-prototype' );
 
-        for( var i in boxes ){
-
-            /*if( i !== 'normal' && i !== 'allMail' ){*/
-                insertBox( _boxItem( boxes[ i ][ 0 ], boxPrototype.clone().removeClass('wz-prototype') ), item );
-            /*}*/
-
+        for( var i = 0; i < boxes.length; i++ ){
+            insertBox( _boxItem( boxes[ i ], boxPrototype.clone().removeClass('wz-prototype') ), item );
         }
 
         /*win.trigger( 'boxes-shown', [ account.id ] );*/
@@ -215,9 +208,11 @@ var _boxItem = function( box, item ){
     }
 
     item
-        .addClass( classes + ' box-' + _formatId(box.id) + ' account-' + box.accountId + '-box-' + _formatId(box.id) )
+        .addClass( classes + ' box-' + _formatId( text ) + ' account-' + box.accountId + '-box-' + _formatId( text ) )
         .data({
-            id    : box.id,
+
+            id    : box.path,
+            name  : box.name,
             order : order,
             path  : box.path,
             type  : classes
@@ -279,16 +274,13 @@ var getAccounts = function(){
 
     wz.mail.getAccounts( function( error, accounts ){
 
-        console.log( error, accounts );
-
         if( error ){
-            alert( error );
+            return alert( error );
             return;
         }
 
         if( !accounts.length ){
-            wz.app.createView( null, 'hosting' );
-            return;
+            return wz.app.createView( null, 'hosting' );
         }
 
         var list = [];
@@ -296,8 +288,6 @@ var getAccounts = function(){
         for( var i = 0, j = accounts.length; i < j; i++ ){
             list.push( _accountItem( accounts[ i ] ) );
         }
-
-        console.log(list);
 
         addAccount.before( list );
 
@@ -694,16 +684,13 @@ var insertBox = function( boxObj, accountObj ){
 
     var boxes = accountObj.children().not('.wz-prototype, .syncing');
 
-    if(
-        boxes.filter( '.box-' + boxObj.data('id') ).size() ||
-        boxes.filter( '.' + boxObj.data('type') ).size()
-    ){
+    if( boxes.filter( '.box-' + _formatId( boxObj.data('name') ) ).length ){
         return;
     }
 
     accountObj.children('.syncing').remove();
 
-    if( boxes.size() === 0 ){
+    if( boxes.length === 0 ){
         accountObj.prepend( accountObj );
     }else{
 
@@ -849,7 +836,7 @@ win
 
     openedAccount.text( $(this).parent('.account').children( 'span' ).text() );
     openedMailbox.text( $(this).children( 'span' ).text() );
-    showMailsList( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ), $(this).data( 'type' ) );
+    showMailsList( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'path' ), $(this).data( 'type' ) );
     $( '.active', mailColumn ).removeClass( 'active' );
     $( this ).addClass( 'active' );
     contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
