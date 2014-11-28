@@ -34,7 +34,7 @@ var _accountOpened      = 0;
     var _lastMailFolderType = 'normal';
 
     var _formatId = function(id){
-        return id.replace(/ |\.|#|<|>/g,"-");
+        return id.replace(/ |\.|#|<|>|&|;/g,"-");
     };
 
     var _accountOptionsHeight = function( item ){
@@ -113,6 +113,10 @@ var _accountItem = function( account ){
 
 var _accountItemBoxes = function( account, item ){
 
+    var boxesPromise    = $.Deferred();
+    var countersPromise = $.Deferred();
+    var counters        = null;
+
     account.getBoxes( false, function( error, boxes ){
 
         if( error ){
@@ -125,8 +129,32 @@ var _accountItemBoxes = function( account, item ){
             insertBox( _boxItem( boxes[ i ], boxPrototype.clone().removeClass('wz-prototype') ), item );
         }
 
+        boxesPromise.resolve();
+
         /*win.trigger( 'boxes-shown', [ account.id ] );*/
         
+    });
+
+    wz.mail.getCounters( account.id, function( error, object ){
+
+        if( error ){
+            return alert( error );
+        }
+
+        counters = object;
+
+        countersPromise.resolve();
+
+    });
+
+    $.when( boxesPromise, countersPromise ).done( function(){
+
+        mailColumn.find('.account-' + account.id ).children( '.bullet' ).text( counters['INBOX'].unseen || '' );
+
+        for( var i in counters ){
+            mailColumn.find('.account-' + account.id + '-box-' + _formatId( i ) ).children( '.bullet' ).text( counters[ i ].unseen || '' );
+        }
+
     });
 
 };
@@ -208,7 +236,7 @@ var _boxItem = function( box, item ){
     }
 
     item
-        .addClass( classes + ' box-' + _formatId( text ) + ' account-' + box.accountId + '-box-' + _formatId( text ) )
+        .addClass( classes + ' box-' + _formatId( box.path ) + ' account-' + box.accountId + '-box-' + _formatId( box.path ) )
         .data({
 
             id    : box.path,
@@ -276,7 +304,6 @@ var getAccounts = function(){
 
         if( error ){
             return alert( error );
-            return;
         }
 
         if( !accounts.length ){
@@ -339,8 +366,7 @@ var toDate = function( date ){
         wz.mail.getAccounts( function( error, list ){
             
             if( error ){
-                alert( error );
-                return false;
+                return alert( error );
             }
 
             if( list.length > 1 ){
@@ -367,19 +393,15 @@ var showMailsList = function( id, boxId, boxType, page ){
     wz.mail( id, function( error, account ){
 
         if( error ){
-            alert( error );
-            return;
+            return alert( error );
         }
 
         _accountOpened = id;
 
         account.getMessagesFromBox( boxId, 20, page, function( error, list ){
 
-            console.log( error, list );
-
             if( error ){
-                alert( error );
-                return;
+                return alert( error );
             }
 
             _folderOpened     = boxId;
@@ -684,7 +706,7 @@ var insertBox = function( boxObj, accountObj ){
 
     var boxes = accountObj.children().not('.wz-prototype, .syncing');
 
-    if( boxes.filter( '.box-' + _formatId( boxObj.data('name') ) ).length ){
+    if( boxes.filter( '.box-' + _formatId( boxObj.data('path') ) ).length ){
         return;
     }
 
@@ -731,15 +753,15 @@ var insertBox = function( boxObj, accountObj ){
         wz.mail.getCounters(accountId, function( error, object ){
 
             if( error ){
-                alert( error );
-                return false;
+                return alert( error );
             }
 
-            mailColumn.find('.account-' + accountId ).children( '.bullet' ).text( object.unread || '' );
+            mailColumn.find('.account-' + accountId ).children( '.bullet' ).text( object['INBOX'].unseen || '' );
 
-            for( var i in object.folders ){
+            for( var i in object ){
 
-                mailColumn.find('.account-' + accountId + '-box-' + _formatId(i) ).children( '.bullet' ).text( object.folders[ i ].unread || '' );
+                console.log( object[ i ] );
+                mailColumn.find('.account-' + accountId + '-box-' + _formatId( i ) ).children( '.bullet' ).text( object[ i ].unseen || '' );
 
             }
 
