@@ -704,6 +704,16 @@ var insertBox = function( boxObj, accountObj ){
                 inserted = true;
                 return false;
 
+            }else if( $(this).data('order') === boxObj.data('order') ){
+
+                if( $(this).data('name').localeCompare( boxObj.data('name') ) > 0 ){
+
+                    $( this ).before( boxObj );
+                    inserted = true;
+                    return false;
+
+                }
+
             }
 
         });
