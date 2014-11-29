@@ -759,10 +759,7 @@ var insertBox = function( boxObj, accountObj ){
             mailColumn.find('.account-' + accountId ).children( '.bullet' ).text( object['INBOX'].unseen || '' );
 
             for( var i in object ){
-
-                console.log( object[ i ] );
                 mailColumn.find('.account-' + accountId + '-box-' + _formatId( i ) ).children( '.bullet' ).text( object[ i ].unseen || '' );
-
             }
 
         });
