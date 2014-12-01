@@ -291,7 +291,7 @@ var _messageItem = function( item ){
     if( messageDate.sentToday ){
         messageSqueleton.find( '.message-date' ).text( messageDate.sentHour + ':' + messageDate.sentMinute );
     }else{
-        messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth );
+        messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth + '/' + messageDate.sentYear.slice( -2 ) );
     }
 
     return messageSqueleton;
@@ -365,6 +365,7 @@ var toDate = function( date ){
     // Inserta la cuenta Common si no existe
     var showCommonAccount = function(){
 
+        /*
         wz.mail.getAccounts( function( error, list ){
             
             if( error ){
@@ -380,6 +381,7 @@ var toDate = function( date ){
             }
 
         });
+        */
 
     };
 
@@ -542,7 +544,7 @@ var showMessage = function( message ){
     }else if( messageDate.sentYesterday ){
         contentDate.text( lang.yesterday + ' ' + messageDate.sentHour + ':' + messageDate.sentMinute );
     }else{
-        contentDate.text( messageDate.sentDay + '/' + messageDate.sentMonth + ', ' + messageDate.sentHour + ':' + messageDate.sentMinute );
+        contentDate.text( messageDate.sentDay + '/' + messageDate.sentMonth + '/' + messageDate.sentYear + ', ' + messageDate.sentHour + ':' + messageDate.sentMinute );
     }
 
     /*wql.changeOpened( [ message.id, $( '.mailbox.active', mailColumn ).data( 'id' ), $( '.account.display', mailColumn ).data( 'id' ) ] );*/
@@ -694,7 +696,7 @@ var showMessage = function( message ){
         if( messageDate.sentToday ){
             messageSqueleton.find( '.message-date' ).text( messageDate.sentHour + ':' + messageDate.sentMinute );
         }else{
-            messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth );
+            messageSqueleton.find( '.message-date' ).text( messageDate.sentDay + '/' + messageDate.sentMonth + '/' + messageDate.sentYear.slice( -2 ) );
         }
 
         if( message.isFlagged() ){
