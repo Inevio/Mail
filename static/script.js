@@ -36,7 +36,7 @@ var _accountOpened      = 0;
     var _lastMailFolderType = 'normal';
 
     var _formatId = function(id){
-        return id.replace(/ /g,"-");
+        return id.replace(/ |\.|#|<|>|&|;/g,"-");
     };
 
     var _accountOptionsHeight = function( item ){
@@ -115,27 +115,48 @@ var _accountItem = function( account ){
 
 var _accountItemBoxes = function( account, item ){
 
+    var boxesPromise    = $.Deferred();
+    var countersPromise = $.Deferred();
+    var counters        = null;
+
     account.getBoxes( false, function( error, boxes ){
 
-        console.log( error, boxes );
-
         if( error ){
-            alert( error );
-            return;
+            return alert( error );
         }
 
         var boxPrototype = item.find( '.mailbox.wz-prototype' );
 
-        for( var i in boxes ){
-
-            /*if( i !== 'normal' && i !== 'allMail' ){*/
-                insertBox( _boxItem( boxes[ i ][ 0 ], boxPrototype.clone().removeClass('wz-prototype') ), item );
-            /*}*/
-
+        for( var i = 0; i < boxes.length; i++ ){
+            insertBox( _boxItem( boxes[ i ], boxPrototype.clone().removeClass('wz-prototype') ), item );
         }
+
+        boxesPromise.resolve();
 
         /*win.trigger( 'boxes-shown', [ account.id ] );*/
         
+    });
+
+    wz.mail.getCounters( account.id, function( error, object ){
+
+        if( error ){
+            return alert( error );
+        }
+
+        counters = object;
+
+        countersPromise.resolve();
+
+    });
+
+    $.when( boxesPromise, countersPromise ).done( function(){
+
+        mailColumn.find('.account-' + account.id ).children( '.bullet' ).text( counters['INBOX'].unseen || '' );
+
+        for( var i in counters ){
+            mailColumn.find('.account-' + account.id + '-box-' + _formatId( i ) ).children( '.bullet' ).text( counters[ i ].unseen || '' );
+        }
+
     });
 
 };
@@ -217,9 +238,11 @@ var _boxItem = function( box, item ){
     }
 
     item
-        .addClass( classes + ' box-' + _formatId(box.id) + ' account-' + box.accountId + '-box-' + _formatId(box.id) )
+        .addClass( classes + ' box-' + _formatId( box.path ) + ' account-' + box.accountId + '-box-' + _formatId( box.path ) )
         .data({
-            id    : box.id,
+
+            id    : box.path,
+            name  : box.name,
             order : order,
             path  : box.path,
             type  : classes
@@ -281,16 +304,12 @@ var getAccounts = function(){
 
     wz.mail.getAccounts( function( error, accounts ){
 
-        console.log( error, accounts );
-
         if( error ){
-            alert( error );
-            return;
+            return alert( error );
         }
 
         if( !accounts.length ){
-            wz.app.createView( null, 'hosting' );
-            return;
+            return wz.app.createView( null, 'hosting' );
         }
 
         var list = [];
@@ -298,8 +317,6 @@ var getAccounts = function(){
         for( var i = 0, j = accounts.length; i < j; i++ ){
             list.push( _accountItem( accounts[ i ] ) );
         }
-
-        console.log(list);
 
         addAccount.before( list );
 
@@ -351,8 +368,7 @@ var toDate = function( date ){
         wz.mail.getAccounts( function( error, list ){
             
             if( error ){
-                alert( error );
-                return false;
+                return alert( error );
             }
 
             if( list.length > 1 ){
@@ -375,19 +391,15 @@ var showMailsList = function( id, boxId, boxType, request){
     wz.mail( id, function( error, account ){
 
         if( error ){
-            alert( error );
-            return;
+            return alert( error );
         }
 
         _accountOpened = id;
 
         account.getMessagesFromBox( boxId, 20, request, function( error, object ){
 
-            console.log( error, list );
-
             if( error ){
-                alert( error );
-                return;
+                return alert( error );
             }
 
             var list = object.list;
@@ -695,16 +707,13 @@ var insertBox = function( boxObj, accountObj ){
 
     var boxes = accountObj.children().not('.wz-prototype, .syncing');
 
-    if(
-        boxes.filter( '.box-' + boxObj.data('id') ).size() ||
-        boxes.filter( '.' + boxObj.data('type') ).size()
-    ){
+    if( boxes.filter( '.box-' + _formatId( boxObj.data('path') ) ).length ){
         return;
     }
 
     accountObj.children('.syncing').remove();
 
-    if( boxes.size() === 0 ){
+    if( boxes.length === 0 ){
         accountObj.prepend( accountObj );
     }else{
 
@@ -717,6 +726,16 @@ var insertBox = function( boxObj, accountObj ){
                 $( this ).before( boxObj );
                 inserted = true;
                 return false;
+
+            }else if( $(this).data('order') === boxObj.data('order') ){
+
+                if( $(this).data('name').localeCompare( boxObj.data('name') ) > 0 ){
+
+                    $( this ).before( boxObj );
+                    inserted = true;
+                    return false;
+
+                }
 
             }
 
@@ -735,16 +754,13 @@ var insertBox = function( boxObj, accountObj ){
         wz.mail.getCounters(accountId, function( error, object ){
 
             if( error ){
-                alert( error );
-                return false;
+                return alert( error );
             }
 
-            mailColumn.find('.account-' + accountId ).children( '.bullet' ).text( object.unread || '' );
+            mailColumn.find('.account-' + accountId ).children( '.bullet' ).text( object['INBOX'].unseen || '' );
 
-            for( var i in object.folders ){
-
-                mailColumn.find('.account-' + accountId + '-box-' + _formatId(i) ).children( '.bullet' ).text( object.folders[ i ].unread || '' );
-
+            for( var i in object ){
+                mailColumn.find('.account-' + accountId + '-box-' + _formatId( i ) ).children( '.bullet' ).text( object[ i ].unseen || '' );
             }
 
         });
@@ -850,7 +866,7 @@ win
 
     openedAccount.text( $(this).parent('.account').children( 'span' ).text() );
     openedMailbox.text( $(this).children( 'span' ).text() );
-    showMailsList( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'id' ), $(this).data( 'type' ) );
+    showMailsList( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'path' ), $(this).data( 'type' ) );
     $( '.active', mailColumn ).removeClass( 'active' );
     $( this ).addClass( 'active' );
     contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
