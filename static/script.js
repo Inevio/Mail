@@ -29,6 +29,8 @@ var contentMessageText  = $('.content-message-text', contentMessage );
 
 var _accountOpened      = 0;
     var _folderOpened       = 0;
+    var _lastRequest        = null;
+    var _nextRequest        = null;
     var _folderTypeOpened   = 'normal';
     var _pageOpened         = 0;
     var _lastMailFolderType = 'normal';
@@ -366,13 +368,9 @@ var toDate = function( date ){
     };
 
 // Muestra la lista de correos
-var showMailsList = function( id, boxId, boxType, page ){
+var showMailsList = function( id, boxId, boxType, request){
 
-    page = parseInt( page, 10 );
-
-    if( isNaN( page ) || page < 0 ){
-        page = 0;
-    }
+    var page = 0;
 
     wz.mail( id, function( error, account ){
 
@@ -383,7 +381,7 @@ var showMailsList = function( id, boxId, boxType, page ){
 
         _accountOpened = id;
 
-        account.getMessagesFromBox( boxId, 20, page, function( error, list ){
+        account.getMessagesFromBox( boxId, 20, request, function( error, object ){
 
             console.log( error, list );
 
@@ -392,9 +390,12 @@ var showMailsList = function( id, boxId, boxType, page ){
                 return;
             }
 
+            var list = object.list;
+
             _folderOpened     = boxId;
             _folderTypeOpened = boxType;
-            _pageOpened       = page;
+            _nextRequest      = object.nextPositions;
+            _lastRequest      = request;
 
             $( '.middle-column-pages-actual', messagesZone ).text( ( ( page * 20 ) + 1 ) + ' - ' + ( ( page + 1 ) * 20 ) );
 
@@ -1326,7 +1327,7 @@ win
         }
 
         if( page !== _pageOpened ){
-            showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, page );
+            showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _lastRequest );
         }
         
     })
@@ -1341,7 +1342,7 @@ win
         }
 
         if( page !== _pageOpened ){
-            showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, page );
+            showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _nextRequest );
         }
 
     })
