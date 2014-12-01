@@ -29,7 +29,7 @@ var contentMessageText  = $('.content-message-text', contentMessage );
 
 var _accountOpened      = 0;
     var _folderOpened       = 0;
-    var _lastRequest        = null;
+    var _prevRequest        = null;
     var _nextRequest        = null;
     var _folderTypeOpened   = 'normal';
     var _pageOpened         = 0;
@@ -386,7 +386,7 @@ var toDate = function( date ){
 // Muestra la lista de correos
 var showMailsList = function( id, boxId, boxType, request){
 
-    var page = 0;
+    console.log(request, _prevRequest, _nextRequest);
 
     wz.mail( id, function( error, account ){
 
@@ -404,12 +404,14 @@ var showMailsList = function( id, boxId, boxType, request){
 
             var list = object.list;
 
+            console.log(object);
+
             _folderOpened     = boxId;
             _folderTypeOpened = boxType;
-            _nextRequest      = object.nextPositions;
-            _lastRequest      = request;
+            _nextRequest      = object.next;
+            _prevRequest      = object.prev;
 
-            $( '.middle-column-pages-actual', messagesZone ).text( ( ( page * 20 ) + 1 ) + ' - ' + ( ( page + 1 ) * 20 ) );
+            $( '.middle-column-pages-actual', messagesZone ).text( ( ( _pageOpened * 20 ) + 1 ) + ' - ' + ( ( _pageOpened + 1 ) * 20 ) );
 
             // Limpiamos la columna
             getMessagesInList().remove();
@@ -863,6 +865,8 @@ win
 .on( 'click', '.mailbox', function( e ){
 
     e.stopPropagation();
+
+    _pageOpened = 0;
 
     openedAccount.text( $(this).parent('.account').children( 'span' ).text() );
     openedMailbox.text( $(this).children( 'span' ).text() );
@@ -1336,30 +1340,22 @@ win
     // Anterior página de mensajes
     .on( 'click', '.middle-column-pages-prev', function(){
 
-        var page = _pageOpened - 1;
-
-        if( page < 0 ){
-            page = 0;
+        if(_pageOpened <= 0){
+            return;
         }
 
-        if( page !== _pageOpened ){
-            showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _lastRequest );
-        }
+        _pageOpened--;
+
+        showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _prevRequest );
         
     })
 
     // Siguiente página de mensajes
     .on( 'click', '.middle-column-pages-next', function(){
 
-        var page = _pageOpened + 1;
+        _pageOpened++;
 
-        if( page < 0 ){
-            page = 0;
-        }
-
-        if( page !== _pageOpened ){
-            showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _nextRequest );
-        }
+        showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _nextRequest );
 
     })
 
