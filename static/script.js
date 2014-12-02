@@ -406,8 +406,6 @@ var showMailsList = function( id, boxId, boxType, request){
 
             var list = object.list;
 
-            console.log(object);
-
             _folderOpened     = boxId;
             _folderTypeOpened = boxType;
             _nextRequest      = object.next;
@@ -424,7 +422,9 @@ var showMailsList = function( id, boxId, boxType, request){
                 messageList.push( _messageItem( list[ i ] ) );
             }
 
-            messagesColumn.append( messageList );
+            messagesColumn
+                .append( messageList )
+                .scrollTop( 0 );
 
             messagesZone.addClass( 'box-shown' );
             /*win.trigger( 'messages-shown' );*/
