@@ -59,6 +59,7 @@
 }
 
 .left-column-content-scroll{
+    float: left;
     height: 429px;
 }
 
@@ -128,6 +129,7 @@
 }
 
 .new-mail{
+    float: left;
     width: 100px;
     height: 15px;
     margin: 19px;
@@ -266,8 +268,7 @@ span{
     height: 38px;
     border-top: 1px solid #DADADA;
     float: left;
-    margin-left: 9px;
-    margin-top: 10px;
+    margin: 10px;
     text-align: center;
     cursor: pointer;
 }
@@ -350,6 +351,7 @@ span{
 }
 
 .middle-column-top input{
+    display: none;
     width: 110px;
     height: 15px;
     float: left;
@@ -385,6 +387,12 @@ span{
 .middle-column-top input:placeholder{
     font-size: 13px;
     color: #5D5D5D;
+}
+
+.middle-column-content-head{
+    float: left;
+    width: 250px;
+    height: 71px;
 }
 
 .middle-column-content-nav{
@@ -543,10 +551,10 @@ figure.options-label i:first-child{
 }*/
 
 .middle-column-pages{
-    height: 33px;
+    height: 43px;
     float: left;
     width: 58px;
-    margin-top: 19px;
+    padding: 19px 20px 9px 0;
 }
 
 .middle-column-pages-actual{
@@ -616,7 +624,8 @@ figure.options-label i:first-child{
 .middle-column-content-scroll{
     width: 240px;
     height: 429px;
-    margin: 0 auto;
+    padding: 0 5px;
+    float: left;
 }
 
 .middle-column-content-scroll .wz-scroll-slider{
@@ -718,7 +727,7 @@ figure.options-label i:first-child{
 }
 
 .message-origin{
-    width: 125px;
+    width: 120px;
     height: 14px;
     float: left;
     margin-left: 8px;
