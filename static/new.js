@@ -29,17 +29,27 @@
 
     });
 
-    if( params.to ){
+    var _formatTo = function(object){
 
-        var to = params.to[ 0 ];
+        console.log(object);
 
-        for( var i = 1 ; i < params.to.length ; i++ ){
+        var to = object[0].address || object[ 0 ];
 
-            to = to + ', ' + params.to[ i ];
+        for( var i = 1 ; i < object.length ; i++ ){
+
+            var other = object[i].address || object[ i ];
+            to = to + ', ' + other;
 
         }
 
-        $( '.content-to input', win ).val( to );
+        return to;
+    };
+
+    params.to = (params.replyTo && params.replyTo.length) ? params.replyTo : params.to;
+
+    if( params.to ){
+
+        params.to = _formatTo(params.to);
 
         /*
         if( params.cc ){
@@ -60,12 +70,48 @@
         }
         */
 
-        if( params.subject ){
-            $( '.content-subject input', win ).val( params.reply? params.subject : 'Re: ' + params.subject );
-        }
-        
-        //$( '.content-compose', win ).html( params.message );
+    }
 
+    if( params.originalTo ){
+        params.originalTo = _formatTo(params.originalTo);
+    }
+
+
+    if(params.reply){
+
+        $( '.content-subject input', win ).val('Re: ' + params.subject );
+        //To-DO Better formatting and languages
+        $( '.content-compose', win ).html(
+                '<br><br><hr><div><div>' + 
+                'From: <b>' + params.from.name + '</b>' + 
+                '<span dir="ltr">&lt;'+params.from.address+'&gt;</span><br>' +
+                'Date: ' + params.time + '<br>' +
+                'Subject: ' + params.subject + '<br>' +
+                'To: ' + params.originalTo +'<br><br><br></div><div>' +
+                params.message + 
+                '</div></div>'
+            );
+
+
+        $( '.content-to input', win ).val( params.to );
+
+        params.references.push(params.messageId);
+
+    }
+    else if(params.forward) {
+        $( '.content-subject input', win ).val('Fwd: ' + params.subject );
+        $( '.content-compose', win ).html(
+                '<br><br><div><div>' + 
+                '---------- Forwarded message ----------<br>' + 
+                'From: <b>' + params.from.name + '</b>' + 
+                '<span dir="ltr">&lt;'+params.from.address+'&gt;</span><br>' +
+                'Date: ' + params.time + '<br>' +
+                'Subject: ' + params.subject + '<br>' +
+                'To: ' + params.originalTo +'<br><br><br></div><div>' +
+                params.message + 
+                '</div></div>'
+            );
+        
     }
     
     win
@@ -82,6 +128,8 @@
                     bcc         : $( '.content-cco input', win ).val(),
                     subject     : $( '.content-subject input', win ).val(),
                     content     : $( '.content-compose', win ).html(),
+                    inReplyTo   : (params.reply) ? params.messageId : null,
+                    references  : params.references,
                     attachments : attachmentsList
 
                 },

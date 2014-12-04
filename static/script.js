@@ -386,8 +386,6 @@ var toDate = function( date ){
 // Muestra la lista de correos
 var showMailsList = function( id, boxId, boxType, request){
 
-    console.log(request, _prevRequest, _nextRequest);
-
     wz.mail( id, function( error, account ){
 
         if( error ){
@@ -403,8 +401,6 @@ var showMailsList = function( id, boxId, boxType, request){
             }
 
             var list = object.list;
-
-            console.log(object);
 
             _folderOpened     = boxId;
             _folderTypeOpened = boxType;
@@ -501,8 +497,6 @@ var showMailsList = function( id, boxId, boxType, request){
 
 var showMessage = function( message ){
 
-    console.log( message );
-
     /*_lastMailFolderType = _folderTypeOpened;*/
 
     contentSubject.text( message.title );
@@ -550,8 +544,6 @@ var showMessage = function( message ){
     contentMessageText.contents().find( 'body' ).empty();
 
     message.getFullMessage( function( error, fullMessage ){
-
-        console.log( error, fullMessage );
 
         if( error ){
             alert( error );
@@ -949,6 +941,31 @@ win
         }
 
     })
+
+    .on( 'click', '.reply-mode-forward', function(){
+
+        if( contentColumn.hasClass( 'message-shown' ) ){
+
+            wz.app.createView(
+
+                {
+                    cc      : null,
+                    subject : contentColumn.data().message.title,
+                    message : contentColumn.data().message.message,
+                    forward   : true,
+                    time       : contentColumn.data().message.time,
+                    originalTo : contentColumn.data().message.to,
+                    from       : contentColumn.data().message.from,
+                    references : contentColumn.data().message.references,
+                    messageId  : contentColumn.data().message.messageId,
+                },
+                'new'
+
+            );
+
+        }
+
+    })
     
     .on( 'click', '.options-reply', function(){
 
@@ -957,11 +974,17 @@ win
             wz.app.createView(
 
                 {
+                    originalTo : contentColumn.data().message.to,
                     to      : [ contentColumn.data().message.from.address ],
                     cc      : null,
                     subject : contentColumn.data().message.title,
                     message : contentColumn.data().message.message,
-                    reply   : contentColumn.data().message.inReplyTo
+                    reply   : true,
+                    time       : contentColumn.data().message.time,
+                    from       : contentColumn.data().message.from,
+                    references : contentColumn.data().message.references,
+                    replyTo    : contentColumn.data().message.replyTo,
+                    messageId  : contentColumn.data().message.messageId,
                 },
                 'new'
 
@@ -1004,14 +1027,20 @@ win
         wz.app.createView(
 
             {
-                to      : receivers,
-                cc      : cc,
-                subject : data.message.title,
-                message : data.message.message,
-                reply   : data.message.inReplyTo
+                to      : [ contentColumn.data().message.from.address ],
+                originalTo : contentColumn.data().message.to,
+                cc      : null,
+                subject : contentColumn.data().message.title,
+                message : contentColumn.data().message.message,
+                reply   : true,
+                time       : contentColumn.data().message.time,
+                from       : contentColumn.data().message.from,
+                references : contentColumn.data().message.references,
+                replyTo    : contentColumn.data().message.replyTo,
+                messageId  : contentColumn.data().message.messageId,
             },
             'new'
-            
+
         );
 
     })
