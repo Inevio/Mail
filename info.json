@@ -119,6 +119,36 @@
                     "script" : ["account.js"]
 
                 },
+
+                "box" : {
+
+                    "description" : "",
+                    
+                    "template" : "box.html",
+
+                    "maxizable" : false,
+                    "resizable" : false,
+
+                    "width"  : {
+
+                        "default" : 560,
+                        "min"     : 0,
+                        "max"     : 0
+
+                    },
+
+                    "height" : {
+
+                        "default" : 330,
+                        "min"     : 0,
+                        "max"     : 0
+
+                    },
+
+                    "css"    : ["box.css"],
+                    "script" : ["box.js"]
+
+                },
                 
                 "hosting" : {
 

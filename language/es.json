@@ -83,6 +83,10 @@
     "startImport" : "Comenzando importación...",
     "file" : "archivo",
     "files" : "archivos",
-    "delete" : "Eliminar"
+    "delete" : "Eliminar",
+    "createBox" : "Crear nueva bandeja",
+    "createBoxDescription" : "Introduce el nombre de la nueva bandeja que quieres crear.",
+    "boxName" : "Nombre de la bandeja"
+
     
 }

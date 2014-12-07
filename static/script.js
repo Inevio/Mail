@@ -1431,6 +1431,17 @@ win
 
                 })
 
+                .addOption( lang.createBox, function(){
+                    
+                    wz.mail( idData, function( error, account ){
+
+                        // To Do -> Error
+                        wz.app.createView( { cmd : 'create', account : account }, 'box' );
+
+                    });
+
+                })
+
                 .addOption( lang.deleteAccount, function() {
 
                     wz.mail.removeAccount( idData, function( error ){

@@ -83,6 +83,9 @@
     "startImport" : "Starting import...",
     "file" : "file",
     "files" : "files",
-    "delete" : "Delete"
+    "delete" : "Delete",
+    "createBox" : "Create new mailbox",
+    "createBoxDescription" : "Introduce the name of the new mailbox you want to create",
+    "boxName" : "Mailbox name"
     
 }
