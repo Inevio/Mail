@@ -119,7 +119,7 @@ var _accountItemBoxes = function( account, item ){
     var countersPromise = $.Deferred();
     var counters        = null;
 
-    account.getBoxes( false, function( error, boxes ){
+    account.getBoxes(function( error, boxes ){
 
         if( error ){
             return alert( error );

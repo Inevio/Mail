@@ -5,25 +5,6 @@
 
     $( '.name', content ).find( 'input' ).focus();
 
-    var create = function(){
-
-        if(!params){
-
-            win.transition( { 'height' : '256' }, 250);
-            content.transition( { 'height' : '146' }, 250);
-
-        }
-
-        $( '.wz-view-menu span', win ).text( lang.createBox );
-        $( '.description', win ).text( lang.createBoxDescription );
-        $( '.name span', win ).text( lang.boxName + ':' );
-
-        $( '.name', content ).find( 'input' ).focus();
-
-        content.children().not( '.finish , .name, .description' ).remove();
-
-    };
-
     var finish = function(){
 
         if( params ){
@@ -81,12 +62,14 @@
 
     if( params ){
 
-        console.log(params.account);
+        win.css( { 'height' : '256' } );
+        content.css( { 'height' : '146' } );
 
-        if( params.cmd === 'create' ){
-            create();
-        }else{
-            moreData();
-        }
-        
+        $( '.wz-view-menu span', win ).text( (params.cmd === 'create') ? lang.createBox : lang.renameBox  );
+        $( '.description', win ).text( (params.cmd === 'create') ? lang.createBoxDescription : lang.renameBoxDescription);
+        $( '.name span', win ).text( lang.boxName + ':' );
+
+        $( '.name', content ).find( 'input' ).focus();
+
+        content.children().not( '.finish , .name, .description' ).remove();
     }
