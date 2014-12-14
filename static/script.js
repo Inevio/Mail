@@ -35,9 +35,9 @@ var _accountOpened      = 0;
     var _pageOpened         = 0;
     var _lastMailFolderType = 'normal';
 
-    var _formatId = function(id){
-        return id.replace(/ |\.|#|<|>|&|;/g,"-");
-    };
+var _formatId = function( id ){
+    return id.replace(/ |\.|\[|\]|#|<|>|&|;/g,'-').replace( /--+/g, '-' );
+};
 
     var _accountOptionsHeight = function( item ){
         item = $( item );
@@ -654,7 +654,7 @@ var showMessage = function( message ){
         }
 
         // To Do -> Seguro que podemos hacerlo con elementos en concreto y no con una búsqueda asi
-        contentColumn.children().not('.wz-fit-ignore').not( contentMessage ).not( attachments ).map( function(){
+        contentColumn.children().not('.wz-fit-ignore').not( contentMessage ).not( attachments ).each( function(){
             availableHeight -= $( this ).outerHeight( true );
         });
 
@@ -1627,7 +1627,8 @@ win
         wz.app.createView( null, 'hosting' );
     });
 
-    wz.mail
+wz.mail
+    /*
     .on( 'messageMarkedAsSeen', function( message ){
 
         $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
@@ -1656,6 +1657,7 @@ win
         mailsUnread( accountId );
 
     })
+    */
 
     .on( 'messageIn', function( accountId, message, boxId, boxType ){
 
@@ -1741,36 +1743,64 @@ win
         $( '.account-' + accountId + '-message', messagesColumn ).remove();
     })
 
-    .on( 'boxAdded', function( mailBox, accountId ){
+.on( 'boxAdded', function( accountId, path ){
 
-        if( mailBox.type === 'normal' || mailBox.type === 'allMail' ){
-            return false;
-        }
+    var accountItem = $( '.account-' + accountId, mailColumn );
+    var boxFound;
+    var boxItem;
 
-        var accountItem = $( '.account-' + accountId, mailColumn );
-        var boxItem     = null;
+    if(
+        !accountItem.length ||
+        mailColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) ).length
+    ){
+        return;
+    }
 
-        if( !accountItem.size() ){
-            return false;
-        }
+    // To Do -> Implementar un método getBox para hacer esto más eficiente y no tener que buscar en todo el listado de mailboxes
 
-        boxItem = _boxItem( mailBox, accountItem.children('.wz-prototype') );
+    wz.mail( accountId, function( error, account ){
 
-        insertBox( boxItem, accountItem );
+        // To Do -> Error
 
-        if( accountItem.hasClass('display') ){
+        account.getBoxes( function( error, list ){
 
-            var size = 0;
-            boxItem.siblings('.mailbox, span').add( boxItem ).not('.wz-prototype').each(function(){
-                size += boxItem.outerHeight( true );
-            });
+            for( var i = 0; i < list.length; i++ ){
 
-            accountItem.stop().clearQueue().animate( { height : size }, 150 );
-        }
+                if( path === list[ i ].path ){
+                    
+                    boxFound = list[ i ];
 
         mailsUnread( accountId );
 
-    })
+                }
+
+            }
+
+            if( !boxFound ){
+                return;
+            }
+
+            boxItem = _boxItem( boxFound, accountItem.children('.wz-prototype').clone().removeClass('wz-prototype') );
+
+            insertBox( boxItem, accountItem );
+
+            if( accountItem.hasClass('display') ){
+
+                var size = 0;
+                accountItem.children('.mailbox, span').not('.wz-prototype').each(function(){
+                    size += $(this).outerHeight( true );
+                });
+
+                accountItem.stop().clearQueue().animate( { height : size }, 150 );
+            }
+
+            /*mailsUnread( accountId );*/
+
+        });
+
+    });
+
+})
 
     .on( 'boxRemoved', function( boxId, accountId ){
 
@@ -1784,7 +1814,7 @@ win
         var size = 0;
         
         boxItem.siblings('.mailbox, span').not('.wz-prototype').each(function(){
-            size += boxItem.outerHeight( true );
+            size += $(this).outerHeight( true );
         });
 
         boxItem.fadeOut( 150, function(){
