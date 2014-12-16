@@ -1,4 +1,7 @@
 
+// Constants
+var PAGINATION_LIMIT = 20;
+
 // DOM Variables
 var win                 = $( this );
 var attachments         = $('.content-attachments');
@@ -24,15 +27,14 @@ var contentStar         = $('.message-star', contentColumn );
 var contentMessage      = $('.content-message', contentColumn );
 var contentMessageText  = $('.content-message-text', contentMessage );
 
-
     var myAccount = null;
 
-var _accountOpened      = 0;
-    var _folderOpened       = 0;
+var _accountOpened;
+var _boxOpened;
     var _prevRequest        = null;
     var _nextRequest        = null;
     var _folderTypeOpened   = 'normal';
-    var _pageOpened         = 0;
+var _pageOpened         = 0;
     var _lastMailFolderType = 'normal';
 
 var _formatId = function( id ){
@@ -261,15 +263,16 @@ var _boxItem = function( box, item ){
 
 var _messageItem = function( item ){
 
+    console.log( item );
+
     var messageSqueleton = messagePrototype.clone();
 
     messageSqueleton
         .removeClass( 'wz-prototype' )
-        .addClass( 'message-' + item.id )
         .addClass( 'account-' + item.accountId + '-message' )
-        .addClass( 'account-' + item.accountId + '-message-' + item.id )
-        .data( 'message', item )
-        .data( 'message-time', item.time );
+        .addClass( 'account-' + item.accountId + '-box-' + _formatId( item.path ) + '-message' )
+        .addClass( 'account-' + item.accountId + '-box-' + _formatId( item.path ) + '-message-' + item.id )
+        .data( 'message', item );
 
     messageSqueleton.find( '.message-origin' ).text( item.from.name );
     messageSqueleton.find( '.message-subject' ).text( item.title );
@@ -326,14 +329,16 @@ var getAccounts = function(){
     });
 
 };
-
+    
+    /*
     var isAccountOpened = function( id ){
         return id === _accountOpened;
     };
 
     var isBoxOpened = function( id ){
-        return id === _folderOpened;
+        return id === _boxOpened;
     };
+    */
 
 var getMessagesInList = function(){
     return messagesColumn.children().not( messagePrototype ).not( '.middle-column-content-none' );
@@ -363,9 +368,9 @@ var toDate = function( date ){
 };
 
     // Inserta la cuenta Common si no existe
+    /*
     var showCommonAccount = function(){
 
-        /*
         wz.mail.getAccounts( function( error, list ){
             
             if( error ){
@@ -381,9 +386,9 @@ var toDate = function( date ){
             }
 
         });
-        */
 
     };
+    */
 
 // Muestra la lista de correos
 var showMailsList = function( id, boxId, boxType, request){
@@ -396,7 +401,7 @@ var showMailsList = function( id, boxId, boxType, request){
 
         _accountOpened = id;
 
-        account.getMessagesFromBox( boxId, 20, request, function( error, object ){
+        account.getMessagesFromBox( boxId, PAGINATION_LIMIT, request, function( error, object ){
 
             if( error ){
                 return alert( error );
@@ -404,12 +409,12 @@ var showMailsList = function( id, boxId, boxType, request){
 
             var list = object.list;
 
-            _folderOpened     = boxId;
+            _boxOpened     = boxId;
             _folderTypeOpened = boxType;
             _nextRequest      = object.next;
             _prevRequest      = object.prev;
 
-            $( '.middle-column-pages-actual', messagesZone ).text( ( ( _pageOpened * 20 ) + 1 ) + ' - ' + ( ( _pageOpened + 1 ) * 20 ) );
+            $( '.middle-column-pages-actual', messagesZone ).text( ( ( _pageOpened * PAGINATION_LIMIT ) + 1 ) + ' - ' + ( ( _pageOpened + 1 ) * PAGINATION_LIMIT ) );
 
             // Limpiamos la columna
             getMessagesInList().remove();
@@ -436,6 +441,7 @@ var showMailsList = function( id, boxId, boxType, request){
 
 };
 
+    /*
     var showReceptors = function( fullMessage ){
 
         if( fullMessage.to.length ){
@@ -498,6 +504,7 @@ var showMailsList = function( id, boxId, boxType, request){
         }
 
     };
+    */
 
 var showMessage = function( message ){
 
@@ -664,6 +671,7 @@ var showMessage = function( message ){
 
 };
 
+    /*
     var appendMessage = function( message ){
 
         var messageSqueleton = messagePrototype.clone();
@@ -700,6 +708,7 @@ var showMessage = function( message ){
         messagesColumn.find( '.message:last-child' ).remove();
 
     };
+    */
 
 var insertBox = function( boxObj, accountObj ){
 
@@ -749,6 +758,8 @@ var insertBox = function( boxObj, accountObj ){
 
     var mailsUnread = function( accountId ){
 
+        console.warn('mailsUnread() executed');
+
         wz.mail.getCounters(accountId, function( error, object ){
 
             if( error ){
@@ -765,8 +776,12 @@ var insertBox = function( boxObj, accountObj ){
 
     };
 
+    /*
     var showLastMessage = function(){
 
+        console.log('not implemented');
+
+        /*
         wql.getOpened( function( error, result ){
 
             if( error ){
@@ -808,8 +823,10 @@ var insertBox = function( boxObj, accountObj ){
             });
 
         });
+        *//*
 
     };
+    */
 
 var translateUI = function(){
 
@@ -912,6 +929,7 @@ win
 
 })
 
+/*
     .on( 'click', 'input', function( e ){
         e.stopPropagation();
         contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
@@ -1204,6 +1222,9 @@ win
             
                 confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
 
+                    // To Do -> No se tiene en cuenta lo elegido por el usuario
+                    console.warn('No se tiene en cuenta lo elegido por el usuario');
+
                     contentColumn.data( 'message' ).remove( function( error ){
 
                         if( error ){
@@ -1379,7 +1400,7 @@ win
 
         _pageOpened--;
 
-        showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _prevRequest );
+        showMailsList( _accountOpened, _boxOpened, _folderTypeOpened, _prevRequest );
         
     })
 
@@ -1388,7 +1409,7 @@ win
 
         _pageOpened++;
 
-        showMailsList( _accountOpened, _folderOpened, _folderTypeOpened, _nextRequest );
+        showMailsList( _accountOpened, _boxOpened, _folderTypeOpened, _nextRequest );
 
     })
 
@@ -1621,36 +1642,36 @@ win
             .render();
 
     });
+*/
 
-    addAccount
-    .on( 'click', function(){
-        wz.app.createView( null, 'hosting' );
-    });
+addAccount.on( 'click', function(){
+    wz.app.createView( null, 'hosting' );
+});
 
 wz.mail
+.on( 'messageMarkedAsSeen', function( accountId, path, uid ){
+
+    $( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid, messagesColumn ).removeClass( 'unread' );
+    mailsUnread( accountId );
+
+})
+
+.on( 'messageUnmarkedAsSeen', function( accountId, path, uid ){
+
+    $( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid, messagesColumn ).addClass( 'unread' );
+    mailsUnread( accountId );
+
+})
+
+.on( 'messageMarkedAsFlagged', function( accountId, path, uid ){
+    $( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid, messagesColumn ).addClass( 'active' );
+})
+
+.on( 'messageUnmarkedAsFlagged', function( accountId, path, uid ){
+    $( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid, messagesColumn ).removeClass( 'active' );
+})
+
     /*
-    .on( 'messageMarkedAsSeen', function( message ){
-
-        $( '.message-' + message.id, messagesColumn ).removeClass( 'unread' );
-        mailsUnread( message.accountId );
-
-    })
-
-    .on( 'messageUnmarkedAsSeen', function( message ){
-
-        $( '.message-' + message.id, messagesColumn ).addClass( 'unread' );
-        mailsUnread( message.accountId );
-
-    })
-
-    .on( 'messageMarkedAsFlagged', function( message ){
-        $( '.message-' + message.id + ' .message-star', win ).addClass( 'active' );
-    })
-
-    .on( 'messageUnmarkedAsFlagged', function( message ){
-        $( '.message-' + message.id + ' .message-star', win ).removeClass( 'active' );
-    })
-
     .on( 'messageRemoved', function( messageId, accountId ){
 
         $( '.message-' + messageId, messagesColumn ).remove();
@@ -1659,61 +1680,107 @@ wz.mail
     })
     */
 
-    .on( 'messageIn', function( accountId, message, boxId, boxType ){
+.on( 'messageIn', function( accountId, path, uid, time, flags ){
 
-        if(
+    // Check if the path is opened
+    if( accountId !== _accountOpened || path !== _boxOpened ){
+        return;
+    }
 
-            ( isAccountOpened( 'common' ) && isBoxOpened( boxType ) ) ||
-            ( isAccountOpened( accountId ) && isBoxOpened( boxId ) )
+    // Check if date is in the range
+    var position;
+    var messages = messagesColumn.find('.message').not('.wz-prototype');
 
-        ){
-            
-            var list     = getMessagesInList();
-            var inserted = false;
+    if( messages.length ){
+    
+        messages.each( function( index ){
 
-            list.each( function(){
+            if( time > $(this).data('message').time.getTime() ){
+                
+                position = index;
+                
+                return false;
 
-                if( $( this ).data('message-time') < message.time ){
+            }
 
-                    $( this ).before( _messageItem( message ) );
+        });
 
-                    inserted = true;
+    }else{
+        position = 0;
+    }
 
+    if( typeof position === 'undefined' ){
+        return;
+    }
+
+    wz.mail.getMessage( accountId, path, uid, function( error, message ){
+
+        if( error ){
+            return;
+        }
+
+        // Check if the path is opened still
+        if( accountId !== _accountOpened || path !== _boxOpened ){
+            return;
+        }
+
+        // Check if date is still in the range
+        var position;
+        var messages = messagesColumn.find('.message').not('.wz-prototype');
+
+        if( messages.length ){
+
+            messages.each( function( index ){
+
+                if( time > $(this).data('message').time.getTime() ){
+                    
+                    position = index;
+                    
                     return false;
 
                 }
 
             });
 
-            if( !inserted ){
-                messagesColumn.append( _messageItem( message ) );
+            if( typeof position === 'undefined' ){
+                return;
             }
 
+            messages.eq( position ).before( _messageItem( message ) );
+
+            if( messages.length >= PAGINATION_LIMIT ){
+                messagesColumn.find('.message').not('.wz-prototype').slice( PAGINATION_LIMIT )
+            }
+
+        }else{
+            messagesColumn.append( _messageItem( message ) );
         }
 
-        mailsUnread( accountId );
+    });
 
-    })
+    mailsUnread( accountId );
 
-    .on( 'messageOut', function( accountId, messageId /*, boxId */ ){
+})
+    
+    /*
+    .on( 'messageOut', function( accountId, messageId ){
         $( '.account-' + accountId + '-message-' + messageId, messagesColumn ).remove();
     })
 
-    .on( 'newMessage', function( /* message */ ){
+    .on( 'newMessage', function(){
         // To Do
     })
+    */
 
+    /*
     .on( 'accountAdded', function( mailAccount ){
 
         addAccount.before( _accountItem( mailAccount ) );
         mailZone.addClass( 'account-shown' );
 
-        if( !mailColumn.children('.general').length ){
-            showCommonAccount();
-        }
-
     })
-
+    */
+/*
     .on( 'accountRemoved', function( accountId ){
         
         $( '.account-' + accountId, mailColumn )
@@ -1742,6 +1809,7 @@ wz.mail
     .on( 'accountRemoveFinished', function( accountId ){
         $( '.account-' + accountId + '-message', messagesColumn ).remove();
     })
+*/
 
 .on( 'boxAdded', function( accountId, path ){
 
@@ -1770,7 +1838,7 @@ wz.mail
                     
                     boxFound = list[ i ];
 
-        mailsUnread( accountId );
+                    break;
 
                 }
 
@@ -1802,6 +1870,7 @@ wz.mail
 
 })
 
+    /*
     .on( 'boxRemoved', function( boxId, accountId ){
 
         var boxItem     = $( '.account-' + accountId + '-box-' + _formatId(boxId), mailColumn );
@@ -1834,6 +1903,7 @@ wz.mail
         }
 
     });
+*/
 
 // Start App
 getAccounts();
