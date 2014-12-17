@@ -801,6 +801,10 @@ figure.options-label i:first-child{
     display: none;
 }
 
+.right-column-content-receivers.content-receivers-displayed{
+    display: block;
+}
+
 .receivers-to{
     width: 100%;
     float: left;
@@ -848,6 +852,10 @@ figure.options-label i:first-child{
     border: 1px solid #54728C;
     border-radius: 2px;
     display: none;
+}
+
+.right-column-content-reply-mode.reply-mode-displayed{
+    display: block;
 }
 
 .right-column-content-reply-mode article{

@@ -27,15 +27,12 @@ var contentStar         = $('.message-star', contentColumn );
 var contentMessage      = $('.content-message', contentColumn );
 var contentMessageText  = $('.content-message-text', contentMessage );
 
-    var myAccount = null;
-
+var _accountList = [];
 var _accountOpened;
 var _boxOpened;
     var _prevRequest        = null;
     var _nextRequest        = null;
-    var _folderTypeOpened   = 'normal';
 var _pageOpened         = 0;
-    var _lastMailFolderType = 'normal';
 
 var _formatId = function( id ){
     return id.replace(/ |\.|\[|\]|#|<|>|&|;/g,'-').replace( /--+/g, '-' );
@@ -263,8 +260,6 @@ var _boxItem = function( box, item ){
 
 var _messageItem = function( item ){
 
-    console.log( item );
-
     var messageSqueleton = messagePrototype.clone();
 
     messageSqueleton
@@ -319,11 +314,10 @@ var getAccounts = function(){
 
         for( var i = 0, j = accounts.length; i < j; i++ ){
             list.push( _accountItem( accounts[ i ] ) );
+            _accountList.push( accounts[ i ] );
         }
 
         addAccount.before( list );
-
-        mailZone.addClass( 'account-shown' );
         /*showLastMessage();*/
 
     });
@@ -391,7 +385,7 @@ var toDate = function( date ){
     */
 
 // Muestra la lista de correos
-var showMailsList = function( id, boxId, boxType, request){
+var showMailsList = function( id, boxId, request){
 
     wz.mail( id, function( error, account ){
 
@@ -409,10 +403,9 @@ var showMailsList = function( id, boxId, boxType, request){
 
             var list = object.list;
 
-            _boxOpened     = boxId;
-            _folderTypeOpened = boxType;
-            _nextRequest      = object.next;
-            _prevRequest      = object.prev;
+            _boxOpened   = boxId;
+            _nextRequest = object.next;
+            _prevRequest = object.prev;
 
             $( '.middle-column-pages-actual', messagesZone ).text( ( ( _pageOpened * PAGINATION_LIMIT ) + 1 ) + ' - ' + ( ( _pageOpened + 1 ) * PAGINATION_LIMIT ) );
 
@@ -441,74 +434,80 @@ var showMailsList = function( id, boxId, boxType, request){
 
 };
 
-    /*
-    var showReceptors = function( fullMessage ){
+var showReceptors = function( fullMessage ){
 
-        if( fullMessage.to.length ){
+    if( fullMessage.to.length ){
 
-            $( '.receivers-to', contentReceivers ).css( 'display', 'block' );
-            $( '.receivers-to', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+        $( '.receivers-to', contentReceivers )
+            .show()
+            .children().not('.receivers-title, .wz-prototype')
+                .remove();
 
-            for( var i = 0, j = fullMessage.to.length; i < j; i++ ){
+        for( var i = 0; i < fullMessage.to.length; i++ ){
 
-                if( myAccount === fullMessage.to[ i ].address  ){
+            $( '.receivers-to', contentReceivers ).append(
 
-                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address + ' ' + '(' + lang.me + ')' ) );
-                
-                }else{
-                    $( '.receivers-to', contentReceivers ).append( $( '.receivers-to .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.to[ i ].address ) );
-                }
-                
-            }
+                $( '.receivers-to .wz-prototype', contentReceivers ).clone()
+                    .removeClass( 'wz-prototype' )
+                    .text( fullMessage.to[ i ].address )
 
-        }else{
-            $( '.receivers-to', contentReceivers ).css( 'display', 'none' );
+            );
+
         }
 
-        if( fullMessage.cc.length ){
+    }else{
+        $( '.receivers-to', contentReceivers ).hide();
+    }
 
-            $( '.receivers-cc', contentReceivers ).css( 'display', 'block' );
-            $( '.receivers-cc', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+    if( fullMessage.cc.length ){
 
-            for( var k = 0, l = fullMessage.cc.length; k < l ; k++ ){
+        $( '.receivers-cc', contentReceivers )
+            .show()
+            .children().not('.receivers-title, .wz-prototype')
+                .remove();
 
-                if( myAccount === fullMessage.cc[ k ].address  ){
-                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ k ].address + ' ' + '(' + lang.me + ')' ) );
-                }else{
-                    $( '.receivers-cc', contentReceivers ).append( $( '.receivers-cc .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.cc[ k ].address ) );
-                }
+        for( var i = 0; i < fullMessage.cc.length; i++ ){
 
-            }
+            $( '.receivers-cc', contentReceivers ).append(
 
-        }else{
-            $( '.receivers-cc', contentReceivers ).css( 'display', 'none' );
+                $( '.receivers-cc .wz-prototype', contentReceivers ).clone()
+                    .removeClass( 'wz-prototype' )
+                    .text( fullMessage.cc[ i ].address )
+
+            );
+
         }
 
-        if( fullMessage.bcc.length ){
+    }else{
+        $( '.receivers-cc', contentReceivers ).hide();
+    }
 
-            $( '.receivers-cco', contentReceivers ).css( 'display', 'block' );
-            $( '.receivers-cco', contentReceivers ).children().not( '.receivers-title, .wz-prototype' ).remove();
+    if( fullMessage.bcc.length ){
 
-            for( var m = 0, n = fullMessage.bcc.length; m < n; m++ ){
+        $( '.receivers-cco', contentReceivers )
+            .show()
+            .children().not( '.receivers-title, .wz-prototype' )
+                .remove();
 
-                if( myAccount === fullMessage.bcc[ m ].address  ){
-                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ m ].address + ' ' + '(' + lang.me + ')' ) );
-                }else{
-                    $( '.receivers-cco', contentReceivers ).append( $( '.receivers-cco .wz-prototype', contentReceivers ).clone().removeClass( 'wz-prototype' ).text( fullMessage.bcc[ m ].address ) );
-                }
+        for( var i = 0; i < fullMessage.bcc.length; i++ ){
 
-            }
+            $( '.receivers-cco', contentReceivers ).append(
 
-        }else{
-            $( '.receivers-cco', contentReceivers ).css( 'display', 'none' );
+                $( '.receivers-cco .wz-prototype', contentReceivers ).clone()
+                    .removeClass( 'wz-prototype' )
+                    .text( fullMessage.bcc[ i ].address )
+
+            );
+
         }
 
-    };
-    */
+    }else{
+        $( '.receivers-cco', contentReceivers ).hide();
+    }
+
+};
 
 var showMessage = function( message ){
-
-    /*_lastMailFolderType = _folderTypeOpened;*/
 
     contentSubject.text( message.title );
     contentName.text( message.from.name );
@@ -599,20 +598,7 @@ var showMessage = function( message ){
             $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'block' );
         }
 
-        // To Do -> Por que se hace esto cada vez que se abre la app?
-        /*
-        wz.mail( fullMessage.accountId, function( error, account ){
-
-            if( error ){
-                alert( error );
-                return;
-            }
-
-            myAccount = account.address;
-            showReceptors( fullMessage );
-
-        });
-        */
+        showReceptors( fullMessage );
 
         contentColumn.data( 'message', fullMessage );
 
@@ -758,8 +744,9 @@ var insertBox = function( boxObj, accountObj ){
 
     var mailsUnread = function( accountId ){
 
-        console.warn('mailsUnread() executed');
+        console.warn('mailsUnread( ' + accountId + ' ) executed');
 
+        /*
         wz.mail.getCounters(accountId, function( error, object ){
 
             if( error ){
@@ -773,6 +760,7 @@ var insertBox = function( boxObj, accountObj ){
             }
 
         });
+        */
 
     };
 
@@ -843,10 +831,7 @@ var translateUI = function(){
     $( '.reply-mode-reply span', contentReplyMode ).text( lang.reply );
     $( '.reply-mode-reply-all span', contentReplyMode ).text( lang.replyToAll );
     $( '.reply-mode-forward span', contentReplyMode ).text( lang.forward );
-    $( '.reply-mode-mark-unread span', contentReplyMode ).text( lang.markAsUnread );
-    $( '.reply-mode-spam span', contentReplyMode ).text( lang.markAsSpam );
-    $( '.reply-mode-delete span', contentReplyMode ).text( lang.moveToTrash );
-
+    
 };
 
 win
@@ -881,13 +866,13 @@ win
 
     _pageOpened = 0;
 
-    openedAccount.text( $(this).parent('.account').children( 'span' ).text() );
-    openedMailbox.text( $(this).children( 'span' ).text() );
-    showMailsList( $(this).parent( '.account' ).data( 'id' ), $(this).data( 'path' ), $(this).data( 'type' ) );
-    $( '.active', mailColumn ).removeClass( 'active' );
-    $( this ).addClass( 'active' );
-    contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
-    contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+    openedAccount.text( $(this).parent('.account').children('span').text() );
+    openedMailbox.text( $(this).children('span').text() );
+    contentReceivers.removeClass('content-receivers-displayed');
+    contentReplyMode.removeClass('reply-mode-displayed');
+    mailColumn.find('.active').removeClass('active');
+    showMailsList( $(this).parent('.account').data('id'), $(this).data('path') );
+    $( this ).addClass('active');
 
 })
 
@@ -932,90 +917,101 @@ win
 /*
     .on( 'click', 'input', function( e ){
         e.stopPropagation();
-        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
-        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+        contentReceivers.removeClass( 'content-receivers-displayed' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' );
     })
+*/
+.on( 'click', '.message-star', function( e ){
 
-    .on( 'click', '.message-star', function( e ){
+    e.stopPropagation();
+    contentReceivers.removeClass('content-receivers-displayed');
+    contentReplyMode.removeClass('reply-mode-displayed');
 
-        e.stopPropagation();
-        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
-        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+    if( $(this).hasClass('active') ){
 
-        if( $(this).hasClass('active') ){
+        $(this).removeClass('active');
 
-            $(this).removeClass('active');
-            $(this).parents( '.parent' ).data( 'message' ).unmarkAsFlagged( function( error ){
-                if( error ){
-                    alert( error );
-                }
-            });
+        $(this).parents('.parent').data('message').unmarkAsFlagged( function( error ){
+            
+            if( error ){
+                alert( error );
+            }
 
-        }else{
+        });
 
-            $(this).addClass('active');
-            $(this).parents( '.parent' ).data( 'message' ).markAsFlagged( function( error ){
-                if( error ){
-                    alert( error );
-                }
-            });
+    }else{
 
-        }
+        $(this).addClass('active');
 
-    })
+        $(this).parents('.parent').data('message').markAsFlagged( function( error ){
+            
+            if( error ){
+                alert( error );
+            }
 
-    .on( 'click', '.reply-mode-forward', function(){
+        });
 
-        if( contentColumn.hasClass( 'message-shown' ) ){
+    }
 
-            wz.app.createView(
+})
 
-                {
-                    cc      : null,
-                    subject : contentColumn.data().message.title,
-                    message : contentColumn.data().message.message,
-                    forward   : true,
-                    time       : contentColumn.data().message.time,
-                    originalTo : contentColumn.data().message.to,
-                    from       : contentColumn.data().message.from,
-                    references : contentColumn.data().message.references,
-                    messageId  : contentColumn.data().message.messageId,
-                },
-                'new'
+.on( 'click', '.reply-mode-forward', function(){
 
-            );
+    if( contentColumn.hasClass( 'message-shown' ) ){
 
-        }
+        var message = contentColumn.data('message');
 
-    })
-    
-    .on( 'click', '.options-reply', function(){
+        wz.app.createView(
 
-        if( contentColumn.hasClass( 'message-shown' ) ){
+            {
+                cc         : null,
+                subject    : message.title,
+                message    : message.message,
+                forward    : true,
+                time       : message.time,
+                originalTo : message.to,
+                from       : message.from,
+                references : message.references,
+                messageId  : message.messageId,
+            },
+            'new'
 
-            wz.app.createView(
+        );
 
-                {
-                    originalTo : contentColumn.data().message.to,
-                    to      : [ contentColumn.data().message.from.address ],
-                    cc      : null,
-                    subject : contentColumn.data().message.title,
-                    message : contentColumn.data().message.message,
-                    reply   : true,
-                    time       : contentColumn.data().message.time,
-                    from       : contentColumn.data().message.from,
-                    references : contentColumn.data().message.references,
-                    replyTo    : contentColumn.data().message.replyTo,
-                    messageId  : contentColumn.data().message.messageId,
-                },
-                'new'
+    }
 
-            );
+})
 
-        }
+.on( 'click', '.options-reply', function(){
 
-    })
+    if( contentColumn.hasClass( 'message-shown' ) ){
 
+        var info = contentColumn.data('message');
+
+        wz.app.createView(
+
+            {
+                originalTo : info.to,
+                to         : [ info.from.address ],
+                cc         : null,
+                subject    : info.title,
+                message    : info.message,
+                reply      : true,
+                time       : info.time,
+                from       : info.from,
+                references : info.references,
+                replyTo    : info.replyTo,
+                messageId  : info.messageId,
+            },
+            'new'
+
+        );
+
+    }
+
+})
+
+/*
     .on( 'click', '.reply-mode-reply', function(){
         $( '.options-reply', contentColumn ).click();
     })
@@ -1023,25 +1019,24 @@ win
     .on( 'click', '.reply-mode-reply-all', function(){
         
         var receivers = [];
+        var cc        = [];
+        var data      = contentColumn.data('message');
 
-        receivers.push( contentColumn.data().message.from.address );
+        receivers.push( data.from.address );
 
-        var data = contentColumn.data();
+        for( var i = 0; i < data.to.length; i++ ){
 
-        for( var i = 0, j = data.message.to.length; i < j; i++ ){
-
-            if( myAccount !== data.message.to[ i ].address ){
-                receivers.push( data.message.to[ i ].address );
+            if( myAccount !== data.to[ i ].address ){
+                receivers.push( data.to[ i ].address );
             }
 
         }
 
-        var cc = [];
 
-        for( var k = 0, l = data.message.cc.length; k < l; k++ ){
+        for( var i = 0; i < data.cc.length; i++ ){
 
-            if( myAccount !== data.message.cc[ i ].address ){
-                cc.push( data.message.cc[ i ].address );
+            if( myAccount !== data.cc[ i ].address ){
+                cc.push( data.cc[ i ].address );
             }
 
         }
@@ -1049,46 +1044,34 @@ win
         wz.app.createView(
 
             {
-                to      : [ contentColumn.data().message.from.address ],
-                originalTo : contentColumn.data().message.to,
-                cc      : null,
-                subject : contentColumn.data().message.title,
-                message : contentColumn.data().message.message,
-                reply   : true,
-                time       : contentColumn.data().message.time,
-                from       : contentColumn.data().message.from,
-                references : contentColumn.data().message.references,
-                replyTo    : contentColumn.data().message.replyTo,
-                messageId  : contentColumn.data().message.messageId,
+                to         : receivers,
+                originalTo : data.to,
+                cc         : cc,
+                subject    : data.title,
+                message    : data.message,
+                reply      : true,
+                time       : data.time,
+                from       : data.from,
+                references : data.references,
+                replyTo    : data.replyTo,
+                messageId  : data.messageId,
             },
             'new'
 
         );
 
     })
+*/
+.on( 'click', '.new-mail', function(){
 
-    .on( 'click', '.reply-mode-mark-unread', function(){
-        $( '.options-unread', contentColumn ).click();
-    })
+    if( _accountList.length ){
+        wz.app.createView( '', 'new' );
+    }else{
+        alert( lang.createAccountToSend );
+    }
 
-    .on( 'click', '.reply-mode-spam', function(){
-        $( '.options-spam', contentColumn ).click();
-    })
-
-    .on( 'click', '.reply-mode-delete', function(){
-        $( '.options-trash', contentColumn ).click();
-    })
-
-    .on( 'click', '.new-mail', function(){
-
-        if( mailZone.hasClass( 'account-shown' ) ){
-            wz.app.createView( '', 'new' );
-        }else{
-            alert( lang.createAccountToSend );
-        }
-
-    })
-
+})
+/*
     .on( 'click', '.options-spam.middle', function(){
 
         var messageSpamPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
@@ -1099,15 +1082,13 @@ win
             $( this ).data( 'message' ).moveToSpam( function( error ){
 
                 if( error ){
-                    alert( error );
-                }else{
+                    return alert( error );
+                }
 
-                    if( messageSpamPrev.size() ){
-                        messageSpamPrev.click();
-                    }else if( messageSpamNext.size() ){
-                        messageSpamNext.click();
-                    }
-
+                if( messageSpamPrev.size() ){
+                    messageSpamPrev.click();
+                }else if( messageSpamNext.size() ){
+                    messageSpamNext.click();
                 }
 
             });
@@ -1126,15 +1107,13 @@ win
             contentColumn.data( 'message' ).moveToSpam( function( error ){
 
                 if( error ){
-                    alert( error );
-                }else{
+                    return alert( error );
+                }
 
-                    if( messageSpamPrev.size() ){
-                        messageSpamPrev.click();
-                    }else if( messageSpamNext.size() ){
-                        messageSpamNext.click();
-                    }
-
+                if( messageSpamPrev.size() ){
+                    messageSpamPrev.click();
+                }else if( messageSpamNext.size() ){
+                    messageSpamNext.click();
                 }
 
             });
@@ -1162,16 +1141,14 @@ win
                             $( this ).data('message').remove( function( error ){
 
                                 if( error ){
-                                    alert( error );
-                                }else{
+                                    return alert( error );
+                                }
 
-                                    // To Do -> Esto tiene pinta de bucle excesivo
-                                    if( messageTrashPrev.size() ){
-                                        messageTrashPrev.click();
-                                    }else if( messageTrashNext.size() ){
-                                        messageTrashNext.click();
-                                    }
-
+                                // To Do -> Esto tiene pinta de bucle excesivo
+                                if( messageTrashPrev.size() ){
+                                    messageTrashPrev.click();
+                                }else if( messageTrashNext.size() ){
+                                    messageTrashNext.click();
                                 }
 
                             });
@@ -1228,15 +1205,13 @@ win
                     contentColumn.data( 'message' ).remove( function( error ){
 
                         if( error ){
-                            alert( error );
-                        }else{
+                            return alert( error );
+                        }
 
-                            if( messageTrashPrev.size() ){
-                                messageTrashPrev.click();
-                            }else if( messageTrashNext.size() ){
-                                messageTrashNext.click();
-                            }
-
+                        if( messageTrashPrev.size() ){
+                            messageTrashPrev.click();
+                        }else if( messageTrashNext.size() ){
+                            messageTrashNext.click();
                         }
 
                     });
@@ -1266,161 +1241,141 @@ win
         }
 
     })
+*/
 
-    .on( 'click', '.options-unread.middle', function(){
+.on( 'click', '.options-unread.middle', function(){
 
-        $( '.selected', messagesColumn ).each( function(){
+    $( '.selected', messagesColumn ).each( function(){
 
-            $( this ).data( 'message' ).unmarkAsSeen( function( error ){
+        $( this ).data( 'message' ).unmarkAsSeen( function( error ){
 
-                if( error ){
-                    alert( error );
-                }
-
-            });
+            if( error ){
+                alert( error );
+            }
 
         });
 
-    })
+    });
 
-    .on( 'click', '.options-unread.right', function(){
+})
 
-        if( contentColumn.hasClass( 'message-shown' ) ){
+.on( 'click', '.options-unread.right', function(){
 
-            contentColumn.data( 'message' ).unmarkAsSeen( function( error ){
+    if( contentColumn.hasClass( 'message-shown' ) ){
 
-                if( error ){
-                    alert( error );
-                }
+        contentColumn.data( 'message' ).unmarkAsSeen( function( error ){
 
-            });
-
-        }
-
-    })
-
-    .on( 'click', '.options-read.middle', function(){
-
-        $( '.selected', messagesColumn ).each( function(){
-
-            $( this ).data( 'message' ).markAsSeen( function( error ){
-
-                if( error ){
-                    alert( error );
-                }
-
-            });
+            if( error ){
+                alert( error );
+            }
 
         });
 
-    })
+    }
 
-    .on( 'click', '.options-read.right', function(){
+})
 
-        if( contentColumn.hasClass( 'message-shown' ) ){
+.on( 'click', '.options-read.middle', function(){
 
-            contentColumn.data( 'message' ).markAsSeen( function( error ){
+    $( '.selected', messagesColumn ).each( function(){
 
-                if( error ){
-                    alert( error );
-                }
+        $( this ).data( 'message' ).markAsSeen( function( error ){
 
-            });
-
-        }
-
-    })
-
-    .on( 'click', '.options-prev.right', function(){
-
-        if( contentColumn.hasClass( 'message-shown' ) ){
-
-            var prevMessage = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
-
-            if( prevMessage.size() ){
-                prevMessage.click();
+            if( error ){
+                alert( error );
             }
 
-        }
+        });
 
-    })
+    });
 
-    .on( 'click', '.options-next.right', function(){
+})
 
-        var nextMessage = $( '.last-selected', messagesColumn ).next();
+.on( 'click', '.options-read.right', function(){
 
-        if( nextMessage.size() ){
-            nextMessage.click();
-        }
+    if( contentColumn.hasClass( 'message-shown' ) ){
 
-    })
+        contentColumn.data( 'message' ).markAsSeen( function( error ){
 
-    .on( 'click', '.options-more', function( e ){
-
-        if( contentColumn.hasClass( 'message-shown' ) ){
-
-            e.stopPropagation();
-
-            if( contentReplyMode.hasClass( 'reply-mode-displayed' ) ){
-                contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
-            }else{
-                contentReplyMode.addClass( 'reply-mode-displayed' ).css( 'display', 'block' );
+            if( error ){
+                alert( error );
             }
 
-            contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
+        });
 
-        }
+    }
 
-    })
+})
 
-    .on( 'click', '.content-origin-display', function( e ){
+.on( 'click', '.options-prev.right', function(){
+    $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none').click();
+})
+
+.on( 'click', '.options-next.right', function(){
+    $( '.last-selected', messagesColumn ).next().click();
+})
+
+.on( 'click', '.options-more', function( e ){
+
+    if( contentColumn.hasClass( 'message-shown' ) ){
 
         e.stopPropagation();
+        contentReplyMode.toggleClass('reply-mode-displayed');
+        contentReceivers.removeClass('content-receivers-displayed');
 
-        if( contentReceivers.hasClass( 'content-receivers-displayed' ) ){
-            contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
-        }else{
-            contentReceivers.addClass( 'content-receivers-displayed' ).css( 'display', 'block' );
-        }
+    }
 
-        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+})
 
-    })
+.on( 'click', '.content-origin-display', function( e ){
 
+    console.log('content-origin-display');
+
+    e.stopPropagation();
+
+    contentReceivers.toggleClass('content-receivers-displayed');
+    contentReplyMode.removeClass('reply-mode-displayed');
+
+})
+
+/*
     .on( 'click', '.right-column-content-receivers', function( e ){
         e.stopPropagation();
     })
+*/
 
-    // Anterior página de mensajes
-    .on( 'click', '.middle-column-pages-prev', function(){
+// Anterior página de mensajes
+.on( 'click', '.middle-column-pages-prev', function(){
 
-        if(_pageOpened <= 0){
-            return;
-        }
+    if(_pageOpened <= 0){
+        return;
+    }
 
-        _pageOpened--;
+    _pageOpened--;
 
-        showMailsList( _accountOpened, _boxOpened, _folderTypeOpened, _prevRequest );
-        
-    })
+    showMailsList( _accountOpened, _boxOpened, _prevRequest );
+    
+})
 
-    // Siguiente página de mensajes
-    .on( 'click', '.middle-column-pages-next', function(){
 
-        _pageOpened++;
+// Siguiente página de mensajes
+.on( 'click', '.middle-column-pages-next', function(){
 
-        showMailsList( _accountOpened, _boxOpened, _folderTypeOpened, _nextRequest );
+    _pageOpened++; // To Do -> Uno se puede salir de rango
 
-    })
+    showMailsList( _accountOpened, _boxOpened, _nextRequest );
 
+})
+
+/*
     // Oculta los desplegables de Receptores y Modos de respuesta
     .on( 'click', function(){
 
-        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
-        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+        contentReceivers.removeClass( 'content-receivers-displayed' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' );
 
     })
-
+*/
     .on( 'contextmenu', '.account', function(){
 
         var mailData = $( this ).data( 'mail' );
@@ -1488,70 +1443,68 @@ win
         }
 
     })
-
+/*
     .on( 'contextmenu', '.account article', function( e ){
 
         e.stopPropagation();
 
-        contentReceivers.removeClass( 'content-receivers-displayed' ).css( 'display', 'none' );
-        contentReplyMode.removeClass( 'reply-mode-displayed' ).css( 'display', 'none' );
+        contentReceivers.removeClass( 'content-receivers-displayed' );
+        contentReplyMode.removeClass( 'reply-mode-displayed' );
 
         return; // To Do -> Es realmente necesario?
 
     })
+*/
 
-    .key( 'down', function( e ){
+.key( 'down', function( e ){
 
-        var target = null;
+    var target = null;
 
-        if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
-            target = messagesColumn.children('.selected').last();
-        }else{
-            target = messagesColumn.children('.selected').first();
-        }
+    if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
+        target = messagesColumn.children('.selected').last();
+    }else{
+        target = messagesColumn.children('.selected').first();
+    }
 
-        e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
+    e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
 
-        if( target.size() ){
+    if(
+        target.size() &&
+        ( target = target.next() ) &&
+        target.size()
+    ){
+        target.trigger( e );
+    }else{
+        messagesColumn.children( ':not( .wz-prototype, .middle-column-content-none ):first' ).click();
+    }
 
-            target = target.next();
+})
 
-            if( target.size() ){
-                target.trigger( e );
-            }
+.key( 'up', function( e ){
 
-        }else{
-            messagesColumn.children( ':not( .wz-prototype, .middle-column-content-none ):first' ).click();
-        }
+    var target = null;
 
-    })
+    if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
+        target = messagesColumn.children('.selected').last();
+    }else{
+        target = messagesColumn.children('.selected').first();
+    }
 
-    .key( 'up', function( e ){
+    e = jQuery.Event( 'click', { shiftKey : e.shiftKey } );
 
-        var target = null;
+    if(
+        target.size() &&
+        ( target = target.prev().not('.wz-prototype, .middle-column-content-none') ) &&
+        target.size()
+    ){
+        target.trigger( e );
+    }else{
+        messagesColumn.children(':not( .wz-prototype, .middle-column-content-none ):first' ).click();
+    }
 
-        if( messagesColumn.children('.selected').first().hasClass( 'last-selected' ) ){
-            target = messagesColumn.children('.selected').last();
-        }else{
-            target = messagesColumn.children('.selected').first();
-        }
+})
 
-        e = jQuery.Event( "click", { shiftKey : e.shiftKey } );
-
-        if( target.size() ){
-
-            target = target.prev().not('.wz-prototype, .middle-column-content-none');
-
-            if( target.size() ){
-                target.trigger( e );
-            }
-
-        }else{
-            messagesColumn.children(':not( .wz-prototype, .middle-column-content-none ):first' ).click();
-        }
-
-    })
-
+/*
     .key( 'backspace, del', function( e ){
 
         if( $( e.target ).is('input') ){
@@ -1628,21 +1581,21 @@ win
     .on( 'ui-view-resize-end', function(){
         wql.changeSize( [ win.width(), win.height() ] );
     });
-
-    attachments.on( 'click', '.content-attachments-import', function(){
-        
-        $( this ).parent().data('actions').import( function(){
-            console.log( arguments );
-        });
-
-        wz.banner()
-            .setTitle( lang.startImport )
-            .setText( $( this ).siblings('.name').text() )
-            .setIcon( 'https://static.inevio.com/app/8/import.png' )
-            .render();
-
-    });
 */
+
+attachments.on( 'click', '.content-attachments-import', function(){
+    
+    $( this ).parent().data('actions').import( function(){
+        console.log( arguments );
+    });
+
+    wz.banner()
+        .setTitle( lang.startImport )
+        .setText( $( this ).siblings('.name').text() )
+        .setIcon( 'https://static.inevio.com/app/8/import.png' )
+        .render();
+
+});
 
 addAccount.on( 'click', function(){
     wz.app.createView( null, 'hosting' );
@@ -1680,7 +1633,7 @@ wz.mail
     })
     */
 
-.on( 'messageIn', function( accountId, path, uid, time, flags ){
+.on( 'messageIn', function( accountId, path, uid, time ){
 
     // Check if the path is opened
     if( accountId !== _accountOpened || path !== _boxOpened ){
@@ -1762,24 +1715,23 @@ wz.mail
 
 })
     
+.on( 'messageOut', function( accountId, path, uid ){
+    messagesColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid ).remove();
+})
+    
     /*
-    .on( 'messageOut', function( accountId, messageId ){
-        $( '.account-' + accountId + '-message-' + messageId, messagesColumn ).remove();
-    })
-
     .on( 'newMessage', function(){
         // To Do
     })
     */
 
-    /*
-    .on( 'accountAdded', function( mailAccount ){
+.on( 'accountAdded', function( mailAccount ){
 
-        addAccount.before( _accountItem( mailAccount ) );
-        mailZone.addClass( 'account-shown' );
+    addAccount.before( _accountItem( mailAccount ) );
+    _accountList.push( mailAccount );
 
-    })
-    */
+})
+
 /*
     .on( 'accountRemoved', function( accountId ){
         
