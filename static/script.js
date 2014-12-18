@@ -1644,7 +1644,7 @@ wz.mail
     var position;
     var messages = messagesColumn.find('.message').not('.wz-prototype');
 
-    if( messages.length ){
+    if( messages.length && time ){
     
         messages.each( function( index ){
 
