@@ -742,25 +742,19 @@ var insertBox = function( boxObj, accountObj ){
 
 };
 
-    var mailsUnread = function( accountId ){
+    var mailsUnread = function( accountId, path ){
 
-        console.warn('mailsUnread( ' + accountId + ' ) executed');
+        wz.mail.getCounters( accountId, path, function( error, object ){
 
-        /*
-        wz.mail.getCounters(accountId, function( error, object ){
+            // To Do -> Error
 
-            if( error ){
-                return alert( error );
+            if( path === 'INBOX' ){
+                mailColumn.find( '.account-' + accountId ).children('.bullet').text( object.unseen || '' );
             }
 
-            mailColumn.find('.account-' + accountId ).children( '.bullet' ).text( object['INBOX'].unseen || '' );
-
-            for( var i in object ){
-                mailColumn.find('.account-' + accountId + '-box-' + _formatId( i ) ).children( '.bullet' ).text( object[ i ].unseen || '' );
-            }
+            mailColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) ).children('.bullet').text( object.unseen || '' );
 
         });
-        */
 
     };
 
@@ -1605,14 +1599,14 @@ wz.mail
 .on( 'messageMarkedAsSeen', function( accountId, path, uid ){
 
     $( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid, messagesColumn ).removeClass( 'unread' );
-    mailsUnread( accountId );
+    mailsUnread( accountId, path );
 
 })
 
 .on( 'messageUnmarkedAsSeen', function( accountId, path, uid ){
 
     $( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid, messagesColumn ).addClass( 'unread' );
-    mailsUnread( accountId );
+    mailsUnread( accountId, path );
 
 })
 
@@ -1634,6 +1628,8 @@ wz.mail
     */
 
 .on( 'messageIn', function( accountId, path, uid, time ){
+    
+    mailsUnread( accountId, path );
 
     // Check if the path is opened
     if( accountId !== _accountOpened || path !== _boxOpened ){
@@ -1710,8 +1706,6 @@ wz.mail
         }
 
     });
-
-    mailsUnread( accountId );
 
 })
     
@@ -1814,7 +1808,7 @@ wz.mail
                 accountItem.stop().clearQueue().animate( { height : size }, 150 );
             }
 
-            /*mailsUnread( accountId );*/
+            mailsUnread( accountId, path );
 
         });
 
