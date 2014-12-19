@@ -1770,47 +1770,25 @@ wz.mail
         return;
     }
 
-    // To Do -> Implementar un método getBox para hacer esto más eficiente y no tener que buscar en todo el listado de mailboxes
-
-    wz.mail( accountId, function( error, account ){
+    wz.mail.getBox( accountId, path, function( error, box ){
 
         // To Do -> Error
 
-        account.getBoxes( function( error, list ){
+        boxItem = _boxItem( box, accountItem.children('.wz-prototype').clone().removeClass('wz-prototype') );
 
-            for( var i = 0; i < list.length; i++ ){
+        insertBox( boxItem, accountItem );
 
-                if( path === list[ i ].path ){
-                    
-                    boxFound = list[ i ];
+        if( accountItem.hasClass('display') ){
 
-                    break;
+            var size = 0;
+            accountItem.children('.mailbox, span').not('.wz-prototype').each(function(){
+                size += $(this).outerHeight( true );
+            });
 
-                }
+            accountItem.stop().clearQueue().animate( { height : size }, 150 );
+        }
 
-            }
-
-            if( !boxFound ){
-                return;
-            }
-
-            boxItem = _boxItem( boxFound, accountItem.children('.wz-prototype').clone().removeClass('wz-prototype') );
-
-            insertBox( boxItem, accountItem );
-
-            if( accountItem.hasClass('display') ){
-
-                var size = 0;
-                accountItem.children('.mailbox, span').not('.wz-prototype').each(function(){
-                    size += $(this).outerHeight( true );
-                });
-
-                accountItem.stop().clearQueue().animate( { height : size }, 150 );
-            }
-
-            mailsUnread( accountId, path );
-
-        });
+        mailsUnread( accountId, path );
 
     });
 
