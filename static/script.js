@@ -700,7 +700,7 @@ var insertBox = function( boxObj, accountObj ){
 
     var boxes = accountObj.children().not('.wz-prototype, .syncing');
 
-    if( boxes.filter( '.box-' + _formatId( boxObj.data('path') ) ).length ){
+    if( boxes.find( '.box-' + _formatId( boxObj.data('path') ) ).length ){
         return;
     }
 
@@ -886,7 +886,7 @@ win
 
         var messages = $( '.message', messagesColumn );
         var beginRow = messages.index( this );
-        var finalRow = messages.index( messages.filter( '.last-selected' ) );
+        var finalRow = messages.index( messages.filter( '.last-selected' ) ); // To Do -> Tiene que ser un filter seguro? O un find?
         var row      = null;
         
         if( beginRow < finalRow ){
@@ -1115,93 +1115,35 @@ win
         }
 
     })
+    */
 
-    .on( 'click', '.options-trash.middle', function(){
+.on( 'click', '.options-trash.middle', function(){
 
-        var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
-        var messageTrashNext = $( '.last-selected', messagesColumn ).next();
-        var messagesSelected = $( '.selected', messagesColumn );
+    var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
+    var messageTrashNext = $( '.last-selected', messagesColumn ).next();
+    var messagesSelected = $( '.selected', messagesColumn );
 
-        if( messagesSelected.length ){
+    if( !messagesSelected.length ){
+        return;
+    }
 
-            if( _lastMailFolderType === 'trash' ){
+    if( mailColumn.find( '.account-' + _accountOpened + '-box-' + _formatId( _boxOpened ) ).data('type') === 'trash' ){
 
-                confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
+        confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
 
-                    if( result ){
-
-                        messagesSelected.each( function(){
-
-                            $( this ).data('message').remove( function( error ){
-
-                                if( error ){
-                                    return alert( error );
-                                }
-
-                                // To Do -> Esto tiene pinta de bucle excesivo
-                                if( messageTrashPrev.size() ){
-                                    messageTrashPrev.click();
-                                }else if( messageTrashNext.size() ){
-                                    messageTrashNext.click();
-                                }
-
-                            });
-
-                        });
-
-                    }
-
-                });
-
-            }else{
+            if( result ){
 
                 messagesSelected.each( function(){
 
-                    $( this ).data( 'message' ).moveToTrash( function( error ){
+                    $( this ).data('message').remove( function( error ){
 
-                        if( error ){
-                            alert( error );
-                        }else{
-
-                            // To Do -> Esto tiene pinta de bucle excesivo
-                            if( messageTrashPrev.size() ){
-                                messageTrashPrev.click();
-                            }else if( messageTrashNext.size() ){
-                                messageTrashNext.click();
-                            }
-
-                        }
-
-                    });
-
-                });
-
-            }
-
-        }
-
-    })
-
-    .on( 'click', '.options-trash.right', function(){
-
-        if( contentColumn.hasClass( 'message-shown' ) ){
-
-            var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
-            var messageTrashNext = $( '.last-selected', messagesColumn ).next();
-
-            if( _lastMailFolderType === 'trash' ){
-            
-                confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
-
-                    // To Do -> No se tiene en cuenta lo elegido por el usuario
-                    console.warn('No se tiene en cuenta lo elegido por el usuario');
-
-                    contentColumn.data( 'message' ).remove( function( error ){
+                        console.log( arguments );
 
                         if( error ){
                             return alert( error );
                         }
 
+                        // To Do -> Esto tiene pinta de bucle excesivo
                         if( messageTrashPrev.size() ){
                             messageTrashPrev.click();
                         }else if( messageTrashNext.size() ){
@@ -1212,30 +1154,85 @@ win
 
                 });
 
-            }else{
+            }
 
-                contentColumn.data( 'message' ).moveToTrash( function( error ){
+        });
+
+    }else{
+
+        messagesSelected.each( function(){
+
+            $(this).data('message').moveToTrash( function( error ){
+
+                if( error ){
+                    return alert( error );
+                }
+
+                // To Do -> Esto tiene pinta de bucle excesivo
+                if( messageTrashPrev.size() ){
+                    messageTrashPrev.click();
+                }else if( messageTrashNext.size() ){
+                    messageTrashNext.click();
+                }
+
+            });
+
+        });
+
+    }
+
+})
+
+.on( 'click', '.options-trash.right', function(){
+
+    var message          = contentColumn.data('message');
+    var messageTrashPrev = $( '.last-selected', messagesColumn ).prev().not('.wz-prototype, .middle-column-content-none');
+    var messageTrashNext = $( '.last-selected', messagesColumn ).next();
+
+    // Si estamos en un la papelera o el mensaje pertenece a la papelera
+    if( mailColumn.find( '.account-' + message.accountId + '-box-' + _formatId( message.path ) ).data('type') === 'trash' ){
+        
+        confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
+
+            if( result ){
+
+                contentColumn.data( 'message' ).remove( function( error ){
 
                     if( error ){
-                        alert( error );
-                    }else{
+                        return alert( error );
+                    }
 
-                        if( messageTrashPrev.size() ){
-                            messageTrashPrev.click();
-                        }else if( messageTrashNext.size() ){
-                            messageTrashNext.click();
-                        }
-
+                    if( messageTrashPrev.size() ){
+                        messageTrashPrev.click();
+                    }else if( messageTrashNext.size() ){
+                        messageTrashNext.click();
                     }
 
                 });
 
             }
 
-        }
+        });
 
-    })
-*/
+    }else{
+
+        contentColumn.data( 'message' ).moveToTrash( function( error ){
+
+            if( error ){
+                return alert( error );
+            }
+
+            if( messageTrashPrev.size() ){
+                messageTrashPrev.click();
+            }else if( messageTrashNext.size() ){
+                messageTrashNext.click();
+            }
+
+        });
+
+    }
+
+})
 
 .on( 'click', '.options-unread.middle', function(){
 
