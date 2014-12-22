@@ -1005,57 +1005,55 @@ win
 
 })
 
-/*
-    .on( 'click', '.reply-mode-reply', function(){
-        $( '.options-reply', contentColumn ).click();
-    })
+.on( 'click', '.reply-mode-reply', function(){
+    $( '.options-reply', contentColumn ).click();
+})
 
-    .on( 'click', '.reply-mode-reply-all', function(){
-        
-        var receivers = [];
-        var cc        = [];
-        var data      = contentColumn.data('message');
+.on( 'click', '.reply-mode-reply-all', function(){
+    
+    var receivers = [];
+    var cc        = [];
+    var data      = contentColumn.data('message');
 
-        receivers.push( data.from.address );
+    receivers.push( data.from.address );
 
-        for( var i = 0; i < data.to.length; i++ ){
+    for( var i = 0; i < data.to.length; i++ ){
 
-            if( myAccount !== data.to[ i ].address ){
-                receivers.push( data.to[ i ].address );
-            }
-
+        if( myAccount !== data.to[ i ].address ){
+            receivers.push( data.to[ i ].address );
         }
 
+    }
 
-        for( var i = 0; i < data.cc.length; i++ ){
+    for( var i = 0; i < data.cc.length; i++ ){
 
-            if( myAccount !== data.cc[ i ].address ){
-                cc.push( data.cc[ i ].address );
-            }
-
+        if( myAccount !== data.cc[ i ].address ){
+            cc.push( data.cc[ i ].address );
         }
 
-        wz.app.createView(
+    }
 
-            {
-                to         : receivers,
-                originalTo : data.to,
-                cc         : cc,
-                subject    : data.title,
-                message    : data.message,
-                reply      : true,
-                time       : data.time,
-                from       : data.from,
-                references : data.references,
-                replyTo    : data.replyTo,
-                messageId  : data.messageId,
-            },
-            'new'
+    wz.app.createView(
 
-        );
+        {
+            to         : receivers,
+            originalTo : data.to,
+            cc         : cc,
+            subject    : data.title,
+            message    : data.message,
+            reply      : true,
+            time       : data.time,
+            from       : data.from,
+            references : data.references,
+            replyTo    : data.replyTo,
+            messageId  : data.messageId,
+        },
+        'new'
 
-    })
-*/
+    );
+
+})
+
 .on( 'click', '.new-mail', function(){
 
     if( _accountList.length ){
