@@ -1,21 +1,27 @@
 
 var win = $( this );
 
-    $(win)
+win
+.on( 'click', '.gmail', function(){
 
-    .on( 'click', '.gmail', function(){
+    wz.mail.addGmailAccount();
+    wz.view.remove();
 
-        wz.mail.addGmailAccount();
-        wz.view.remove();
+})
 
-    })
+.on( 'click', '.hotmail, .outlook', function(){
 
-    .on( 'click', '.yahoo, .hotmail, .outlook, .other', function(){
+    wz.mail.addOutlookAccount( params, 'account' );
+    wz.view.remove();
 
-        wz.app.createView( params, 'account' );
-        wz.view.remove();
+})
 
-    });
+.on( 'click', '.yahoo, .other', function(){
 
-    $( '.hosting-title', win ).text( lang.chooseServer );
-    $( '.hosting-image-other', win ).text( lang.chooseOther );
+    wz.app.createView( params, 'account' );
+    wz.view.remove();
+
+});
+
+$('.hosting-title').text( lang.chooseServer );
+$('.hosting-image-other').text( lang.chooseOther );
