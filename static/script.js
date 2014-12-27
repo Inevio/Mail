@@ -35,7 +35,7 @@ var _boxOpened;
 var _pageOpened         = 0;
 
 var _formatId = function( id ){
-    return id.replace(/ |\.|\[|\]|#|<|>|&|;/g,'-').replace( /--+/g, '-' );
+    return id.replace(/ |\.|\[|\]|\(|\)|#|<|>|&|;/g,'-').replace( /--+/g, '-' );
 };
 
     var _accountOptionsHeight = function( item ){
