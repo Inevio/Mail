@@ -565,19 +565,9 @@ var showMessage = function( message ){
         }else{
             contentStar.removeClass( 'active' );
         }
-
-        if( fullMessage.to.length > 1 || fullMessage.cc.length || fullMessage.bcc.length ){
-
-            contentDisplay.css( 'display', 'block' );
-            $( '.reply-mode-reply-all', contentReplyMode ).css( 'display', 'block' );
-
-        }else{
-
-            contentDisplay.css( 'display', 'none' );
-            $( '.reply-mode-reply-all', contentReplyMode ).css( 'display', 'none' );
-
-        }
-
+            
+        contentDisplay.css( 'display', 'block' );
+        contentReplyMode.find('.reply-mode-reply-all').css( 'display', 'block' );
         contentMessageText.contents().find( 'body' ).html( _getBasicStyle() + fullMessage.message );
 
         if( !( /webkit/gi ).test( navigator.userAgent ) ){
