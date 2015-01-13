@@ -1721,32 +1721,32 @@ wz.mail
 
 })
 
-/*
-    .on( 'accountRemoved', function( accountId ){
+.on( 'accountRemoved', function( accountId ){
+    
+    $( '.account-' + accountId, mailColumn )
+        .addClass('removed')
+        .transition( { height : 0 }, 150, function(){
+            $( this ).remove();
+        });
+
+    if( $( '.account', mailColumn ).not('.removed, .wz-prototype, .general').size() < 1 ){
+
+        $( '.account.general', mailColumn ).transition( { height : 0 }, 150, function(){
+            $( this ).remove();
+        });
+
+        contentColumn.removeClass( 'message-shown' );
+        messagesZone.removeClass( 'box-shown' );
+
+        wz.app.createView( null, 'hosting' );
         
-        $( '.account-' + accountId, mailColumn )
-            .addClass('removed')
-            .transition( { height : 0 }, 150, function(){
-                $( this ).remove();
-            });
+    }
 
-        if( $( '.account', mailColumn ).not('.removed, .wz-prototype, .general').size() < 1 ){
+    $( '.account-' + accountId + '-message', messagesColumn ).remove();
 
-            $( '.account.general', mailColumn ).transition( { height : 0 }, 150, function(){
-                $( this ).remove();
-            });
+})
 
-            contentColumn.removeClass( 'message-shown' );
-            messagesZone.removeClass( 'box-shown' );
-
-            wz.app.createView( null, 'hosting' );
-            
-        }
-
-        $( '.account-' + accountId + '-message', messagesColumn ).remove();
-
-    })
-
+/*
     .on( 'accountRemoveFinished', function( accountId ){
         $( '.account-' + accountId + '-message', messagesColumn ).remove();
     })
