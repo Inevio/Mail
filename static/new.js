@@ -1,119 +1,105 @@
 
-    var win                 = $( this );
-    var content             = $('.content');
-    var mailExpresion       = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,4}))$/;
-    var attachments         = $('.content-attachments');
-    var attachmentPrototype = $('.attachment.wz-prototype');
-    var attachmentsList     = [];
+// Variables
+var win                 = $( this );
+var content             = $('.content');
+var mailExpresion       = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,4}))$/;
+var attachments         = $('.content-attachments');
+var attachmentPrototype = $('.attachment.wz-prototype');
+var attachmentsList     = [];
+
+// Functions
+var loadAccountList = function(){
 
     wz.mail.getAccounts( function( error, accounts ){
 
-        var optionProto = $( '.content-from option.wz-prototype', win );
+        var optionProto = $('.content-from option.wz-prototype');
 
         for( var i = 0, j = accounts.length; i < j; i++ ){
 
-            if( accounts[ i ].inProtocol !== 'common' ){
-
-                optionProto
-                    .clone()
-                    .removeClass( 'wz-prototype' )
-                    .text( accounts[ i ].address )
-                    .data( 'account', accounts[ i ] )
-                    .appendTo( $( '.content-from select', win ) );
-
+            if( accounts[ i ].inProtocol === 'common' ){
+                continue;
             }
+
+            optionProto
+                .clone()
+                .removeClass('wz-prototype')
+                .text( accounts[ i ].address )
+                .data( 'account', accounts[ i ] )
+                .appendTo( $('.content-from select') );
 
         }
 
         optionProto.remove();
 
-    });
-
-    var _formatTo = function(object){
-
-        console.log(object);
-
-        var to = object[0].address || object[ 0 ];
-
-        for( var i = 1 ; i < object.length ; i++ ){
-
-            var other = object[i].address || object[ i ];
-            to = to + ', ' + other;
-
+        if( !params || !params.from ){
+            return;
         }
 
-        return to;
-    };
+        $('.content-from select option').each( function(){
 
-    params.to = (params.replyTo && params.replyTo.length) ? params.replyTo : params.to;
-
-    if( params.to ){
-
-        params.to = _formatTo(params.to);
-
-        /*
-        if( params.cc ){
-
-            $( '.content-left-container', win ).addClass( 'show' );
-            win.transition({ height : '+=40' }, 100 );
-
-            var cc = params.cc[ 0 ];
-
-            for( var i = 1 ; i < params.cc.length ; i++ ){
-
-                cc = cc + ', ' + params.cc[ i ];
-
+            if( $(this).text() === params.from.address ){
+                $(this).prop( 'selected', true );
+                return false;
             }
 
-            $( '.content-cc input', win ).val( cc );
+        });
 
-        }
-        */
+    });
 
+};
+
+var loadParams = function(){
+
+    if( !params.messageId ){
+        $('.content-to input').focus();
+        return;
     }
 
-    if( params.originalTo ){
-        params.originalTo = _formatTo(params.originalTo);
+    // To Do -> Add the name of the contact
+    var to = params.to.map( function( item ){
+        return item.address;
+    });
+
+    // To Do -> Add the name of the contact
+    var cc = params.cc.map( function( item ){
+        return item.address;
+    });
+
+    $('.content-subject input').val( params.subject );
+    $('.content-to input').val( to.join(', ') );
+    $('.content-cc input').val( cc.join(', ') );
+    $('.content-compose').html( params.message );
+
+    if( to.length ){
+        $('.content-compose').focus();
+    }else{
+        $('.content-to input').focus();
     }
 
-
-    if(params.reply){
-
-        $( '.content-subject input', win ).val('Re: ' + params.subject );
-        //To-DO Better formatting and languages
-        $( '.content-compose', win ).html(
-                '<br><br><hr><div><div>' + 
-                'From: <b>' + params.from.name + '</b>' + 
-                '<span dir="ltr">&lt;'+params.from.address+'&gt;</span><br>' +
-                'Date: ' + params.time + '<br>' +
-                'Subject: ' + params.subject + '<br>' +
-                'To: ' + params.originalTo +'<br><br><br></div><div>' +
-                params.message + 
-                '</div></div>'
-            );
-
-
-        $( '.content-to input', win ).val( params.to );
-
-        params.references.push(params.messageId);
-
+    if( params.cc.length ){
+        $('.show-cc').click();
     }
-    else if(params.forward) {
-        $( '.content-subject input', win ).val('Fwd: ' + params.subject );
-        $( '.content-compose', win ).html(
-                '<br><br><div><div>' + 
-                '---------- Forwarded message ----------<br>' + 
-                'From: <b>' + params.from.name + '</b>' + 
-                '<span dir="ltr">&lt;'+params.from.address+'&gt;</span><br>' +
-                'Date: ' + params.time + '<br>' +
-                'Subject: ' + params.subject + '<br>' +
-                'To: ' + params.originalTo +'<br><br><br></div><div>' +
-                params.message + 
-                '</div></div>'
-            );
-        
+
+    if( params.messageId ){
+        params.references.push( params.messageId );
     }
-    
+
+};
+
+var translateUi = function(){
+
+    $('.wz-view-menu span').text( lang.newEmail );
+    $('.content-to span').append( lang.to + ':' );
+    $('.content-subject span').text( lang.subject + ':' );
+    $('.content-from span').text( lang.from + ':' );
+    $('.content-send span').text( lang.send );
+    $('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
+    $('.content-attachments-delete').text( lang.delete );
+    $('.content-add-attachments span').text( lang.attachFile );
+
+};
+
+// Events
     win
     .on( 'click', '.content-send figure', function(){
         
@@ -128,7 +114,7 @@
                     bcc         : $( '.content-cco input', win ).val(),
                     subject     : $( '.content-subject input', win ).val(),
                     content     : $( '.content-compose', win ).html(),
-                    inReplyTo   : (params.reply) ? params.messageId : null,
+                    inReplyTo   : params.messageId || null,
                     references  : params.references,
                     attachments : attachmentsList
 
@@ -267,11 +253,7 @@
 
     });
 
-    $('.wz-view-menu span').text( lang.newEmail );
-    $('.content-to span').append( lang.to + ':' );
-    $('.content-subject span').text( lang.subject + ':' );
-    $('.content-from span').text( lang.from + ':' );
-    $('.content-send span').text( lang.send );
-    $('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
-    $('.content-attachments-delete').text( lang.delete );
-    $('.content-add-attachments span').text( lang.attachFile );
+// Start
+translateUi();
+loadAccountList();
+loadParams();

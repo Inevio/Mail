@@ -818,6 +818,20 @@ var translateUI = function(){
     
 };
 
+var getOpenedAccount = function(){
+
+    for( var i = 0; i < _accountList.length; i++ ){
+
+        if( _accountList[ i ].id === _accountOpened ){
+            return _accountList[ i ];
+        }
+
+    }
+
+    return null;
+
+};
+
 win
 .on( 'click', '.account', function(){
 
@@ -943,20 +957,66 @@ win
 
     if( contentColumn.hasClass( 'message-shown' ) ){
 
-        var message = contentColumn.data('message');
+        var info      = contentColumn.data('message');
+        var account   = getOpenedAccount();
+        var newSender = null;
+
+        for( var i = 0; i < info.to.length && !newSender; i++ ){
+            
+            if( info.to[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        for( var i = 0; i < info.cc.length && !newSender; i++ ){
+            
+            if( info.cc[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        for( var i = 0; i < info.bcc.length && !newSender; i++ ){
+            
+            if( info.bcc[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        if( !newSender ){
+            newSender = account;
+        }
+
+        var toList     = info.to.map( function( item ){ return item.name + ' <span>&lt;' + item.address + '&gt;</span>'; });
+        var ccList     = info.cc.map( function( item ){ return item.name + ' <span>&lt;' + item.address + '&gt;</span>'; });
+        var newMessage = [
+
+            '<br><br>',
+            '---------- Forwarded message ----------<br>',
+            '<b>From:</b> ' + info.from.name + ' <span>&lt;' + info.from.address + '&gt;</span><br>',
+            '<b>Date:</b> ' + info.time.toString() + '<br>',
+            toList.length ? '<b>To:</b> ' + toList.join(', ') + '<br>' : '',
+            ccList.length ? '<b>CC:</b> ' + ccList.join(', ') + '<br>' : '',
+            '<b>Subject:</b> ' + info.title + '<br>',
+            '<br>',
+            info.message
+
+        ];
 
         wz.app.createView(
 
             {
-                cc         : null,
-                subject    : message.title,
-                message    : message.message,
-                forward    : true,
-                time       : message.time,
-                originalTo : message.to,
-                from       : message.from,
-                references : message.references,
-                messageId  : message.messageId,
+
+                cc         : [],
+                from       : newSender,
+                message    : newMessage.join(''),
+                references : info.references,
+                subject    : info.title.indexOf('Fw') === 0 ? info.title : 'Fw: ' + info.title,
+                time       : info.time,
+                to         : []
+
             },
             'new'
 
@@ -966,88 +1026,220 @@ win
 
 })
 
-.on( 'click', '.options-reply', function(){
+.on( 'click', '.options-reply, .reply-mode-reply', function(){
 
     if( contentColumn.hasClass( 'message-shown' ) ){
 
-        var info = contentColumn.data('message');
+        var info      = contentColumn.data('message');
+        var account   = getOpenedAccount();
+        var newSender = null;
+
+        for( var i = 0; i < info.to.length && !newSender; i++ ){
+            
+            if( info.to[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        for( var i = 0; i < info.cc.length && !newSender; i++ ){
+            
+            if( info.cc[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        for( var i = 0; i < info.bcc.length && !newSender; i++ ){
+            
+            if( info.bcc[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        if( !newSender ){
+            newSender = account;
+        }
+
+        var toList     = info.to.map( function( item ){ return item.name + ' <span>&lt;' + item.address + '&gt;</span>'; });
+        var ccList     = info.cc.map( function( item ){ return item.name + ' <span>&lt;' + item.address + '&gt;</span>'; });
+        var newMessage = [
+
+            '<br><br><hr>',
+            '<blockquote><br>',
+            '<b>From:</b> ' + info.from.name + ' <span>&lt;' + info.from.address + '&gt;</span><br>',
+            '<b>Date:</b> ' + info.time.toString() + '<br>',
+            toList.length ? '<b>To:</b> ' + toList.join(', ') + '<br>' : '',
+            ccList.length ? '<b>CC:</b> ' + ccList.join(', ') + '<br>' : '',
+            '<b>Subject:</b> ' + info.title + '<br>',
+            '<br>',
+            info.message,
+            '</blockquote>'
+
+        ];
 
         wz.app.createView(
 
             {
+
+                cc         : [],
+                from       : newSender,
+                message    : newMessage.join(''),
+                messageId  : info.messageId,
+                references : info.references,
+                subject    : info.title.indexOf('Re') === 0 ? info.title : 'Re: ' + info.title,
+                to         : info.replyTo.length ? info.replyTo : [ info.from ]
+
+            },
+            'new'
+
+        );
+
+    }
+
+})
+
+.on( 'click', '.reply-mode-reply-all', function(){
+
+    if( contentColumn.hasClass( 'message-shown' ) ){
+
+        var info      = contentColumn.data('message');
+        var account   = getOpenedAccount();
+        var newSender = null;
+
+        for( var i = 0; i < info.to.length && !newSender; i++ ){
+            
+            if( info.to[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        for( var i = 0; i < info.cc.length && !newSender; i++ ){
+            
+            if( info.cc[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        for( var i = 0; i < info.bcc.length && !newSender; i++ ){
+            
+            if( info.bcc[ i ].address === account.address ){
+                newSender = account;
+            }
+
+        }
+
+        if( !newSender ){
+            newSender = account;
+        }
+
+        var toList = info.to.map( function( item ){ return item.name + ' <span>&lt;' + item.address + '&gt;</span>'; });
+        var ccList = info.cc.map( function( item ){ return item.name + ' <span>&lt;' + item.address + '&gt;</span>'; });
+
+        var newMessage = [
+
+            '<br><br><hr>',
+            '<blockquote><br>',
+            '<b>From:</b> ' + info.from.name + ' <span>&lt;' + info.from.address + '&gt;</span><br>',
+            '<b>Date:</b> ' + info.time.toString() + '<br>',
+            toList.length ? '<b>To:</b> ' + toList.join(', ') + '<br>' : '',
+            ccList.length ? '<b>CC:</b> ' + ccList.join(', ') + '<br>' : '',
+            '<b>Subject:</b> ' + info.title + '<br>',
+            '<br>',
+            info.message,
+            '</blockquote>'
+
+        ];
+
+        var newCc = info.to.concat( info.cc ).filter( function( item ){
+            return item.address !== newSender.address;
+        });
+
+        wz.app.createView(
+
+            {
+
+                cc         : newCc,
+                from       : newSender,
+                message    : newMessage.join(''),
+                messageId  : info.messageId,
+                references : info.references,
+                subject    : info.title.indexOf('Re') === 0 ? info.title : 'Re: ' + info.title,
+                to         : info.replyTo.length ? info.replyTo : [ info.from ]
+
+            },
+            'new'
+
+        );
+
+    }
+
+/*
+        var newTo = ( info.replyTo || [ info.from ] ).concat( info.to ).filter( function( item ){
+            return item.address !== newSender.address;
+        }).filter( function( value, index, self ){
+            return self.indexOf( value ) === index;
+        });
+
+        var newCc = info.cc.filter( function( item ){
+            return item.address !== newSender.address;
+        });
+
+        wz.app.createView(
+
+            {
+
                 originalTo : info.to,
-                to         : [ info.from.address ],
-                cc         : null,
+                to         : newTo,
+                cc         : newCc,
                 subject    : info.title,
                 message    : info.message,
                 reply      : true,
                 time       : info.time,
-                from       : info.from,
+                from       : newSender,
                 references : info.references,
-                replyTo    : info.replyTo,
-                messageId  : info.messageId,
+                messageId  : info.messageId
+
             },
             'new'
 
         );
 
     }
-
-})
-
-.on( 'click', '.reply-mode-reply', function(){
-    $( '.options-reply', contentColumn ).click();
-})
-
-.on( 'click', '.reply-mode-reply-all', function(){
     
+    /*
     var receivers = [];
     var cc        = [];
-    var data      = contentColumn.data('message');
+    var info      = contentColumn.data('message');
 
-    receivers.push( data.from.address );
+    receivers.push( info.from.address );
 
-    for( var i = 0; i < data.to.length; i++ ){
+    for( var i = 0; i < info.to.length; i++ ){
 
-        if( myAccount !== data.to[ i ].address ){
-            receivers.push( data.to[ i ].address );
+        if( myAccount !== info.to[ i ].address ){
+            receivers.push( info.to[ i ].address );
         }
 
     }
 
-    for( var i = 0; i < data.cc.length; i++ ){
+    for( var i = 0; i < info.cc.length; i++ ){
 
-        if( myAccount !== data.cc[ i ].address ){
-            cc.push( data.cc[ i ].address );
+        if( myAccount !== info.cc[ i ].address ){
+            cc.push( info.cc[ i ].address );
         }
 
     }
-
-    wz.app.createView(
-
-        {
-            to         : receivers,
-            originalTo : data.to,
-            cc         : cc,
-            subject    : data.title,
-            message    : data.message,
-            reply      : true,
-            time       : data.time,
-            from       : data.from,
-            references : data.references,
-            replyTo    : data.replyTo,
-            messageId  : data.messageId,
-        },
-        'new'
-
-    );
+    */
 
 })
 
 .on( 'click', '.new-mail', function(){
 
     if( _accountList.length ){
-        wz.app.createView( '', 'new' );
+        wz.app.createView( { from : getOpenedAccount() }, 'new' );
     }else{
         alert( lang.createAccountToSend );
     }
