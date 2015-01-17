@@ -582,6 +582,8 @@ var showMessage = function( message ){
             .css( 'height', '' )
             .height( contentMessageText.contents().find( 'html' )[ 0 ].scrollHeight );
 
+        contentMessageText.contents().find( 'html' )[ 0 ].scrollTop = 0;
+
         if( fullMessage.isSpam() ){
             $( '.reply-mode-spam', contentReplyMode ).css( 'display', 'none' );
         }else{
