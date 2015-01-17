@@ -2008,6 +2008,16 @@ wz.mail
     });
 */
 
+.on( 'accountParamsChanged', function( accountId, params ){
+
+    if( typeof params.description === 'undefined' ){
+        return;
+    }
+
+    mailColumn.find('.account-' + accountId ).children('span').text( params.description );
+    
+});
+
 // Start App
 getAccounts();
 translateUI();
