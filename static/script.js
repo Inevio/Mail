@@ -738,7 +738,9 @@ var insertBox = function( boxObj, accountObj ){
 
         wz.mail.getCounters( accountId, path, function( error, object ){
 
-            // To Do -> Error
+            if( error ){
+                return;
+            }
 
             if( path === 'INBOX' ){
                 mailColumn.find( '.account-' + accountId ).children('.bullet').text( object.unseen || '' );
@@ -1595,17 +1597,16 @@ win
 
                     wz.mail.removeAccount( idData, function( error ){
 
+
                         if( error ){
-                            alert( error );
-                        }else{
-
-                            wz.banner()
-                                .setTitle( lang.accountDeleted )
-                                .setText( mailData + ' ' + lang.deleteSuccessful )
-                                .setIcon( 'https://static.inevio.com/app/8/envelope.png' )
-                                .render();
-
+                            return alert( error );
                         }
+
+                        wz.banner()
+                            .setTitle( lang.accountDeleted )
+                            .setText( mailData + ' ' + lang.deleteSuccessful )
+                            .setIcon( 'https://static.inevio.com/app/8/envelope.png' )
+                            .render();
 
                     });
 
