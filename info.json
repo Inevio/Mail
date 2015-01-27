@@ -33,7 +33,7 @@
 
                     "description" : "",
                     
-                    "template" : "main.html",
+                    "template" : "view/main.html",
 
                     "maxizable" : true,
                     "resizable" : true,
@@ -64,7 +64,7 @@
 
                     "description" : "",
                     
-                    "template" : "new.html",
+                    "template" : "view/new.html",
 
                     "maxizable" : true,
                     "resizable" : true,
@@ -94,7 +94,7 @@
 
                     "description" : "",
                     
-                    "template" : "account.html",
+                    "template" : "view/account.html",
 
                     "maxizable" : false,
                     "resizable" : false,
@@ -124,7 +124,7 @@
 
                     "description" : "",
                     
-                    "template" : "box.html",
+                    "template" : "view/box.html",
 
                     "maxizable" : false,
                     "resizable" : false,
@@ -154,7 +154,7 @@
 
                     "description" : "",
                     
-                    "template" : "hosting.html",
+                    "template" : "view/hosting.html",
 
                     "maxizable" : false,
                     "resizable" : false,
