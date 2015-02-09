@@ -87,14 +87,15 @@ var _accountItem = function( account ){
 
         item
             .addClass( 'account-' + account.id )
-            .data( {
+            .data({
 
                 mail : account.address,
                 id   : account.id
 
-            } )
-            .children( 'span' )
-            .text( account.description );
+            })
+            .children('.account-info')
+            .children('span')
+                .text( account.description );
 
         /*
         if( account.unread ){
@@ -125,10 +126,34 @@ var _accountItemBoxes = function( account, item ){
         }
 
         var boxPrototype = item.find( '.mailbox.wz-prototype' );
+        var children     = [];
 
         for( var i = 0; i < boxes.length; i++ ){
-            insertBox( _boxItem( boxes[ i ], boxPrototype.clone().removeClass('wz-prototype') ), item );
+            children.push( _boxItem( boxes[ i ], boxPrototype ) );
         }
+
+        children = children.sort( function( a, b ){
+
+            var aOrder = a.data('order');
+            var bOrder = b.data('order');
+
+            if( aOrder - bOrder ){
+                return aOrder - bOrder;
+            }
+
+            return a.data('name').localeCompare( b.data('name') );
+
+        });
+
+        item.children('.children').append( children );
+
+        /*
+        console.log('boxPrototype',boxPrototype.length);
+
+        for( var i = 0; i < boxes.length; i++ ){
+            insertBox( _boxItem( boxes[ i ], boxPrototype.clone().removeClass('wz-prototype') ), childrenArea );
+        }
+        */
 
         boxesPromise.resolve();
 
@@ -173,8 +198,9 @@ var _getBasicStyle = function(){
 
 };
 
-var _boxItem = function( box, item ){
+var _boxItem = function( box, prototype ){
 
+    var item    = prototype.clone().removeClass('wz-prototype');
     var text    = box.name;
     var classes = 'normal';
     var order   = 10;
@@ -248,12 +274,43 @@ var _boxItem = function( box, item ){
 
         });
 
-    item.children( 'span' ).text( text );
+    item.children('.mailbox-info').children('span').text( text );
+
+    if( box.tags.indexOf('\\Noselect') >= 0 ){
+        item.addClass('noselect');
+    }
 
     if( box.unread ){
-        item.children( '.bullet' ).text( box.unread );
+        item.children('.mailbox-info').children('.bullet').text( box.unread );
     }
-    
+
+    if( box.children.length ){
+
+        item.removeClass('hide-arrow').addClass('arrow-closed');
+
+        var children = [];
+
+        for( var i = 0; i < box.children.length; i++ ){
+            children.push( _boxItem( box.children[ i ], prototype ) );
+        }
+
+        children = children.sort( function( a, b ){
+
+            var aOrder = a.data('order');
+            var bOrder = b.data('order');
+
+            if( aOrder - bOrder ){
+                return aOrder - bOrder;
+            }
+
+            return a.data('name').localeCompare( b.data('name') );
+
+        });
+
+        item.children('.children').append( children );
+
+    }
+
     return item;
 
 };
@@ -699,7 +756,7 @@ var insertBox = function( boxObj, accountObj ){
     accountObj.children('.syncing').remove();
 
     if( boxes.length === 0 ){
-        accountObj.prepend( accountObj );
+        accountObj.prepend( boxObj );
     }else{
 
         var inserted = false;
@@ -837,28 +894,37 @@ var getOpenedAccount = function(){
 };
 
 win
-.on( 'click', '.account', function(){
+.on( 'click', '.arrow-closed', function( e ){
 
-    var minHeight = $(this).children('span').outerHeight( true );
-    var height    = _accountOptionsHeight( this );
+    e.stopPropagation();
 
-    if( $( this ).hasClass('display') ){
+    $(this).removeClass('arrow-closed').addClass('arrow-opened');
 
-        $( this )
-            .removeClass('display')
-            .transition( { height: minHeight }, 250 );
+    var childrenList = $(this).children('.children');
+    var height = 0;
 
-    }else{
+    childrenList.children().not('.wz-prototype').each( function(){
+        height += $(this).outerHeight( true );
+    });
 
-        $('.display')
-            .removeClass('display')
-            .transition( { height: minHeight }, 250 );
+    childrenList.height( height );
 
-        $( this )
-            .addClass('display')
-            .transition( { height: height }, 250 );
-
+    if( !$(this).hasClass('account') ){
+        $(this).parentsUntil('.account','.children').height( '+=' + height );
     }
+
+})
+
+.on( 'click', '.arrow-opened', function( e ){
+
+    e.stopPropagation();
+    $(this).removeClass('arrow-opened').addClass('arrow-closed');
+
+    if( !$(this).hasClass('account') ){
+        $(this).parentsUntil('.account','.children').height( '-=' + $(this).children('.children').height() );
+    }
+
+    $(this).children('.children').height( 0 );
 
 })
 
@@ -868,13 +934,18 @@ win
 
     _pageOpened = 0;
 
-    openedAccount.text( $(this).parent('.account').children('span').text() );
+    openedAccount.text( $(this).parents('.account').children('span').text() );
     openedMailbox.text( $(this).children('span').text() );
     contentReceivers.removeClass('content-receivers-displayed');
     contentReplyMode.removeClass('reply-mode-displayed');
     mailColumn.find('.active').removeClass('active');
-    showMailsList( $(this).parent('.account').data('id'), $(this).data('path') );
-    $( this ).addClass('active');
+
+    if( !$(this).hasClass('noselect') ){
+
+        showMailsList( $(this).parents('.account').data('id'), $(this).data('path') );
+        $( this ).addClass('active');
+
+    }
 
 })
 
@@ -1939,6 +2010,7 @@ wz.mail
 
 .on( 'boxAdded', function( accountId, path ){
 
+    /*
     var accountItem = $( '.account-' + accountId, mailColumn );
     var boxFound;
     var boxItem;
@@ -1954,7 +2026,7 @@ wz.mail
 
         // To Do -> Error
 
-        boxItem = _boxItem( box, accountItem.children('.wz-prototype').clone().removeClass('wz-prototype') );
+        boxItem = _boxItem( box, accountItem.children('.wz-prototype') );
 
         insertBox( boxItem, accountItem );
 
@@ -1971,6 +2043,7 @@ wz.mail
         mailsUnread( accountId, path );
 
     });
+    */
 
 })
 

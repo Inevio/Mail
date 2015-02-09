@@ -31,6 +31,12 @@
     background: #F9F9F9;
 }
 
+.left-column .children{
+    padding-left: 10px;
+    overflow: hidden;
+    height: 0;
+}
+
 .left-column-top{
     width: 180px;
     height: 39px;
@@ -159,67 +165,89 @@ span{
 }
 
 .account{
-    width: 180px;
-    height: 38px;
-    border-top: 1px solid rgba(60,60,60,0);
-    border-bottom: 1px solid rgba(60,60,60,0);
+    /*width: 180px;*/
     float: left;
-    overflow: hidden;
+    width: 100%;
+    /*overflow: hidden;*/
 }
 
-.account:hover{
+.account-info{
+    float: left;
+    width: 100%;
+    height: 29px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+
+.account-info:hover{
     background: rgba(117,169,209,0.3);
     border-top: 1px solid #75A9D1;
     border-bottom: 1px solid #75A9D1;
 }
 
-.account.display:hover{
-    background: none;
-    border-top: 1px solid rgba(60,60,60,0);
-    border-bottom: 1px solid rgba(60,60,60,0);
-}
-
-.account .arrow{
-    width: 0px; 
-    height: 0px;
+.account .children{
     float: left;
-    margin: 13px 1px 0px 14px;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 6px solid #AAA;
 }
 
-.account.display .arrow{
-    margin: 16px 0px 0px 11px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #AAA;
+.arrow-opened .arrow{
+    opacity: 1;
+    width: 7px; 
+    height: 4px;
+    float: left;
+    margin: 10px 0px 0px 7px;
+    background: url('@static/arrow_open.png') no-repeat center center;
+    padding: 3px 2px;
+}
+
+.arrow-closed .arrow{
+    opacity: 1;
+    width: 4px; 
+    height: 7px;
+    float: left;
+    margin: 9px 0px 0px 8px;
+    background: url('@static/arrow_closed.png') no-repeat center center;
+    padding: 2px 3px;
+}
+
+.hide-arrow .arrow{
+    opacity: 0;
 }
 
 .account span{
-    margin: 11px 0px 12px 8px;
+    margin: 8px 0px 12px 8px;
     color: #5D5D5D;
-    max-width: 100px;
+    /*max-width: 100px;*/
     height: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.mailbox, .syncing{
-    width: 180px;
-    height: 35px;
+.mailbox{
+    width: 100%;
     float: left;
 }
 
-.mailbox:hover{
+.syncing{
+    width: 100%;
+    height: 29px;
+    float: left;
+}
+
+.mailbox-info{
+    height: 29px;
+}
+
+.mailbox-info:hover{
     background: rgba(117,169,209,0.3);
 }
 
-.mailbox.active{
+/*
+.mailbox.active .mailbox-info{
     background: rgba( 0, 0, 0, 0.05 );
     box-shadow: -2px 0 0 #54728C inset;
 }
+*/
 
 .syncing:hover{
     background: none;
@@ -228,29 +256,30 @@ span{
 .mailbox span{
     float: left;
     margin-left: 8px;
-    margin-top: 10px;
+    margin-top: 9px;
+    margin-bottom: 0px;
+    height: 15px;
 }   
 
-.mailbox i{
+.mailbox .icon{
     width: 14px;
     height: 14px;
     float: left;
-    margin-left: 28px;
-    margin-top: 11px;
+    margin-left: 9px;
+    margin-top: 9px;
     display: block;
 }
 
 .bullet{
     height: 9px;
     float: right;
-    margin-top: 7px;
+    margin-top: 4px;
     margin-right: 10px;
     line-height: 8px;
     padding: 5px;
     border-radius: 2px;
     background: #E45857;
     border: 1px solid #C14142;
-    max-width: 23px;
     color: #FFF;
     font-size: 14px;
 }
@@ -298,41 +327,42 @@ span{
     background-size: 14px 14px;
 }
 
-.inbox i{
+.inbox .icon{
+    margin-top: 8px;
     background: url('@static/sprite.png') no-repeat -79px 0;
     background-size: 177px 40px;
 }
 
-.starred i{
+.starred .icon{
     background: url('@static/sprite.png') no-repeat -135px 0;
     background-size: 177px 40px;
 }
 
-.sent i{
+.sent .icon{
     height: 10px;
     margin-top: 13px;
     background: url('@static/sprite.png') no-repeat -121px 0;
     background-size: 177px 40px;
 }
 
-.drafts i{
+.drafts .icon{
     background: url('@static/sprite.png') no-repeat -42px -26px;
     background-size: 177px 40px;
 }
 
-.trash i{
+.trash .icon{
     background: url('@static/sprite.png') no-repeat -123px -23px;
     background-size: 177px 40px;
 }
 
-.spam i{
+.spam .icon{
     background: url('@static/sprite.png') no-repeat -109px -23px;
     background-size: 177px 40px;
 }
 
-.normal i{
+.normal .icon{
     height: 11px;
-    margin-top: 10px;
+    margin-top: 9px;
     background: url('@static/sprite.png') no-repeat -93px 0;
     background-size: 177px 40px;
 }
