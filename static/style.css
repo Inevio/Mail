@@ -67,6 +67,7 @@
 .left-column-content-scroll{
     float: left;
     height: 429px;
+    width: 100%;
 }
 
 .middle-column{
@@ -187,6 +188,8 @@ span{
 
 .account .children{
     float: left;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .arrow-opened .arrow{
@@ -242,6 +245,10 @@ span{
     background: rgba(117,169,209,0.3);
 }
 
+.account-info > *, .mailbox-info > *{
+    float: left;
+}
+
 /*
 .mailbox.active .mailbox-info{
     background: rgba( 0, 0, 0, 0.05 );
@@ -271,7 +278,6 @@ span{
 }
 
 .bullet{
-    height: 9px;
     float: right;
     margin-top: 4px;
     margin-right: 10px;
@@ -285,7 +291,7 @@ span{
 }
 
 .bullet.big{
-    margin-top: 6px;
+    margin-top: 4px;
 }
 
 .bullet:empty{

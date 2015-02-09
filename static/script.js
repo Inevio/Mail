@@ -147,14 +147,6 @@ var _accountItemBoxes = function( account, item ){
 
         item.children('.children').append( children );
 
-        /*
-        console.log('boxPrototype',boxPrototype.length);
-
-        for( var i = 0; i < boxes.length; i++ ){
-            insertBox( _boxItem( boxes[ i ], boxPrototype.clone().removeClass('wz-prototype') ), childrenArea );
-        }
-        */
-
         boxesPromise.resolve();
 
         /*win.trigger( 'boxes-shown', [ account.id ] );*/
@@ -175,13 +167,55 @@ var _accountItemBoxes = function( account, item ){
 
     $.when( boxesPromise, countersPromise ).done( function(){
 
-        mailColumn.find('.account-' + account.id ).children( '.bullet' ).text( counters['INBOX'].unseen || '' );
-
         for( var i in counters ){
-            mailColumn.find('.account-' + account.id + '-box-' + _formatId( i ) ).children( '.bullet' ).text( counters[ i ].unseen || '' );
+            updateMailboxCounter( account.id, i, counters[ i ].unseen );
         }
 
     });
+
+};
+
+var updateMailboxCounter = function( accountId, path, value ){
+
+    value = value || '';
+
+    var width = 0;
+
+    if( path === 'INBOX' ){
+
+        var accountInfo = mailColumn.find( '.account-' + accountId ).children('.account-info')
+
+        accountInfo.children('.bullet').text( value );
+        accountInfo.children('.arrow, .icon').each( function(){
+            width += $(this).outerWidth( true );
+        });
+        accountInfo.children('.bullet').each( function(){
+
+            if( $(this).css('display') !== 'none' ){
+                width += $(this).outerWidth( true );
+            }
+
+        });
+        accountInfo.find('span').outerWidth( accountInfo.width() - width - 1, true ); // -1 it's neccesary, calculations aren't exactly
+
+        width = 0;
+
+    }
+
+    var mailboxInfo = mailColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) ).children('.mailbox-info');
+
+    mailboxInfo.children('.bullet').text( value );
+    mailboxInfo.children('.arrow, .icon').each( function(){
+        width += $(this).outerWidth( true );
+    });
+    mailboxInfo.children('.bullet').each( function(){
+
+        if( $(this).css('display') !== 'none' ){
+            width += $(this).outerWidth( true );
+        }
+
+    });
+    mailboxInfo.find('span').outerWidth( mailboxInfo.width() - width - 1, true ); // -1 it's neccesary, calculations aren't exactly
 
 };
 
