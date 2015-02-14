@@ -193,6 +193,8 @@ var updateMailboxCounter = function( accountId, path, value ){
 
             if( $(this).css('display') !== 'none' ){
                 width += $(this).outerWidth( true );
+            }else{
+                width += parseInt( $(this).css('margin-right'), 10 );
             }
 
         });
@@ -210,8 +212,12 @@ var updateMailboxCounter = function( accountId, path, value ){
     });
     mailboxInfo.children('.bullet').each( function(){
 
+        console.log(mailboxInfo.find('span').text(), $(this).css('display'), parseInt( $(this).css('margin-right'), 10 ));
+
         if( $(this).css('display') !== 'none' ){
             width += $(this).outerWidth( true );
+        }else{
+            width += parseInt( $(this).css('margin-right'), 10 );
         }
 
     });
@@ -1656,84 +1662,150 @@ win
 
     })
 */
-    .on( 'contextmenu', '.account', function(){
+.on( 'contextmenu', '.account-info, .mailbox-info', function(){
 
-        var mailData = $( this ).data( 'mail' );
-        var idData   = $( this ).data( 'id' );
+    var mailData = $(this).parents('.account').data('mail');
+    var idData   = $(this).parents('.account').data('id');
 
-        if( !$( this ).hasClass( 'general' ) ){
+    console.log( mailData, idData );
 
-            wz.menu()
+    if( $(this).hasClass('account-info') ){
 
-                .addOption( lang.renameAccount, function(){
+        wz.menu()
+            .addOption( lang.createBox, function(){
+                
+                wz.mail( idData, function( error, account ){
 
-                    wz.mail( idData, function( error, account ){
+                    // To Do -> Error
+                    wz.app.createView( { cmd : 'create', account : account }, 'box' );
+
+                });
+
+            })
+            .addOption( lang.renameAccount, function(){
+
+                wz.mail( idData, function( error, account ){
+
+                    // To Do -> Error
+                    wz.app.createView( { cmd : 'rename', account : account }, 'account' );
+
+                });
+                
+            })
+            .addOption( lang.changeConfig, function(){
+                
+                wz.mail( idData, function( error, account ){
+
+                    // To Do -> Error
+                    wz.app.createView( { cmd : 'config', account : account }, 'account' );
+
+                });
+
+            })
+            .addOption( lang.deleteAccount, function() {
+
+                wz.mail.removeAccount( idData, function( error ){
+
+
+                    if( error ){
+                        return alert( error );
+                    }
+
+                    wz.banner()
+                        .setTitle( lang.accountDeleted )
+                        .setText( mailData + ' ' + lang.deleteSuccessful )
+                        .setIcon( 'https://static.inevio.com/app/8/envelope.png' )
+                        .render();
+
+                });
+
+            }, 'warning')
+            .render();
+
+    }else if( $(this).hasClass('mailbox-info') ){
+
+        var boxInfo = $(this).parent().data();
+
+        var menu = wz.menu()
+
+        menu.addOption( lang.createNestedBox, function(){
+            
+            wz.mail.getBox( idData, boxInfo.path, function( error, box ){
+
+                // To Do -> Error
+                console.log( box );
+
+            });
+
+        }); 
+
+        if( boxInfo.path !== 'INBOX' ){
+
+            menu.addOption( lang.renameBox, function(){
+
+                prompt( 'Nuevo nombre', function( newName ){
+
+                    newName = newName || '';
+                    newName = newName.trim();
+
+                    if( !newName ){
+                        return;
+                    }
+
+                    wz.mail.getBox( idData, boxInfo.path, function( error, box ){
+
+                        box.rename( function( error ){
+                            console.log( arguments );
+                        });
 
                         // To Do -> Error
-                        wz.app.createView( { cmd : 'rename', account : account }, 'account' );
-
+                        console.log( box );
+                        
                     });
-                    
-                })
 
-                .addOption( lang.changeConfig, function(){
+                });
+
+                /*
+                wz.mail.getBox( idData, boxInfo.path, function( error, box ){
+
+                    // To Do -> Error
+                    console.log( box );
                     
-                    wz.mail( idData, function( error, account ){
+                });
+                */
+
+            });
+
+            menu.addOption( lang.deleteBox, function(){
+
+                confirm( 'Seguro?', function( accepted ){
+                    
+                    if( !accepted ){
+                        return;
+                    }
+
+                    wz.mail.getBox( idData, boxInfo.path, function( error, box ){
+
+                        box.delete( function( error ){
+                            console.log( arguments );
+                        });
 
                         // To Do -> Error
-                        wz.app.createView( { cmd : 'config', account : account }, 'account' );
-
+                        console.log( box );
+                        
                     });
 
-                })
+                });
 
-                .addOption( lang.createBox, function(){
-                    
-                    wz.mail( idData, function( error, account ){
-
-                        // To Do -> Error
-                        wz.app.createView( { cmd : 'create', account : account }, 'box' );
-
-                    });
-
-                })
-
-                .addOption( lang.deleteAccount, function() {
-
-                    wz.mail.removeAccount( idData, function( error ){
-
-
-                        if( error ){
-                            return alert( error );
-                        }
-
-                        wz.banner()
-                            .setTitle( lang.accountDeleted )
-                            .setText( mailData + ' ' + lang.deleteSuccessful )
-                            .setIcon( 'https://static.inevio.com/app/8/envelope.png' )
-                            .render();
-
-                    });
-
-                }, 'warning')
-
-                .render();
+            }, 'warning' );
 
         }
+        
+        menu.render();
 
-    })
-/*
-    .on( 'contextmenu', '.account article', function( e ){
+    }
 
-        e.stopPropagation();
-
-        contentReceivers.removeClass( 'content-receivers-displayed' );
-        contentReplyMode.removeClass( 'reply-mode-displayed' );
-
-        return; // To Do -> Es realmente necesario?
-
-    })
-*/
+})
 
 .key( 'down', function( e ){
 

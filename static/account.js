@@ -49,7 +49,9 @@
 
     };
 
-    var moreData = function(){
+    var moreData = function( data ){
+
+        data = data || {};
 
         if( params ){
 
@@ -66,21 +68,79 @@
         }
 
         $( '.description', content ).text( lang.accountData );
-        $( '.name', content ).removeClass( 'name' ).addClass( 'username' ).find( 'span' ).text( lang.username + ':' );
         $( '.mail', content ).remove();
         $( '.pass', content ).remove();
 
-        var object = $( '.username', content );
+        $( '.name', content )
+            .removeClass('name')
+            .addClass('username')
+            .find('span')
+                .text( lang.username + ':' );
 
-        object.find( 'input' ).val( '' );
-        object.find( 'input' ).focus();
-        //$( '.wz-prototype.select', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-protocol' ).find( 'span' ).text( lang.inProtocol + ':' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-host' ).find( 'span' ).text( lang.inHost + ':' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'in-port' ).find( 'span' ).text( lang.inPort + ':' );
-        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'in-secure' ).find( 'span' ).text( lang.inSecure + ':' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-host' ).find( 'span' ).text( lang.outHost + ':' );
-        object.clone().appendTo( content ).removeClass( 'username' ).addClass( 'out-port' ).find( 'span' ).text( lang.outPort + ':' );
-        $( '.wz-prototype.checkbox', content ).clone().appendTo( content ).removeClass( 'wz-prototype' ).addClass( 'out-secure' ).find( 'span' ).text( lang.outSecure + ':' );
+        var input    = $( '.username', content );
+        var checkbox = $( '.wz-prototype.checkbox', content );
+        var tmp;
+
+        input.find('input').val( data.address || '' );
+        input.find('input').focus();
+
+        input.clone()
+            .appendTo( content )
+            .removeClass('username')
+            .addClass('in-host')
+            .find('span')
+                .text( lang.inHost + ':' )
+            .siblings('input')
+                .val( data.inHost || '' );
+
+        input.clone()
+            .appendTo( content )
+            .removeClass('username')
+            .addClass('in-port')
+            .find('span')
+                .text( lang.inPort + ':' )
+            .siblings('input')
+                .val( data.inPort || '' );
+
+        tmp = checkbox.clone()
+            .appendTo( content )
+            .removeClass('wz-prototype')
+            .addClass('in-secure')
+            .find('span')
+                .text( lang.inSecure + ':' );
+
+        if( data.inSecure ){
+            tmp.siblings('input').attr('checked','checked');
+        }
+
+        input.clone()
+            .appendTo( content )
+            .removeClass('username')
+            .addClass('out-host')
+            .find('span')
+                .text( lang.outHost + ':' )
+            .siblings('input')
+                .val( data.outHost || '' );
+
+        input.clone()
+            .appendTo( content )
+            .removeClass('username')
+            .addClass('out-port')
+            .find('span')
+                .text( lang.outPort + ':' )
+            .siblings('input')
+                .val( data.outPort || '' );
+
+        tmp = checkbox.clone()
+            .appendTo( content )
+            .removeClass('wz-prototype')
+            .addClass('out-secure')
+            .find('span')
+                .text( lang.outSecure + ':' );
+
+        if( data.outSecure ){
+            tmp.siblings('input').attr('checked','checked');
+        }
 
         $( '.next', content ).appendTo( content ).removeClass( 'next' ).addClass( 'save' ).text( lang.save );
 
@@ -131,35 +191,18 @@
 
         if( mailExpresion.test( email ) && pass && name ){
 
-            wz.mail.addAccount(
+            wz.mail.getAutoconfig(
 
                 {
-                    address : email,
+                    address  : email,
                     password : pass,
-                    name : name
+                    name     : name
                 },
 
                 function( error, details ){
 
-                    if( error ){
-
-                        if( details.indexOf( 'ACCOUNT CAN NOT BE AUTOCONFIGURED' ) === -1 ){
-
-                            alert( lang.error );
-
-                        }else{
-
-                            moreData();
-
-                        }
-
-                    }else{
-
-                        account = details;
-
-                        whichName();
-
-                    }
+                    // To Do -> Error
+                    moreData( details );
 
                 }
 
