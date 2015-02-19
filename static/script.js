@@ -119,7 +119,7 @@ var _accountItemBoxes = function( account, item ){
     var countersPromise = $.Deferred();
     var counters        = null;
 
-    account.getBoxes(function( error, boxes ){
+    account.getBoxes( function( error, boxes ){
 
         if( error ){
             return alert( error );
@@ -210,9 +210,8 @@ var updateMailboxCounter = function( accountId, path, value ){
     mailboxInfo.children('.arrow, .icon').each( function(){
         width += $(this).outerWidth( true );
     });
-    mailboxInfo.children('.bullet').each( function(){
 
-        console.log(mailboxInfo.find('span').text(), $(this).css('display'), parseInt( $(this).css('margin-right'), 10 ));
+    mailboxInfo.children('.bullet').each( function(){
 
         if( $(this).css('display') !== 'none' ){
             width += $(this).outerWidth( true );
@@ -221,6 +220,7 @@ var updateMailboxCounter = function( accountId, path, value ){
         }
 
     });
+
     mailboxInfo.find('span').outerWidth( mailboxInfo.width() - width - 1, true ); // -1 it's neccesary, calculations aren't exactly
 
 };
@@ -1667,8 +1667,6 @@ win
     var mailData = $(this).parents('.account').data('mail');
     var idData   = $(this).parents('.account').data('id');
 
-    console.log( mailData, idData );
-
     if( $(this).hasClass('account-info') ){
 
         wz.menu()
@@ -1677,7 +1675,27 @@ win
                 wz.mail( idData, function( error, account ){
 
                     // To Do -> Error
-                    wz.app.createView( { cmd : 'create', account : account }, 'box' );
+                    prompt( lang.createBox, function( input ){
+
+                        input = ( input || '' ).trim();
+
+                        if( !input ){
+                            return;
+                        }
+
+                        wz.mail( idData, function( error, account ){
+
+                            account.createBox( input, function( error ){
+
+                                if( error ){
+                                    return alert( error );
+                                }
+
+                            });
+
+                        });
+
+                    });
 
                 });
 
@@ -1729,11 +1747,33 @@ win
         var menu = wz.menu()
 
         menu.addOption( lang.createNestedBox, function(){
-            
-            wz.mail.getBox( idData, boxInfo.path, function( error, box ){
 
-                // To Do -> Error
-                console.log( box );
+            // To Do -> Error
+            prompt( lang.createNestedBox, function( input ){
+
+                input = ( input || '' ).trim();
+
+                if( !input ){
+                    return;
+                }
+
+                wz.mail.getBox( idData, boxInfo.path, function( error, box ){
+
+                    input = box.path + box.delimiter + input;
+
+                    wz.mail( idData, function( error, account ){
+
+                        account.createBox( input, function( error ){
+
+                            if( error ){
+                                return alert( error );
+                            }
+
+                        });
+
+                    });
+
+                });
 
             });
 
@@ -1745,8 +1785,7 @@ win
 
                 prompt( 'Nuevo nombre', function( newName ){
 
-                    newName = newName || '';
-                    newName = newName.trim();
+                    newName = ( newName || '' ).trim();
 
                     if( !newName ){
                         return;
@@ -1754,25 +1793,20 @@ win
 
                     wz.mail.getBox( idData, boxInfo.path, function( error, box ){
 
-                        box.rename( function( error ){
-                            console.log( arguments );
-                        });
+                        newName = box.path.split( box.delimiter ).slice( 0, -1 ).concat( [ newName ] ).join( box.delimiter );
 
                         // To Do -> Error
-                        console.log( box );
+                        box.rename( newName, function( error ){
+                            
+                            if( error ){
+                                alert( error );
+                            }
+
+                        });
                         
                     });
 
                 });
-
-                /*
-                wz.mail.getBox( idData, boxInfo.path, function( error, box ){
-
-                    // To Do -> Error
-                    console.log( box );
-                    
-                });
-                */
 
             });
 
@@ -1786,13 +1820,15 @@ win
 
                     wz.mail.getBox( idData, boxInfo.path, function( error, box ){
 
+                        // To Do -> Error
                         box.delete( function( error ){
-                            console.log( arguments );
+                            
+                            if( error ){
+                                alert( error );
+                            }
+
                         });
 
-                        // To Do -> Error
-                        console.log( box );
-                        
                     });
 
                 });
@@ -2116,14 +2152,11 @@ wz.mail
 
 .on( 'boxAdded', function( accountId, path ){
 
-    /*
     var accountItem = $( '.account-' + accountId, mailColumn );
-    var boxFound;
-    var boxItem;
 
     if(
         !accountItem.length ||
-        mailColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) ).length
+        accountItem.find( '.account-' + accountId + '-box-' + _formatId( path ) ).length
     ){
         return;
     }
@@ -2132,24 +2165,49 @@ wz.mail
 
         // To Do -> Error
 
-        boxItem = _boxItem( box, accountItem.children('.wz-prototype') );
+        var parentPath = box.path.split( box.delimiter ).slice( 0, -1 ).join( box.delimiter );
+        var parent;
 
-        insertBox( boxItem, accountItem );
-
-        if( accountItem.hasClass('display') ){
-
-            var size = 0;
-            accountItem.children('.mailbox, span').not('.wz-prototype').each(function(){
-                size += $(this).outerHeight( true );
-            });
-
-            accountItem.stop().clearQueue().animate( { height : size }, 150 );
+        if( parentPath.length ){
+            parent = accountItem.find( '.account-' + accountId + '-box-' + _formatId( parentPath ) );
+        }else{
+            parent = accountItem;
         }
 
+        if( !parent.length ){
+            return;
+        }
+
+        var newBox = _boxItem( box, accountItem.find('.mailbox.wz-prototype') );
+
+        parent.children('.children').append( newBox );
         mailsUnread( accountId, path );
 
+        var arrow = parent.children('.mailbox-info, .account-info').children('.arrow');
+
+        if( parent.hasClass('hide-arrow') ){
+            parent.removeClass('hide-arrow').addClass('arrow-closed');
+        }
+
+        if( parent.hasClass('arrow-opened') ){
+
+            var childrenList   = parent.children('.children');
+            var height         = 0;
+            var originalHeight = childrenList.height();
+
+            childrenList.children().not('.wz-prototype').each( function(){
+                height += $(this).outerHeight( true );
+            });
+
+            childrenList.height( height );
+
+            if( !parent.hasClass('account') ){
+                parent.parentsUntil('.account','.children').height( '+=' + ( height - originalHeight ) );
+            }
+
+        }
+
     });
-    */
 
 })
 

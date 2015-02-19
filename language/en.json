@@ -85,6 +85,9 @@
     "delete" : "Delete",
     "createBox" : "Create new mailbox",
     "createBoxDescription" : "Introduce the name of the new mailbox you want to create",
-    "boxName" : "Mailbox name"
+    "boxName" : "Mailbox name",
+    "createNestedBox" : "Create new mailbox inside",
+    "renameBox" : "Rename mailbox",
+    "deleteBox" : "Delete mailbox"
     
 }

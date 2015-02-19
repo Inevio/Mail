@@ -85,7 +85,9 @@
     "delete" : "Eliminar",
     "createBox" : "Crear nueva bandeja",
     "createBoxDescription" : "Introduce el nombre de la nueva bandeja que quieres crear.",
-    "boxName" : "Nombre de la bandeja"
-
+    "boxName" : "Nombre de la bandeja",
+    "createNestedBox" : "Crear nueva bandeja dentro",
+    "renameBox" : "Renombrar bandeja",
+    "deleteBox" : "Eliminar bandeja"
     
 }

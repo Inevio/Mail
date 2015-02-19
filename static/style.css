@@ -199,6 +199,7 @@ span{
     float: left;
     margin: 10px 0px 0px 7px;
     background: url('@static/arrow_open.png') no-repeat center center;
+    background-size: 7px 4px;
     padding: 3px 2px;
 }
 
@@ -209,6 +210,7 @@ span{
     float: left;
     margin: 9px 0px 0px 8px;
     background: url('@static/arrow_closed.png') no-repeat center center;
+    background-size: 4px 7px;
     padding: 2px 3px;
 }
 
