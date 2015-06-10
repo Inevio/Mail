@@ -25,73 +25,94 @@
 }
 
 .wz-view-menu{
-    
-    width: 816px;
+
+    width: 100%;
     height: 39px;
     padding: 0px;
     background: #54728C;
     border-bottom: 1px solid #466176;
-    
+
 }
 
 .wz-view-menu span{
-    
+
     width: 500px;
     float: left;
     font-size: 16px;
     color: #FFF;
     margin-left: 30px;
     margin-top: 13px;
-    
+
 }
 
 .content{
-    width: 756px;
-    height: 215px;
-    padding: 30px;
+    width: 858px;
+    height: 325px;
+    padding: 20px 0px 0px 20px;
+    background-color: #e5e5e5;
 }
 
 .hosting-image{
-    width: 250px;
-    height: 100px;
+    width: 264px; /*250*/
+    height: 140px; /*100*/
     float: left;
     border: 1px solid #54728C;
+    background-color: white;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 2px #d8d8d8;
+    -moz-box-shadow: 0 2px #d8d8d8;
+    box-shadow: 0 2px #d8d8d8;
+    border: solid 1px #d8d8d8;
 }
 
 .hosting-image.gmail{
-    background: url('@static/servers/gmail.png') no-repeat;
-    background-size: 250px 100px;
+    background: url('@static/servers/Google_logo.png') no-repeat;
+    background-size: 196px 66px;
     cursor: pointer;
+    background-position: center;
+    background-color: white;
 }
 
 .hosting-image.hotmail{
-    background: url('@static/servers/hotmail.png') no-repeat;
-    background-size: 250px 100px;
+    background: url('@static/servers/hotmail_logo.png') no-repeat;
+    background-size: 242px 60px;
     cursor: pointer;
+    background-position: center;
+    background-color: white;
 }
 
 .hosting-image.outlook{
-    background: url('@static/servers/outlook.png') no-repeat;
-    background-size: 250px 100px;
+    background: url('@static/servers/Outlook_logo.png') no-repeat;
+    background-size: 199px 41px;
     cursor: pointer;
+    background-position: center;
+    background-color: white;
 }
 
 .hosting-image.yahoo{
-    background: url('@static/servers/yahoo.png') no-repeat;
-    background-size: 250px 100px;
+    background: url('@static/servers/Yahoo_Logo.png') no-repeat;
+    background-size: 202px 48px;
     cursor: pointer;
+    background-position: center;
+    background-color: white;
 }
 
 .hosting-image.aol{
     background: url('@static/servers/aol_disabled.png') no-repeat;
     background-size: 250px 100px;
+    background-position: center;
+    background-color: white;
 }
 
 .hosting-image-other{
-    width: 250px;
+    width: 264px;
     float: left;
     text-align: center;
-    margin: 29px 0;
+    margin: 47px 0;
     font-size: 42px;
     color: #54728C;
     cursor: pointer;

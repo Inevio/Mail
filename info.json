@@ -32,7 +32,7 @@
                 "main" : {
 
                     "description" : "",
-                    
+
                     "template" : "view/main.html",
 
                     "maxizable" : true,
@@ -59,11 +59,11 @@
                     "start"  : ["start.js"]
 
                 },
-                
+
                 "new" : {
 
                     "description" : "",
-                    
+
                     "template" : "view/new.html",
 
                     "maxizable" : true,
@@ -79,7 +79,7 @@
 
                     "height" : {
 
-                        "default" : 521,
+                        "default" : 477,
                         "min"     : 300,
                         "max"     : 0
 
@@ -89,11 +89,11 @@
                     "script" : ["new.js"]
 
                 },
-                
+
                 "account" : {
 
                     "description" : "",
-                    
+
                     "template" : "view/account.html",
 
                     "maxizable" : false,
@@ -123,7 +123,7 @@
                 "hosting" : {
 
                     "description" : "",
-                    
+
                     "template" : "view/hosting.html",
 
                     "maxizable" : false,
@@ -131,7 +131,7 @@
 
                     "width"  : {
 
-                        "default" : 816,
+                        "default" : 878,
                         "min"     : 0,
                         "max"     : 0
 
@@ -139,7 +139,7 @@
 
                     "height" : {
 
-                        "default" : 315,
+                        "default" : 385,
                         "min"     : 0,
                         "max"     : 0
 

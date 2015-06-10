@@ -22,7 +22,7 @@
 }
 
 .wz-view-menu{
-    
+
     width: 560px;
     height: 39px;
     padding: 0px;
@@ -30,11 +30,11 @@
     background: #54728c;
     box-shadow: inset 0 1px rgba(0,0,0,.15);
     border-bottom: 1px solid #466176;
-    
+
 }
 
 .wz-view-menu span{
-    
+
     width: 130px;
     float: left;
     font-size: 14px;
@@ -42,12 +42,12 @@
     text-shadow: 0 1px rgba(0,0,0,.3);
     margin-left: 20px;
     margin-top: 14px;
-    
+
 }
 
 .content{
     width: 560px;
-    height: 481px;
+    height: 437px;
 }
 
 input{
@@ -60,17 +60,16 @@ select{
 }
 
 .content-compose{
-
-    margin: 10px 25px 18px;
-    width: 448px;
-    height: 255px;
-    float: left;
-    border-radius: 3px;
-    border: 1px solid #ddd;
-    font-size: 14px;
-    color: #5D5D5D;
-    padding: 20px 30px 20px 30px;
-    
+  margin: 0px;
+  width: 100%;
+  height: 265px;
+  float: left;
+  border-radius: 3px;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #5D5D5D;
+  padding: 0px;
 }
 
 .content-compose:focus{
@@ -95,12 +94,12 @@ select{
 .content-to{
     float: left;
     clear: left;
-    margin-top: 16px;
+    margin-top: 11px;
 }
 
 .show-cc{
     border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;    
+    border-bottom: 5px solid transparent;
     border-left: 5px solid #666;
     height: 0;
     display: inline-block;
@@ -156,8 +155,8 @@ select{
 .content-info{
     float: left;
     width: 560px;
-    height: 108px;
-    padding-bottom: 10px;
+    height: 129px;
+    padding-bottom: 5px;
     border-bottom: 1px solid #dadada;
 }
 
@@ -226,16 +225,15 @@ span.content-attachments-delete:hover{
 .content-add-attachments{
     display: block;
     width: 260px;
-    height: 27px;
+    height: 15px;
     float: left;
-    padding-left: 25px;
-    padding-bottom: 10px;
+    padding: 11px 0px 11px 5px;
 }
 
 .content-add-attachments-button{
     display: inline-block;
     border-bottom: 1px solid transparent;
-    padding: 5px 2px 1px;
+    padding: 0px 2px 1px;
 }
 
 .content-add-attachments-button:hover{
@@ -268,10 +266,9 @@ span.content-attachments-delete:hover{
     display: block;
     width: 250px;
     height: 27px;
-    float: left;
+    float: right;
     text-align: right;
-    padding-right: 25px;
-    padding-bottom: 10px;
+    padding: 5px 10px 5px 0px;
 }
 
 .content-send figure{
