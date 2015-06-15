@@ -101,9 +101,9 @@
     background-color: white;
 }
 
-.hosting-image.aol{
-    background: url('@static/servers/aol_disabled.png') no-repeat;
-    background-size: 250px 100px;
+.hosting-image.inevio{
+    background: url('@static/servers/inevio_mail.png') no-repeat;
+    background-size: 195px 52px;
     background-position: center;
     background-color: white;
 }

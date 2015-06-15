@@ -93,7 +93,7 @@ var translateUi = function(){
     $('.content-subject span').text( lang.subject + ':' );
     $('.content-from span').text( lang.from + ':' );
     $('.content-send span').text( lang.send );
-    $('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
+    //$('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
     $('.content-attachments-delete').text( lang.delete );
     $('.content-add-attachments span').text( lang.attachFile );
 
@@ -102,7 +102,7 @@ var translateUi = function(){
 // Events
     win
     .on( 'click', '.content-send figure', function(){
-        
+
         if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
 
             $( '.content-from option:selected', win ).data( 'account' ).send(
@@ -171,7 +171,7 @@ var translateUi = function(){
     })
 
     .on( 'click', '.content-add-attachments-button', function(){
-        
+
         wz.fs.selectFile( 'root', lang.attachFile, function( error, list ){
 
             if( error ){
@@ -199,7 +199,7 @@ var translateUi = function(){
 
                 attachmentsHeight += attachment.outerHeight( true );
                 generalHeight     += attachment.outerHeight( true );
-                
+
                 attachmentsList.push( item );
 
                 wz.fs( item, function( error, item ){
