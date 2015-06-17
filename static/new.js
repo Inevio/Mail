@@ -7,6 +7,17 @@ var attachments         = $('.content-attachments');
 var attachmentPrototype = $('.attachment.wz-prototype');
 var attachmentsList     = [];
 
+var toolButton          = $('.tool-button');
+var boldButton          = $('.tool-button-bold');
+var italicButton        = $('.tool-button-italic');
+var underlineButton     = $('.tool-button-underline');
+var leftButton          = $('.tool-button-left');
+var centerButton        = $('.tool-button-center');
+var rightButton         = $('.tool-button-right');
+var justifyButton       = $('.tool-button-justify');
+var unsortedButton      = $('.tool-button-list-unsorted');
+var sortedButton        = $('.tool-button-list-sorted');
+
 // Functions
 var loadAccountList = function(){
 
@@ -98,6 +109,10 @@ var translateUi = function(){
     $('.content-add-attachments span').text( lang.attachFile );
 
 };
+
+
+
+
 
 // Events
     win
@@ -253,7 +268,66 @@ var translateUi = function(){
 
     });
 
+    toolButton.on( 'mousedown' , function(e){
+      e.preventDefault();
+    });
+
+    boldButton.on( 'click' , function(){
+
+      _window.document.execCommand('bold', false, null);
+
+    });
+
+    italicButton.on( 'click' , function(){
+
+      _window.document.execCommand('italic', false, null);
+
+    });
+
+    underlineButton.on( 'click' , function(){
+
+      _window.document.execCommand('underline', false, null);
+
+    });
+
+    leftButton.on( 'click' , function(){
+
+      _window.document.execCommand('justifyleft', false, null);
+
+    });
+
+    centerButton.on( 'click' , function(){
+
+      _window.document.execCommand('justifycenter', false, null);
+
+    });
+
+    rightButton.on( 'click' , function(){
+
+      _window.document.execCommand('justifyright', false, null);
+
+    });
+
+    justifyButton.on( 'click' , function(){
+
+      _window.document.execCommand('justifyfull', false, null);
+
+    });
+
+    unsortedButton.on( 'click' , function(){
+
+      _window.document.execCommand('insertunorderedlist', false, null);
+
+    });
+
+    sortedButton.on( 'click' , function(){
+
+      _window.document.execCommand('insertorderedlist', false, null);
+
+    });
+
 // Start
 translateUi();
 loadAccountList();
 loadParams();
+_window.document.getElementsByClassName('content-compose').designMode = 'On';
