@@ -106,6 +106,7 @@
     background-size: 195px 52px;
     background-position: center;
     background-color: white;
+    cursor: pointer;
 }
 
 .hosting-image-other{

@@ -280,7 +280,7 @@ var translateUi = function(){
 
     italicButton.on( 'click' , function(){
 
-      _window.document.execCommand('italic', false, null);
+      _window.document.execCommand('italic', false, "");
 
     });
 

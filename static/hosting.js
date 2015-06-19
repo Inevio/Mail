@@ -16,7 +16,7 @@ win
 
 })
 
-.on( 'click', '.yahoo, .other', function(){
+.on( 'click', '.yahoo, .other, .inevio', function(){
 
     wz.app.createView( params, 'account' );
     wz.view.remove();
