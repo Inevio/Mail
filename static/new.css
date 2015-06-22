@@ -487,6 +487,52 @@ span.content-attachments-delete:hover{
     display: inline-block;
 }
 
+.toolbar-list-container{
+  position: relative;
+  z-index: 1;
+  height: auto;
+  max-height: 450px;
+  display: none;
+  width: auto;
+}
+
+.toolbar-list-container .arrow{
+  position: absolute;
+  display: block;
+  z-index: 1;
+  top: 1px;
+  left: 8px;
+  width: 10px;
+  height: 10px;
+  background: url('https://static.inevio.com/app/7/sprite.png') -234px 0;
+  background-size: 298px 18px;
+}
+
+.toolbar-list{
+  position: absolute;
+  height: auto;
+  top: 7px;
+  left: 0;
+  max-height: 450px;
+  overflow: auto;
+}
+
+.active-fontfamily{
+  width: 150px;
+}
+
+.toolbar-list i{
+  margin: 2px 6px 0 2px;
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+}
+
+.toolbar-list .active i{
+  background: url('https://static.inevio.com/app/7/tick_dropdown.png') 0 0;
+  background-size: 8px 8px;
+}
+
 .tools-group{
   margin-left: 69px;
 }

@@ -17,8 +17,132 @@ var rightButton         = $('.tool-button-right');
 var justifyButton       = $('.tool-button-justify');
 var unsortedButton      = $('.tool-button-list-unsorted');
 var sortedButton        = $('.tool-button-list-sorted');
+var fontfamilyDropdown  = $('.tool-fontfamily');
+var fontsizeDropdown    = $('.tool-fontsize');
+
+var FONTFAMILY  = [ 'Arial', 'Cambria', 'Comic Sans MS', 'Courier', 'Helvetica', 'Times New Roman', 'Trebuchet MS', 'Verdana' ];
+var FONTSIZE    = [ 1, 2, 3, 4, 5, 6, 7];
+
+var DROPDOWN_FONTFAMILY = 0;
+var DROPDOWN_FONTSIZE   = 1;
+var DROPDOWN_COLOR      = 2;
+var DROPDOWN            = [ FONTFAMILY, FONTSIZE];
+var DROPDOWN_CLASS      = [ 'active-fontfamily', 'active-fontsize'];
+
+var toolsListContainer  = $('.toolbar-list-container');
+var toolsList           = $('.toolbar-list');
+
+var lastDropdownActive  = -1;
+var dropdownActive      = -1;
+var cached              = [];
+var fontfamilyActive    = FONTFAMILY[1];
+var fontSizeActive      = FONTSIZE[3];
+
 
 // Functions
+
+var changeValue = function(type,value){
+
+  if(type === "fontfamily"){
+
+    fontfamilyActive=value;
+    _window.document.execCommand("fontName",false,fontfamilyActive);
+    fontfamilyDropdown.text(fontfamilyActive);
+
+  }else if(type === "fontsize"){
+
+    fontSizeActive=value;
+    _window.document.execCommand("fontSize",false,fontSizeActive);
+    fontsizeDropdown.text(fontSizeActive);
+
+  }
+}
+
+
+var hideDropdowns = function(){
+
+  console.log(dropdownActive);
+
+  lastDropdownActive = dropdownActive;
+
+  if( dropdownActive === -1 ){
+      return;
+  }
+
+  dropdownActive = -1;
+
+  toolsList.removeClass( DROPDOWN_CLASS.join(' ') );
+  //toolsColor.removeClass('active-color');
+  toolsListContainer.hide();
+  //toolsColorContainer.hide();
+
+}
+
+var showDropdown = function(type){
+
+  hideDropdowns();
+
+  //origin         = $( origin );
+  dropdownActive = type;
+
+  if( type === DROPDOWN_FONTFAMILY || type === DROPDOWN_FONTSIZE  ){
+
+    if( !cached[ type ] ){
+
+      cached[ type ] = '';
+
+      for( var i = 0; i < DROPDOWN[ type ].length; i++ ){
+        cached[ type ] += '<li data-value="' + ( DROPDOWN[ type ][ i ] ) + '"><i></i><span>' + DROPDOWN[ type ][ i ] + '</span></li>';
+      }
+
+    }
+
+    var position = ['134px','188px'];
+
+    if(type === DROPDOWN_FONTFAMILY){
+      position = ['134px','91px'];
+    }
+
+    toolsList
+      .addClass( DROPDOWN_CLASS[ type ] )
+      .html( cached[ type ] );
+
+    toolsListContainer
+      .css({
+
+        //top     : origin.position().top + origin.outerHeight(),
+        //left    : origin.position().left,
+        top       : position[0],
+        left      : position[1],
+        display   : 'block'
+
+      });
+    if(type === DROPDOWN_FONTFAMILY){
+      toolsList.find('[data-value="' + fontfamilyActive +'"]').addClass('active');
+    }else{
+      toolsList.find('[data-value="' + fontSizeActive +'"]').addClass('active');
+    }
+    //toolsList.find('[data-value="' + ( type === DROPDOWN_LINESPACING ? origin.attr('data-value') : origin.text() ) + '"]').addClass('active');
+
+  }else if( type === DROPDOWN_COLOR ){
+
+    toolsColor.addClass('active-color');
+
+    toolsColorContainer
+      .css({
+
+        top     : origin.position().top + origin.outerHeight(),
+        left    : origin.position().left,
+        display : 'block'
+
+      });
+
+  }
+
+};
+
+
+
 var loadAccountList = function(){
 
     wz.mail.getAccounts( function( error, accounts ){
@@ -239,6 +363,27 @@ var translateUi = function(){
 
     })
 
+    .on('click','.active-fontfamily li',function(){
+
+      var value = $(this).text();
+      changeValue('fontfamily',value);
+      hideDropdowns();
+
+    })
+
+
+    .on('click','.active-fontsize li',function(){
+
+      var value = $(this).text();
+      changeValue('fontsize',value);
+      hideDropdowns();
+
+    })
+
+    .on('mousedown',function(){
+      hideDropdowns();
+    })
+
     .on( 'click', '.content-attachments-delete', function(){
 
         var attachment   = $(this).parent();
@@ -326,8 +471,26 @@ var translateUi = function(){
 
     });
 
+    fontfamilyDropdown.on('click', function(){
+
+      if( lastDropdownActive !== DROPDOWN_FONTFAMILY ){
+            showDropdown( DROPDOWN_FONTFAMILY, this );
+      }
+
+    });
+
+    fontsizeDropdown.on('click', function(){
+
+      if( lastDropdownActive !== DROPDOWN_FONTSIZE ){
+        showDropdown( DROPDOWN_FONTSIZE, this );
+      }
+
+    });
+
 // Start
 translateUi();
 loadAccountList();
 loadParams();
+changeValue('fontfamily','Cambria');
+changeValue('fontsize','12');
 _window.document.getElementsByClassName('content-compose').designMode = 'On';
