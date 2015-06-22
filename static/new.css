@@ -490,3 +490,7 @@ span.content-attachments-delete:hover{
 .tools-group{
   margin-left: 69px;
 }
+
+.content-compose i{
+  font-style: italic;
+}
