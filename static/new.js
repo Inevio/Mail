@@ -61,13 +61,13 @@ var changeValue = function(type,value){
 
 var hideDropdowns = function(){
 
-  console.log(dropdownActive);
-
-  lastDropdownActive = dropdownActive;
+  //console.log(dropdownActive);
 
   if( dropdownActive === -1 ){
       return;
   }
+
+  lastDropdownActive = dropdownActive;
 
   dropdownActive = -1;
 
@@ -78,11 +78,11 @@ var hideDropdowns = function(){
 
 }
 
-var showDropdown = function(type){
+var showDropdown = function(type, origin){
 
   hideDropdowns();
 
-  //origin         = $( origin );
+  origin         = $( origin );
   dropdownActive = type;
 
   if( type === DROPDOWN_FONTFAMILY || type === DROPDOWN_FONTSIZE  ){
@@ -380,9 +380,10 @@ var translateUi = function(){
 
     })
 
-    .on('mousedown',function(){
+    /*.on('mousedown',function(){
+      console.log("ejecuto2");
       hideDropdowns();
-    })
+    })*/
 
     .on( 'click', '.content-attachments-delete', function(){
 
@@ -473,17 +474,17 @@ var translateUi = function(){
 
     fontfamilyDropdown.on('click', function(){
 
-      if( lastDropdownActive !== DROPDOWN_FONTFAMILY ){
-            showDropdown( DROPDOWN_FONTFAMILY, this );
-      }
+      //if( lastDropdownActive !== DROPDOWN_FONTFAMILY ){
+        showDropdown( DROPDOWN_FONTFAMILY, this );
+      //}
 
     });
 
     fontsizeDropdown.on('click', function(){
 
-      if( lastDropdownActive !== DROPDOWN_FONTSIZE ){
+      //if( lastDropdownActive !== DROPDOWN_FONTSIZE ){
         showDropdown( DROPDOWN_FONTSIZE, this );
-      }
+      //}
 
     });
 
@@ -492,5 +493,5 @@ translateUi();
 loadAccountList();
 loadParams();
 changeValue('fontfamily','Cambria');
-changeValue('fontsize','12');
+changeValue('fontsize','4');
 _window.document.getElementsByClassName('content-compose').designMode = 'On';

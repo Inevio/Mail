@@ -70,6 +70,7 @@ select{
   font-size: 14px;
   color: #5D5D5D;
   padding: 15px 20px;
+  font-family: 'Cambria';
 }
 
 .content-compose:focus{
@@ -503,7 +504,7 @@ span.content-attachments-delete:hover{
   top: 1px;
   left: 8px;
   width: 10px;
-  height: 10px;
+  height: 6px;
   background: url('https://static.inevio.com/app/7/sprite.png') -234px 0;
   background-size: 298px 18px;
 }
@@ -521,6 +522,10 @@ span.content-attachments-delete:hover{
   width: 150px;
 }
 
+.active-fontsize{
+  width: 52px;
+}
+
 .toolbar-list i{
   margin: 2px 6px 0 2px;
   width: 8px;
@@ -535,6 +540,38 @@ span.content-attachments-delete:hover{
 
 .tools-group{
   margin-left: 69px;
+}
+
+.content-compose font[face="Arial"]{
+  font-family: "Arial";
+}
+
+.content-compose font[face="Cambria"]{
+  font-family: "Cambria";
+}
+
+.content-compose font[face="Comic Sans MS"]{
+  font-family: "Comic Sans MS";
+}
+
+.content-compose font[face="Courier"]{
+  font-family: "Courier";
+}
+
+.content-compose font[face="Helvetica"]{
+  font-family: "Helvetica";
+}
+
+.content-compose font[face="Times New Roman"]{
+  font-family: "Times New Roman";
+}
+
+.content-compose font[face="Trebuchet MS"]{
+  font-family: "Trebuchet MS";
+}
+
+.content-compose font[face="Verdana"]{
+  font-family: "Verdana";
 }
 
 .content-compose i{
