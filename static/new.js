@@ -19,6 +19,7 @@ var unsortedButton      = $('.tool-button-list-unsorted');
 var sortedButton        = $('.tool-button-list-sorted');
 var fontfamilyDropdown  = $('.tool-fontfamily');
 var fontsizeDropdown    = $('.tool-fontsize');
+var colorButton         = $('.tool-button-color');
 
 var FONTFAMILY  = [ 'Arial', 'Cambria', 'Comic Sans MS', 'Courier', 'Helvetica', 'Times New Roman', 'Trebuchet MS', 'Verdana' ];
 var FONTSIZE    = [ 1, 2, 3, 4, 5, 6, 7];
@@ -31,12 +32,16 @@ var DROPDOWN_CLASS      = [ 'active-fontfamily', 'active-fontsize'];
 
 var toolsListContainer  = $('.toolbar-list-container');
 var toolsList           = $('.toolbar-list');
+var toolsColorContainer = $('.toolbar-color-picker-container');
+var toolsColor          = $('.toolbar-color-picker');
+var toolsColorHover     = $('.toolbar-color-picker-hover');
+var toolsColorColor     = $('.tool-button-color .color');
 
 var lastDropdownActive  = -1;
 var dropdownActive      = -1;
 var cached              = [];
 var fontfamilyActive    = FONTFAMILY[1];
-var fontSizeActive      = FONTSIZE[3];
+var fontSizeActive      = FONTSIZE[2];
 
 
 // Functions
@@ -46,16 +51,23 @@ var changeValue = function(type,value){
   if(type === "fontfamily"){
 
     fontfamilyActive=value;
-    _window.document.execCommand("fontName",false,fontfamilyActive);
+    _window.document.execCommand("fontName",false,value);
     fontfamilyDropdown.text(fontfamilyActive);
 
   }else if(type === "fontsize"){
 
     fontSizeActive=value;
-    _window.document.execCommand("fontSize",false,fontSizeActive);
+    _window.document.execCommand("fontSize",false,value);
     fontsizeDropdown.text(fontSizeActive);
 
   }
+
+  else if(type === "color"){
+
+    _window.document.execCommand("foreColor",false,value);
+
+  }
+
 }
 
 
@@ -63,18 +75,18 @@ var hideDropdowns = function(){
 
   //console.log(dropdownActive);
 
+  lastDropdownActive = dropdownActive;
+
   if( dropdownActive === -1 ){
       return;
   }
 
-  lastDropdownActive = dropdownActive;
-
   dropdownActive = -1;
 
   toolsList.removeClass( DROPDOWN_CLASS.join(' ') );
-  //toolsColor.removeClass('active-color');
+  toolsColor.removeClass('active-color');
   toolsListContainer.hide();
-  //toolsColorContainer.hide();
+  toolsColorContainer.hide();
 
 }
 
@@ -84,6 +96,8 @@ var showDropdown = function(type, origin){
 
   origin         = $( origin );
   dropdownActive = type;
+
+  var position = ['134px','188px'];
 
   if( type === DROPDOWN_FONTFAMILY || type === DROPDOWN_FONTSIZE  ){
 
@@ -97,7 +111,7 @@ var showDropdown = function(type, origin){
 
     }
 
-    var position = ['134px','188px'];
+
 
     if(type === DROPDOWN_FONTFAMILY){
       position = ['134px','91px'];
@@ -126,13 +140,17 @@ var showDropdown = function(type, origin){
 
   }else if( type === DROPDOWN_COLOR ){
 
+    position = ['134px', '321px'];
+
     toolsColor.addClass('active-color');
 
     toolsColorContainer
       .css({
 
-        top     : origin.position().top + origin.outerHeight(),
-        left    : origin.position().left,
+        //top     : origin.position().top + origin.outerHeight(),
+        //left    : origin.position().left,
+        top       : position[0],
+        left      : position[1],
         display : 'block'
 
       });
@@ -380,10 +398,9 @@ var translateUi = function(){
 
     })
 
-    /*.on('mousedown',function(){
-      console.log("ejecuto2");
+    .on('mousedown',function(){
       hideDropdowns();
-    })*/
+    })
 
     .on( 'click', '.content-attachments-delete', function(){
 
@@ -413,6 +430,11 @@ var translateUi = function(){
         });
 
     });
+
+    toolsList
+    .on( 'mousedown', function( e ){
+        e.stopPropagation();
+    })
 
     toolButton.on( 'mousedown' , function(e){
       e.preventDefault();
@@ -474,24 +496,85 @@ var translateUi = function(){
 
     fontfamilyDropdown.on('click', function(){
 
-      //if( lastDropdownActive !== DROPDOWN_FONTFAMILY ){
+      if( lastDropdownActive !== DROPDOWN_FONTFAMILY ){
         showDropdown( DROPDOWN_FONTFAMILY, this );
-      //}
+      }
 
     });
 
     fontsizeDropdown.on('click', function(){
 
-      //if( lastDropdownActive !== DROPDOWN_FONTSIZE ){
+      if( lastDropdownActive !== DROPDOWN_FONTSIZE ){
         showDropdown( DROPDOWN_FONTSIZE, this );
-      //}
+      }
 
     });
+
+    colorButton.on('click', function(){
+
+      if( lastDropdownActive !== DROPDOWN_COLOR ){
+        showDropdown( DROPDOWN_COLOR, this );
+      }
+
+    });
+
+    toolsColor
+    .on( 'mousedown', function( e ){
+        e.stopPropagation();
+    })
+
+    .on( 'mouseenter', 'td', function(){
+
+        var pos = $(this).position();
+
+        // To Do -> Existe un problema con las tablas entre distintos navegadores.
+        //          Firefox indica la posición de la celda sin contar los bordes (solo el contenido)
+        //          Chrome si tiene en cuenta los bordes
+        //          Ver posibles soluciones o ver si lo han arreglado en futuras release de jQuery
+
+        /*if( BROWSER_TYPE === BROWSER_FIREFOX ){
+
+            pos.top  = pos.top - parseInt( toolsColorHover.css('border-top-width'), 10 );
+            pos.left = pos.left - parseInt( toolsColorHover.css('border-left-width'), 10 );
+
+        }*/
+
+        toolsColorHover.css({
+
+            //'background-color' : normalizeColor( $(this).css('background-color') ),
+            'background-color' :  $(this).css('background-color') ,
+            top                : pos.top,
+            left               : pos.left
+
+        });
+
+    })
+
+    toolsColorHover.on( 'click', function(){
+
+      if( dropdownActive === DROPDOWN_COLOR  ){
+
+          changeValue('color', toolsColorHover.css('background-color'));
+
+          toolsColorColor
+              //.attr( 'data-tool-value', normalizeColor( toolsColorHover.css('background-color') ) )
+              //.css( 'background-color', normalizeColor( toolsColorHover.css('background-color') ) )
+              .attr( 'data-tool-value', toolsColorHover.css('background-color') )
+              .css( 'background-color', toolsColorHover.css('background-color') )
+              .click();
+
+      }
+
+      hideDropdowns();
+
+  });
+
 
 // Start
 translateUi();
 loadAccountList();
 loadParams();
-changeValue('fontfamily','Cambria');
-changeValue('fontsize','4');
+changeValue('fontfamily',fontfamilyActive);
+changeValue('fontsize',fontSizeActive);
+_window.document.execCommand("styleWithCss",false,true);
 _window.document.getElementsByClassName('content-compose').designMode = 'On';
