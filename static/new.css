@@ -78,6 +78,14 @@ select{
     border: 1px solid #7ebe30;
 }
 
+.content-compose ol{
+  list-style-type: decimal;
+}
+
+.content-compose ul{
+  list-style-type: disc;
+}
+
 .content-info span{
     width: 55px;
     height: 16px;
@@ -504,7 +512,7 @@ span.content-attachments-delete:hover{
   z-index: 1;
   top: 1px;
   left: 8px;
-  width: 10px;
+  width: 9px;
   height: 6px;
   background: url('https://static.inevio.com/app/7/sprite.png') -234px 0;
   background-size: 298px 18px;

@@ -43,6 +43,7 @@ var cached              = [];
 var fontfamilyActive    = FONTFAMILY[1];
 var fontSizeActive      = FONTSIZE[2];
 
+var winDocument         = win.parents().last().parent()[0];
 
 // Functions
 
@@ -51,20 +52,20 @@ var changeValue = function(type,value){
   if(type === "fontfamily"){
 
     fontfamilyActive=value;
-    _window.document.execCommand("fontName",false,value);
+    winDocument.execCommand("fontName",false,value);
     fontfamilyDropdown.text(fontfamilyActive);
 
   }else if(type === "fontsize"){
 
     fontSizeActive=value;
-    _window.document.execCommand("fontSize",false,value);
+    winDocument.execCommand("fontSize",false,value);
     fontsizeDropdown.text(fontSizeActive);
 
   }
 
   else if(type === "color"){
 
-    _window.document.execCommand("foreColor",false,value);
+    winDocument.execCommand("foreColor",false,value);
 
   }
 
@@ -442,55 +443,55 @@ var translateUi = function(){
 
     boldButton.on( 'click' , function(){
 
-      _window.document.execCommand('bold', false, null);
+      winDocument.execCommand('bold', false, null);
 
     });
 
     italicButton.on( 'click' , function(){
 
-      _window.document.execCommand('italic', false, "");
+      winDocument.execCommand('italic', false, "");
 
     });
 
     underlineButton.on( 'click' , function(){
 
-      _window.document.execCommand('underline', false, null);
+      winDocument.execCommand('underline', false, null);
 
     });
 
     leftButton.on( 'click' , function(){
 
-      _window.document.execCommand('justifyleft', false, null);
+      winDocument.execCommand('justifyleft', false, null);
 
     });
 
     centerButton.on( 'click' , function(){
 
-      _window.document.execCommand('justifycenter', false, null);
+      winDocument.execCommand('justifycenter', false, null);
 
     });
 
     rightButton.on( 'click' , function(){
 
-      _window.document.execCommand('justifyright', false, null);
+      winDocument.execCommand('justifyright', false, null);
 
     });
 
     justifyButton.on( 'click' , function(){
 
-      _window.document.execCommand('justifyfull', false, null);
+      winDocument.execCommand('justifyfull', false, null);
 
     });
 
     unsortedButton.on( 'click' , function(){
 
-      _window.document.execCommand('insertunorderedlist', false, null);
+      winDocument.execCommand('insertunorderedlist', false, null);
 
     });
 
     sortedButton.on( 'click' , function(){
 
-      _window.document.execCommand('insertorderedlist', false, null);
+      winDocument.execCommand('insertorderedlist', false, null);
 
     });
 
@@ -576,5 +577,5 @@ loadAccountList();
 loadParams();
 changeValue('fontfamily',fontfamilyActive);
 changeValue('fontsize',fontSizeActive);
-_window.document.execCommand("styleWithCss",false,true);
-_window.document.getElementsByClassName('content-compose').designMode = 'On';
+winDocument.execCommand("styleWithCss",false,true);
+winDocument.getElementsByClassName('content-compose').designMode = 'On';
