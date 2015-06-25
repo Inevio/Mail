@@ -194,7 +194,7 @@ span{
 
 .arrow-opened .arrow{
     opacity: 1;
-    width: 7px; 
+    width: 7px;
     height: 4px;
     float: left;
     margin: 10px 0px 0px 7px;
@@ -205,7 +205,7 @@ span{
 
 .arrow-closed .arrow{
     opacity: 1;
-    width: 4px; 
+    width: 4px;
     height: 7px;
     float: left;
     margin: 9px 0px 0px 8px;
@@ -243,6 +243,10 @@ span{
     height: 29px;
 }
 
+.mailbox-info.active{
+  background: rgba(117,169,209,0.3);
+}
+
 .mailbox-info:hover{
     background: rgba(117,169,209,0.3);
 }
@@ -268,7 +272,7 @@ span{
     margin-top: 9px;
     margin-bottom: 0px;
     height: 15px;
-}   
+}
 
 .mailbox .icon{
     width: 14px;
@@ -417,7 +421,7 @@ span{
     color: #5D5D5D;
 }
 
-.middle-column-top input:-ms-input-placeholder {  
+.middle-column-top input:-ms-input-placeholder {
     font-size: 13px;
     color: #5D5D5D;
 }
@@ -510,7 +514,7 @@ nav figure:last-child:hover{
     padding-left: 6px;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
-    border-right: 1px solid #DADADA; 
+    border-right: 1px solid #DADADA;
 }*/
 
 nav figure i{
@@ -1117,7 +1121,7 @@ figure.options-label i:first-child{
 
 .right-column-content.attachments .content-attachments{
     display: block;
-}   
+}
 
 .content-attachments article{
     width: 520px;

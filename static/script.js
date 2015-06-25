@@ -27,6 +27,7 @@ var contentStar         = $('.message-star', contentColumn );
 var contentMessage      = $('.content-message', contentColumn );
 var contentMessageText  = $('.content-message-text', contentMessage );
 
+
 var _accountList = [];
 var _accountOpened;
 var _boxOpened;
@@ -57,7 +58,7 @@ var _accountItem = function( account ){
 
     /*
     if( account.inProtocol === 'common' ){
-        
+
         item
             .addClass( 'general account-common' )
             .data( {
@@ -102,7 +103,7 @@ var _accountItem = function( account ){
             item.children( '.bullet' ).text( account.unread );
         }
         */
-        
+
     /*}*/
 
     item.find('.syncing span').text( lang.syncing );
@@ -150,7 +151,7 @@ var _accountItemBoxes = function( account, item ){
         boxesPromise.resolve();
 
         /*win.trigger( 'boxes-shown', [ account.id ] );*/
-        
+
     });
 
     wz.mail.getCounters( account.id, function( error, object ){
@@ -258,7 +259,7 @@ var _boxItem = function( box, prototype ){
             break;
 
         case 'flagged' :
-            
+
             text    = lang.starred;
             classes = 'starred';
             order   = 1;
@@ -266,7 +267,7 @@ var _boxItem = function( box, prototype ){
             break;
 
         case 'sent' :
-            
+
             text    = lang.sent;
             classes = 'sent';
             order   = 2;
@@ -274,7 +275,7 @@ var _boxItem = function( box, prototype ){
             break;
 
         case 'drafts' :
-            
+
             text    = lang.drafts;
             classes = 'drafts';
             order   = 3;
@@ -282,7 +283,7 @@ var _boxItem = function( box, prototype ){
             break;
 
         case 'junk' :
-            
+
             text    = lang.spam;
             classes = 'spam';
             order   = 4;
@@ -290,7 +291,7 @@ var _boxItem = function( box, prototype ){
             break;
 
         case 'trash' :
-            
+
             text    = lang.trash;
             classes = 'trash';
             order   = 5;
@@ -420,7 +421,7 @@ var getAccounts = function(){
     });
 
 };
-    
+
     /*
     var isAccountOpened = function( id ){
         return id === _accountOpened;
@@ -463,7 +464,7 @@ var toDate = function( date ){
     var showCommonAccount = function(){
 
         wz.mail.getAccounts( function( error, list ){
-            
+
             if( error ){
                 return alert( error );
             }
@@ -662,7 +663,7 @@ var showMessage = function( message ){
         }else{
             contentStar.removeClass( 'active' );
         }
-            
+
         contentDisplay.css( 'display', 'block' );
         contentReplyMode.find('.reply-mode-reply-all').css( 'display', 'block' );
         contentMessageText.contents().find( 'body' ).html( _getBasicStyle() + fullMessage.message );
@@ -916,7 +917,7 @@ var translateUI = function(){
     $( '.reply-mode-reply span', contentReplyMode ).text( lang.reply );
     $( '.reply-mode-reply-all span', contentReplyMode ).text( lang.replyToAll );
     $( '.reply-mode-forward span', contentReplyMode ).text( lang.forward );
-    
+
 };
 
 var getOpenedAccount = function(){
@@ -1007,13 +1008,13 @@ win
         var beginRow = messages.index( this );
         var finalRow = messages.index( messages.filter( '.last-selected' ) ); // To Do -> Tiene que ser un filter seguro? O un find?
         var row      = null;
-        
+
         if( beginRow < finalRow ){
             row = messages.slice( beginRow, finalRow + 1 ).addClass( 'selected' );
         }else{
             row = messages.slice( finalRow, beginRow + 1 ).addClass( 'selected' );
         }
-        
+
         messages.not( row ).removeClass( 'selected' );
 
     }else{
@@ -1045,7 +1046,7 @@ win
         $(this).removeClass('active');
 
         $(this).parents('.parent').data('message').unmarkAsFlagged( function( error ){
-            
+
             if( error ){
                 alert( error );
             }
@@ -1057,7 +1058,7 @@ win
         $(this).addClass('active');
 
         $(this).parents('.parent').data('message').markAsFlagged( function( error ){
-            
+
             if( error ){
                 alert( error );
             }
@@ -1077,7 +1078,7 @@ win
         var newSender = null;
 
         for( var i = 0; i < info.to.length && !newSender; i++ ){
-            
+
             if( info.to[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1085,7 +1086,7 @@ win
         }
 
         for( var i = 0; i < info.cc.length && !newSender; i++ ){
-            
+
             if( info.cc[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1093,7 +1094,7 @@ win
         }
 
         for( var i = 0; i < info.bcc.length && !newSender; i++ ){
-            
+
             if( info.bcc[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1150,7 +1151,7 @@ win
         var newSender = null;
 
         for( var i = 0; i < info.to.length && !newSender; i++ ){
-            
+
             if( info.to[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1158,7 +1159,7 @@ win
         }
 
         for( var i = 0; i < info.cc.length && !newSender; i++ ){
-            
+
             if( info.cc[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1166,7 +1167,7 @@ win
         }
 
         for( var i = 0; i < info.bcc.length && !newSender; i++ ){
-            
+
             if( info.bcc[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1224,7 +1225,7 @@ win
         var newSender = null;
 
         for( var i = 0; i < info.to.length && !newSender; i++ ){
-            
+
             if( info.to[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1232,7 +1233,7 @@ win
         }
 
         for( var i = 0; i < info.cc.length && !newSender; i++ ){
-            
+
             if( info.cc[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1240,7 +1241,7 @@ win
         }
 
         for( var i = 0; i < info.bcc.length && !newSender; i++ ){
-            
+
             if( info.bcc[ i ].address === account.address ){
                 newSender = account;
             }
@@ -1324,7 +1325,7 @@ win
         );
 
     }
-    
+
     /*
     var receivers = [];
     var cc        = [];
@@ -1486,7 +1487,7 @@ win
 
     // Si estamos en un la papelera o el mensaje pertenece a la papelera
     if( mailColumn.find( '.account-' + message.accountId + '-box-' + _formatId( message.path ) ).data('type') === 'trash' ){
-        
+
         confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
 
             if( result ){
@@ -1640,7 +1641,7 @@ win
     _pageOpened--;
 
     showMailsList( _accountOpened, _boxOpened, _prevRequest );
-    
+
 })
 
 
@@ -1671,7 +1672,7 @@ win
 
         wz.menu()
             .addOption( lang.createBox, function(){
-                
+
                 wz.mail( idData, function( error, account ){
 
                     // To Do -> Error
@@ -1708,10 +1709,10 @@ win
                     wz.app.createView( { cmd : 'rename', account : account }, 'account' );
 
                 });
-                
+
             })
             .addOption( lang.changeConfig, function(){
-                
+
                 wz.mail( idData, function( error, account ){
 
                     // To Do -> Error
@@ -1777,7 +1778,7 @@ win
 
             });
 
-        }); 
+        });
 
         if( boxInfo.path !== 'INBOX' ){
 
@@ -1797,13 +1798,13 @@ win
 
                         // To Do -> Error
                         box.rename( newName, function( error ){
-                            
+
                             if( error ){
                                 alert( error );
                             }
 
                         });
-                        
+
                     });
 
                 });
@@ -1813,7 +1814,7 @@ win
             menu.addOption( lang.deleteBox, function(){
 
                 confirm( 'Seguro?', function( accepted ){
-                    
+
                     if( !accepted ){
                         return;
                     }
@@ -1822,7 +1823,7 @@ win
 
                         // To Do -> Error
                         box.delete( function( error ){
-                            
+
                             if( error ){
                                 alert( error );
                             }
@@ -1836,10 +1837,51 @@ win
             }, 'warning' );
 
         }
-        
+
         menu.render();
 
     }
+
+})
+
+.on('wz-dragstart' , '.message', function(e,drag){
+
+  //var ghost = messagePrototype.clone().removeClass( 'wz-prototype' );
+  var ghost = $(this).cloneWithStyle().css( {
+
+                        margin : 0,
+                        top    : 'auto',
+                        left   : 'auto',
+                        bottom : 'auto',
+                        right  : 'auto'
+
+  } );
+
+  drag.ghost(ghost);
+
+})
+
+.on( 'wz-dropenter', '.mailbox-info', function( e,file ){
+
+  $(this).addClass('active');
+
+})
+
+.on( 'wz-dropleave', '.mailbox-info', function( e,file ){
+
+  $(this).removeClass('active');
+
+})
+
+.on( 'wz-drop', '.wz-drop-area', function( e,item ){
+
+  var boxOrigen = item.data('message').path;
+  var boxDestino= $(this).parent().data().path;
+  if( boxOrigen !== boxDestino){
+    item.data('message').moveToBox(boxOrigen, boxDestino ,function(error){
+      //console.log(error);
+    });
+  }
 
 })
 
@@ -1971,7 +2013,7 @@ win
 */
 
 attachments.on( 'click', '.content-attachments-import', function(){
-    
+
     $( this ).parent().data('actions').import( function(){
         console.log( arguments );
     });
@@ -2021,7 +2063,7 @@ wz.mail
     */
 
 .on( 'messageIn', function( accountId, path, uid, time ){
-    
+
     mailsUnread( accountId, path );
 
     // Check if the path is opened
@@ -2034,13 +2076,13 @@ wz.mail
     var messages = messagesColumn.find('.message').not('.wz-prototype');
 
     if( messages.length && time ){
-    
+
         messages.each( function( index ){
 
             if( time > $(this).data('message').time.getTime() ){
-                
+
                 position = index;
-                
+
                 return false;
 
             }
@@ -2075,9 +2117,9 @@ wz.mail
             messages.each( function( index ){
 
                 if( time > $(this).data('message').time.getTime() ){
-                    
+
                     position = index;
-                    
+
                     return false;
 
                 }
@@ -2101,11 +2143,11 @@ wz.mail
     });
 
 })
-    
+
 .on( 'messageOut', function( accountId, path, uid ){
-    messagesColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid ).remove();
+  messagesColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid ).remove();
 })
-    
+
     /*
     .on( 'newMessage', function(){
         // To Do
@@ -2120,7 +2162,7 @@ wz.mail
 })
 
 .on( 'accountRemoved', function( accountId ){
-    
+
     $( '.account-' + accountId, mailColumn )
         .addClass('removed')
         .transition( { height : 0 }, 150, function(){
@@ -2137,7 +2179,7 @@ wz.mail
         messagesZone.removeClass( 'box-shown' );
 
         wz.app.createView( null, 'hosting' );
-        
+
     }
 
     $( '.account-' + accountId + '-message', messagesColumn ).remove();
@@ -2222,7 +2264,7 @@ wz.mail
         }
 
         var size = 0;
-        
+
         boxItem.siblings('.mailbox, span').not('.wz-prototype').each(function(){
             size += $(this).outerHeight( true );
         });
@@ -2253,7 +2295,7 @@ wz.mail
     }
 
     mailColumn.find('.account-' + accountId ).children('span').text( params.description );
-    
+
 });
 
 // Start App
