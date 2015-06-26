@@ -130,6 +130,7 @@ var _accountItemBoxes = function( account, item ){
         var children     = [];
 
         for( var i = 0; i < boxes.length; i++ ){
+          console.log(boxes[i]);
             children.push( _boxItem( boxes[ i ], boxPrototype ) );
         }
 
@@ -990,7 +991,7 @@ win
 
 })
 
-.on( 'click', '.message', function( e ){
+.on( 'mousedown', '.message', function( e ){
 
     if( e.ctrlKey || e.metaKey ){
 
@@ -1026,7 +1027,10 @@ win
 
     }
 
+     e.stopPropagation();
+
 })
+
 
 /*
     .on( 'click', 'input', function( e ){
@@ -2062,8 +2066,17 @@ wz.mail
     })
     */
 
+.on( 'mail-messageIn', function( accountId, path, uid, time, flags ){
+  console.log('mail-messageIn');
+})
+
+.on( 'mail-messageOut', function( accountId, path, uid ){
+  console.log('mail-messageOut');
+})
+
 .on( 'messageIn', function( accountId, path, uid, time ){
 
+  console.log('messageIn');
     mailsUnread( accountId, path );
 
     // Check if the path is opened
@@ -2145,6 +2158,7 @@ wz.mail
 })
 
 .on( 'messageOut', function( accountId, path, uid ){
+  console.log('messageOut');
   messagesColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid ).remove();
 })
 
