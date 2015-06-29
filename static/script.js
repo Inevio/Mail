@@ -120,6 +120,8 @@ var _accountItemBoxes = function( account, item ){
     var countersPromise = $.Deferred();
     var counters        = null;
 
+    console.log( account );
+
     account.getBoxes( function( error, boxes ){
 
         if( error ){
@@ -304,7 +306,7 @@ var _boxItem = function( box, prototype ){
 
     }
 
-    item
+    /*item
         .addClass( classes + ' box-' + _formatId( box.path ) + ' account-' + box.accountId + '-box-' + _formatId( box.path ) )
         .data({
 
@@ -314,7 +316,11 @@ var _boxItem = function( box, prototype ){
             path  : box.path,
             type  : classes
 
-        });
+        });*/
+
+    item
+        .addClass( classes + ' box-' + _formatId( box.path ) + ' account-' + box.accountId + '-box-' + _formatId( box.path ) )
+            .data( box );
 
     item.children('.mailbox-info').children('span').text( text );
 
@@ -796,6 +802,7 @@ var insertBox = function( boxObj, accountObj ){
     }
 
     accountObj.children('.syncing').remove();
+
 
     if( boxes.length === 0 ){
         accountObj.prepend( boxObj );
@@ -1848,7 +1855,23 @@ win
 
 })
 
-.on('wz-dragstart' , '.message', function(e,drag){
+.on('wz-dragstart' , '.mailbox', function( e,drag ){
+
+  var ghost = $(this).cloneWithStyle().css( {
+
+                        margin : 0,
+                        top    : 'auto',
+                        left   : 'auto',
+                        bottom : 'auto',
+                        right  : 'auto'
+
+  });
+
+  drag.ghost(ghost);
+
+})
+
+.on('wz-dragstart' , '.message', function( e,drag ){
 
   //var ghost = messagePrototype.clone().removeClass( 'wz-prototype' );
   var ghost = $(this).cloneWithStyle().css( {
@@ -1865,13 +1888,13 @@ win
 
 })
 
-.on( 'wz-dropenter', '.mailbox-info', function( e,file ){
+.on( 'wz-dropenter', '.mailbox', function( e,file ){
 
   $(this).addClass('active');
 
 })
 
-.on( 'wz-dropleave', '.mailbox-info', function( e,file ){
+.on( 'wz-dropleave', '.mailbox', function( e,file ){
 
   $(this).removeClass('active');
 
@@ -1879,14 +1902,46 @@ win
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
-  var boxOrigen = item.data('message').path;
-  var boxDestino= $(this).parent().data().path;
-  if( boxOrigen !== boxDestino){
-    item.data('message').moveToBox(boxOrigen, boxDestino ,function(error){
-      //console.log(error);
-    });
-  }
+  console.log( item.data() );
 
+  if( item.data().delimiter ){
+
+    console.log('im a folder');
+
+    /*if ( item.data().name ===  'Trash' ){
+      item.data().delete( function( error ){
+        console.log(error);
+        return;
+      });
+      item.data().rename( 'Trash' , function(){
+
+      });
+    }*/
+
+    console.log('Yo soy ' + item.data().path + ' y voy a ' + $(this).data().path);
+
+    if( item.data().path === $(this).data().path ){
+      return;
+    }
+
+    var boxDestino = $(this).data().path;
+    console.log(boxDestino + '/' + item.data().name);
+    item.data().rename( boxDestino + '/' + item.data().name, function( error ){
+      console.log(error);
+      //getAccounts();
+    });
+
+  }else{
+
+    var boxOrigen = item.data('message').path;
+    var boxDestino= $(this).parent().data().path;
+    if( boxOrigen !== boxDestino){
+      item.data('message').moveToBox(boxOrigen, boxDestino ,function(error){
+        //console.log(error);
+      });
+    }
+
+  }
 })
 
 .key( 'down', function( e ){
