@@ -31,8 +31,8 @@ var contentMessageText  = $('.content-message-text', contentMessage );
 var _accountList = [];
 var _accountOpened;
 var _boxOpened;
-    var _prevRequest        = null;
-    var _nextRequest        = null;
+var _prevRequest        = null;
+var _nextRequest        = null;
 var _pageOpened         = 0;
 
 var _formatId = function( id ){
@@ -1902,7 +1902,7 @@ win
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
-  console.log( item.data() );
+  //console.log( item.data() );
 
   if( item.data().delimiter ){
 
@@ -1918,7 +1918,7 @@ win
       });
     }*/
 
-    console.log('Yo soy ' + item.data().path + ' y voy a ' + $(this).data().path);
+    /*console.log('Yo soy ' + item.data().path + ' y voy a ' + $(this).data().path);
 
     if( item.data().path === $(this).data().path ){
       return;
@@ -1929,7 +1929,7 @@ win
     item.data().rename( boxDestino + '/' + item.data().name, function( error ){
       console.log(error);
       //getAccounts();
-    });
+    });*/
 
   }else{
 
@@ -2367,6 +2367,11 @@ wz.mail
 
 });
 
+
 // Start App
+/*console.log( wz.mail.getAccount( 264 , function (error){
+  console.console.log(error);
+}));*/
+
 getAccounts();
 translateUI();
