@@ -624,6 +624,9 @@ var showMessage = function( message ){
             alert( error );
         }
 
+        $('.account-' + message.accountId + '-box-' + message.path + '-message-' + message.id).removeClass('unread');
+        mailsUnread( message.accountId , message.path );
+
     });
 
     contentColumn
@@ -852,7 +855,7 @@ var insertBox = function( boxObj, accountObj ){
                 mailColumn.find( '.account-' + accountId ).children('.bullet').text( object.unseen || '' );
             }
 
-            mailColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) ).children('.bullet').text( object.unseen || '' );
+            mailColumn.find( '.account-' + accountId + '-box-' + path ).children('.bullet').text( object.unseen || '' );
 
         });
 
@@ -998,7 +1001,9 @@ win
 
 })
 
-.on( 'mousedown', '.message', function( e ){
+.on( 'click', '.message', function( e ){
+
+    //e.stopPropagation();
 
     if( e.ctrlKey || e.metaKey ){
 
@@ -1873,6 +1878,7 @@ win
 
 .on('wz-dragstart' , '.message', function( e,drag ){
 
+
   //var ghost = messagePrototype.clone().removeClass( 'wz-prototype' );
   var ghost = $(this).cloneWithStyle().css( {
 
@@ -1888,13 +1894,13 @@ win
 
 })
 
-.on( 'wz-dropenter', '.mailbox', function( e,file ){
+.on( 'wz-dropenter', '.mailbox-info', function( e,file ){
 
   $(this).addClass('active');
 
 })
 
-.on( 'wz-dropleave', '.mailbox', function( e,file ){
+.on( 'wz-dropleave', '.mailbox-info', function( e,file ){
 
   $(this).removeClass('active');
 
@@ -2129,9 +2135,44 @@ wz.mail
   console.log('mail-messageOut');
 })
 
-.on( 'messageIn', function( accountId, path, uid, time ){
+.on( 'flagChanged' , function( accountId, path, uid, flags ){
 
-  console.log('messageIn');
+  console.log('Cambio de flags: ');
+  console.log(arguments);
+
+  var title = "";
+
+  //if( flags[0] === "/seen" )
+
+  /*wz.banner()
+                .setTitle( 'Texts - Exporting PDF...' )
+                .setText( ' is being exported' )
+                .setIcon( 'https://static.inevio.com/app/7/saved.png' )
+                .render();*/
+
+})
+
+.on( 'messageIn', function( accountId, path, uid, time, flags, lmtp ){
+
+    console.log('MessageIn: ');
+    console.log(arguments);
+
+    var title = 'Email movido';
+    var text  = 'a: ' + path;
+
+    if( lmtp === true ){
+
+      title = 'Email recibido';
+      text  = '';
+
+    }
+
+    wz.banner()
+                  .setTitle( title )
+                  .setText( text )
+                  .setIcon( 'https://static.inevio.com/app/8/icon.png' )
+                  .render();
+
     mailsUnread( accountId, path );
 
     // Check if the path is opened
@@ -2213,8 +2254,11 @@ wz.mail
 })
 
 .on( 'messageOut', function( accountId, path, uid ){
-  console.log('messageOut');
+
+  console.log('MessageOut: ');
+  console.log(arguments);
   messagesColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid ).remove();
+
 })
 
     /*
