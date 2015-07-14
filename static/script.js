@@ -530,6 +530,8 @@ var showMailsList = function( id, boxId, request){
             messagesZone.addClass( 'box-shown' );
             /*win.trigger( 'messages-shown' );*/
 
+            mailsUnread( id, boxId);
+
             // Nullify
             messageList = list = account = null;
 
@@ -852,26 +854,12 @@ var insertBox = function( boxObj, accountObj ){
 
     var mailsUnread = function( accountId, path ){
 
-      //console.log(arguments);
-
         wz.mail.getCounters( accountId, path, function( error, object ){
-
-            //console.log(object);
 
             if( error ){
                 return;
             }
-
-            var Path = path.split('/');
-            var finalPath = Path.join('-');
-
-
-            //$('.account-' + accountId + '-box-' + Path[0] + '.bullet').text( object.unseen || '' );
-
-            $( '.account-' + accountId + '-box-' + finalPath + ' .mailbox-info .bullet' ).text( object.unseen || '' );
-
-
-            //$('.account-' + accountId + ' .account-info .bullet').text( object.unseen || '' );
+            updateMailboxCounter( accountId, path , object.unseen || '' )
 
         });
 
@@ -2160,12 +2148,12 @@ wz.mail
 
   var title = "";
 
-  var path = path.split('/');
-  var finalPath = path.join('-');
+  var Path = path.split('/');
+  var finalPath = Path.join('-');
 
   var message = $('.account-' + accountId + '-box-' + finalPath + '-message-' + uid);
 
-  if( message ){
+  if( message.data() ){
 
     var apiMessage = message.data().message;
     //console.log(apiMessage);
@@ -2176,6 +2164,7 @@ wz.mail
 
         apiMessage.unmarkAsSeen( function(){
           message.addClass('unread');
+          mailsUnread( accountId, path );
         });
 
       }
@@ -2186,6 +2175,7 @@ wz.mail
 
         apiMessage.markAsSeen( function(){
           message.removeClass('unread');
+          mailsUnread( accountId, path );
         });
 
       }
