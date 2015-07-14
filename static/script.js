@@ -618,16 +618,23 @@ var showMessage = function( message ){
     contentName.text( message.from.name );
     contentMail.text( message.from.address );
 
-    message.markAsSeen( function( error ){
+    if( message.flags[0] != "\\Seen" ){
 
-        if( error ){
-            alert( error );
-        }
+      message.markAsSeen( function( error ){
 
-        $('.account-' + message.accountId + '-box-' + message.path + '-message-' + message.id).removeClass('unread');
-        mailsUnread( message.accountId , message.path );
+          if( error ){
+              alert( error );
+          }
 
-    });
+          var path = message.path.split('/');
+          var finalPath = path.join('-');
+
+          $('.account-' + message.accountId + '-box-' + finalPath + '-message-' + message.id).removeClass('unread');
+          mailsUnread( message.accountId , message.path );
+
+      });
+
+    }
 
     contentColumn
         .removeClass()
@@ -845,17 +852,26 @@ var insertBox = function( boxObj, accountObj ){
 
     var mailsUnread = function( accountId, path ){
 
+      //console.log(arguments);
+
         wz.mail.getCounters( accountId, path, function( error, object ){
+
+            //console.log(object);
 
             if( error ){
                 return;
             }
 
-            if( path === 'INBOX' ){
-                mailColumn.find( '.account-' + accountId ).children('.bullet').text( object.unseen || '' );
-            }
+            var Path = path.split('/');
+            var finalPath = Path.join('-');
 
-            mailColumn.find( '.account-' + accountId + '-box-' + path ).children('.bullet').text( object.unseen || '' );
+
+            //$('.account-' + accountId + '-box-' + Path[0] + '.bullet').text( object.unseen || '' );
+
+            $( '.account-' + accountId + '-box-' + finalPath + ' .mailbox-info .bullet' ).text( object.unseen || '' );
+
+
+            //$('.account-' + accountId + ' .account-info .bullet').text( object.unseen || '' );
 
         });
 
@@ -1004,6 +1020,8 @@ win
 .on( 'click', '.message', function( e ){
 
     //e.stopPropagation();
+
+    console.log($( this ).data());
 
     if( e.ctrlKey || e.metaKey ){
 
@@ -2142,7 +2160,63 @@ wz.mail
 
   var title = "";
 
-  //if( flags[0] === "/seen" )
+  var path = path.split('/');
+  var finalPath = path.join('-');
+
+  var message = $('.account-' + accountId + '-box-' + finalPath + '-message-' + uid);
+
+  if( message ){
+
+    var apiMessage = message.data().message;
+    //console.log(apiMessage);
+
+    if( flags.indexOf('\\Seen') === -1 ){
+
+      if( !(message.hasClass('unread')) ){
+
+        apiMessage.unmarkAsSeen( function(){
+          message.addClass('unread');
+        });
+
+      }
+
+    }else{
+
+      if( message.hasClass('unread') ){
+
+        apiMessage.markAsSeen( function(){
+          message.removeClass('unread');
+        });
+
+      }
+
+    }
+
+    var star = message.find('.message-star');
+
+    if( flags.indexOf('\\Flagged') === -1 ){
+
+      if( star.hasClass('active') ){
+
+        apiMessage.unmarkAsFlagged( function(){
+            star.removeClass('active');
+        });
+
+      }
+
+    }else{
+
+      if( !(star.hasClass('active')) ){
+
+        apiMessage.markAsFlagged( function(){
+            star.addClass('active');
+        });
+
+      }
+
+    }
+
+  }
 
   /*wz.banner()
                 .setTitle( 'Texts - Exporting PDF...' )
@@ -2157,21 +2231,20 @@ wz.mail
     console.log('MessageIn: ');
     console.log(arguments);
 
-    var title = 'Email movido';
-    var text  = 'a: ' + path;
-
     if( lmtp === true ){
 
-      title = 'Email recibido';
-      text  = '';
+      var title = 'Email recibido';
+      var text  = 'en: ' + path;
+
+      wz.banner()
+                    .setTitle( title )
+                    .setText( text )
+                    .setIcon( 'https://static.inevio.com/app/8/icon.png' )
+                    .render();
 
     }
 
-    wz.banner()
-                  .setTitle( title )
-                  .setText( text )
-                  .setIcon( 'https://static.inevio.com/app/8/icon.png' )
-                  .render();
+
 
     mailsUnread( accountId, path );
 
