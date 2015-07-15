@@ -1448,13 +1448,9 @@ win
     if( mailColumn.find( '.account-' + _accountOpened + '-box-' + _formatId( _boxOpened ) ).data('type') === 'trash' ){
 
         confirm( 'Hola Mundo', function( result ){ // To Do -> Traducir
-
             if( result ){
-
                 messagesSelected.each( function(){
-
                     $( this ).data('message').remove( function( error ){
-
                         console.log( arguments );
 
                         if( error ){
@@ -1479,7 +1475,6 @@ win
     }else{
 
         messagesSelected.each( function(){
-
             $(this).data('message').moveToTrash( function( error ){
 
                 if( error ){

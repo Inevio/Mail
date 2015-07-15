@@ -1,4 +1,6 @@
-
+*{
+  font-family: Lato;
+}
 .wz-view{
     background: #fbfbfb;
 }
