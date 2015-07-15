@@ -2340,6 +2340,7 @@ wz.mail
   console.log('MessageOut: ');
   console.log(arguments);
   messagesColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid ).remove();
+  mailsUnread(accountId, path);
 
 })
 
