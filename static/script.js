@@ -1065,7 +1065,7 @@ win
 
     if( $(this).hasClass('active') ){
 
-        $(this).removeClass('active');
+        //$(this).removeClass('active');
 
         $(this).parents('.parent').data('message').unmarkAsFlagged( function( error ){
 
@@ -1077,7 +1077,7 @@ win
 
     }else{
 
-        $(this).addClass('active');
+        //$(this).addClass('active');
 
         $(this).parents('.parent').data('message').markAsFlagged( function( error ){
 
@@ -2156,15 +2156,17 @@ wz.mail
   if( message.data() ){
 
     var apiMessage = message.data().message;
-    //console.log(apiMessage);
 
     if( flags.indexOf('\\Seen') === -1 ){
 
       if( !(message.hasClass('unread')) ){
 
         apiMessage.unmarkAsSeen( function(){
+
           message.addClass('unread');
           mailsUnread( accountId, path );
+          message.data('message').flags = flags;
+
         });
 
       }
@@ -2174,8 +2176,11 @@ wz.mail
       if( message.hasClass('unread') ){
 
         apiMessage.markAsSeen( function(){
+
           message.removeClass('unread');
           mailsUnread( accountId, path );
+          message.data('message').flags = flags;
+
         });
 
       }
@@ -2183,23 +2188,39 @@ wz.mail
     }
 
     var star = message.find('.message-star');
+    var selected = message.hasClass('selected');
+    var star2 = $('.content-origin-bottom .message-star');
 
     if( flags.indexOf('\\Flagged') === -1 ){
+      console.log('llego');
 
       if( star.hasClass('active') ){
 
+        console.log('llego+');
         apiMessage.unmarkAsFlagged( function(){
             star.removeClass('active');
+            if(selected){
+              console.log('entro1');
+              star2.removeClass('active');
+            }
+            message.data('message').flags = flags;
         });
 
       }
 
     }else{
 
+      console.log('llego2');
       if( !(star.hasClass('active')) ){
 
+        console.log('llego2+');
         apiMessage.markAsFlagged( function(){
             star.addClass('active');
+            if(selected){
+              console.log('entro2');
+              star2.addClass('active');
+            }
+            message.data('message').flags = flags;
         });
 
       }
