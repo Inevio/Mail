@@ -2192,15 +2192,12 @@ wz.mail
     var star2 = $('.content-origin-bottom .message-star');
 
     if( flags.indexOf('\\Flagged') === -1 ){
-      console.log('llego');
 
       if( star.hasClass('active') ){
 
-        console.log('llego+');
         apiMessage.unmarkAsFlagged( function(){
             star.removeClass('active');
             if(selected){
-              console.log('entro1');
               star2.removeClass('active');
             }
             message.data('message').flags = flags;
@@ -2210,14 +2207,11 @@ wz.mail
 
     }else{
 
-      console.log('llego2');
       if( !(star.hasClass('active')) ){
 
-        console.log('llego2+');
         apiMessage.markAsFlagged( function(){
             star.addClass('active');
             if(selected){
-              console.log('entro2');
               star2.addClass('active');
             }
             message.data('message').flags = flags;
@@ -2226,6 +2220,10 @@ wz.mail
       }
 
     }
+
+  }else{
+
+    mailsUnread( accountId, path );
 
   }
 
