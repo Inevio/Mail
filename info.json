@@ -79,8 +79,8 @@
 
                     "height" : {
 
-                        "default" : 480,
-                        "min"     : 480,
+                        "default" : 510,
+                        "min"     : 510,
                         "max"     : 0
 
                     },
