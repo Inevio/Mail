@@ -341,6 +341,10 @@ var translateUi = function(){
             var generalHeight     = 0;
             var initialValue      = 205;
 
+            if(attachments.outerHeight( true ) !== 22){
+              initialValue += attachments.outerHeight( true );
+            }
+
             if( attachments.css('display') === 'none' ){
 
                 attachments.show();
