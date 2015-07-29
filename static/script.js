@@ -1851,6 +1851,9 @@ win
                                 alert( error );
                             }
 
+                            boxDom.remove();
+                            getAccounts();
+
                         });
 
                     });
