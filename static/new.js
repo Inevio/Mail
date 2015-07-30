@@ -6,6 +6,7 @@ var mailExpresion       = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)
 var attachments         = $('.content-attachments');
 var attachmentPrototype = $('.attachment.wz-prototype');
 var attachmentsList     = [];
+var contentCompose      = $('.content-compose');
 
 var toolButton          = $('.tool-button');
 var boldButton          = $('.tool-button-bold');
@@ -247,7 +248,7 @@ var translateUi = function(){
     $('.content-subject span').text( lang.subject + ':' );
     $('.content-from span').text( lang.from + ':' );
     $('.content-send span').text( lang.send );
-    //$('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
+    $('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
     $('.content-attachments-delete').text( lang.delete );
     $('.content-add-attachments span').text( lang.attachFile );
 
@@ -338,11 +339,17 @@ var translateUi = function(){
 
             var attachmentsHeight = 0;
             var generalHeight     = 0;
+            var initialValue      = 205;
+
+            if(attachments.outerHeight( true ) !== 22){
+              initialValue += attachments.outerHeight( true );
+            }
 
             if( attachments.css('display') === 'none' ){
 
                 attachments.show();
 
+                initialValue += 22;
                 attachmentsHeight += $('.content-attachments-title').outerHeight( true );
                 generalHeight     += attachments.outerHeight( true ) + attachmentsHeight;
 
@@ -355,8 +362,10 @@ var translateUi = function(){
                 attachment.data( 'id', item );
                 attachments.append( attachment );
 
-                attachmentsHeight += attachment.outerHeight( true );
-                generalHeight     += attachment.outerHeight( true );
+                if( attachmentsList.length < 4 ){
+                  attachmentsHeight += attachment.outerHeight( true );
+                  generalHeight     += attachment.outerHeight( true );
+                }
 
                 attachmentsList.push( item );
 
@@ -374,8 +383,12 @@ var translateUi = function(){
 
             });
 
-            win.height( '+=' + generalHeight );
-            content.height( '+=' + generalHeight );
+            //win.height( '+=' + generalHeight );
+
+            initialValue += attachmentsHeight;
+            //content.height( '+=' + generalHeight );
+            console.log('calc(100% - ' + initialValue + 'px)');
+            contentCompose.css('height', 'calc(100% - ' + initialValue + 'px)' );
             attachments.height( '+=' + attachmentsHeight );
 
         });
@@ -408,22 +421,33 @@ var translateUi = function(){
         var attachment   = $(this).parent();
         var attachmentId = attachment.data('id');
 
-        attachments.height( '-=' + attachment.outerHeight( true ) );
-        content.height( '-=' + attachment.outerHeight( true ) );
-        win.height( '-=' + attachment.outerHeight( true ) );
+        var initialValue = 205 + attachments.outerHeight(true);
+
+        //content.height( '-=' + attachment.outerHeight( true ) );
+        //win.height( '-=' + attachment.outerHeight( true ) );
+
+        console.log(attachmentsList.length);
+        console.log(initialValue);
+
+        if( attachmentsList.length < 5){
+          initialValue -= attachment.outerHeight( true );
+          attachments.height( '-=' + attachment.outerHeight( true ) );
+        }
 
         attachment.remove();
 
         if( !$('.attachment').not('.wz-prototype').length ){
 
-            win.height( '-=' + attachments.outerHeight( true ) );
-            content.height( '-=' + attachments.outerHeight( true ) );
-            attachments.height( '-=' + $('.content-attachments-title').outerHeight( true ) );
+            //win.height( '-=' + attachments.outerHeight( true ) );
+            //content.height( '-=' + attachments.outerHeight( true ) );
 
+            attachments.height( '-=' + $('.content-attachments-title').outerHeight( true ) );
+            initialValue -= 38;
             attachments.hide();
 
         }
 
+        contentCompose.css('height', 'calc(100% - ' + initialValue + 'px)' );
         attachmentsList[ attachmentsList.indexOf( attachmentId ) ] = null;
 
         attachmentsList = attachmentsList.filter( function( item ){

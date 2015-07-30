@@ -77,7 +77,7 @@ select{
 
 
 .content-compose:focus{
-    border: 1px solid #7ebe30;
+    /*border: 1px solid #7ebe30;*/
 }
 
 .content-compose ol{
@@ -99,12 +99,13 @@ select{
     text-align: right;
 }
 
+
+
 .content-from span{
     margin-top: 4px;
 }
 
 .content-to{
-    float: left;
     clear: left;
     margin-top: 11px;
 }
@@ -131,7 +132,6 @@ select{
 }
 
 .content-cc{
-    float: left;
     clear: left;
     margin-top: 7px;
     display: none;
@@ -142,7 +142,6 @@ select{
 }
 
 .content-cco{
-    float: left;
     clear: left;
     margin-top: 7px;
     display: none;
@@ -153,13 +152,11 @@ select{
 }
 
 .content-subject{
-    float: left;
     clear: left;
     margin-top: 7px;
 }
 
 .content-from{
-    float: left;
     clear: left;
     margin: 5px 0px 5px 0px;
 }
@@ -173,6 +170,8 @@ select{
 }
 
 .content-info article{
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
     width: 560px;
     padding: 0 20px;
 }
@@ -185,7 +184,7 @@ select{
     border-top: 1px solid #dadada;
     border-bottom: 1px solid #dadada;
     padding: 10px 0;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .content-attachments article{

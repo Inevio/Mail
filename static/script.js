@@ -999,7 +999,7 @@ win
     if( !$(this).hasClass('noselect') ){
 
         showMailsList( $(this).parents('.account').data('id'), $(this).data('path') );
-        $( this ).addClass('active');
+        $( this ).children('.mailbox-info').addClass('active');
 
     }
 
@@ -1761,6 +1761,7 @@ win
     }else if( $(this).hasClass('mailbox-info') ){
 
         var boxInfo = $(this).parent().data();
+        var boxDom  = $(this);
 
         var menu = wz.menu()
 
@@ -1820,6 +1821,11 @@ win
                                 alert( error );
                             }
 
+                            var localPath = newName.split('/');
+                            var localName = localPath[localPath.length -1];
+                            boxDom.find('span').text( localName );
+                            boxInfo.path = newName ;
+
                         });
 
                     });
@@ -1844,6 +1850,9 @@ win
                             if( error ){
                                 alert( error );
                             }
+
+                            boxDom.remove();
+                            getAccounts();
 
                         });
 
