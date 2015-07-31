@@ -243,12 +243,16 @@ span{
     height: 29px;
 }
 
-.mailbox-info.active{
-  background: rgba(117,169,209,0.3);
+.mailbox-info.active span{
+  color: white;
+}
+
+.mailbox .mailbox-info.active{
+  background: #54728C;
 }
 
 .mailbox-info:hover{
-  background: rgba(117,169,209,0.3);
+  background: #d1e8f6;
 }
 
 .account-info > *, .mailbox-info > *{
