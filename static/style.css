@@ -7,7 +7,7 @@ span{
 }
 
 .line{
-	width:354px;
+	width: 284px;
 	height: 0px;
 	border-top:1px solid #e8eeef;
 	margin: 0px 5px 0px 5px;
@@ -19,15 +19,15 @@ span{
 /* Main window --------------------------------------------------*/
 
 .window-content{
-	width: 1070px;
-	height: 517px;
+	width: 100%;
+	height: ~"calc(100% - 40px)";
 	background-color: white;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
 
 .subcontent0,.subcontent1,.subcontent2{
-	height: 517px;
+	height: 100%;
 }
 
 .subheader0, .subheader1, .subheader2, .subcontent0,.subcontent1,.subcontent2{
@@ -38,19 +38,13 @@ span{
 	height: 27px;
 }
 
-
-.subcontent1{
-	
+.subheader0{
+	width: 220px;
 }
-
-
-.mail-section0{
-	width: 250px;
+.subheader1{
+	width: 295px;
 }
-.mail-section1{
-	width: 380px;
-}
-.mail-section2{
+.subheader2{
   width: 441px;
 }
 
@@ -63,14 +57,14 @@ span{
 	margin: 5px 0px 0px 5px;
 }
 
-/* End of main window --------------------------------------------------*/ 
+/* End of main window --------------------------------------------------*/
 
 
 /* Navigation bar --------------------------------------------------*/
 
 .window-header{
 	/*width: 100%;*/
-	height: 40px;
+	height: 39px;
   border-radius: 5px 5px 0 0;
   background-color: #f6f6f5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px rgba(255, 255, 255, 0.1);
@@ -121,7 +115,7 @@ span{
 }
 
 .searchField{
-	width: 335px;
+	width: 250px;
   height: 22px;
   margin: -7px 0 0 0;
   padding: 6px 2px 0 6px;
@@ -177,7 +171,7 @@ span{
 }*/
 
 .button{
-	border: 1px solid #c2cacd;	
+	border: 1px solid #c2cacd;
 	border-radius: 3px;
 	background-color: white !important;
 	font-size: 15px;
@@ -207,7 +201,7 @@ span{
 /* Left sidebar --------------------------------------------------*/
 
 .accounts{
-	height: 290px;
+	height: ~'calc(100% - 21px)';
   /*overflow-y: inherit;*/
 }
 
@@ -220,7 +214,7 @@ span{
 }
 
 .window-content .subcontent0{
-	width:250px;
+	width:220px;
 	/*overflow-y: auto;*/
 }
 
@@ -273,12 +267,10 @@ span{
 }
 
 .mail-account{
-  margin: 5px 0px 0px 7px;
-  padding-bottom: 2px;
-  padding-left: 11px;
+  margin-top: 5px;
   height: 25px;
   line-height: 25px;
-  width: 210px;	
+  width: 100%;
 }
 
 .mail-account.yahoo-mail{
@@ -314,7 +306,7 @@ span{
 }
 
 .subcontent0 .active{
-	background-color: #74bdef;
+	background-color: #3ba9e4;
   border-radius: 3px;
 }
 
@@ -385,7 +377,7 @@ span{
   width: 225px;
 }
 
-.folder i, .subfolder i{  
+.folder i, .subfolder i{
 	width: 17px !important;
 	background:url("@static/folder.png");
 	background-repeat: no-repeat;
@@ -406,7 +398,7 @@ span{
 }
 
 .window-content .subcontent1{
-  width: 377px;
+  width: 293px;
 }
 
 .mail-options{
@@ -465,13 +457,13 @@ span{
 }
 
 .sort-by{
-	float:right; 
+	float:right;
 	margin-right: 10px;
 }
 
 
 .inbox{
-	height: 477px;
+  height: ~'calc(100% - 40px)';
 }
 
 .emails, .scrollbar-inbox{
@@ -488,15 +480,15 @@ span{
 }
 
 .emails{
-	width: 377px;
-	height: 477px;
+	width: 100%;
+  height: 100%;
 	/*to-do*/
   float: left;
 	/*overflow-y: auto;*/
 }
 
 .day{
-	width:360px;
+	width: 100%;
 	height: 20px;
 	background-color: #f6f8f8;
 	border-bottom: 1px solid #ccd3d5;
@@ -507,23 +499,25 @@ span{
   font-weight: bold;
 	display: inline-block;
 	text-align: center;
+  margin-bottom: 2px;
 }
 
 
 .single-mail{
-	border-radius: 5px;
-  padding: 10px 5px 5px 5px;
-  margin: 5px;
-  width: 344px;
-  height: 100px;
+	/*border-radius: 5px;
+  padding: 10px 5px 5px 5px;*/
+  margin-bottom: 5px;
+  width: 100%;
+  height: 94px;
   float: left;
 }
 
 .mail-left{
-	width:15px;
-	margin-right: 5px;
-	height: 100px;
-	float:left;
+  width: 19px;
+  height: 82px;
+  float: left;
+  margin-left: 8px;
+  margin-top: 12px;
 }
 
 .mail-left i{
@@ -531,9 +525,12 @@ span{
 }
 
 .mail-content{
-	float:left;
-	height: 100px;
-	width: 324px;
+  float: left;
+  height: 70px;
+  width: 258px;
+  margin-right: 8px;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .mail-from{
@@ -559,6 +556,12 @@ span{
 .mail-text{
 	font-size: 12px;
 	padding-top: 10px;
+}
+
+.mail-text span{
+  height: 25px;
+  display: inline-block;
+  overflow: hidden;
 }
 
 .select{
@@ -592,7 +595,11 @@ span{
 
 .emails .single-mail.active{
 	color:white !important;
-	background-color: #74bdef;
+	background-color: #3ba9e4;
+}
+
+.single-mail:hover{
+  background-color: #d1e8f6;
 }
 
 .emails .active span,.emails .active div{
@@ -613,6 +620,9 @@ span{
 
 /* Right content -------------------------------------------------- */
 
+.subcontent2{
+  width: ~"calc(100% - 515px)";
+}
 
 .scrollbar-open-mail{
 	width:13px;
@@ -624,36 +634,46 @@ span{
 }
 
 .full-mail{
-	width: 406px;
-  height: 497px;
+	width: ~"calc(100% - 40px)";
+  height: ~"calc(100% - 40px)";
   float: left;
-	padding: 10px 15px 10px 20px;
+	padding: 20px;
 }
 
 .full-mail-header{
-	height: 50px;
+	height: 54px;
 	border-bottom: 1px solid #ccd3d5;
 }
 
+.full-mail-content{
+  height: ~'calc(100% - 35px)';
+  width: 100%;
+  padding-right: 17px;
+}
+
 .full-mail-title{
-	color: black;
+	color: #545f65;
 	font-size: 19px;
 	font-weight: bold;
+  width: ~'calc(100% - 175px)';
+  float: left;
 }
 
 .full-mail-date{
-	float: right;
-	color:#9ea4a6;
-	font-size: 11px;
-	padding-top: 2px;
-	font-weight: bold;
+  float: right;
+  color: #9ea4a6;
+  font-size: 11px;
+  padding-top: 6px;
+  font-weight: bold;
+  width: 175px;
+  text-align: right;
 }
 
 .full-mail-delivery{
 	font-size: 13px;
 	padding-top: 7px;
 	float:left;
-	width: 285px;
+	width: ~'calc(100% - 121px)';
 }
 
 .to{
@@ -661,11 +681,18 @@ span{
 }
 
 .from{
-	color:#74bdef;
+	color:#3ba9e4;
 }
 
 .full-mail-options{
-	float: right;
+  float: right;
+  height: 23px;
+  margin-top: 3px;
+}
+
+.full-mail-options .more{
+  width: 3px;
+  height: 11px;
 }
 
 .full-mail-options i{
@@ -792,11 +819,11 @@ span{
 }
 
 .attachment2{
-	margin-top: 5px; 
+	margin-top: 5px;
 	float: left;
   width: 125px;
   height: 135px;
-	background-color: #74bdef;
+	background-color: #3ba9e4;
 	padding: 3px;
 	border-radius: 5px;
 }

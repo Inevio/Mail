@@ -22,18 +22,25 @@ singleMail.on('click', function(){
 
 opcionesGlobales.on('click', function(){
 	$('.mail-account .active').removeClass('active');
-	$('.mail-account .semiactive').removeClass('semiactive');
 	$('.general-options .active').removeClass('active');
-	$(this).addClass('active');	
+	$(this).addClass('active');
 });
 
-opcionesParticulares.on('click',function(){
+opcionesParticulares.on('click',function(e){
 	$('.general-options .active').removeClass('active');
-	$('.mail-account .semiactive').removeClass('semiactive');
 	$('.mail-account .active').removeClass('active');
-	$(this).addClass('active');	
+	$(this).addClass('active');
+	e.stopPropagation();
 });
 
-$('.accounts > .mail-account').on('click',function(){
-	$(this).toggleClass('expanded-options');
+$('.mail-account').on('click',function(){
+	console.log('entro en click');
+	if( !$(this).hasClass('expanded-options') ){
+		$('.mail-account').removeClass('expanded-options');
+		$(this).toggleClass('expanded-options');
+		$(this).height( 313 );
+	}else{
+		$(this).toggleClass('expanded-options');
+		$(this).height( 31 );
+	}
 });
