@@ -1,3 +1,5 @@
+
+var win                 	= $( this );
 var singleMail       			= $('.single-mail');
 var allInbox        			= $('.general-options .all-inbox');
 var starred       				= $('.general-options .starred');
@@ -6,7 +8,7 @@ var sent        					= $('.general-options .sent');
 var spam        					= $('.general-options .spam');
 var trash        					= $('.general-options .trash');
 var opcionesGlobales			= $('.general-options .options');
-var opcionesParticulares 	= $('.mail-account .options');
+//var mailBox 							= $('.mail-account .options');
 
 
 singleMail.on('click', function(){
@@ -26,21 +28,56 @@ opcionesGlobales.on('click', function(){
 	$(this).addClass('active');
 });
 
-opcionesParticulares.on('click',function(e){
-	$('.general-options .active').removeClass('active');
-	$('.mail-account .active').removeClass('active');
+$('.mailbox-info').on('click',function(e){
+	$('.mailbox-info.active').removeClass('active');
 	$(this).addClass('active');
-	e.stopPropagation();
+
+	/*if( $(this).parent().hasClass('arrow-opened') ){
+		e.stopPropagation();
+	}*/
+
 });
 
-$('.mail-account').on('click',function(){
-	console.log('entro en click');
-	if( !$(this).hasClass('expanded-options') ){
-		$('.mail-account').removeClass('expanded-options');
-		$(this).toggleClass('expanded-options');
-		$(this).height( 313 );
-	}else{
-		$(this).toggleClass('expanded-options');
-		$(this).height( 31 );
+win.on('click','.mailbox', function(e){
+
+	e.stopPropagation();
+	console.log('capturo click');
+
+	if( !$(this).hasClass('hide-arrow') ){
+
+		if( !$(this).hasClass('arrow-opened') ){
+
+			$(this).removeClass('arrow-closed');
+			$(this).addClass('arrow-opened');
+			$(this).children('.children').first().css('display', 'block');
+
+		}else{
+
+			$(this).removeClass('arrow-opened');
+			$(this).addClass('arrow-closed');
+			$(this).children('.children').first().css('display', 'none');
+
+		}
 	}
+
+
+})
+
+
+.on('click', '.mail-account' ,function(){
+
+	if( !$(this).hasClass('arrow-opened') ){
+
+		$(this).removeClass('arrow-closed');
+		$(this).addClass('arrow-opened');
+		$(this).children('.children').first().css('display', 'block');
+
+	}else{
+
+		$(this).removeClass('arrow-opened');
+		$(this).addClass('arrow-closed');
+		$(this).children('.children').first().css('display', 'none');
+
+	}
+
 });

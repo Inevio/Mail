@@ -196,13 +196,96 @@ span{
 
 /* End of navigation bar --------------------------------------------------*/
 
+.arrow-closed .mailbox-info .arrow, .arrow-closed .account-info .arrow{
+  opacity: 1;
+  width: 4px;
+  height: 7px;
+  float: left;
+  margin: 9px 0px 0px 8px;
+  background: url('@static/arrow.png') no-repeat center center;
+  background-size: 4px 7px;
+  padding: 2px 3px;
+}
 
+.mail-account .hide-arrow .arrow{
+  opacity: 0;
+}
+
+.arrow-opened .arrow{
+  opacity: 1;
+  width: 7px;
+  height: 4px;
+  float: left;
+  margin: 10px 0px 0px 7px;
+  background: url('@static/arrow_rotated.png') no-repeat center center;
+  background-size: 7px 4px;
+  padding: 3px 2px;
+}
 
 /* Left sidebar --------------------------------------------------*/
 
 .accounts{
 	height: ~'calc(100% - 21px)';
-  /*overflow-y: inherit;*/
+  background-color: #f7f8fa;
+  overflow-y: hidden;
+}
+
+.mailbox-info:hover{
+  background-color: #d1e8f6;
+}
+
+.mailbox{
+  /*height: 29px;*/
+}
+
+.children{
+  display: none;
+  padding-left: 10px;
+  overflow: hidden;
+}
+
+.account-info .account-icon{
+  background: url('@static/inevio_mail.png');
+  width: 16px;
+	height: 16px;
+	float:left;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+.mail-account .bullet{
+  float: right;
+  margin-top: 5px;
+  margin-right: 10px;
+  line-height: 8px;
+  padding: 5px 8px;
+  border-radius: 12px;
+  background: #969b9d;
+  color: #FFF;
+  font-size: 12px;
+}
+
+.mail-account .mailbox-info.active .bullet, .mail-account .account-info.active .bullet{
+  color: black;
+  background: white;
+}
+
+.account-info{
+  float: left;
+  width: 100%;
+  height: 29px;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.bullet:empty{
+  display: none;
+}
+
+.mail-account span{
+  float: left;
+  margin-bottom: 0px;
+  height: 15px;
 }
 
 .mail-account .options{
@@ -225,15 +308,16 @@ span{
 
 .account-options{
   height: 16px;
-  width: 240px;
-  padding: 0px 5px 5px 5px;
+  width: 208px;
+  padding: 0px 5px 7px 7px;
   bottom: 0;
   position: absolute;
+  background-color: #f7f8fa;
 }
 
 .account-options i{
-	width:16px;
-	height: 16px;
+	width: 14px;
+	height: 14px;
 }
 
 .mail-section0 .expanded-options{
@@ -241,24 +325,20 @@ span{
 }
 
 .add-account{
-	float: left;
-	background:url("@static/add-account.png");
-	background-repeat: no-repeat;
-}
-
-.max{
-	float: right;
-	margin-right: 15px;
-	background:url("@static/max.png");
-	background-repeat: no-repeat;
+  float: left;
+  background: url("@static/add.png");
+  background-repeat: no-repeat;
+  margin-left: 8px;
+  background-size: 14px 14px;
 }
 
 .mail-settings{
 	float: left;
-	background:url("@static/account-settings.png");
+	background:url("@static/settings.png");
 	background-repeat: no-repeat;
 	padding-right: 5px;
   margin-left: 5px;
+  background-size: 14px 14px;
 }
 
 .mail-account .options{
@@ -267,8 +347,6 @@ span{
 }
 
 .mail-account{
-  margin-top: 5px;
-  height: 25px;
   line-height: 25px;
   width: 100%;
 }
@@ -278,13 +356,6 @@ span{
 	padding-top: 3px;
 }
 
-.mail-account .yahoo-logo{
-	width: 18px;
-	height: 18px;
-	float:left;
-	background:url("@static/yahoo.png");
-	background-repeat: no-repeat;
-}
 
 .mail-account.inevio-mail{
 	border-top: 1px solid #e8eeef;
@@ -303,20 +374,6 @@ span{
 	float:right;
 	padding-right: 5px;
 	font-size: 14px;
-}
-
-.subcontent0 .active{
-	background-color: #3ba9e4;
-  border-radius: 3px;
-}
-
-.subcontent0 .semiactive{
-	background-color: #d5ebfa;
-  border-radius: 3px;
-}
-
-.subcontent0 .active span{
-	color:white;
 }
 
 .all-inbox{
@@ -366,6 +423,38 @@ span{
 	width:16px;
 	height: 16px;
 	float: left;
+}
+
+.mailbox-info{
+  height: 29px;
+}
+
+.mailbox-info.active{
+  background-color: #3ba9e4;
+}
+
+.mailbox-info.active span{
+  color: white;
+}
+
+.mailbox-info .icon{
+  background:url("@static/folder.png");
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+.mailbox-info.active .icon{
+  background:url("@static/folder_active.png");
+}
+
+.mailbox-info .inbox .icon{
+  background:url("@static/inbox.png");
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+}
+
+.mailbox-info .inbox.active .icon{
+  background:url("@static/inbox_active.png");
 }
 
 .options{
@@ -462,7 +551,7 @@ span{
 }
 
 
-.inbox{
+.inbox-middle{
   height: ~'calc(100% - 40px)';
 }
 
