@@ -98,6 +98,28 @@ span{
   margin: -7px 5px 0 0;
   padding: 6px 2px 0 6px;
   float: right;
+  background-image: -webkit-linear-gradient(bottom, #fafafa, #fff);
+  background-image: -moz-linear-gradient(bottom, #fafafa, #fff);
+  background-image: -o-linear-gradient(bottom, #fafafa, #fff);
+  background-image: -ms-linear-gradient(bottom, #fafafa, #fff);
+  background-image: linear-gradient(to top, #fafafa, #fff);
+  background-color: #ccd3d5;
+  -webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	background-color: #ccd3d5;
+	border: solid 1px #ccd3d5;
+  font-size: 14px;
+}
+
+.composeButton:hover{
+
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px rgba(0,0,0,.05);
+  border: solid 1px #ccd3d5;
+  
 }
 
 .composeButton i{
@@ -482,7 +504,7 @@ span{
 /* Middle content -------------------------------------------------- */
 
 .subcontent1{
-	border-left: 1px solid #e8eeef;
+	border-left: 1px solid #ccd3d5;
 	border-right: 1px solid #ccd3d5;
 }
 
@@ -517,13 +539,13 @@ span{
 
 .unread{
 	float:left;
-	background:url("@static/mark-as-unread.png");
+	background:url("@static/mark_read.png");
 	background-repeat: no-repeat;
 }
 
 .read{
 	float:left;
-	background:url("@static/mark-as-read.png");
+	background:url("@static/mark_unread.png");
 	background-repeat: no-repeat;
 }
 
@@ -541,7 +563,7 @@ span{
 
 .delete{
 	float:left;
-	background:url("@static/trash2.png");
+	background:url("@static/trash.png");
 	background-repeat: no-repeat;
 }
 
@@ -630,7 +652,7 @@ span{
 
 .mail-subject{
 	padding-top: 5px;
-	font-weight: bold;
+	/*font-weight: bold;*/
 	font-size: 11px;
 }
 
@@ -792,7 +814,7 @@ span{
 }
 
 .full-important{
-	background-image: url("@static/full-important.png");
+	background-image: url("@static/favorite.png");
 	background-repeat: no-repeat;
 }
 
@@ -802,17 +824,17 @@ span{
 }
 
 .reply-all{
-	background-image: url("@static/reply-all.png");
+	background-image: url("@static/reply_all.png");
 	background-repeat: no-repeat;
 }
 
 .reply2{
-	background-image: url("@static/reply2.png");
+	background-image: url("@static/resend.png");
 	background-repeat: no-repeat;
 }
 
 .more{
-	background-image: url("@static/expanded.png");
+	background-image: url("@static/arrow_rotated.png");
 	background-repeat: no-repeat;
 	width: 8px;
   height: 8px;

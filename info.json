@@ -56,10 +56,36 @@
                     "script" : ["script.js"],
                     "start"  : []
 
-                }
+                },
 
+                "new": {
+
+                    "template" : "new.html",
+
+                    "maxizable" : true,
+                    "resizable" : true,
+
+                    "width"  : {
+
+                        "default" : 560,
+                        "min"     : 560,
+                        "max"     : 0
+
+                    },
+
+                    "height" : {
+
+                        "default" : 510,
+                        "min"     : 510,
+                        "max"     : 0
+
+                    },
+
+                    "css"    : ["new.css"],
+                    "script" : ["new.js"]
+
+              }
             }
-
         }
 
     },

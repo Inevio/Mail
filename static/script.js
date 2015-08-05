@@ -38,6 +38,10 @@ $('.mailbox-info').on('click',function(e){
 
 });
 
+$('.composeButton').on('click', function(){
+	wz.app.createView(null, 'new');
+})
+
 win.on('click','.mailbox', function(e){
 
 	e.stopPropagation();
