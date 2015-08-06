@@ -13,7 +13,7 @@
     width: 5px;
 }
 
-.wz-view-menu-group{
+.header-compose-group{
     background: none !important;
     border-left: 1px solid rgba(0,0,0,.2);
     box-shadow: -1px 0 rgba(255,255,255,.1);
@@ -23,19 +23,27 @@
     border: 1px solid #EEE;
 }
 
-.wz-view-menu{
+.header-compose{
 
     width: 560px;
     height: 39px;
     padding: 0px;
-    border-radius: 3px 3px 0 0;
-    background: #54728c;
-    box-shadow: inset 0 1px rgba(0,0,0,.15);
-    border-bottom: 1px solid #466176;
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+  	border-radius: 6px 6px 0 0;
+  	background-color: #f1f1f1;
+    -webkit-box-shadow: 0 1px #ccd3d5;
+    -moz-box-shadow: 0 1px #ccd3d5;
+  	box-shadow: 0 1px #ccd3d5;
+  	background-image: -webkit-linear-gradient(bottom, #e9ecef, #f9fafb);
+    background-image: -moz-linear-gradient(bottom, #e9ecef, #f9fafb);
+    background-image: -o-linear-gradient(bottom, #e9ecef, #f9fafb);
+    background-image: -ms-linear-gradient(bottom, #e9ecef, #f9fafb);
+    background-image: linear-gradient(to top, #e9ecef, #f9fafb);
 
 }
 
-.wz-view-menu span{
+.header-compose span{
 
     width: 130px;
     float: left;
@@ -351,8 +359,6 @@ span.content-attachments-delete:hover{
 }
 
 .tool-button i, .tool-list-button i{
-    background: url('@static/sprite2.png') 0 0;
-    background-size: 298px 18px;
     display: inline-block;
 }
 
@@ -360,14 +366,14 @@ span.content-attachments-delete:hover{
     margin: 7px;
     width: 10px;
     height: 10px;
-    background-position: 0 0;
+    background-image: url('@static/bold.png');
 }
 
 .tool-button-italic i{
     margin: 7px 8px 7px 9px;
     width: 7px;
     height: 10px;
-    background-position: -21px 0;
+    background-image: url('@static/italic.png');
 }
 
 .tool-button-color .color{
@@ -379,37 +385,37 @@ span.content-attachments-delete:hover{
 
 .tool-button-underline i{
     margin: 6px 6px 6px 7px;
-    width: 11px;
+    width: 10px;
     height: 12px;
-    background-position: -10px 0;
+    background-image: url('@static/underlined.png');
 }
 
 .tool-button-left i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-position: -28px 0;
+    background-image: url('@static/align_left.png');
 }
 
 .tool-button-center i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-position: -42px 0;
+    background-image: url('@static/align_center.png');
 }
 
 .tool-button-right i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-position: -56px 0;
+    background-image: url('@static/align_right.png');
 }
 
 .tool-button-justify i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-position: -70px 0;
+    background-image: url('@static/align_all.png');
 }
 
 .tool-button-line-spacing i{
@@ -423,14 +429,14 @@ span.content-attachments-delete:hover{
     margin: 4px 5px 5px 6px;
     width: 13px;
     height: 15px;
-    background-position: -100px 0;
+    background-image: url('@static/dots.png');
 }
 
 .tool-button-list-sorted i{
     margin: 3px 5px 4px;
     width: 14px;
     height: 17px;
-    background-position: -113px 0;
+    background-image: url('@static/numbers.png');
 }
 
 .tool-button-indent-dec i{

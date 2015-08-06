@@ -596,8 +596,8 @@ var translateUi = function(){
 
 
 // Start
-/*translateUi();
-loadAccountList();
+translateUi();
+/*loadAccountList();
 loadParams();*/
 changeValue('fontfamily',fontfamilyActive);
 changeValue('fontsize',fontSizeActive);

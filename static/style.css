@@ -42,14 +42,17 @@ span{
 	width: 220px;
 }
 .subheader1{
-	width: 295px;
+	width: 293px;
+  border-left: 1px solid #ccd3d5;
+  border-right: 1px solid #ccd3d5;
+  background: white;
 }
 .subheader2{
   width: 441px;
 }
 
 .expanded{
-	background: url("@static/expanded.png");
+	background: url("@static/arrow_rotated.png");
 	background-repeat: no-repeat;
 	width: 7px !important;
 	height: 4px !important;
@@ -65,14 +68,20 @@ span{
 .window-header{
 	/*width: 100%;*/
 	height: 39px;
-  border-radius: 5px 5px 0 0;
   background-color: #f6f6f5;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px rgba(255, 255, 255, 0.1);
-	background-image: -webkit-linear-gradient(bottom, #d6d6d6, #ffffff);
-  background-image: -moz-linear-gradient(bottom, #d6d6d6, #ffffff);
-  background-image: -o-linear-gradient(bottom, #d6d6d6, #ffffff);
-  background-image: linear-gradient(to top, #d6d6d6, #ffffff);
-  border-bottom: 1px solid #b9b9b9;
+  -webkit-border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	border-radius: 6px 6px 0 0;
+	background-color: #fff;
+	-webkit-box-shadow: 0 1px #ccd3d5;
+	-moz-box-shadow: 0 1px #ccd3d5;
+	box-shadow: 0 1px #ccd3d5;
+	background-image: -webkit-linear-gradient(bottom, #e9ecef, #f9fafb);
+	background-image: -moz-linear-gradient(bottom, #e9ecef, #f9fafb);
+	background-image: -o-linear-gradient(bottom, #e9ecef, #f9fafb);
+	background-image: -ms-linear-gradient(bottom, #e9ecef, #f9fafb);
+	background-image: linear-gradient(to top, #e9ecef, #f9fafb);
+  border-bottom: 1px solid #ccd3d5;
 }
 
 .subheader0, .subheader1, .subheader2{
@@ -119,7 +128,7 @@ span{
   -moz-box-shadow: 0 1px rgba(0,0,0,.05);
   box-shadow: 0 1px rgba(0,0,0,.05);
   border: solid 1px #ccd3d5;
-  
+
 }
 
 .composeButton i{
@@ -136,28 +145,28 @@ span{
 	font-size: 13px;
 }
 
-.searchField{
-	width: 250px;
-  height: 22px;
-  margin: -7px 0 0 0;
-  padding: 6px 2px 0 6px;
+.header-search{
   float: left;
+  width: 16px;
+  padding-left: 15px;
+  padding-right: 10px;
+  height: 16px;
+  border-right: 1px solid #ccd3d5;
+  margin-right: 10px;
 }
 
-.searchField i{
-	background: url("@static/search.png");
-	width:16px;
-	height: 16px;
-	float: left;
-	background-repeat: no-repeat;
-	padding-left: 3px;
+.header-search i{
+  background-image: url('@static/search.png');
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+  display: inline-block;
 }
 
-.searchField span{
-	padding: 4px;
-	color: #a5abad;
+.header-input{
+  width: ~'calc(100% - 62px)';
+  color: #818181
 }
-
 
 .closeButtons{
 	width:82px;
@@ -982,7 +991,7 @@ span{
 .full-mail-delivery i{
 	width:8px;
 	height: 8px;
-	background-image: url("@static/expanded.png");
+	background-image: url("@static/arrow_rotated.png");
   background-repeat: no-repeat;
 	display: inline-block;
 	margin-bottom: -2px;
