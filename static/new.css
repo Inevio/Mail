@@ -13,6 +13,59 @@
     width: 5px;
 }
 
+.minimize-button{
+  width: 10px;
+  height: 9px;
+  padding: 6px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.minimize-button i{
+  background: url('@static/minimize.png');
+  background-size: 10px 1px;
+  display: inline-block;
+  width: 10px;
+  height: 1px;
+}
+
+.maximize-button{
+  width: 10px;
+  height: 10px;
+  padding: 6px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  margin-left: 6px;
+}
+
+.maximize-button i{
+  background: url('@static/fullscreen.png');
+  background-size: 10px 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.close-button{
+  width: 10px;
+  height: 10px;
+  padding: 6px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  margin-left: 6px;
+}
+
+.close-button i{
+  background: url('@static/close.png');
+  background-size: 10px 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
 .header-compose-group{
     background: none !important;
     border-left: 1px solid rgba(0,0,0,.2);
@@ -41,6 +94,11 @@
     background-image: -ms-linear-gradient(bottom, #e9ecef, #f9fafb);
     background-image: linear-gradient(to top, #e9ecef, #f9fafb);
 
+}
+
+.header-compose .wz-view-menu-group{
+  padding: 5px 20px 6px;
+  height: 28px;
 }
 
 .header-compose span{

@@ -60,6 +60,60 @@ span{
 	margin: 5px 0px 0px 5px;
 }
 
+.minimize-button{
+  width: 10px;
+  height: 9px;
+  padding: 6px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.minimize-button i{
+  background: url('@static/minimize.png');
+  background-size: 10px 1px;
+  display: inline-block;
+  width: 10px;
+  height: 1px;
+}
+
+.maximize-button{
+  width: 10px;
+  height: 10px;
+  padding: 6px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  margin-left: 6px;
+}
+
+.maximize-button i{
+  background: url('@static/fullscreen.png');
+  background-size: 10px 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.close-button{
+  width: 10px;
+  height: 10px;
+  padding: 6px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  margin-left: 6px;
+}
+
+.close-button i{
+  background: url('@static/close.png');
+  background-size: 10px 10px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+
 /* End of main window --------------------------------------------------*/
 
 
@@ -169,10 +223,10 @@ span{
 }
 
 .closeButtons{
-	width:82px;
-	height: 16px;
-	float:right;
-	padding: 10px 10px 6px 0px;
+  width: 94px;
+  height: 16px;
+  float: right;
+  margin: 6px 3px 6px 0px;
 }
 
 /*.closeButtons i{
@@ -922,7 +976,7 @@ span{
 	display: inline-block;
 }
 .attachment4 i{
-	background-image: url("@static/grids.png");
+	/*background-image: url("@static/grids.png");*/
   background-repeat: no-repeat;
 	display: inline-block;
 }
