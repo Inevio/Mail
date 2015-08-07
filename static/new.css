@@ -408,7 +408,7 @@ span.content-attachments-delete:hover{
 
 .tool-button.active{
     background-color: #fff;
-    border-color: #dcdcdc;
+    border-color: #7ebe30;
 }
 
 .tool-button:hover .active{

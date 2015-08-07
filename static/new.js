@@ -468,42 +468,49 @@ var translateUi = function(){
     boldButton.on( 'click' , function(){
 
       winDocument.execCommand('bold', false, null);
+      boldButton.toggleClass('active');
 
     });
 
     italicButton.on( 'click' , function(){
 
       winDocument.execCommand('italic', false, "");
+      italicButton.toggleClass('active');
 
     });
 
     underlineButton.on( 'click' , function(){
 
       winDocument.execCommand('underline', false, null);
+      underlineButton.toggleClass('active');
 
     });
 
     leftButton.on( 'click' , function(){
 
       winDocument.execCommand('justifyleft', false, null);
+      leftButton.toggleClass('active');
 
     });
 
     centerButton.on( 'click' , function(){
 
       winDocument.execCommand('justifycenter', false, null);
+      centerButton.toggleClass('active');
 
     });
 
     rightButton.on( 'click' , function(){
 
       winDocument.execCommand('justifyright', false, null);
+      rightButton.toggleClass('active');
 
     });
 
     justifyButton.on( 'click' , function(){
 
       winDocument.execCommand('justifyfull', false, null);
+      justifyButton.toggleClass('active');
 
     });
 
