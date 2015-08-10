@@ -607,6 +607,7 @@ span{
 }
 
 .read{
+  margin-top: 3px;
 	float:left;
 	background:url("@static/mark_unread.png");
 	background-repeat: no-repeat;
@@ -912,7 +913,7 @@ span{
 	border-bottom: 1px solid #ccd3d5;
 }
 
-.full-mail-text i{
+/*.full-mail-text i{
 	width: 406px;
   height: 291px;
   background-image: url("@static/sunset.png");
@@ -920,15 +921,16 @@ span{
   display: inline-block;
   border-radius: 5px;
   margin-top: 10px;
-}
+}*/
 
 .full-mail-attachments{
 	margin-top: 10px;
+  margin-bottom: 10px;
   padding: 10px 10px 10px 15px;
 	background-color: #f6f8f8;
-	height: 165px;
 	border-radius: 5px;
 	border:1px solid #ccd3d5;
+  display: inline-block;
 }
 
 .attch{
@@ -996,7 +998,7 @@ span{
 	margin-top: 5px;
 	float: left;
   width: 125px;
-  height: 135px;
+  /*height: 135px;*/
 	background-color: #3ba9e4;
 	padding: 3px;
 	border-radius: 5px;
