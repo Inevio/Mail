@@ -191,7 +191,7 @@
 
         if( mailExpresion.test( email ) && pass && name ){
 
-            wz.mail.getAutoconfig(
+            /*wz.mail.getAutoconfig(
 
                 {
                     address  : email,
@@ -206,7 +206,9 @@
 
                 }
 
-            );
+            );*/
+
+            moreData(null);
 
         }else if( !mailExpresion.test( email ) ){
             alert( lang.mailError );
@@ -256,7 +258,7 @@
             wz.mail.addAccount(
 
                 {
-                    
+
                     address     : email,
                     description : description,
                     inHost      : inHost,
@@ -342,5 +344,5 @@
         }else{
             moreData();
         }
-        
+
     }

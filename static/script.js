@@ -120,10 +120,11 @@ var _accountItemBoxes = function( account, item ){
     var countersPromise = $.Deferred();
     var counters        = null;
 
-    console.log( account );
+    //console.log( account );
 
     account.getBoxes( function( error, boxes ){
 
+        console.log(boxes);
         if( error ){
             return alert( error );
         }
@@ -132,7 +133,7 @@ var _accountItemBoxes = function( account, item ){
         var children     = [];
 
         for( var i = 0; i < boxes.length; i++ ){
-          console.log(boxes[i]);
+          //console.log(boxes[i]);
             children.push( _boxItem( boxes[ i ], boxPrototype ) );
         }
 
@@ -157,7 +158,7 @@ var _accountItemBoxes = function( account, item ){
 
     });
 
-    wz.mail.getCounters( account.id, function( error, object ){
+    /*wz.mail.getCounters( account.id, function( error, object ){
 
         if( error ){
             return alert( error );
@@ -167,7 +168,7 @@ var _accountItemBoxes = function( account, item ){
 
         countersPromise.resolve();
 
-    });
+    });*/
 
     $.when( boxesPromise, countersPromise ).done( function(){
 
@@ -411,6 +412,8 @@ var getAccounts = function(){
             return alert( error );
         }
 
+        console.log(accounts);
+
         if( !accounts.length ){
             return wz.app.createView( null, 'hosting' );
         }
@@ -491,8 +494,8 @@ var toDate = function( date ){
 
 // Muestra la lista de correos
 var showMailsList = function( id, boxId, request){
-
-    wz.mail( id, function( error, account ){
+    console.log('Id: ' + id);
+    wz.mail.getAccount( id, function( error, account ){
 
         if( error ){
             return alert( error );
@@ -500,40 +503,52 @@ var showMailsList = function( id, boxId, request){
 
         _accountOpened = id;
 
-        account.getMessagesFromBox( boxId, PAGINATION_LIMIT, request, function( error, object ){
+        console.log(boxId);
 
-            if( error ){
-                return alert( error );
-            }
+        account.getBox(account.id, boxId, function(error, box){
 
-            var list = object.list;
+          if(error){
+            return error;
+          }
 
-            _boxOpened   = boxId;
-            _nextRequest = object.next;
-            _prevRequest = object.prev;
+          box.getMessages(account.id, boxId, 0, PAGINATION_LIMIT, function( error, object ){
 
-            $( '.middle-column-pages-actual', messagesZone ).text( ( ( _pageOpened * PAGINATION_LIMIT ) + 1 ) + ' - ' + ( ( _pageOpened + 1 ) * PAGINATION_LIMIT ) );
+            console.log(object);
 
-            // Limpiamos la columna
-            getMessagesInList().remove();
+              if( error ){
+                  return alert( error );
+              }
 
-            var messageList = [];
+              var list = object.list;
 
-            for( var i = 0, j = list.length; i < j ; i++ ){
-                messageList.push( _messageItem( list[ i ] ) );
-            }
+              _boxOpened   = boxId;
+              _nextRequest = object.next;
+              _prevRequest = object.prev;
 
-            messagesColumn
-                .append( messageList )
-                .scrollTop( 0 );
+              $( '.middle-column-pages-actual', messagesZone ).text( ( ( _pageOpened * PAGINATION_LIMIT ) + 1 ) + ' - ' + ( ( _pageOpened + 1 ) * PAGINATION_LIMIT ) );
 
-            messagesZone.addClass( 'box-shown' );
-            /*win.trigger( 'messages-shown' );*/
+              // Limpiamos la columna
+              getMessagesInList().remove();
 
-            mailsUnread( id, boxId);
+              var messageList = [];
 
-            // Nullify
-            messageList = list = account = null;
+              for( var i = 0, j = list.length; i < j ; i++ ){
+                  messageList.push( _messageItem( list[ i ] ) );
+              }
+
+              messagesColumn
+                  .append( messageList )
+                  .scrollTop( 0 );
+
+              messagesZone.addClass( 'box-shown' );
+              /*win.trigger( 'messages-shown' );*/
+
+              mailsUnread( id, boxId);
+
+              // Nullify
+              messageList = list = account = null;
+
+          });
 
         });
 
@@ -854,14 +869,16 @@ var insertBox = function( boxObj, accountObj ){
 
     var mailsUnread = function( accountId, path ){
 
-        wz.mail.getCounters( accountId, path, function( error, object ){
+        /*wz.mail.getCounters( accountId, path, function( error, object ){
 
             if( error ){
                 return;
             }
             updateMailboxCounter( accountId, path , object.unseen || '' )
 
-        });
+        });*/
+
+
 
     };
 
@@ -1009,7 +1026,7 @@ win
 
     //e.stopPropagation();
 
-    console.log($( this ).data());
+    //console.log($( this ).data());
 
     if( e.ctrlKey || e.metaKey ){
 
@@ -1451,7 +1468,7 @@ win
             if( result ){
                 messagesSelected.each( function(){
                     $( this ).data('message').remove( function( error ){
-                        console.log( arguments );
+                        //console.log( arguments );
 
                         if( error ){
                             return alert( error );
@@ -1633,7 +1650,7 @@ win
 
 .on( 'click', '.content-origin-display', function( e ){
 
-    console.log('content-origin-display');
+    //console.log('content-origin-display');
 
     e.stopPropagation();
 
@@ -1922,7 +1939,7 @@ win
 
   if( item.data().delimiter ){
 
-    console.log('im a folder');
+    //console.log('im a folder');
 
     /*if ( item.data().name ===  'Trash' ){
       item.data().delete( function( error ){
@@ -2090,7 +2107,7 @@ win
 attachments.on( 'click', '.content-attachments-import', function(){
 
     $( this ).parent().data('actions').import( function(){
-        console.log( arguments );
+        //console.log( arguments );
     });
 
     wz.banner()
@@ -2138,17 +2155,17 @@ wz.mail
     */
 
 .on( 'mail-messageIn', function( accountId, path, uid, time, flags ){
-  console.log('mail-messageIn');
+  //console.log('mail-messageIn');
 })
 
 .on( 'mail-messageOut', function( accountId, path, uid ){
-  console.log('mail-messageOut');
+  //console.log('mail-messageOut');
 })
 
 .on( 'flagChanged' , function( accountId, path, uid, flags ){
 
-  console.log('Cambio de flags: ');
-  console.log(arguments);
+  //console.log('Cambio de flags: ');
+  //console.log(arguments);
 
   var title = "";
 
@@ -2241,8 +2258,8 @@ wz.mail
 
 .on( 'messageIn', function( accountId, path, uid, time, flags, lmtp ){
 
-    console.log('MessageIn: ');
-    console.log(arguments);
+    //console.log('MessageIn: ');
+    //console.log(arguments);
 
     if( lmtp === true ){
 
@@ -2341,8 +2358,8 @@ wz.mail
 
 .on( 'messageOut', function( accountId, path, uid ){
 
-  console.log('MessageOut: ');
-  console.log(arguments);
+  //console.log('MessageOut: ');
+  //console.log(arguments);
   messagesColumn.find( '.account-' + accountId + '-box-' + _formatId( path ) + '-message-' + uid ).remove();
   mailsUnread(accountId, path);
 
