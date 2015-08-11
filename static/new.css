@@ -78,16 +78,14 @@
 
 .header-compose{
 
-    width: 560px;
+    width: 100%;
     height: 39px;
     padding: 0px;
     -webkit-border-radius: 6px 6px 0 0;
     -moz-border-radius: 6px 6px 0 0;
   	border-radius: 6px 6px 0 0;
   	background-color: #f1f1f1;
-    -webkit-box-shadow: 0 1px #ccd3d5;
-    -moz-box-shadow: 0 1px #ccd3d5;
-  	box-shadow: 0 1px #ccd3d5;
+    border-bottom: 1px solid #ccd3d5;
   	background-image: -webkit-linear-gradient(bottom, #e9ecef, #f9fafb);
     background-image: -moz-linear-gradient(bottom, #e9ecef, #f9fafb);
     background-image: -o-linear-gradient(bottom, #e9ecef, #f9fafb);
@@ -97,8 +95,9 @@
 }
 
 .header-compose .wz-view-menu-group{
-  padding: 5px 20px 6px;
+  padding: 5px 14px 6px;
   height: 28px;
+  border-left: none;
 }
 
 .header-compose span{
@@ -120,7 +119,7 @@
 
 input{
     height: 23px;
-    width: 429px;
+    width: 478px;
 }
 
 select{
@@ -231,15 +230,13 @@ select{
     float: left;
     width: 100%;
     height: 137px;
-    /*padding-bottom: 5px;*/
     border-bottom: 1px solid #dadada;
+    background-color: #f7f8fa;
 }
 
 .content-info article{
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
-    width: 560px;
-    padding: 0 20px;
+    width: 660px;
+    padding: 0 10px;
 }
 
 .content-attachments{
@@ -398,6 +395,7 @@ span.content-attachments-delete:hover{
 .tool-button, .tool-list-button{
     height: 24px;
     border-radius: 3px;
+    margin-right: 2px;
     border: 1px solid transparent;
 }
 

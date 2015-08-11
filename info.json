@@ -67,8 +67,8 @@
 
                     "width"  : {
 
-                        "default" : 560,
-                        "min"     : 560,
+                        "default" : 690,
+                        "min"     : 690,
                         "max"     : 0
 
                     },
