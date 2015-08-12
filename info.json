@@ -92,19 +92,33 @@
 
     "permission" : {
 
-        "user" : {
+      "mail" : {
 
+          "account" : {
+
+              "modify" : true,
+              "read"   : true
+
+          },
+
+          "message" : {
+
+              "modify" : true,
+              "read"   : true
+
+          },
+
+          "send" : true
+
+      },
+
+      "fs" : {
+
+            "create" : true,
             "modify" : true,
             "read"   : true
 
-        },
-
-        "group" : {
-
-            "modify" : true,
-            "read"   : true
-
-        }
+      }
 
     }
 

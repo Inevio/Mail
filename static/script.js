@@ -9,6 +9,68 @@ var spam        					= $('.general-options .spam');
 var trash        					= $('.general-options .trash');
 var opcionesGlobales			= $('.general-options .options');
 //var mailBox 							= $('.mail-account .options');
+var accountPrototype			= $('.mail-account.wz-prototype');
+var accountList						= $('.subcontent0 .accounts');
+
+
+var initCalendar = function(){
+
+	wz.mail.getAccounts( function(error, list){
+
+		if( error ){
+			return alert(error);
+		}
+
+		if( !list.length ){
+			return alert('añada una cuenta');
+		}
+
+		console.log(list);
+
+		for( var i=0 ; i < list.length ; i++ ){
+
+			var accountItem = accountPrototype.clone().removeClass('wz-prototype');
+
+			accountItem.addClass( 'account-' + list[i].id )
+			.data(
+				list[i]
+			)
+			.children('.account-info')
+			.children('span').text( list[i].address );
+
+			/*console.log(accountItem);
+			accountList.append(accountItem);*/
+			var boxPrototype; = accountItem.children('.mailbox.wz-prototype');
+			var childrenList; = accountItem.children('.children');
+
+			//console.log('testing');
+
+			list[i].getBoxes( function( error, boxes ){
+
+				console.log(boxes);
+				console.log('testing callback');
+
+				for ( var j=0; j<boxes.length; j++ ){
+
+					var boxItem = boxPrototype.clone().removeClass('wz-prototype');
+					boxItem.children('.mailbox-info')
+					.children('span').text();
+
+				}
+
+			});
+
+			console.log('ending log');
+
+		}
+
+
+
+	});
+
+}
+
+
 
 
 singleMail.on('click', function(){
@@ -85,3 +147,5 @@ win.on('click','.mailbox', function(e){
 	}
 
 });
+
+initCalendar();
