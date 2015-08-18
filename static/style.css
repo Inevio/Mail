@@ -7,7 +7,7 @@ span{
 }
 
 .line{
-	width: 284px;
+	width: ~"calc(100% - 10px)";
 	height: 0px;
 	border-top:1px solid #e8eeef;
 	margin: 0px 5px 0px 5px;
@@ -229,32 +229,6 @@ span{
   margin: 6px 3px 6px 0px;
 }
 
-/*.closeButtons i{
-	width:16px;
-	height: 16px;
-	float:left;
-	margin-left: 6px;
-}
-
-.closeButtons i:nth-child(1){
-	background: url("@static/minimize.png");
-	background-repeat: no-repeat;
-}
-
-.closeButtons i:nth-child(2){
-	background: url("@static/enlarge.png");
-	background-repeat: no-repeat;
-}
-
-.closeButtons i:nth-child(3){
-	background: url("@static/close.png");
-	background-repeat: no-repeat;
-	background-color: white;
-  border: 1px solid #c2cacd;
-  border-radius: 3px;
-	margin-left: 5px !important;
-}*/
-
 .button{
 	border: 1px solid #c2cacd;
 	border-radius: 3px;
@@ -290,6 +264,14 @@ span{
   background: url('@static/arrow.png') no-repeat center center;
   background-size: 4px 7px;
   padding: 2px 3px;
+}
+
+.arrow-closed .mailbox-info.active .arrow{
+  background: url('@static/arrow_active.png') no-repeat center center;
+}
+
+.arrow-opened .active .arrow{
+  background: url('@static/arrow_rotated_active.png') no-repeat center center;
 }
 
 .mail-account .hide-arrow .arrow{
@@ -579,6 +561,7 @@ span{
 	padding: 10px 0px 0px 5px;
 	height: 20px;
 	padding-bottom: 10px;
+  border-bottom: 1px solid #ccd3d5;
 }
 
 .mail-options span{
@@ -600,32 +583,32 @@ span{
 	margin-top: -2px;
 }
 
-.unread{
+.mail-options .unread{
 	float:left;
 	background:url("@static/mark_read.png");
 	background-repeat: no-repeat;
 }
 
-.read{
+.mail-options .read{
   margin-top: 3px;
 	float:left;
 	background:url("@static/mark_unread.png");
 	background-repeat: no-repeat;
 }
 
-.spam-button{
+.mail-options .spam-button{
 	float:left;
 	background:url("@static/spam.png");
 	background-repeat: no-repeat;
 }
 
-.fav{
+.mail-options .fav{
 	float:left;
 	background:url("@static/starred.png");
 	background-repeat: no-repeat;
 }
 
-.delete{
+.mail-options .delete{
 	float:left;
 	background:url("@static/trash.png");
 	background-repeat: no-repeat;
@@ -657,9 +640,6 @@ span{
 .emails{
 	width: 100%;
   height: 100%;
-	/*to-do*/
-  float: left;
-	/*overflow-y: auto;*/
 }
 
 .day{
@@ -750,22 +730,28 @@ span{
 .important{
 	width:12px;
 	height: 12px;
-	background-image: url("@static/important.png");
+	background-image: url("@static/favorite.png");
 	background-repeat: no-repeat;
 	margin-top: 7px;
+  background-size: 12px 12px;
 }
 
-.single-mail.active .blue-dot{
+.single-mail.unread span, .single-mail.unread div{
+  font-weight: bold;
+}
+
+
+.single-mail .blue-dot{
 	background-image: none;
+  width:	8px;
+  height: 8px;
+  background-repeat: no-repeat;
+  margin: 12px 0px 0px 2px;
 }
 
-.semiactive .blue-dot{
-	width:	8px;
-	height: 8px;
+.single-mail.unread .blue-dot{
 	background-image: url("@static/blue-dot.png");
-	background-repeat: no-repeat;
-	margin: 12px 0px 0px 2px;
-
+  background-size: 8px 8px;
 }
 
 .emails .single-mail.active{
@@ -781,8 +767,12 @@ span{
 	color:white !important;
 }
 
+.emails .single-mail.flagged .important{
+  background-image: url("@static/favorite_flagged.png");
+}
+
 .emails .active .important{
-	background-image: url("@static/important-active.png");
+	background-image: url("@static/favorite_active.png");
 }
 
 .emails .semiactive{

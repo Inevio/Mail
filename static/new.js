@@ -604,8 +604,8 @@ var translateUi = function(){
 
 // Start
 translateUi();
-/*loadAccountList();
-loadParams();*/
+loadAccountList();
+loadParams();
 changeValue('fontfamily',fontfamilyActive);
 changeValue('fontsize',fontSizeActive);
 winDocument.execCommand("styleWithCss",false,true);
