@@ -53,6 +53,8 @@ var addBoxChildrens = function (boxApi, boxFather){
 
 };
 
+
+
 var initCalendar = function(){
 
 	wz.mail.getAccounts( function(error, list){
@@ -64,6 +66,8 @@ var initCalendar = function(){
 		if( !list.length ){
 			return alert('añada una cuenta');
 		}
+
+		console.log('Cuentas asignadas: ', list);
 
 		list.forEach( function( item ){
 
@@ -87,7 +91,9 @@ var initCalendar = function(){
 				}
 
 				var boxList = [];
-				console.log(boxes);
+				console.log('Boxes de la cuenta ' + item.address, boxes);
+
+				var accUnread = 0;
 
 				for ( var i=0; i<boxes.length; i++ ){
 
@@ -95,6 +101,10 @@ var initCalendar = function(){
 					boxItem.addClass('box-' + boxes[i].name);
 					boxItem.children('.mailbox-info').children('span').text(boxes[i].path);
 					boxItem.data(boxes[i]);
+					if( boxes[i].unread > 0 ){
+						boxItem.children('.mailbox-info').children('.bullet').text( boxes[i].unread );
+						accUnread += boxes[i].unread;
+					}
 					//childrenList.append(boxItem);
 					if( boxes[i].children.length > 0 ){
 						var childrens = addBoxChildrens(boxes[i], boxItem);
@@ -117,6 +127,9 @@ var initCalendar = function(){
 				});
 
 				childrenList.append(sortedList);
+				if( accUnread > 0 ){
+					accountItem.children('.account-info').children('.bullet').text( accUnread );	
+				}
 
 			});
 
@@ -132,9 +145,6 @@ $('.composeButton').on('click', function(){
 })
 
 win.on('click','.mailbox', function(e){
-
-
-	console.log('capturo click');
 
 	$('.mailbox-info.active').removeClass('active');
 	$(this).children('.mailbox-info').addClass('active');
@@ -152,7 +162,6 @@ win.on('click','.mailbox', function(e){
 
 		console.log(messages);
 
-
 		for (var i=0; i<messages.length; i++){
 
 			var message = mailPrototype.clone().removeClass('wz-prototype');
@@ -160,9 +169,23 @@ win.on('click','.mailbox', function(e){
 			message.find('.mail-from').text(messages[i].from.name);
 			message.find('.mail-subject').text(messages[i].title);
 			message.find('.mail-date').text(messages[i].date);
+			message.addClass('message-' + messages[i].id);
+
+			if( messages[i].flags.indexOf('\\Seen') === -1 ){
+				message.addClass('unread');
+			}
+
+			if( messages[i].flags.indexOf('\\Flagged') !== -1 ){
+				message.addClass('flagged');
+				message.find('.important').addClass('active');
+			}
+
 			var line = linePrototype.clone().removeClass('wz-prototype');
 			mailList.append(message);
 			mailList.append(line);
+
+
+
 		}
 
 	});
@@ -213,8 +236,6 @@ win.on('click','.mailbox', function(e){
 
 .on('click', '.single-mail', function(e){
 
-	console.log($(this));
-
 	if( e.ctrlKey || e.metaKey ){
 
 			if( $( this ).hasClass( 'active' ) ){
@@ -229,6 +250,29 @@ win.on('click','.mailbox', function(e){
 
 			var messageApi = $(this).data();
 			var mailboxApi = $('.mailbox-info.active').parent().data();
+
+			console.log(messageApi.flags.indexOf('\\Seen'));
+			if(	messageApi.flags.indexOf('\\Seen') === -1 && $(this).hasClass('unread') ){
+
+				var options = {
+    			add_flags: ['\\Seen']
+				};
+
+				messageApi.modifyMessage( options, function(error, message){
+
+					if(error){
+						return alert(error);
+					}
+
+					alert('revisar THIS');
+					console.log(arguments);
+					//$(this).data(message);
+					console.log($(this));
+					$(this).removeClass('unread');
+
+				});
+
+			}
 
 			mailboxApi.getMessage( messageApi.id , function(error, message){
 
@@ -261,15 +305,16 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on( 'click', '.subcontent1 .unread', function(){
+.on( 'click', '.mail-options .unread', function(){
 
-	/*var selected = $('.subcontent1 .active');
+	var selected = $('.subcontent1 .active');
 
 	console.log(selected);
 
-	if( selected.length && selected.length > 1 ){
+	var selectedList = [];
 
-		var selectedList = [];
+	if( selected.length){
+
 		for( var i = 0; i < selected.length; i++){
 			selectedList.push(selected[i]);
 		}
@@ -280,29 +325,42 @@ win.on('click','.mailbox', function(e){
 
 		console.log(item);
 		var apiMessage = $(item).data();
-		apiMessage.removeMessage( function(error){
 
-			if(error){
-				return alert(error);
+		console.log(apiMessage.flags.indexOf('\\Seen'));
+		console.log($(item).hasClass('unread'));
+
+		if( apiMessage.flags.indexOf('\\Seen') !== -1 && !($(item).hasClass('unread')) ){
+
+			var options = {
+				remove_flags : ['\\Seen']
 			}
 
-			item.remove();
+			apiMessage.modifyMessage(options, function(error, message){
 
-		});
+				console.log(arguments);
+				if(error){
+					return alert(error);
+				}
 
-	});*/
+				$(item).data(message);
+				$(item).addClass('unread');
+
+			});
+		}
+	});
 
 })
 
-.on( 'click', '.subcontent1 .read', function(){
+.on( 'click', '.mail-options .read', function(){
 
-	/*var selected = $('.subcontent1 .active');
+	var selected = $('.subcontent1 .active');
 
 	console.log(selected);
 
-	if( selected.length && selected.length > 1 ){
+	var selectedList = [];
 
-		var selectedList = [];
+	if( selected.length){
+
 		for( var i = 0; i < selected.length; i++){
 			selectedList.push(selected[i]);
 		}
@@ -313,21 +371,29 @@ win.on('click','.mailbox', function(e){
 
 		console.log(item);
 		var apiMessage = $(item).data();
-		apiMessage.removeMessage( function(error){
 
-			if(error){
-				return alert(error);
+		if( apiMessage.flags.indexOf('\\Seen') === -1 && $(item).hasClass('unread') ){
+
+			var options = {
+				add_flags : ['\\Seen']
 			}
 
-			item.remove();
+			apiMessage.modifyMessage(options, function(error, message){
 
-		});
+				if(error){
+					return alert(error);
+				}
 
-	});*/
+				$(item).data(message);
+				$(item).removeClass('unread');
+
+			});
+		}
+	});
 
 })
 
-.on( 'click', '.subcontent1 .delete', function(){
+.on( 'click', '.mail-options .delete', function(){
 
 	var selected = $('.subcontent1 .active');
 
@@ -358,7 +424,107 @@ win.on('click','.mailbox', function(e){
 
 	});
 
-});
+})
 
+.on('click', '.single-mail .important, .full-mail .full-important', function(e){
+
+	console.log($(this));
+
+	if( $(this).hasClass('active') ){
+
+
+
+	}else{
+
+
+
+	}
+
+})
+
+.on('wz-dragstart' , '.single-mail', function( e,drag ){
+
+	console.log('empiezo a dragear por la vida');
+  //var ghost = messagePrototype.clone().removeClass( 'wz-prototype' );
+  var ghost = $(this).cloneWithStyle().css( {
+
+                        margin : 0,
+                        top    : 'auto',
+                        left   : 'auto',
+                        bottom : 'auto',
+                        right  : 'auto'
+
+  } );
+
+  drag.ghost(ghost);
+
+})
+
+.on( 'wz-dropenter', '.mailbox-info', function( e,file ){
+
+  $(this).addClass('active');
+
+})
+
+.on( 'wz-dropleave', '.mailbox-info', function( e,file ){
+
+  $(this).removeClass('active');
+
+})
+
+.on( 'wz-drop', '.wz-drop-area', function( e,item ){
+
+  //console.log( item.data() );
+
+  if( item.data().delimiter ){
+
+    console.log('im a folder');
+
+    /*if ( item.data().name ===  'Trash' ){
+      item.data().delete( function( error ){
+        console.log(error);
+        return;
+      });
+      item.data().rename( 'Trash' , function(){
+
+      });
+    }*/
+
+    /*console.log('Yo soy ' + item.data().path + ' y voy a ' + $(this).data().path);
+
+    if( item.data().path === $(this).data().path ){
+      return;
+    }
+
+    var boxDestino = $(this).data().path;
+    console.log(boxDestino + '/' + item.data().name);
+    item.data().rename( boxDestino + '/' + item.data().name, function( error ){
+      console.log(error);
+      //getAccounts();
+    });*/
+
+  }else{
+
+    /*var boxDestino = $(this).parent().data().path;
+    if( boxDestino){
+			var options = {
+				move_to_box : boxDestino
+			}
+      item.data().modifyMessage(options ,function(error){
+
+				console.log(arguments);
+
+				if(error){
+					return alert(error);
+				}
+
+
+
+      });
+    }*/
+		return alert('Drag and drop no implementado');
+
+  }
+});
 
 initCalendar();
