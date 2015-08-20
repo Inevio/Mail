@@ -8,7 +8,6 @@ var sent        					= $('.general-options .sent');
 var spam        					= $('.general-options .spam');
 var trash        					= $('.general-options .trash');
 var opcionesGlobales			= $('.general-options .options');
-//var mailBox 							= $('.mail-account .options');
 var accountPrototype			= $('.mail-account.wz-prototype');
 var accountList						= $('.subcontent0 .accounts');
 var mailList							= $('.emails');
@@ -128,7 +127,7 @@ var initCalendar = function(){
 
 				childrenList.append(sortedList);
 				if( accUnread > 0 ){
-					accountItem.children('.account-info').children('.bullet').text( accUnread );	
+					accountItem.children('.account-info').children('.bullet').text( accUnread );
 				}
 
 			});
@@ -146,6 +145,7 @@ $('.composeButton').on('click', function(){
 
 win.on('click','.mailbox', function(e){
 
+	$('.full-mail-complete').remove();
 	$('.mailbox-info.active').removeClass('active');
 	$(this).children('.mailbox-info').addClass('active');
 
@@ -217,6 +217,8 @@ win.on('click','.mailbox', function(e){
 
 .on('click', '.mail-account' ,function(e){
 
+	$('.full-mail-complete').remove();
+
 	if( !$(this).hasClass('arrow-opened') ){
 
 		$(this).removeClass('arrow-closed');
@@ -250,8 +252,8 @@ win.on('click','.mailbox', function(e){
 
 			var messageApi = $(this).data();
 			var mailboxApi = $('.mailbox-info.active').parent().data();
+			var messageDom = $(this);
 
-			console.log(messageApi.flags.indexOf('\\Seen'));
 			if(	messageApi.flags.indexOf('\\Seen') === -1 && $(this).hasClass('unread') ){
 
 				var options = {
@@ -264,18 +266,17 @@ win.on('click','.mailbox', function(e){
 						return alert(error);
 					}
 
-					alert('revisar THIS');
-					console.log(arguments);
-					//$(this).data(message);
-					console.log($(this));
-					$(this).removeClass('unread');
+					console.log(messageDom);
+					messageDom.removeClass('unread');
 
 				});
 
 			}
 
+			console.log(messageApi.id);
 			mailboxApi.getMessage( messageApi.id , function(error, message){
 
+				console.log(arguments);
 				if(error){
 					return alert(error);
 				}
@@ -288,6 +289,17 @@ win.on('click','.mailbox', function(e){
 				var date = message.time.toString();
 				fullMailItem.find('.full-mail-date').text( date.slice(0,15) );
 				fullMailItem.find('.full-mail-text span').html( message.message );
+
+				if( message.flags.indexOf('\\Flagged') !== -1 ){
+
+					fullMailItem.find('.full-important').addClass('active');
+					fullMailItem.addClass('flagged');
+
+				}
+
+				fullMailItem.addClass('full-mail-complete');
+				fullMailItem.addClass('full-mail-id-' + message.id);
+				fullMailItem.data(message);
 
 				fullMailItem.insertAfter( fullMailPrototype );
 
@@ -395,13 +407,14 @@ win.on('click','.mailbox', function(e){
 
 .on( 'click', '.mail-options .delete', function(){
 
-	var selected = $('.subcontent1 .active');
+	/*var selected = $('.subcontent1 .active');
 
 	console.log(selected);
 
-	if( selected.length && selected.length > 1 ){
+	var selectedList = [];
 
-		var selectedList = [];
+	if( selected.length){
+
 		for( var i = 0; i < selected.length; i++){
 			selectedList.push(selected[i]);
 		}
@@ -422,15 +435,15 @@ win.on('click','.mailbox', function(e){
 
 		});
 
-	});
+	});*/
 
 })
 
-.on('click', '.single-mail .important, .full-mail .full-important', function(e){
+.on('click', '.single-mail .important', function(e){
 
-	console.log($(this));
 
-	if( $(this).hasClass('active') ){
+
+	/*if( $(this).hasClass('active') ){
 
 
 
@@ -438,8 +451,50 @@ win.on('click','.mailbox', function(e){
 
 
 
+	}*/
+
+})
+
+.on('click', '.full-mail .full-important', function(e){
+
+	/*var messageApi = $('full-mail-complete').data();
+	var options;
+
+	if( $(this).hasClass('active') ){
+		options = {
+			remove_flags : ['\\Flagged']
+		}
+	}else{
+		options = {
+			add_flags : ['\\Flagged']
+		}
 	}
 
+	messageApi.modifyMessage(options , function(error, message){
+
+		if(error){
+			return alert(error);
+		}
+
+		if( $('.full-mail-complete').hasClass('active') ){
+
+			$('.full-mail .full-important').removeClass('active');
+			$('.full-mail-complete').removeClass('flagged');
+
+		}else{
+
+			$('.full-mail .full-important').removeClass('active');
+			$('.full-mail-complete').removeClass('flagged');
+
+
+		}
+
+	})*/
+
+})
+
+.on('click', '.add-account', function(e){
+	wz.app.createView( null, 'account' );
 })
 
 .on('wz-dragstart' , '.single-mail', function( e,drag ){
@@ -474,57 +529,31 @@ win.on('click','.mailbox', function(e){
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
-  //console.log( item.data() );
+  /*var boxDestino = $(this).parent().data().path;
+  if( boxDestino){
+		var options = {
+			move_to_box : boxDestino
+		}
+    item.data().modifyMessage(options ,function(error){
 
-  if( item.data().delimiter ){
+			console.log(arguments);
 
-    console.log('im a folder');
-
-    /*if ( item.data().name ===  'Trash' ){
-      item.data().delete( function( error ){
-        console.log(error);
-        return;
-      });
-      item.data().rename( 'Trash' , function(){
-
-      });
-    }*/
-
-    /*console.log('Yo soy ' + item.data().path + ' y voy a ' + $(this).data().path);
-
-    if( item.data().path === $(this).data().path ){
-      return;
-    }
-
-    var boxDestino = $(this).data().path;
-    console.log(boxDestino + '/' + item.data().name);
-    item.data().rename( boxDestino + '/' + item.data().name, function( error ){
-      console.log(error);
-      //getAccounts();
-    });*/
-
-  }else{
-
-    /*var boxDestino = $(this).parent().data().path;
-    if( boxDestino){
-			var options = {
-				move_to_box : boxDestino
+			if(error){
+				return alert(error);
 			}
-      item.data().modifyMessage(options ,function(error){
 
-				console.log(arguments);
-
-				if(error){
-					return alert(error);
-				}
+    });
+  }*/
+	return alert('Drag and drop no implementado');
 
 
+})
 
-      });
-    }*/
-		return alert('Drag and drop no implementado');
+.on( 'mail-flagChanged' , function( accountId, path, uid, flags ){
 
-  }
+  console.log('Cambio de flags: ');
+  console.log(arguments);
+
 });
 
 initCalendar();

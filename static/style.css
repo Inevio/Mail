@@ -352,7 +352,8 @@ span{
 .mail-account span{
   float: left;
   margin-bottom: 0px;
-  height: 15px;
+  height: 24px;
+  max-width: 130px;
 }
 
 .mail-account .options{
@@ -870,6 +871,10 @@ span{
 .full-important{
 	background-image: url("@static/favorite.png");
 	background-repeat: no-repeat;
+}
+
+.full-important.active{
+  background-image: url("@static/favorite_flagged.png");
 }
 
 .reply{

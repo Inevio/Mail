@@ -58,6 +58,36 @@
 
                 },
 
+                "account" : {
+
+                    "description" : "",
+
+                    "template" : "account.html",
+
+                    "maxizable" : false,
+                    "resizable" : false,
+
+                    "width"  : {
+
+                        "default" : 560,
+                        "min"     : 0,
+                        "max"     : 0
+
+                    },
+
+                    "height" : {
+
+                        "default" : 330,
+                        "min"     : 0,
+                        "max"     : 0
+
+                    },
+
+                    "css"    : ["account.css"],
+                    "script" : ["account.js"]
+
+                },
+
                 "new": {
 
                     "template" : "new.html",
