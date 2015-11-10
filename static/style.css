@@ -48,7 +48,11 @@ span{
   background: white;
 }
 .subheader2{
-  width: 441px;
+  width: 485px;
+  height: 40px;
+  float: right;
+  padding-top: 0px;
+  padding-right: 0px;
 }
 
 .expanded{
@@ -61,54 +65,60 @@ span{
 }
 
 .minimize-button{
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
+  height: 10px;
   width: 10px;
-  height: 9px;
-  padding: 6px;
-  float: left;
+  padding: 7px;
   border: 1px solid transparent;
-  border-radius: 2px;
+  margin-left: 0px;
+}
+
+.minimize-button:hover, .maximize-button:hover, .close-button:hover{
+  border: 1px solid #c2cacd;
 }
 
 .minimize-button i{
-  background: url('@static/minimize.png');
+  background: url('https://static.inevio.com/app/208/minimize.png');
   background-size: 10px 1px;
-  display: inline-block;
   width: 10px;
   height: 1px;
+  margin-top: 9px;
 }
 
 .maximize-button{
-  width: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
   height: 10px;
-  padding: 6px;
-  float: left;
+  width: 10px;
+  padding: 7px;
   border: 1px solid transparent;
-  border-radius: 2px;
-  margin-left: 6px;
+  margin-left: 0px;
 }
 
 .maximize-button i{
   background: url('@static/fullscreen.png');
   background-size: 10px 10px;
-  display: inline-block;
   width: 10px;
   height: 10px;
 }
 
 .close-button{
-  width: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
   height: 10px;
-  padding: 6px;
-  float: left;
+  width: 10px;
+  padding: 7px;
   border: 1px solid transparent;
-  border-radius: 2px;
-  margin-left: 6px;
+  margin-left: 0px;
 }
 
 .close-button i{
   background: url('@static/close.png');
   background-size: 10px 10px;
-  display: inline-block;
   width: 10px;
   height: 10px;
 }
@@ -223,10 +233,9 @@ span{
 }
 
 .closeButtons{
-  width: 94px;
-  height: 16px;
+  width: 114px;
+  height: 40px;
   float: right;
-  margin: 6px 3px 6px 0px;
 }
 
 .button{
@@ -559,9 +568,7 @@ span{
 }
 
 .mail-options{
-	padding: 10px 0px 0px 5px;
-	height: 20px;
-	padding-bottom: 10px;
+	height: 40px;
   border-bottom: 1px solid #ccd3d5;
 }
 

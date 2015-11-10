@@ -54,7 +54,7 @@ var addBoxChildrens = function (boxApi, boxFather){
 
 
 
-var initCalendar = function(){
+var initMail = function(){
 
 	wz.mail.getAccounts( function(error, list){
 
@@ -335,11 +335,8 @@ win.on('click','.mailbox', function(e){
 
 	selectedList.forEach( function(item){
 
-		console.log(item);
 		var apiMessage = $(item).data();
-
-		console.log(apiMessage.flags.indexOf('\\Seen'));
-		console.log($(item).hasClass('unread'));
+		console.log(apiMessage);
 
 		if( apiMessage.flags.indexOf('\\Seen') !== -1 && !($(item).hasClass('unread')) ){
 
@@ -367,8 +364,6 @@ win.on('click','.mailbox', function(e){
 
 	var selected = $('.subcontent1 .active');
 
-	console.log(selected);
-
 	var selectedList = [];
 
 	if( selected.length){
@@ -381,8 +376,8 @@ win.on('click','.mailbox', function(e){
 
 	selectedList.forEach( function(item){
 
-		console.log(item);
 		var apiMessage = $(item).data();
+		console.log(apiMessage);
 
 		if( apiMessage.flags.indexOf('\\Seen') === -1 && $(item).hasClass('unread') ){
 
@@ -392,6 +387,7 @@ win.on('click','.mailbox', function(e){
 
 			apiMessage.modifyMessage(options, function(error, message){
 
+				console.log(arguments);
 				if(error){
 					return alert(error);
 				}
@@ -441,17 +437,43 @@ win.on('click','.mailbox', function(e){
 
 .on('click', '.single-mail .important', function(e){
 
+	/*var messageApi = $(this).parents('.single-mail').data();
+	var options;
 
-
-	/*if( $(this).hasClass('active') ){
-
-
-
+	if( $(this).hasClass('active') ){
+		options = {
+			remove_flags : ['\\Flagged']
+		}
 	}else{
+		options = {
+			add_flags : ['\\Flagged']
+		}
+	}
 
+	messageApi.modifyMessage(options , function(error, message){
 
+		if(error){
+			return alert(error);
+		}
+		console.log(arguments);
 
-	}*/
+		if( $('.full-mail-complete').hasClass('flagged') ){
+
+			$('.full-mail .full-important').removeClass('active');
+			$('.full-mail-complete').removeClass('flagged');
+			$('.message-' + messageApi.id).addClass('flagged');
+			$('.message-' + messageApi.id + ' .important').addClass('active');
+
+		}else{
+
+			$('.full-mail .full-important').removeClass('active');
+			$('.full-mail-complete').removeClass('flagged');
+			$('.message-' + messageApi.id).removeClass('flagged');
+			$('.message-' + messageApi.id + ' .important').removeClass('active');
+
+		}
+
+	})*/
 
 })
 
@@ -475,17 +497,21 @@ win.on('click','.mailbox', function(e){
 		if(error){
 			return alert(error);
 		}
+		console.log(arguments);
 
-		if( $('.full-mail-complete').hasClass('active') ){
+		if( $('.full-mail-complete').hasClass('flagged') ){
 
 			$('.full-mail .full-important').removeClass('active');
 			$('.full-mail-complete').removeClass('flagged');
+			$('.message-' + messageApi.id).addClass('flagged');
+			$('.message-' + messageApi.id + ' .important').addClass('active');
 
 		}else{
 
 			$('.full-mail .full-important').removeClass('active');
 			$('.full-mail-complete').removeClass('flagged');
-
+			$('.message-' + messageApi.id).removeClass('flagged');
+			$('.message-' + messageApi.id + ' .important').removeClass('active');
 
 		}
 
@@ -549,11 +575,11 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on( 'mail-flagChanged' , function( accountId, path, uid, flags ){
+.on( 'flagChanged' , function( accountId, path, uid, flags ){
 
   console.log('Cambio de flags: ');
   console.log(arguments);
 
 });
 
-initCalendar();
+initMail();

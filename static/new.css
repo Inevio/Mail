@@ -14,54 +14,60 @@
 }
 
 .minimize-button{
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
+  height: 10px;
   width: 10px;
-  height: 9px;
-  padding: 6px;
-  float: left;
+  padding: 7px;
   border: 1px solid transparent;
-  border-radius: 2px;
+  margin-left: 0px;
+}
+
+.minimize-button:hover, .maximize-button:hover, .close-button:hover{
+  border: 1px solid #c2cacd;
 }
 
 .minimize-button i{
-  background: url('@static/minimize.png');
+  background: url('https://static.inevio.com/app/208/minimize.png');
   background-size: 10px 1px;
-  display: inline-block;
   width: 10px;
   height: 1px;
+  margin-top: 9px;
 }
 
 .maximize-button{
-  width: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
   height: 10px;
-  padding: 6px;
-  float: left;
+  width: 10px;
+  padding: 7px;
   border: 1px solid transparent;
-  border-radius: 2px;
-  margin-left: 6px;
+  margin-left: 0px;
 }
 
 .maximize-button i{
   background: url('@static/fullscreen.png');
   background-size: 10px 10px;
-  display: inline-block;
   width: 10px;
   height: 10px;
 }
 
 .close-button{
-  width: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
   height: 10px;
-  padding: 6px;
-  float: left;
+  width: 10px;
+  padding: 7px;
   border: 1px solid transparent;
-  border-radius: 2px;
-  margin-left: 6px;
+  margin-left: 0px;
 }
 
 .close-button i{
   background: url('@static/close.png');
   background-size: 10px 10px;
-  display: inline-block;
   width: 10px;
   height: 10px;
 }
@@ -72,31 +78,25 @@
     box-shadow: -1px 0 rgba(255,255,255,.1);
 }
 
-.wz-view-minimize:hover, .wz-view-maximize:hover, .wz-view-close:hover{
-    border: 1px solid #EEE;
-}
-
 .header-compose{
-
-    width: 100%;
-    height: 39px;
-    padding: 0px;
-    -webkit-border-radius: 6px 6px 0 0;
-    -moz-border-radius: 6px 6px 0 0;
-  	border-radius: 6px 6px 0 0;
-  	background-color: #f1f1f1;
-    border-bottom: 1px solid #ccd3d5;
-  	background-image: -webkit-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: -moz-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: -o-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: -ms-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: linear-gradient(to top, #e9ecef, #f9fafb);
-
+  width: 100%;
+  height: 39px;
+  padding: 0px;
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ccd3d5;
+  background-image: -webkit-linear-gradient(bottom, #e9ecef, #f9fafb);
+  background-image: -moz-linear-gradient(bottom, #e9ecef, #f9fafb);
+  background-image: -o-linear-gradient(bottom, #e9ecef, #f9fafb);
+  background-image: -ms-linear-gradient(bottom, #e9ecef, #f9fafb);
+  background-image: linear-gradient(to top, #e9ecef, #f9fafb);
 }
 
 .header-compose .wz-view-menu-group{
-  padding: 5px 14px 6px;
-  height: 28px;
+  padding: 0;
+  height: 39px;
   border-left: none;
 }
 
@@ -440,7 +440,7 @@ span.content-attachments-delete:hover{
 }
 
 .tool-button-underline i{
-    margin: 6px 6px 6px 7px;
+    margin: 6px 7px 6px 7px;
     width: 10px;
     height: 12px;
     background-image: url('@static/underlined.png');
