@@ -56,7 +56,7 @@ span{
 }
 
 .expanded{
-	background: url("@static/arrow_rotated.png");
+	background: url("@static/assets/arrow_rotated.png");
 	background-repeat: no-repeat;
 	width: 7px !important;
 	height: 4px !important;
@@ -80,7 +80,7 @@ span{
 }
 
 .minimize-button i{
-  background: url('https://static.inevio.com/app/208/minimize.png');
+  background: url('@static/assets/minimize.png');
   background-size: 10px 1px;
   width: 10px;
   height: 1px;
@@ -99,7 +99,7 @@ span{
 }
 
 .maximize-button i{
-  background: url('@static/fullscreen.png');
+  background: url('@static/assets/fullscreen.png');
   background-size: 10px 10px;
   width: 10px;
   height: 10px;
@@ -117,7 +117,7 @@ span{
 }
 
 .close-button i{
-  background: url('@static/close.png');
+  background: url('@static/assets/close.png');
   background-size: 10px 10px;
   width: 10px;
   height: 10px;
@@ -196,12 +196,14 @@ span{
 }
 
 .composeButton i{
-	background: url("@static/compose.png");
+	background: url("@static/assets/write.png");
 	width:16px;
 	height: 16px;
 	float: left;
 	background-repeat: no-repeat;
 	padding-left: 3px;
+  background-size: 16px 16px;
+  display: inline-block;
 }
 
 .composeButton span{
@@ -220,7 +222,7 @@ span{
 }
 
 .header-search i{
-  background-image: url('@static/search.png');
+  background-image: url('@static/assets/search.png');
   width: 16px;
   height: 16px;
   background-size: 16px 16px;
@@ -254,7 +256,7 @@ span{
 }
 
 .searchButton i{
-	background: url("@static/searchButton.png");
+	background: url("@static/assets/searchButton.png");
 	width:16px;
 	height: 16px;
 	float: left;
@@ -270,17 +272,17 @@ span{
   height: 7px;
   float: left;
   margin: 9px 0px 0px 8px;
-  background: url('@static/arrow.png') no-repeat center center;
+  background: url('@static/assets/arrow.png') no-repeat center center;
   background-size: 4px 7px;
   padding: 2px 3px;
 }
 
 .arrow-closed .mailbox-info.active .arrow{
-  background: url('@static/arrow_active.png') no-repeat center center;
+  background: url('@static/assets/arrow_active.png') no-repeat center center;
 }
 
 .arrow-opened .active .arrow{
-  background: url('@static/arrow_rotated_active.png') no-repeat center center;
+  background: url('@static/assets/arrow_rotated_active.png') no-repeat center center;
 }
 
 .mail-account .hide-arrow .arrow{
@@ -293,7 +295,7 @@ span{
   height: 4px;
   float: left;
   margin: 10px 0px 0px 7px;
-  background: url('@static/arrow_rotated.png') no-repeat center center;
+  background: url('@static/assets/arrow_rotated.png') no-repeat center center;
   background-size: 7px 4px;
   padding: 3px 2px;
 }
@@ -304,6 +306,16 @@ span{
 	height: ~'calc(100% - 21px)';
   background-color: #f7f8fa;
   overflow-y: hidden;
+}
+
+.mailboxes-title{
+  height: 20px;
+  padding: 10px 0px 3px 16px;
+}
+
+.subcontent0 .accounts .mailboxes-title span{
+  font-size: 13px;
+  color: #889399;
 }
 
 .mailbox-info:hover{
@@ -321,7 +333,7 @@ span{
 }
 
 .account-info .account-icon{
-  background: url('@static/inevio_mail.png');
+  background: url('@static/assets/inevio_mail_2.png');
   width: 16px;
 	height: 16px;
 	float:left;
@@ -403,7 +415,7 @@ span{
 
 .add-account{
   float: left;
-  background: url("@static/add.png");
+  background: url("@static/assets/add.png");
   background-repeat: no-repeat;
   margin-left: 8px;
   background-size: 14px 14px;
@@ -411,7 +423,7 @@ span{
 
 .mail-settings{
 	float: left;
-	background:url("@static/settings.png");
+	background:url("@static/assets/settings.png");
 	background-repeat: no-repeat;
 	padding-right: 5px;
   margin-left: 5px;
@@ -426,13 +438,13 @@ span{
 .mail-account{
   line-height: 25px;
   width: 100%;
+  overflow: hidden;
 }
 
 .mail-account.yahoo-mail{
 	border-top: 1px solid #e8eeef;
 	padding-top: 3px;
 }
-
 
 .mail-account.inevio-mail{
 	border-top: 1px solid #e8eeef;
@@ -443,7 +455,7 @@ span{
 	width: 18px;
 	height: 18px;
 	float:left;
-	background:url("@static/inevio.png");
+	background:url("@static/assets/inevio.png");
 	background-repeat: no-repeat;
 }
 
@@ -458,40 +470,40 @@ span{
 }
 
 .all-inbox i{
-	background:url("@static/allInbox2.png");
+	background:url("@static/assets/allInbox2.png");
 	background-repeat: no-repeat;
 }
 
 .all-inbox.active i{
-	background:url("@static/allInbox.png");
+	background:url("@static/assets/allInbox.png");
 	background-repeat: no-repeat;
 }
 
 .inbox-left i{
-	background:url("@static/allInbox2.png");
+	background:url("@static/assets/allInbox2.png");
 	background-repeat: no-repeat;
 }
 
 .starred i{
-	background:url("@static/starred.png");
+	background:url("@static/assets/starred.png");
 	background-repeat: no-repeat;
 }
 
 .drafts i{
-	background:url("@static/drafts.png");
+	background:url("@static/assets/drafts.png");
 	background-repeat: no-repeat;
 }
 
 .sent i{
-	background:url("@static/sent.png");
+	background:url("@static/assets/sent.png");
 	background-repeat: no-repeat;
 }
 .spam i{
-	background:url("@static/spam.png");
+	background:url("@static/assets/spam.png");
 	background-repeat: no-repeat;
 }
 .trash i{
-	background:url("@static/trash.png");
+	background:url("@static/assets/trash.png");
 	background-repeat: no-repeat;
 }
 
@@ -515,23 +527,23 @@ span{
 }
 
 .mailbox-info .icon{
-  background:url("@static/folder.png");
+  background:url("@static/assets/folder.png");
   background-repeat: no-repeat;
   background-size: 16px 16px;
 }
 
 .mailbox-info.active .icon{
-  background:url("@static/folder_active.png");
+  background:url("@static/assets/folder_active.png");
 }
 
 .mailbox-info .inbox .icon{
-  background:url("@static/inbox.png");
+  background:url("@static/assets/inbox.png");
   background-repeat: no-repeat;
   background-size: 16px 16px;
 }
 
 .mailbox-info .inbox.active .icon{
-  background:url("@static/inbox_active.png");
+  background:url("@static/assets/inbox_active.png");
 }
 
 .options{
@@ -545,7 +557,7 @@ span{
 
 .folder i, .subfolder i{
 	width: 17px !important;
-	background:url("@static/folder.png");
+	background:url("@static/assets/folder.png");
 	background-repeat: no-repeat;
 }
 
@@ -568,8 +580,9 @@ span{
 }
 
 .mail-options{
-	height: 40px;
+  height: 33px;
   border-bottom: 1px solid #ccd3d5;
+  padding: 7px 10px 0px 10px;
 }
 
 .mail-options span{
@@ -577,72 +590,73 @@ span{
 }
 
 .mail-options i{
-	width:16px;
-	height: 16px;
-	padding-right: 10px;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
 }
 
-.mail-options .mark-as{
-	width:35px;
-	height: 22px;
-	float:left;
-	background:url("@static/tick.png");
+.mail-options figure{
+  float: left;
+  margin-right: 6px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid transparent;
+}
+
+.mail-options figure:hover{
+  border: 1px solid;
+}
+
+.mail-options .mark-as-read{
+}
+
+.mail-options .mark-as-read i{
+  background: url("@static/assets/mark_read.png");
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  width: 14px;
+  height: 14px;
+  margin: 5px;
+}
+
+.mail-options .mark-as-unread i{
+  width: 14px;
+  height: 10px;
+	background:url("@static/assets/mark_unread.png");
 	background-repeat: no-repeat;
-	margin-top: -2px;
+  background-size: 14px 10px;
+  margin: 9px 5px 5px 5px;
 }
 
-.mail-options .unread{
-	float:left;
-	background:url("@static/mark_read.png");
-	background-repeat: no-repeat;
+.mail-options .delete i{
+  background: url("@static/assets/trash.png");
+  background-repeat: no-repeat;
+  background-size: 14px 15px;
+  width: 14px;
+  height: 15px;
+  margin: 5px;
 }
 
-.mail-options .read{
-  margin-top: 3px;
-	float:left;
-	background:url("@static/mark_unread.png");
-	background-repeat: no-repeat;
+.mail-options .mark-as-spam i{
+  background: url("@static/assets/spam.png");
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  width: 14px;
+  height: 14px;
+  margin: 5px;
 }
 
-.mail-options .spam-button{
-	float:left;
-	background:url("@static/spam.png");
-	background-repeat: no-repeat;
+.mail-options .mark-as-fav i{
+  background: url("@static/assets/star.png");
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  width: 14px;
+  height: 14px;
+  margin: 5px;
 }
-
-.mail-options .fav{
-	float:left;
-	background:url("@static/starred.png");
-	background-repeat: no-repeat;
-}
-
-.mail-options .delete{
-	float:left;
-	background:url("@static/trash.png");
-	background-repeat: no-repeat;
-}
-
-.sort-by{
-	float:right;
-	margin-right: 10px;
-}
-
 
 .inbox-middle{
   height: ~'calc(100% - 40px)';
-}
-
-.emails, .scrollbar-inbox{
-	/*height: 100%;*/
-}
-
-.scrollbar-inbox{
-	display: none;
-	width:13px;
-	background-image: url("@static/scroll-inbox.png");
-	background-repeat: no-repeat;
-	float:right;
-	border-top: 1px solid #ccd3d5;
 }
 
 .emails{
@@ -730,7 +744,7 @@ span{
 .select{
 	width:12px;
 	height: 12px;
-	background-image: url("@static/select.png");
+	background-image: url("@static/assets/select.png");
 	background-repeat: no-repeat;
 	margin-top: 2px;
 }
@@ -738,7 +752,7 @@ span{
 .important{
 	width:12px;
 	height: 12px;
-	background-image: url("@static/favorite.png");
+	background-image: url("@static/assets/favorite.png");
 	background-repeat: no-repeat;
 	margin-top: 7px;
   background-size: 12px 12px;
@@ -758,7 +772,7 @@ span{
 }
 
 .single-mail.unread .blue-dot{
-	background-image: url("@static/blue-dot.png");
+	background-image: url("@static/assets/blue-dot.png");
   background-size: 8px 8px;
 }
 
@@ -776,11 +790,11 @@ span{
 }
 
 .emails .single-mail.flagged .important{
-  background-image: url("@static/favorite_flagged.png");
+  background-image: url("@static/assets/favorite_flagged.png");
 }
 
 .emails .active .important{
-	background-image: url("@static/favorite_active.png");
+	background-image: url("@static/assets/favorite_active.png");
 }
 
 .emails .semiactive{
@@ -795,15 +809,6 @@ span{
 
 .subcontent2{
   width: ~"calc(100% - 515px)";
-}
-
-.scrollbar-open-mail{
-	width:13px;
-	height: 788px;
-	background-image: url("@static/scroll-open-mail.png");
-	background-repeat: no-repeat;
-	float: right;
-	display: none;
 }
 
 .full-mail{
@@ -876,31 +881,31 @@ span{
 }
 
 .full-important{
-	background-image: url("@static/favorite.png");
+	background-image: url("@static/assets/favorite.png");
 	background-repeat: no-repeat;
 }
 
 .full-important.active{
-  background-image: url("@static/favorite_flagged.png");
+  background-image: url("@static/assets/favorite_flagged.png");
 }
 
 .reply{
-	background-image: url("@static/reply.png");
+	background-image: url("@static/assets/reply.png");
 	background-repeat: no-repeat;
 }
 
 .reply-all{
-	background-image: url("@static/reply_all.png");
+	background-image: url("@static/assets/reply_all.png");
 	background-repeat: no-repeat;
 }
 
 .reply2{
-	background-image: url("@static/resend.png");
+	background-image: url("@static/assets/resend.png");
 	background-repeat: no-repeat;
 }
 
 .more{
-	background-image: url("@static/arrow_rotated.png");
+	background-image: url("@static/assets/arrow_rotated.png");
 	background-repeat: no-repeat;
 	width: 8px;
   height: 8px;
@@ -918,7 +923,7 @@ span{
 /*.full-mail-text i{
 	width: 406px;
   height: 291px;
-  background-image: url("@static/sunset.png");
+  background-image: url("@static/assets/sunset.png");
   background-repeat: no-repeat;
   display: inline-block;
   border-radius: 5px;
@@ -950,7 +955,7 @@ span{
 .save-all{
 	width:22px;
 	height: 22px;
-	background-image: url("@static/save-all.png");
+	background-image: url("@static/assets/save-all.png");
   background-repeat: no-repeat;
 	float: right;
 }
@@ -969,23 +974,23 @@ span{
 }
 
 .attachment1 i{
-	background-image: url("@static/doc.png");
+	background-image: url("@static/assets/doc.png");
   background-repeat: no-repeat;
 	display: inline-block;
 }
 
 .attachment3 i{
-	background-image: url("@static/generico.png");
+	background-image: url("@static/assets/generico.png");
   background-repeat: no-repeat;
 	display: inline-block;
 }
 .attachment4 i{
-	/*background-image: url("@static/grids.png");*/
+	/*background-image: url("@static/assets/grids.png");*/
   background-repeat: no-repeat;
 	display: inline-block;
 }
 .attachment5 i{
-	background-image: url("@static/music.png");
+	background-image: url("@static/assets/music.png");
   background-repeat: no-repeat;
 	display: inline-block;
 }
@@ -1032,7 +1037,7 @@ span{
 .attch-save i{
 	width:12px;
 	height: 12px;
-	background-image: url("@static/save.png");
+	background-image: url("@static/assets/save.png");
   background-repeat: no-repeat;
 	float: left;
 	margin: 4px 8px 0px 5px;
@@ -1049,7 +1054,7 @@ span{
 .full-mail-delivery i{
 	width:8px;
 	height: 8px;
-	background-image: url("@static/arrow_rotated.png");
+	background-image: url("@static/assets/arrow_rotated.png");
   background-repeat: no-repeat;
 	display: inline-block;
 	margin-bottom: -2px;
