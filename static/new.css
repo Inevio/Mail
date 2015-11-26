@@ -29,7 +29,7 @@
 }
 
 .minimize-button i{
-  background: url('https://static.inevio.com/app/208/minimize.png');
+  background: url('@static/assets/minimize.png');
   background-size: 10px 1px;
   width: 10px;
   height: 1px;
@@ -48,7 +48,7 @@
 }
 
 .maximize-button i{
-  background: url('@static/fullscreen.png');
+  background: url('@static/assets/fullscreen.png');
   background-size: 10px 10px;
   width: 10px;
   height: 10px;
@@ -66,7 +66,7 @@
 }
 
 .close-button i{
-  background: url('@static/close.png');
+  background: url('@static/assets/close.png');
   background-size: 10px 10px;
   width: 10px;
   height: 10px;
@@ -278,7 +278,7 @@ select{
     height: 13px;
     float: left;
     margin-top: 1px;
-    background: url('@static/sprite.png') no-repeat -123px -10px;
+    background: url('@static/assets/sprite.png') no-repeat -123px -10px;
     background-size: 177px 40px;
 }
 
@@ -331,7 +331,7 @@ span.content-attachments-delete:hover{
     width: 11px;
     height: 12px;
     float: left;
-    background: url('@static/attatch.png') no-repeat 0 0;
+    background: url('@static/assets/attatch.png') no-repeat 0 0;
     background-size: 11px 12px;
     margin: 0 3px 0 0;
 }
@@ -422,14 +422,14 @@ span.content-attachments-delete:hover{
     margin: 7px;
     width: 10px;
     height: 10px;
-    background-image: url('@static/bold.png');
+    background-image: url('@static/assets/bold.png');
 }
 
 .tool-button-italic i{
     margin: 7px 8px 7px 9px;
     width: 7px;
     height: 10px;
-    background-image: url('@static/italic.png');
+    background-image: url('@static/assets/italic.png');
 }
 
 .tool-button-color .color{
@@ -443,35 +443,35 @@ span.content-attachments-delete:hover{
     margin: 6px 7px 6px 7px;
     width: 10px;
     height: 12px;
-    background-image: url('@static/underlined.png');
+    background-image: url('@static/assets/underlined.png');
 }
 
 .tool-button-left i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-image: url('@static/align_left.png');
+    background-image: url('@static/assets/align_left.png');
 }
 
 .tool-button-center i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-image: url('@static/align_center.png');
+    background-image: url('@static/assets/align_center.png');
 }
 
 .tool-button-right i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-image: url('@static/align_right.png');
+    background-image: url('@static/assets/align_right.png');
 }
 
 .tool-button-justify i{
     margin: 6px 5px 7px;
     width: 14px;
     height: 11px;
-    background-image: url('@static/align_all.png');
+    background-image: url('@static/assets/align_all.png');
 }
 
 .tool-button-line-spacing i{
@@ -485,14 +485,14 @@ span.content-attachments-delete:hover{
     margin: 4px 5px 5px 6px;
     width: 13px;
     height: 15px;
-    background-image: url('@static/dots.png');
+    background-image: url('@static/assets/dots.png');
 }
 
 .tool-button-list-sorted i{
     margin: 3px 5px 4px;
     width: 14px;
     height: 17px;
-    background-image: url('@static/numbers.png');
+    background-image: url('@static/assets/numbers.png');
 }
 
 .tool-button-indent-dec i{

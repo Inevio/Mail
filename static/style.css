@@ -943,16 +943,6 @@ span{
 	border-bottom: 1px solid #ccd3d5;
 }
 
-/*.full-mail-text i{
-	width: 406px;
-  height: 291px;
-  background-image: url("@static/assets/sunset.png");
-  background-repeat: no-repeat;
-  display: inline-block;
-  border-radius: 5px;
-  margin-top: 10px;
-}*/
-
 .full-mail-attachments{
 	margin-top: 10px;
   margin-bottom: 10px;
