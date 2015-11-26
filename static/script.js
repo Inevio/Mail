@@ -150,17 +150,18 @@ win.on('click','.mailbox', function(e){
 	$(this).children('.mailbox-info').addClass('active');
 
 	var mailboxApi = $(this).data();
-	console.log(mailboxApi);
+	//console.log(mailboxApi);
 
 	mailboxApi.getMessages(0,20,function(error, messages){
 
 		mailList.children().not(':first').remove();
 
 		if(error){
+			console.log(error);
 			return alert(error);
 		}
 
-		console.log(messages);
+		//console.log(messages);
 
 		for (var i=0; i<messages.length; i++){
 
@@ -236,8 +237,16 @@ win.on('click','.mailbox', function(e){
 
 })
 
+/*.on('mousemove', '.single-mail', function(e){
+	console.log('Capturando mousemove');
+})
+.on('mousedown', '.single-mail', function(e){
+	console.log('Capturando mousedown');
+})*/
+
 .on('click', '.single-mail', function(e){
 
+	console.log('Capturando click');
 	if( e.ctrlKey || e.metaKey ){
 
 			if( $( this ).hasClass( 'active' ) ){

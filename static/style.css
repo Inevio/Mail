@@ -597,14 +597,15 @@ span{
 
 .mail-options figure{
   float: left;
-  margin-right: 6px;
+  margin-right: 3px;
   width: 24px;
   height: 24px;
   border: 1px solid transparent;
+  border-radius: 3px;
 }
 
 .mail-options figure:hover{
-  border: 1px solid;
+  border: 1px solid #c2cacd;
 }
 
 .mail-options .mark-as-read{
@@ -744,9 +745,14 @@ span{
 .select{
 	width:12px;
 	height: 12px;
-	background-image: url("@static/assets/select.png");
-	background-repeat: no-repeat;
-	margin-top: 2px;
+  border-radius: 12px;
+	margin-top: 3px;
+  background-color: none;
+  margin-left: 1px;
+}
+
+.single-mail.unread .select{
+  background-color: #4698e0;
 }
 
 .important{
@@ -760,20 +766,6 @@ span{
 
 .single-mail.unread span, .single-mail.unread div{
   font-weight: bold;
-}
-
-
-.single-mail .blue-dot{
-	background-image: none;
-  width:	8px;
-  height: 8px;
-  background-repeat: no-repeat;
-  margin: 12px 0px 0px 2px;
-}
-
-.single-mail.unread .blue-dot{
-	background-image: url("@static/assets/blue-dot.png");
-  background-size: 8px 8px;
 }
 
 .emails .single-mail.active{
@@ -851,7 +843,7 @@ span{
 	font-size: 13px;
 	padding-top: 7px;
 	float:left;
-	width: ~'calc(100% - 121px)';
+	width: ~'calc(100% - 127px)';
 }
 
 .to{
@@ -873,38 +865,69 @@ span{
   height: 11px;
 }
 
+.full-mail-options figure{
+  float: left;
+  margin-left: 3px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+.full-mail-options figure:hover{
+  border: 1px solid #c2cacd;
+}
+
 .full-mail-options i{
-	width:22px;
-	height: 22px;
-	float:left;
-	padding-left: 5px;
+  display: inline-block;
 }
 
-.full-important{
-	background-image: url("@static/assets/favorite.png");
-	background-repeat: no-repeat;
+.full-important i{
+  background: url("https://static.inevio.com/app/208/assets/star.png");
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  width: 14px;
+  height: 14px;
+  margin: 5px;
 }
 
-.full-important.active{
-  background-image: url("@static/assets/favorite_flagged.png");
+.full-important.active i{
+  background: url("https://static.inevio.com/app/208/assets/star.png");
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  width: 14px;
+  height: 14px;
+  margin: 5px;
 }
 
-.reply{
-	background-image: url("@static/assets/reply.png");
-	background-repeat: no-repeat;
+.reply i{
+  background: url("https://static.inevio.com/app/208/assets/reply.png");
+  background-repeat: no-repeat;
+  background-size: 17px 13px;
+  width: 17px;
+  height: 13px;
+  margin: 5px 4px 5px 3px;
 }
 
-.reply-all{
-	background-image: url("@static/assets/reply_all.png");
-	background-repeat: no-repeat;
+.reply-all i{
+  background: url("https://static.inevio.com/app/208/assets/reply_all.png");
+  background-repeat: no-repeat;
+  background-size: 21px 14px;
+  width: 21px;
+  height: 14px;
+  margin: 5px 2px 5px 1px;
 }
 
-.reply2{
-	background-image: url("@static/assets/resend.png");
-	background-repeat: no-repeat;
+.resend i{
+  background: url("https://static.inevio.com/app/208/assets/resend.png");
+  background-repeat: no-repeat;
+  background-size: 15px 12px;
+  width: 15px;
+  height: 12px;
+  margin: 6px 5px 6px 4px;
 }
 
-.more{
+.more i{
 	background-image: url("@static/assets/arrow_rotated.png");
 	background-repeat: no-repeat;
 	width: 8px;
