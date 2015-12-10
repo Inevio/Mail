@@ -205,7 +205,7 @@ var loadAccountList = function(){
 
 var loadParams = function(){
 
-    if( !params.messageId ){
+    if( !params ){
         $('.content-to input').focus();
         return;
     }
