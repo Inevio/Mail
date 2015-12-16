@@ -1,5 +1,5 @@
 *{
-    font-family: Lato !important;
+  font-family: Lato !important;
 }
 
 span{
@@ -15,38 +15,32 @@ span{
 	overflow: hidden;
 }
 
-
-/* Main window --------------------------------------------------*/
-
 .window-content{
 	width: 100%;
 	height: ~"calc(100% - 40px)";
 	background-color: white;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+  display: inline-block;
 }
 
 .subcontent0,.subcontent1,.subcontent2{
 	height: 100%;
 }
 
-.subheader0, .subheader1, .subheader2, .subcontent0,.subcontent1,.subcontent2{
+.subheader0, .subheader1, .subcontent0,.subcontent1,.subcontent2{
 	float: left;
 }
 
-.subheader0, .subheader1, .subheader2{
+.subheader0{
 	height: 27px;
+  width: 220px;
 }
 
-.subheader0{
-	width: 220px;
-}
 .subheader1{
 	width: 293px;
-  border-left: 1px solid #ccd3d5;
-  border-right: 1px solid #ccd3d5;
-  background: white;
 }
+
 .subheader2{
   width: 485px;
   height: 40px;
@@ -64,39 +58,8 @@ span{
 	margin: 5px 0px 0px 5px;
 }
 
-/* End of main window --------------------------------------------------*/
-
-
-/* Navigation bar --------------------------------------------------*/
-
-.window-header{
-	/*width: 100%;*/
-	height: 39px;
-  background-color: #f6f6f5;
-  -webkit-border-radius: 6px 6px 0 0;
-	-moz-border-radius: 6px 6px 0 0;
-	border-radius: 6px 6px 0 0;
-	background-color: #fff;
-	-webkit-box-shadow: 0 1px #ccd3d5;
-	-moz-box-shadow: 0 1px #ccd3d5;
-	box-shadow: 0 1px #ccd3d5;
-	background-image: -webkit-linear-gradient(bottom, #e9ecef, #f9fafb);
-	background-image: -moz-linear-gradient(bottom, #e9ecef, #f9fafb);
-	background-image: -o-linear-gradient(bottom, #e9ecef, #f9fafb);
-	background-image: -ms-linear-gradient(bottom, #e9ecef, #f9fafb);
-	background-image: linear-gradient(to top, #e9ecef, #f9fafb);
-  border-bottom: 1px solid #ccd3d5;
-}
-
-.subheader0, .subheader1, .subheader2{
+.subheader0{
 	padding-top: 12px;
-}
-
-.subheader2{
-	width: 440px;
-	float:right;
-	padding-top:0px;
-	padding-right: 0px;
 }
 
 .mailText{
@@ -151,135 +114,13 @@ span{
 	font-size: 13px;
 }
 
-.header-search{
-  float: left;
-  width: 16px;
-  padding-left: 15px;
-  padding-right: 10px;
-  height: 16px;
-  border-right: 1px solid #ccd3d5;
-  margin-right: 10px;
+.ui-header .ui-input-search{
+  height: 39px;
+  border-radius: 0px;
 }
 
-.header-search i{
-  background-image: url('@static/assets/search.png');
-  width: 16px;
-  height: 16px;
-  background-size: 16px 16px;
-  display: inline-block;
-}
-
-.header-input{
-  width: ~'calc(100% - 62px)';
-  color: #818181
-}
-
-.closeButtons{
-  width: 114px;
-  height: 40px;
-  float: right;
-}
-
-.button{
-	border: 1px solid #c2cacd;
-	border-radius: 3px;
-	background-color: white !important;
-	font-size: 15px;
-}
-
-.searchButton{
-  width: 21px;
-  height: 23px;
-  margin: -7px 0 0 0;
-  padding: 5px 2px 0 6px;
-  float: right;
-}
-
-.searchButton i{
-	background: url("@static/assets/searchButton.png");
-	width:16px;
-	height: 16px;
-	float: left;
-	background-repeat: no-repeat;
-	padding-left: 3px;
-}
-
-.ui-header-buttons{
-  float: right;
-}
-
-.ui-header-buttons .ui-minimize, .ui-header-buttons .ui-maximize, .ui-header-buttons .ui-close{
-  float: left;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-right: 12px;
-  height: 10px;
-  width: 10px;
-  padding: 7px;
-  border: 1px solid transparent;
-  margin-left: 0;
-  -webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
-.ui-header-buttons .ui-minimize:hover, .ui-header-buttons .ui-maximize:hover, .ui-header-buttons .ui-close:hover{
-  -webkit-box-shadow: 0 1px rgba(0,0,0,.05);
-	-moz-box-shadow: 0 1px rgba(0,0,0,.05);
-	box-shadow: 0 1px rgba(0,0,0,.05);
-	border: solid 1px #c2cacd;
-  background-color: #fff;
-}
-
-.ui-header-buttons .ui-minimize:active, .ui-header-buttons .ui-maximize:active, .ui-header-buttons .ui-close:active{
-  border: solid 1px #c2cacd;
-	background-image: -webkit-linear-gradient(top, #dfe3e6, #ecf0f3);
-	background-image: -moz-linear-gradient(top, #dfe3e6, #ecf0f3);
-	background-image: -o-linear-gradient(top, #dfe3e6, #ecf0f3);
-	background-image: -ms-linear-gradient(top, #dfe3e6, #ecf0f3);
-	background-image: linear-gradient(to bottom, #dfe3e6, #ecf0f3);
-  box-shadow: none;
-}
-
-
-.ui-header-buttons .inactive:hover, .ui-header .ui-header-buttons .inactive:hover{
-  border: 1px solid transparent;
-  background-image: none;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-.ui-header-buttons .inactive:active{
-  border: 1px solid transparent;
-  background-image: none;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-.ui-minimize i{
-  float: left;
-  width: 10px;
-  height: 10px;
-  background: url('@static/assets/sprite-icons-white.png');
-  background-size: 40px 10px;
-}
-
-.ui-maximize i{
-  float: left;
-  width: 10px;
-  height: 10px;
-  background: url('@static/assets/sprite-icons-white.png');
-  background-position: 30px 0;
-  background-size: 40px 10px;
-}
-
-.ui-close i{
-  float: left;
-  width: 10px;
-  height: 10px;
-  background: url('@static/assets/sprite-icons-white.png');
-  background-position: 10px 0;
-  background-size: 40px 10px;
+.ui-header .ui-input-search input{
+  width: 240px;
 }
 
 /* End of navigation bar --------------------------------------------------*/
@@ -337,11 +178,7 @@ span{
 }
 
 .mailbox-info:hover{
-  background-color: #d1e8f6;
-}
-
-.mailbox{
-  /*height: 29px;*/
+  background-color: #d9eadb;
 }
 
 .children{
@@ -537,7 +374,7 @@ span{
 }
 
 .mailbox-info.active{
-  background-color: #3ba9e4;
+  background-color: #60b25e;
 }
 
 .mailbox-info.active span{
@@ -770,7 +607,7 @@ span{
 }
 
 .single-mail.unread .select{
-  background-color: #4698e0;
+  background-color: #60b25e;
 }
 
 .important{
@@ -788,11 +625,11 @@ span{
 
 .emails .single-mail.active{
 	color:white !important;
-	background-color: #3ba9e4;
+	background-color: #60b25e;
 }
 
 .single-mail:hover{
-  background-color: #d1e8f6;
+  background-color: #d9eadb;
 }
 
 .emails .active span,.emails .active div{

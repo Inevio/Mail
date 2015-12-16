@@ -63,7 +63,7 @@ var initMail = function(){
 		}
 
 		if( !list.length ){
-			return alert('añada una cuenta');
+			return alert('Añada una cuenta');
 		}
 
 		console.log('Cuentas asignadas: ', list);
@@ -104,7 +104,7 @@ var initMail = function(){
 						boxItem.children('.mailbox-info').children('.bullet').text( boxes[i].unread );
 						accUnread += boxes[i].unread;
 					}
-					//childrenList.append(boxItem);
+
 					if( boxes[i].children.length > 0 ){
 						var childrens = addBoxChildrens(boxes[i], boxItem);
 					}
