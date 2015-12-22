@@ -13,7 +13,7 @@ var accountList						= $('.subcontent0 .accounts');
 var mailList							= $('.emails');
 var mailPrototype 				= $('.emails .single-mail.wz-prototype');
 var boxPrototype					= $('.mailbox.wz-prototype');
-var linePrototype					= $('.line.wz-prototype');
+//var linePrototype					= $('.line.wz-prototype');
 var fullMailPrototype			= $('.full-mail.wz-prototype');
 
 var initMail = function(){
@@ -147,6 +147,8 @@ win.on('click','.mailbox', function(e){
 
 	mailboxApi.getMessages(0,20,function(error, messages){
 
+		console.log(messages);
+
 		mailList.children().not(':first').remove();
 
 		if(error){
@@ -174,9 +176,9 @@ win.on('click','.mailbox', function(e){
 				message.find('.important').addClass('active');
 			}
 
-			var line = linePrototype.clone().removeClass('wz-prototype');
+			//var line = linePrototype.clone().removeClass('wz-prototype');
 			mailList.append(message);
-			mailList.append(line);
+			//mailList.append(line);
 
 
 
@@ -402,7 +404,7 @@ win.on('click','.mailbox', function(e){
 
 .on( 'click', '.mail-options .delete', function(){
 
-	/*var selected = $('.subcontent1 .active');
+	var selected = $('.subcontent1 .active');
 	var selectedList = [];
 
 	if( selected.length){
@@ -413,20 +415,84 @@ win.on('click','.mailbox', function(e){
 
 	}
 
-	selectedList.forEach( function(item){
+	if( $('.mailbox-info.active span').text() === 'Trash' ){
 
-		var apiMessage = $(item).data();
-		apiMessage.removeMessage( function(error){
+		selectedList.forEach( function(item){
 
-			if(error){
-				return alert(error);
-			}
+			var apiMessage = $(item).data();
 
-			item.remove();
+			apiMessage.removeMessage( function(error){
+
+				if(error){
+					return alert(error);
+				}
+
+				item.remove();
+
+			});
 
 		});
 
-	});*/
+	}else{
+
+		selectedList.forEach( function(item){
+
+			var apiMessage = $(item).data();
+			var options = {
+				move_to_box : 'Trash'
+			}
+
+			apiMessage.modifyMessage(options, function(error){
+
+				if(error){
+					return alert(error);
+				}
+
+				item.remove();
+
+			});
+
+		});
+
+	}
+
+})
+
+.on( 'click', '.mail-options .mark-as-spam', function(){
+
+	var selected = $('.subcontent1 .active');
+	var selectedList = [];
+
+	if( selected.length){
+
+		for( var i = 0; i < selected.length; i++){
+			selectedList.push(selected[i]);
+		}
+
+	}
+
+	if( $('.mailbox-info.active span').text() !== 'Spam' ){
+
+		selectedList.forEach( function(item){
+
+			var apiMessage = $(item).data();
+			var options = {
+				move_to_box : 'Spam'
+			}
+
+			apiMessage.modifyMessage(options, function(error){
+
+				if(error){
+					return alert(error);
+				}
+
+				item.remove();
+
+			});
+
+		});
+
+	}
 
 })
 
