@@ -502,7 +502,7 @@ span{
   margin: 5px;
 }
 
-.mail-options .mark-as-fav i{
+.mail-options .toggle-fav i{
   background: url("@static/assets/star.png");
   background-repeat: no-repeat;
   background-size: 14px 14px;
@@ -604,6 +604,10 @@ span{
 	margin-top: 3px;
   background-color: none;
   margin-left: 1px;
+}
+
+.single-mail.unread.active .select{
+  background-color: white;
 }
 
 .single-mail.unread .select{

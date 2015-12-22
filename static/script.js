@@ -16,44 +16,6 @@ var boxPrototype					= $('.mailbox.wz-prototype');
 var linePrototype					= $('.line.wz-prototype');
 var fullMailPrototype			= $('.full-mail.wz-prototype');
 
-var addBoxChildrens = function (boxApi, boxFather){
-
-	var boxList = [];
-	boxFather.removeClass('hide-arrow').addClass('arrow-closed');
-
-	for( var i=0; i< boxApi.children.length; i++ ){
-
-		var boxItem = boxPrototype.clone().removeClass('wz-prototype');
-		boxItem.addClass('box-' + boxApi.children[i].name);
-		boxItem.children('.mailbox-info').children('span').text(boxApi.children[i].name);
-		boxItem.data(boxApi.children[i]);
-
-		if(boxApi.children[i].children.length >0){
-			addBoxChildrens(boxApi.children[i], boxItem);
-		}
-
-		boxList.push(boxItem);
-
-	}
-
-	var sortedList = boxList.sort( function( a, b ){
-
-			var aOrder = a.data('order');
-			var bOrder = b.data('order');
-
-			if( aOrder - bOrder ){
-					return aOrder - bOrder;
-			}
-
-			return a.data('name').localeCompare( b.data('name') );
-	});
-
-	boxFather.children('.children').append(sortedList);
-
-};
-
-
-
 var initMail = function(){
 
 	wz.mail.getAccounts( function(error, list){
@@ -138,10 +100,41 @@ var initMail = function(){
 
 }
 
+var addBoxChildrens = function (boxApi, boxFather){
 
-$('.composeButton').on('click', function(){
-	wz.app.createView(null, 'new');
-})
+	var boxList = [];
+	boxFather.removeClass('hide-arrow').addClass('arrow-closed');
+
+	for( var i=0; i< boxApi.children.length; i++ ){
+
+		var boxItem = boxPrototype.clone().removeClass('wz-prototype');
+		boxItem.addClass('box-' + boxApi.children[i].name);
+		boxItem.children('.mailbox-info').children('span').text(boxApi.children[i].name);
+		boxItem.data(boxApi.children[i]);
+
+		if(boxApi.children[i].children.length >0){
+			addBoxChildrens(boxApi.children[i], boxItem);
+		}
+
+		boxList.push(boxItem);
+
+	}
+
+	var sortedList = boxList.sort( function( a, b ){
+
+			var aOrder = a.data('order');
+			var bOrder = b.data('order');
+
+			if( aOrder - bOrder ){
+					return aOrder - bOrder;
+			}
+
+			return a.data('name').localeCompare( b.data('name') );
+	});
+
+	boxFather.children('.children').append(sortedList);
+
+};
 
 win.on('click','.mailbox', function(e){
 
@@ -246,7 +239,6 @@ win.on('click','.mailbox', function(e){
 
 .on('click', '.single-mail', function(e){
 
-	console.log('Capturando click');
 	if( e.ctrlKey || e.metaKey ){
 
 			if( $( this ).hasClass( 'active' ) ){
@@ -257,7 +249,7 @@ win.on('click','.mailbox', function(e){
 
 	}else{
 
-		if(!$(this).hasClass('active')){
+		if( !$(this).hasClass('active') ){
 
 			var messageApi = $(this).data();
 			var mailboxApi = $('.mailbox-info.active').parent().data();
@@ -268,6 +260,7 @@ win.on('click','.mailbox', function(e){
 				var options = {
     			add_flags: ['\\Seen']
 				};
+				console.log('voy a marcar como leido');
 
 				messageApi.modifyMessage( options, function(error, message){
 
@@ -275,23 +268,24 @@ win.on('click','.mailbox', function(e){
 						return alert(error);
 					}
 
-					console.log(messageDom);
+					console.log('marco como leido');
+					console.log(message);
 					messageDom.removeClass('unread');
+					messageDom.data(message);
+					messageApi = message;
 
 				});
 
 			}
 
-			console.log(messageApi.id);
 			mailboxApi.getMessage( messageApi.id , function(error, message){
 
-				console.log(arguments);
 				if(error){
 					return alert(error);
 				}
 
-				var fullMailItem = fullMailPrototype.clone().removeClass('wz-prototype');
 				console.log(message);
+				var fullMailItem = fullMailPrototype.clone().removeClass('wz-prototype');
 
 				fullMailItem.find('.full-mail-title').text( message.title );
 				fullMailItem.find('.full-mail-delivery').text( message.from.name );
@@ -314,8 +308,6 @@ win.on('click','.mailbox', function(e){
 
 			});
 
-
-
 			$('.emails .active').removeClass('active');
 			$(this).addClass('active');
 
@@ -326,12 +318,9 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on( 'click', '.mail-options .unread', function(){
+.on( 'click', '.mail-options .mark-as-unread', function(){
 
 	var selected = $('.subcontent1 .active');
-
-	console.log(selected);
-
 	var selectedList = [];
 
 	if( selected.length){
@@ -345,21 +334,22 @@ win.on('click','.mailbox', function(e){
 	selectedList.forEach( function(item){
 
 		var apiMessage = $(item).data();
-		console.log(apiMessage);
 
 		if( apiMessage.flags.indexOf('\\Seen') !== -1 && !($(item).hasClass('unread')) ){
 
+			console.log('voy a marcar como no leido');
 			var options = {
 				remove_flags : ['\\Seen']
 			}
 
 			apiMessage.modifyMessage(options, function(error, message){
 
-				console.log(arguments);
 				if(error){
 					return alert(error);
 				}
 
+				console.log('marco como no leido');
+				console.log(arguments);
 				$(item).data(message);
 				$(item).addClass('unread');
 
@@ -369,7 +359,7 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on( 'click', '.mail-options .read', function(){
+.on( 'click', '.mail-options .mark-as-read', function(){
 
 	var selected = $('.subcontent1 .active');
 
@@ -413,9 +403,6 @@ win.on('click','.mailbox', function(e){
 .on( 'click', '.mail-options .delete', function(){
 
 	/*var selected = $('.subcontent1 .active');
-
-	console.log(selected);
-
 	var selectedList = [];
 
 	if( selected.length){
@@ -428,7 +415,6 @@ win.on('click','.mailbox', function(e){
 
 	selectedList.forEach( function(item){
 
-		console.log(item);
 		var apiMessage = $(item).data();
 		apiMessage.removeMessage( function(error){
 
@@ -444,7 +430,7 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on('click', '.single-mail .important', function(e){
+.on('click', '.single-mail .toggle-fav', function(e){
 
 	/*var messageApi = $(this).parents('.single-mail').data();
 	var options;
@@ -534,7 +520,7 @@ win.on('click','.mailbox', function(e){
 
 .on('wz-dragstart' , '.single-mail', function( e,drag ){
 
-	console.log('empiezo a dragear por la vida');
+	//console.log('empiezo a dragear por la vida');
   //var ghost = messagePrototype.clone().removeClass( 'wz-prototype' );
   var ghost = $(this).cloneWithStyle().css( {
 
@@ -589,6 +575,10 @@ win.on('click','.mailbox', function(e){
   console.log('Cambio de flags: ');
   console.log(arguments);
 
+})
+
+.on('click', '.composeButton' , function(){
+	wz.app.createView(null, 'new');
 });
 
 initMail();
