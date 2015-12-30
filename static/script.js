@@ -54,18 +54,13 @@ var initMail = function(){
 				var boxList = [];
 				console.log('Boxes de la cuenta ' + item.address, boxes);
 
-				var accUnread = 0;
-
 				for ( var i=0; i<boxes.length; i++ ){
 
 					var boxItem = boxPrototype.clone().removeClass('wz-prototype');
 					boxItem.addClass('box-' + boxes[i].name);
+					boxItem.addClass('account-' + item.id );
 					boxItem.children('.mailbox-info').children('span').text(boxes[i].path);
 					boxItem.data(boxes[i]);
-					if( boxes[i].unread > 0 ){
-						boxItem.children('.mailbox-info').children('.bullet').text( boxes[i].unread );
-						accUnread += boxes[i].unread;
-					}
 
 					if( boxes[i].children.length > 0 ){
 						var childrens = addBoxChildrens(boxes[i], boxItem);
@@ -88,9 +83,7 @@ var initMail = function(){
 				});
 
 				childrenList.append(sortedList);
-				if( accUnread > 0 ){
-					accountItem.children('.account-info').children('.bullet').text( accUnread );
-				}
+				refreshUnreads( item.id );
 
 			});
 
@@ -136,11 +129,92 @@ var addBoxChildrens = function (boxApi, boxFather){
 
 };
 
+var refreshUnreads = function( accId, box ){
+
+	var accountDom = $('.account-' + accId);
+	var accountApi = accountDom.data();
+	console.log('Argumentos:', arguments);
+
+	if( typeof box !== "undefined" ){
+
+		accountApi.getBox( box, function( error, boxApi ){
+
+			if(error){
+				alert(error);
+			}
+
+			var boxDom = $( '.account-' + accId + '.box-' + boxApi.name );
+			var oldUnread = boxDom.children('.mailbox-info').children('.bullet').text();
+			var totalUnread = accountDom.children('.account-info').children('.bullet').text();
+
+			boxDom.data( boxApi );
+			console.log( boxApi );
+			var newUnread = boxApi.unread;
+
+			if( newUnread == -1 ){
+				newUnread = 0;
+			}
+
+			if ( totalUnread == '' ){
+				totalUnread = 0;
+			}
+
+			if( oldUnread == '' ){
+				oldUnread = 0;
+			}
+
+			console.log( totalUnread );
+			console.log( newUnread );
+			console.log( oldUnread );
+
+			totalUnread = totalUnread + newUnread - oldUnread;
+
+			if( newUnread == 0 ){
+				newUnread = '';
+			}
+			if( totalUnread == -1 || totalUnread == 0 ){
+				totalUnread = '';
+			}
+
+			console.log(totalUnread);
+			boxDom.children('.mailbox-info').children('.bullet').text( newUnread );
+			accountDom.children('.account-info').children('.bullet').text( totalUnread );
+
+		});
+
+	}else{
+
+		var totalUnread = 0;
+		var boxes = accountDom.find( '.mailbox.account-' + accId );
+
+		for( var i = 0; i < boxes.length; i++ ){
+
+			var unread = boxes.eq(i).data().unread;
+
+			if ( unread > 0 ){
+
+				boxes.eq(i).children('.mailbox-info').children('.bullet').text( unread );
+				totalUnread += unread;
+
+			}
+
+		}
+
+		if( totalUnread > 0 ){
+			accountDom.children('.account-info').children('.bullet').text( totalUnread );
+		}
+
+	}
+
+}
+
 win.on('click','.mailbox', function(e){
 
 	$('.full-mail-complete').remove();
+	$('.mailbox.active').removeClass('active');
 	$('.mailbox-info.active').removeClass('active');
 	$(this).children('.mailbox-info').addClass('active');
+	$(this).addClass('active')
 
 	var mailboxApi = $(this).data();
 	//console.log(mailboxApi);
@@ -180,8 +254,6 @@ win.on('click','.mailbox', function(e){
 			mailList.append(message);
 			//mailList.append(line);
 
-
-
 		}
 
 	});
@@ -192,7 +264,7 @@ win.on('click','.mailbox', function(e){
 
 .on('click', '.mailbox .arrow' ,function(e){
 
-	if($(this).parents('.mailbox').first().hasClass('arrow-opened')){
+	if( $(this).parents('.mailbox').first().hasClass('arrow-opened') ){
 
 		$(this).parents('.mailbox').first().removeClass('arrow-opened');
 		$(this).parents('.mailbox').first().addClass('arrow-closed');
@@ -262,8 +334,8 @@ win.on('click','.mailbox', function(e){
 				var options = {
     			add_flags: ['\\Seen']
 				};
-				console.log('voy a marcar como leido');
 
+				console.log('voy a marcar como leido');
 				messageApi.modifyMessage( options, function(error, message){
 
 					if(error){
@@ -636,15 +708,40 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on( 'flagChanged' , function( accountId, path, uid, flags ){
-
-  console.log('Cambio de flags: ');
-  console.log(arguments);
-
-})
-
 .on('click', '.composeButton' , function(){
 	wz.app.createView(null, 'new');
+});
+
+wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
+
+  console.log('Cambio de flags: ', arguments);
+	console.log( '.account-' + accountId + '.box-' + path + '.active' );
+
+	if( $( '.account-' + accountId + '.box-' + path + '.active' ).length !== 0 ){
+
+		var message = $( '.single-mail.message-' + uid );
+		if( message.length !== 0 ){
+
+			if( flags.indexOf('\\Seen') === -1 ){
+				message.addClass('unread');
+			}
+			else{
+				message.removeClass('unread');
+			}
+
+			if( flags.indexOf('\\Flagged') !== -1 ){
+				message.addClass('flagged');
+				//message.find('.important').addClass('active');
+			}else{
+				message.removeClass('flagged');
+			}
+
+		}
+
+	}
+
+	refreshUnreads( accountId, path );
+
 });
 
 initMail();
