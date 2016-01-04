@@ -247,7 +247,7 @@ var translateUi = function(){
     $('.content-to span').append( lang.to + ':' );
     $('.content-subject span').text( lang.subject + ':' );
     $('.content-from span').text( lang.from + ':' );
-    $('.content-send span').text( lang.send );
+    $('.ui-btn.send span').text( lang.send );
     $('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
     $('.content-attachments-delete').text( lang.delete );
     $('.content-add-attachments span').text( lang.attachFile );
@@ -255,12 +255,9 @@ var translateUi = function(){
 };
 
 
-
-
-
 // Events
     win
-    .on( 'click', '.content-send figure', function(){
+    .on( 'click', '.ui-btn.send', function(){
 
         if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
 

@@ -259,21 +259,9 @@ span.content-attachments-delete:hover{
     margin: 0 3px 0 0;
 }
 
-.content-send{
-    display: block;
-    width: 250px;
-    height: 27px;
-    float: right;
-    text-align: right;
-    padding: 5px 10px 5px 0px;
-}
-
-.content-send figure{
-    display: inline-block;
-    width: auto;
-    padding: 6px 20px;
-    font-size: 13px;
-    height: 13px;
+.send.ui-btn{
+  float: right;
+  margin: 7px;
 }
 
 .tool{
@@ -959,4 +947,11 @@ span.content-attachments-delete:hover{
 
     }
 
+}
+
+
+.footer{
+  width: 100%;
+  height: 49px;
+  display: inline-block;
 }
