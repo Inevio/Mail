@@ -167,7 +167,7 @@ var loadAccountList = function(){
 
     wz.mail.getAccounts( function( error, accounts ){
 
-        var optionProto = $('.content-from option.wz-prototype');
+        var optionProto = $('.content-from .ui-select-dropdown .wz-prototype');
 
         for( var i = 0, j = accounts.length; i < j; i++ ){
 
@@ -180,7 +180,7 @@ var loadAccountList = function(){
                 .removeClass('wz-prototype')
                 .text( accounts[ i ].address )
                 .data( 'account', accounts[ i ] )
-                .appendTo( $('.content-from select') );
+                .appendTo( $('.content-from .ui-select-dropdown') );
 
         }
 
