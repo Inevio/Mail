@@ -190,7 +190,7 @@ var loadAccountList = function(){
             return;
         }
 
-        $('.content-from select option').each( function(){
+        $('.content-from .ui-select-dropdown article').each( function(){
 
             if( $(this).text() === params.from.address ){
                 $(this).prop( 'selected', true );
@@ -259,9 +259,9 @@ var translateUi = function(){
     win
     .on( 'click', '.ui-btn.send', function(){
 
-        if( $( '.content-to input', win ).val().length && $( '.content-from option:selected', win ).text().length ){
+        if( $( '.content-to .ui-input input', win ).val().length && $( '.content-from .ui-select-input article', win ).text().length ){
 
-            $( '.content-from option:selected', win ).data( 'account' ).send(
+            $( '.content-from .ui-select article.active', win ).data( 'account' ).send(
 
                 {
 
@@ -269,18 +269,21 @@ var translateUi = function(){
                     cc          : $( '.content-cc input', win ).val(),
                     bcc         : $( '.content-cco input', win ).val(),
                     subject     : $( '.content-subject input', win ).val(),
-                    content     : $( '.content-compose', win ).html(),
+                    msg         : $( '.content-compose', win ).html(),
+                    inReplyTo   : null,
+                    references  : null,
+                    attachments : null/*,
                     inReplyTo   : params.messageId || null,
                     references  : params.references,
-                    attachments : attachmentsList
+                    attachments : attachmentsList*/
 
                 },
 
                 function( error ){
 
                     if( error ){
-                        alert( error );
-                        return;
+                      alert( error );
+                      return;
                     }
 
                     wz.banner()
@@ -302,6 +305,13 @@ var translateUi = function(){
         }else if( !$( '.content-from option:selected', win ).text() ){
             alert( lang.introduceFrom );
         }
+
+    })
+
+    .on('click', '.content-from .ui-select-dropdown article', function(){
+
+      $('.content-from .ui-select-dropdown article.active').removeClass('active');
+      $(this).addClass('active');
 
     })
 
