@@ -272,7 +272,7 @@ var translateUi = function(){
                     msg         : $( '.content-compose', win ).html(),
                     inReplyTo   : null,
                     references  : null,
-                    attachments : null/*,
+                    attachments : attachmentsList/*,
                     inReplyTo   : params.messageId || null,
                     references  : params.references,
                     attachments : attachmentsList*/
