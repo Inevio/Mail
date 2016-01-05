@@ -346,7 +346,7 @@ var translateUi = function(){
 
             var attachmentsHeight = 0;
             var generalHeight     = 0;
-            var initialValue      = 205;
+            var initialValue      = 230;
 
             if(attachments.outerHeight( true ) !== 22){
               initialValue += attachments.outerHeight( true );
@@ -428,7 +428,7 @@ var translateUi = function(){
         var attachment   = $(this).parent();
         var attachmentId = attachment.data('id');
 
-        var initialValue = 205 + attachments.outerHeight(true);
+        var initialValue = 230 + attachments.outerHeight(true);
 
         //content.height( '-=' + attachment.outerHeight( true ) );
         //win.height( '-=' + attachment.outerHeight( true ) );
@@ -495,6 +495,7 @@ var translateUi = function(){
 
     leftButton.on( 'click' , function(){
 
+      $('.tool-alignment.active').removeClass('active');
       winDocument.execCommand('justifyleft', false, null);
       leftButton.toggleClass('active');
 
@@ -502,6 +503,7 @@ var translateUi = function(){
 
     centerButton.on( 'click' , function(){
 
+      $('.tool-alignment.active').removeClass('active');
       winDocument.execCommand('justifycenter', false, null);
       centerButton.toggleClass('active');
 
@@ -509,6 +511,7 @@ var translateUi = function(){
 
     rightButton.on( 'click' , function(){
 
+      $('.tool-alignment.active').removeClass('active');
       winDocument.execCommand('justifyright', false, null);
       rightButton.toggleClass('active');
 
@@ -516,6 +519,7 @@ var translateUi = function(){
 
     justifyButton.on( 'click' , function(){
 
+      $('.tool-alignment.active').removeClass('active');
       winDocument.execCommand('justifyfull', false, null);
       justifyButton.toggleClass('active');
 
