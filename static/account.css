@@ -15,85 +15,11 @@ span, input, button{
     width: 5px;
 }
 
-.wz-view-minimize, .wz-view-maximize, .wz-view-close{
-    float: right;
-    margin-top: 6px;
-}
-
-.wz-view-minimize{
-  width: 10px;
-  height: 9px;
-  padding: 6px;
-  float: right;
-  border-radius: 2px;
-}
-
-.wz-view-minimize i{
-  background: url('https://static.inevio.com/app/208/minimize.png');
-  background-size: 10px 1px;
-  display: inline-block;
-  width: 10px;
-  height: 1px;
-}
-
-.wz-view-close{
-    margin-right: 20px;
-    width: 10px;
-    height: 10px;
-    padding: 6px;
-    float: right;
-    border: 1px solid transparent;
-    border-radius: 2px;
-    margin-left: 6px;
-}
-
-.wz-view-close i{
-  background: url('https://static.inevio.com/app/208/close.png');
-  background-size: 10px 10px;
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-}
-
-.wz-view-minimize:hover, .wz-view-maximize:hover, .wz-view-close:hover{
-    border: 1px solid #EEE;
-}
-
-.wz-view-menu{
-
-    width: 560px;
-    height: 39px;
-    padding: 0px;
-    background-color: #f6f6f5;
-    -webkit-border-radius: 6px 6px 0 0;
-    -moz-border-radius: 6px 6px 0 0;
-    border-radius: 6px 6px 0 0;
-    background-color: #fff;
-    -webkit-box-shadow: 0 1px #ccd3d5;
-    -moz-box-shadow: 0 1px #ccd3d5;
-    box-shadow: 0 1px #ccd3d5;
-    background-image: -webkit-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: -moz-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: -o-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: -ms-linear-gradient(bottom, #e9ecef, #f9fafb);
-    background-image: linear-gradient(to top, #e9ecef, #f9fafb);
-
-}
-
-.wz-view-menu span{
-
-    float: left;
-    font-size: 15px;
-    color: #818181;
-    margin-left: 30px;
-    margin-top: 13px;
-
-}
-
 .content{
     width: 500px;
     height: 220px;
     padding: 40px 30px 30px;
+    display: inline-block;
 }
 
 select{

@@ -44,27 +44,16 @@ var cached              = [];
 var fontfamilyActive    = FONTFAMILY[1];
 var fontSizeActive      = FONTSIZE[2];
 
+var fontFamilyPrototype = $('.tool-fontfamily .ui-select-dropdown article.wz-prototype');
+var fontSizePrototype   = $('.tool-fontsize .ui-select-dropdown article.wz-prototype');
+
 var winDocument         = win.parents().last().parent()[0];
 
 // Functions
 
 var changeValue = function(type,value){
 
-  if(type === "fontfamily"){
-
-    fontfamilyActive=value;
-    winDocument.execCommand("fontName",false,value);
-    fontfamilyDropdown.text(fontfamilyActive);
-
-  }else if(type === "fontsize"){
-
-    fontSizeActive=value;
-    winDocument.execCommand("fontSize",false,value);
-    fontsizeDropdown.text(fontSizeActive);
-
-  }
-
-  else if(type === "color"){
+  if(type === "color"){
 
     winDocument.execCommand("foreColor",false,value);
 
@@ -101,7 +90,7 @@ var showDropdown = function(type, origin){
 
   var position = ['134px','188px'];
 
-  if( type === DROPDOWN_FONTFAMILY || type === DROPDOWN_FONTSIZE  ){
+  /*if( type === DROPDOWN_FONTFAMILY || type === DROPDOWN_FONTSIZE  ){
 
     if( !cached[ type ] ){
 
@@ -140,7 +129,8 @@ var showDropdown = function(type, origin){
     }
     //toolsList.find('[data-value="' + ( type === DROPDOWN_LINESPACING ? origin.attr('data-value') : origin.text() ) + '"]').addClass('active');
 
-  }else if( type === DROPDOWN_COLOR ){
+  }else*/
+  if( type === DROPDOWN_COLOR ){
 
     position = ['134px', '321px'];
 
@@ -251,6 +241,21 @@ var translateUi = function(){
     $('.content-attachments-title span').not( '.stats' ).text( lang.attachments );
     $('.content-attachments-delete').text( lang.delete );
     $('.content-add-attachments span').text( lang.attachFile );
+
+};
+
+var loadDropdowns = function(){
+
+  for( var i = 0; i < FONTFAMILY.length; i++ ){
+
+    fontFamilyPrototype
+        .clone()
+        .removeClass('wz-prototype')
+        .text( FONTFAMILY[ i ] )
+        .appendTo( $('.tool-fontfamily .ui-select-dropdown') );
+
+  }
+
 
 };
 
@@ -617,6 +622,7 @@ var translateUi = function(){
 translateUi();
 loadAccountList();
 loadParams();
+loadDropdowns();
 changeValue('fontfamily',fontfamilyActive);
 changeValue('fontsize',fontSizeActive);
 winDocument.execCommand("styleWithCss",false,true);

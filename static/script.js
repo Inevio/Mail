@@ -742,6 +742,14 @@ wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
 
 	refreshUnreads( accountId, path );
 
+})
+
+.on( 'modifyMessage' , function( mailAccountId, boxId, options, mods ){
+	console.log('Modify message', arguments);
+})
+
+.on( 'messageIn' , function( mailAccountId, boxId, options, mods ){
+	console.log('Message in2', arguments);
 });
 
 initMail();
