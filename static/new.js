@@ -416,20 +416,21 @@ var loadDropdowns = function(){
 
     })
 
-    .on('click','.active-fontfamily li',function(){
+    .on('click','.tool-fontfamily .ui-select-dropdown article',function(){
 
       var value = $(this).text();
       changeValue('fontfamily',value);
-      hideDropdowns();
+      //hideDropdowns();
 
     })
 
 
-    .on('click','.active-fontsize li',function(){
+    .on('click','.tool-fontsize .ui-select-dropdown article',function(){
 
       var value = $(this).text();
+      console.log(value);
       changeValue('fontsize',value);
-      hideDropdowns();
+      //hideDropdowns();
 
     })
 
