@@ -135,7 +135,6 @@ select{
 
 .content-info .ui-input{
   float: left;
-  height: 28px;
   width: ~'calc( 100% - 100px )';
 }
 
@@ -496,7 +495,9 @@ span.content-attachments-delete:hover{
 }
 
 .tools-group{
-  margin-left: 69px;
+  padding: 0 10px;
+  height: 30px;
+  width: ~'calc( 100% - 20px )';
 }
 
 .toolbar-color-picker-container{

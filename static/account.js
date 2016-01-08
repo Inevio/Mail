@@ -49,7 +49,7 @@
               },
 
               function( error, details ){
-                
+
                   console.log(arguments);
                   if( error ){
                       //alert( lang.error );
@@ -85,7 +85,7 @@
     $( '.name span', win ).text( lang.name + ':' );
     $( '.mail span', win ).text( lang.address + ':' );
     $( '.pass span', win ).text( lang.password + ':' );
-    $( '.next', win ).text( lang.next );
+    $( '.next', win ).children('span').text( lang.next );
 
     if( params ){
 

@@ -256,6 +256,15 @@ var loadDropdowns = function(){
 
   }
 
+  for( var i = 0; i < FONTSIZE.length; i++ ){
+
+    fontSizePrototype
+        .clone()
+        .removeClass('wz-prototype')
+        .text( FONTSIZE[ i ] )
+        .appendTo( $('.tool-fontsize .ui-select-dropdown') );
+
+  }
 
 };
 

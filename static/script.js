@@ -144,11 +144,9 @@ var refreshUnreads = function( accId, box ){
 			}
 
 			var boxDom = $( '.account-' + accId + '.box-' + boxApi.name );
-			var oldUnread = boxDom.children('.mailbox-info').children('.bullet').text();
-			var totalUnread = accountDom.children('.account-info').children('.bullet').text();
+			var oldUnread = parseInt( boxDom.children('.mailbox-info').children('.bullet').text() ) || 0;
+			var totalUnread = parseInt( accountDom.children('.account-info').children('.bullet').text() ) || 0;
 
-			boxDom.data( boxApi );
-			console.log( boxApi );
 			var newUnread = boxApi.unread;
 
 			if( newUnread == -1 ){
@@ -163,10 +161,6 @@ var refreshUnreads = function( accId, box ){
 				oldUnread = 0;
 			}
 
-			console.log( totalUnread );
-			console.log( newUnread );
-			console.log( oldUnread );
-
 			totalUnread = totalUnread + newUnread - oldUnread;
 
 			if( newUnread == 0 ){
@@ -176,7 +170,6 @@ var refreshUnreads = function( accId, box ){
 				totalUnread = '';
 			}
 
-			console.log(totalUnread);
 			boxDom.children('.mailbox-info').children('.bullet').text( newUnread );
 			accountDom.children('.account-info').children('.bullet').text( totalUnread );
 
@@ -749,7 +742,11 @@ wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
 })
 
 .on( 'messageIn' , function( mailAccountId, boxId, options, mods ){
-	console.log('Message in2', arguments);
+	console.log('Message in', arguments);
+})
+
+.on( 'messageOut' , function( mailAccountId, boxId, options, mods ){
+	console.log('Message out', arguments);
 });
 
 initMail();

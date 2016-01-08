@@ -41,120 +41,13 @@ select:focus{
 
 }
 
-input{
-
-    width: 230px;
-    float: left;
-    margin-top: -3px;
-    border-radius: 3px;
-    border: 1px solid #DDD;
-    font-size: 14px;
-    color: #5D5D5D;
-    padding: 3px 5px 3px 5px;
-
-}
-
-input:focus{
-    border: 1px solid #50BDFF;
-}
-
 .checkbox input{
 
     cursor: default;
 
 }
 
-button{
 
-    border-radius: 2px;
-    border-top: 1px solid #4B4B4D;
-    padding: 10px 25px;
-    margin-top: 20px;
-    text-align: center;
-    box-shadow: 0 1px 1px #AAA;
-    box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    font-size: 16px;
-    color: #FFF;
-    cursor: pointer;
-
-    background-image: -moz-linear-gradient(50% 0% -90deg,rgb(54,54,57) 0%,rgb(39,39,41) 100%);
-    background-image: -webkit-linear-gradient(-90deg,rgb(54,54,57) 0%,rgb(39,39,41) 100%);
-    background-image: -o-linear-gradient(-90deg,rgb(54,54,57) 0%,rgb(39,39,41) 100%);
-    background-image: linear-gradient(0deg,rgb(39,39,41) 0%,rgb(54,54,57) 100%);
-
-}
-
-button:hover{
-
-    border-top: 1px solid #5D5D60;
-
-    background-image: -moz-linear-gradient(50% 0% -90deg,rgb(75,75,77) 0%,rgb(55,55,56) 100%);
-    background-image: -webkit-linear-gradient(-90deg,rgb(75,75,77) 0%,rgb(55,55,56) 100%);
-    background-image: -o-linear-gradient(-90deg,rgb(75,75,77) 0%,rgb(55,55,56) 100%);
-    background-image: linear-gradient(0deg,rgb(55,55,56) 0%,rgb(75,75,77) 100%);
-
-}
-
-button.big{
-    padding: 10px 40px;
-}
-
-button.active{
-
-  background-image: -moz-linear-gradient(90deg, #50a54e 0%, #60b25e 100%);
-  background-image: -webkit-linear-gradient(90deg, #50a54e 0%, #60b25e 100%);
-  background-image: -ms-linear-gradient(90deg, #50a54e 0%, #60b25e 100%);
-  background-image: -moz-linear-gradient(90deg, #5cb05a 0%, #6ebd6c 100%);
-  background-image: -webkit-linear-gradient(90deg, #5cb05a 0%, #6ebd6c 100%);
-  background-image: -ms-linear-gradient(90deg, #5cb05a 0%, #6ebd6c 100%);
-  box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.2);
-  border:0px;
-
-}
-
-button.active:hover{
-
-    border-top: 1px solid #60CBFF;
-
-    background-image: -moz-linear-gradient(50% 0% -90deg,rgb(77,197,255) 0%,rgb(56,175,255) 100%);
-    background-image: -webkit-linear-gradient(-90deg,rgb(77,197,255) 0%,rgb(56,175,255) 100%);
-    background-image: -o-linear-gradient(-90deg,rgb(77,197,255) 0%,rgb(56,175,255) 100%);
-    background-image: linear-gradient(0deg,rgb(56,175,255) 0%,rgb(77,197,255) 100%);
-
-}
-
-button.disabled{
-
-    border-top: 1px solid #333334;
-    background: rgba(58,58,59,0.2);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.4);
-    color: #666;
-    cursor: default;
-
-}
-
-button.disabled:hover{
-
-    border-top: 1px solid #333334;
-    background: rgba(58,58,59,0.2);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.4);
-
-}
-
-button.warning{
-
-    border-top: 1px solid #A14C53;
-    background: #96383F;
-
-}
-
-button.warning:hover{
-
-    border-top: 1px solid #AB5E65;
-    background: #A14C53;
-
-}
 
 .description{
 
@@ -183,10 +76,15 @@ span{
     font-size: 15px;
     float: left;
     color: #666;
+    margin-top: 4px;
 
 }
 
-.data input{
+.next{
+  margin-top: 20px;
+}
+
+.data .ui-input{
     float: right;
 }
 
