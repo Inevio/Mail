@@ -419,7 +419,7 @@ var loadDropdowns = function(){
     .on('click','.tool-fontfamily .ui-select-dropdown article',function(){
 
       var value = $(this).text();
-      changeValue('fontfamily',value);
+      winDocument.execCommand("fontName",false,value);
       //hideDropdowns();
 
     })
@@ -428,8 +428,7 @@ var loadDropdowns = function(){
     .on('click','.tool-fontsize .ui-select-dropdown article',function(){
 
       var value = $(this).text();
-      console.log(value);
-      changeValue('fontsize',value);
+      winDocument.execCommand("fontSize",false,value);
       //hideDropdowns();
 
     })
@@ -552,7 +551,7 @@ var loadDropdowns = function(){
 
     });
 
-    fontfamilyDropdown.on('click', function(){
+    /*fontfamilyDropdown.on('click', function(){
 
       if( lastDropdownActive !== DROPDOWN_FONTFAMILY ){
         showDropdown( DROPDOWN_FONTFAMILY, this );
@@ -566,7 +565,7 @@ var loadDropdowns = function(){
         showDropdown( DROPDOWN_FONTSIZE, this );
       }
 
-    });
+    });*/
 
     colorButton.on('click', function(){
 

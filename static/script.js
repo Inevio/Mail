@@ -171,7 +171,10 @@ var refreshUnreads = function( accId, box ){
 			}
 
 			boxDom.children('.mailbox-info').children('.bullet').text( newUnread );
-			accountDom.children('.account-info').children('.bullet').text( totalUnread );
+			console.log(boxApi);
+			if( boxApi.type === "inbox" ){
+				accountDom.children('.account-info').children('.bullet').text( totalUnread );
+			}
 
 		});
 
@@ -184,10 +187,13 @@ var refreshUnreads = function( accId, box ){
 
 			var unread = boxes.eq(i).data().unread;
 
-			if ( unread > 0 ){
+			if ( unread > 0  ){
 
 				boxes.eq(i).children('.mailbox-info').children('.bullet').text( unread );
-				totalUnread += unread;
+
+				if( boxes.eq(i).data().type === "inbox" ){
+					totalUnread += unread;
+				}
 
 			}
 
@@ -335,11 +341,10 @@ win.on('click','.mailbox', function(e){
 						return alert(error);
 					}
 
-					console.log('marco como leido');
-					console.log(message);
 					messageDom.removeClass('unread');
-					messageDom.data(message);
-					messageApi = message;
+					var newMessageApi = messageDom.data();
+					newMessageApi.flags.push('\\Seen');
+					messageDom.data(newMessageApi);
 
 				});
 
@@ -415,9 +420,10 @@ win.on('click','.mailbox', function(e){
 					return alert(error);
 				}
 
+				var index = apiMessage.flags.indexOf('\\Seen');
+				apiMessage.flags.splice(index,1);
 				console.log('marco como no leido');
-				console.log(arguments);
-				$(item).data(message);
+				$(item).data(apiMessage);
 				$(item).addClass('unread');
 
 			});
@@ -458,7 +464,8 @@ win.on('click','.mailbox', function(e){
 					return alert(error);
 				}
 
-				$(item).data(message);
+				apiMessage.flags.push('\\Seen');
+				$(item).data(apiMessage);
 				$(item).removeClass('unread');
 
 			});
@@ -703,6 +710,43 @@ win.on('click','.mailbox', function(e){
 
 .on('click', '.composeButton' , function(){
 	wz.app.createView(null, 'new');
+})
+
+.on( 'contextmenu', '.mailbox', function(e){
+
+  var boxApi = $(this).data();
+
+  wz.menu().
+		addOption( lang.renameBox, function(){
+			//boxApi.renameBox();
+		})
+		.addOption( lang.deleteBox, function(){
+			//boxApi.removeBox();
+		})
+		.addOption( 'Cambiar tipo', function(){
+
+		})
+		.render();
+
+})
+
+.on( 'contextmenu', '.mail-account', function(e){
+
+	if( $(e.target).closest('.mailbox').length ){
+		return;
+	}
+
+  var accountApi = $(this).data();
+
+  wz.menu().
+		addOption( lang.renameAccount, function(){
+			//boxApi.renameBox();
+		})
+		.addOption( lang.deleteAccount, function(){
+			//boxApi.removeBox();
+		})
+		.render();
+
 });
 
 wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
@@ -713,6 +757,9 @@ wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
 	if( $( '.account-' + accountId + '.box-' + path + '.active' ).length !== 0 ){
 
 		var message = $( '.single-mail.message-' + uid );
+		var apiMessage = message.data();
+		apiMessage.flags = flags;
+
 		if( message.length !== 0 ){
 
 			if( flags.indexOf('\\Seen') === -1 ){
