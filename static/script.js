@@ -103,10 +103,10 @@ var addBoxChildrens = function (boxApi, boxFather){
 		var boxItem = boxPrototype.clone().removeClass('wz-prototype');
 		boxItem.addClass('box-' + boxApi.children[i].name);
 		boxItem.children('.mailbox-info').children('span').text(boxApi.children[i].name);
-		boxItem.data(boxApi.children[i]);
+		boxItem.data( boxApi.children[i] );
 
-		if(boxApi.children[i].children.length >0){
-			addBoxChildrens(boxApi.children[i], boxItem);
+		if( boxApi.children[i].children.length > 0 ){
+			addBoxChildrens( boxApi.children[i], boxItem );
 		}
 
 		boxList.push(boxItem);
@@ -218,44 +218,52 @@ win.on('click','.mailbox', function(e){
 	var mailboxApi = $(this).data();
 	//console.log(mailboxApi);
 
-	mailboxApi.getMessages(0,20,function(error, messages){
+	if( mailboxApi.tags.length && mailboxApi.tags.indexOf( '\\Noselect' ) !== -1 ){
 
-		console.log(messages);
+		alert( 'Bandeja no seleccionable' );
 
-		mailList.children().not(':first').remove();
+	}else{
 
-		if(error){
-			console.log(error);
-			return alert(error);
-		}
+		mailboxApi.getMessages(0,20,function(error, messages){
 
-		//console.log(messages);
+			console.log(messages);
 
-		for (var i=0; i<messages.length; i++){
+			mailList.children().not(':first').remove();
 
-			var message = mailPrototype.clone().removeClass('wz-prototype');
-			message.data(messages[i]);
-			message.find('.mail-from').text(messages[i].from.name);
-			message.find('.mail-subject').text(messages[i].title);
-			message.find('.mail-date').text(messages[i].date);
-			message.addClass('message-' + messages[i].id);
-
-			if( messages[i].flags.indexOf('\\Seen') === -1 ){
-				message.addClass('unread');
+			if(error){
+				console.log(error);
+				return alert(error);
 			}
 
-			if( messages[i].flags.indexOf('\\Flagged') !== -1 ){
-				message.addClass('flagged');
-				message.find('.important').addClass('active');
+			//console.log(messages);
+
+			for (var i=0; i<messages.length; i++){
+
+				var message = mailPrototype.clone().removeClass('wz-prototype');
+				message.data(messages[i]);
+				message.find('.mail-from').text(messages[i].from.name);
+				message.find('.mail-subject').text(messages[i].title);
+				message.find('.mail-date').text(messages[i].date);
+				message.addClass('message-' + messages[i].id);
+
+				if( messages[i].flags.indexOf('\\Seen') === -1 ){
+					message.addClass('unread');
+				}
+
+				if( messages[i].flags.indexOf('\\Flagged') !== -1 ){
+					message.addClass('flagged');
+					message.find('.important').addClass('active');
+				}
+
+				//var line = linePrototype.clone().removeClass('wz-prototype');
+				mailList.append(message);
+				//mailList.append(line);
+
 			}
 
-			//var line = linePrototype.clone().removeClass('wz-prototype');
-			mailList.append(message);
-			//mailList.append(line);
+		});
 
-		}
-
-	});
+	}
 
 	e.stopPropagation();
 
