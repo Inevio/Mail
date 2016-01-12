@@ -57,13 +57,13 @@ var initMail = function(){
 				for ( var i=0; i<boxes.length; i++ ){
 
 					var boxItem = boxPrototype.clone().removeClass('wz-prototype');
-					boxItem.addClass('box-' + boxes[i].name);
+					boxItem.addClass('box-' + boxes[i].name.replace(' ', '-') );
 					boxItem.addClass('account-' + item.id );
 					boxItem.children('.mailbox-info').children('span').text(boxes[i].path);
 					boxItem.data(boxes[i]);
 
 					if( boxes[i].children.length > 0 ){
-						var childrens = addBoxChildrens(boxes[i], boxItem);
+						var childrens = addBoxChildrens(boxes[i], boxItem, item.id);
 					}
 
 					boxList.push(boxItem);
@@ -93,7 +93,7 @@ var initMail = function(){
 
 }
 
-var addBoxChildrens = function (boxApi, boxFather){
+var addBoxChildrens = function (boxApi, boxFather, accId){
 
 	var boxList = [];
 	boxFather.removeClass('hide-arrow').addClass('arrow-closed');
@@ -101,8 +101,9 @@ var addBoxChildrens = function (boxApi, boxFather){
 	for( var i=0; i< boxApi.children.length; i++ ){
 
 		var boxItem = boxPrototype.clone().removeClass('wz-prototype');
-		boxItem.addClass('box-' + boxApi.children[i].name);
+		boxItem.addClass('box-' + boxApi.children[i].name.replace(' ', '-') );
 		boxItem.children('.mailbox-info').children('span').text(boxApi.children[i].name);
+		boxItem.addClass('account-' + accId );
 		boxItem.data( boxApi.children[i] );
 
 		if( boxApi.children[i].children.length > 0 ){
@@ -129,6 +130,32 @@ var addBoxChildrens = function (boxApi, boxFather){
 
 };
 
+var generateSelectorString = function ( path, iterations ){
+
+	var splittedPath = path.split('/');
+	var finalString = '';
+
+	if( splittedPath.length === 1 ){
+		finalString = '.mailbox.box-' + path.replace(' ', '-');
+	}else{
+
+		var maximumIterations = splittedPath.length;
+		if ( typeof iterations !== "undefined" ){
+			if( iterations < maximumIterations ){
+				maximumIterations = iterations;
+			}
+		}
+
+		for( var i = 0 ; i < maximumIterations; i++ ){
+			finalString += ' .mailbox.box-' + splittedPath[i].replace(' ', '-');
+		}
+
+	}
+
+	return finalString;
+
+}
+
 var refreshUnreads = function( accId, box ){
 
 	var accountDom = $('.account-' + accId);
@@ -137,46 +164,107 @@ var refreshUnreads = function( accId, box ){
 
 	if( typeof box !== "undefined" ){
 
-		accountApi.getBox( box, function( error, boxApi ){
+		var splittedPath = box.split('/');
+		console.log( splittedPath );
 
-			if(error){
-				alert(error);
+		if( splittedPath.length === 1 ){
+
+			accountApi.getBox( box, function( error, boxApi ){
+
+				if(error){
+					alert(error);
+				}
+
+				var boxDom = $( '.account-' + accId + '.box-' + boxApi.name.replace(' ', '-') );
+				var oldUnread = parseInt( boxDom.children('.mailbox-info').children('.bullet').text() ) || 0;
+				var totalUnread = parseInt( accountDom.children('.account-info').children('.bullet').text() ) || 0;
+				var newUnread = boxApi.unread;
+
+				if ( totalUnread == '' ){
+					totalUnread = 0;
+				}
+
+				if( oldUnread == '' ){
+					oldUnread = 0;
+				}
+
+				totalUnread = totalUnread + newUnread - oldUnread;
+
+				if( newUnread == 0 ){
+					newUnread = '';
+				}
+				if( totalUnread == -1 || totalUnread == 0 ){
+					totalUnread = '';
+				}
+
+				boxDom.children('.mailbox-info').children('.bullet').text( newUnread );
+				console.log(boxApi);
+				if( boxApi.type === "inbox" ){
+					accountDom.children('.account-info').children('.bullet').text( totalUnread );
+				}
+
+			});
+
+		}else{
+
+			var pathToCheck = '';
+			console.log('longitud del path: ' + splittedPath.length);
+			var incrementalUnreads = 0;
+
+			for( var i = splittedPath.length ; i > 0 ; i-- ){
+
+				var jquerySelector = generateSelectorString( box, i );
+				console.log('jquerySelector: ' + jquerySelector)
+
+				var boxToCheck = $(jquerySelector);
+				var boxToCheckApi = boxToCheck.data();
+
+				accountApi.getBox( boxToCheckApi.path, function( error, boxApi ){
+
+					if(error){
+						alert(error);
+					}
+
+					var oldUnread = parseInt( boxToCheck.children('.mailbox-info').children('.bullet').text() ) || 0;
+					var totalUnread = parseInt( accountDom.children('.account-info').children('.bullet').text() ) || 0;
+					var newUnread = boxApi.unread;
+					if( i != splittedPath.length ){
+						incrementalUnreads += newUnread;
+					}else{
+						incrementalUnreads = newUnread;
+					}
+
+					if ( totalUnread == '' ){
+						totalUnread = 0;
+					}
+
+					if( oldUnread == '' ){
+						oldUnread = 0;
+					}
+
+					totalUnread = totalUnread + newUnread - oldUnread;
+
+					if( newUnread == 0 ){
+						newUnread = '';
+					}
+					if( totalUnread == 0 ){
+						totalUnread = '';
+					}
+					if(incrementalUnreads == 0){
+						incrementalUnreads = '';
+					}
+
+					boxToCheck.children('.mailbox-info').children('.bullet').text( incrementalUnreads );
+					console.log(boxApi);
+					if( boxApi.type === "inbox" ){
+						accountDom.children('.account-info').children('.bullet').text( totalUnread );
+					}
+
+				});
+
 			}
 
-			var boxDom = $( '.account-' + accId + '.box-' + boxApi.name );
-			var oldUnread = parseInt( boxDom.children('.mailbox-info').children('.bullet').text() ) || 0;
-			var totalUnread = parseInt( accountDom.children('.account-info').children('.bullet').text() ) || 0;
-
-			var newUnread = boxApi.unread;
-
-			if( newUnread == -1 ){
-				newUnread = 0;
-			}
-
-			if ( totalUnread == '' ){
-				totalUnread = 0;
-			}
-
-			if( oldUnread == '' ){
-				oldUnread = 0;
-			}
-
-			totalUnread = totalUnread + newUnread - oldUnread;
-
-			if( newUnread == 0 ){
-				newUnread = '';
-			}
-			if( totalUnread == -1 || totalUnread == 0 ){
-				totalUnread = '';
-			}
-
-			boxDom.children('.mailbox-info').children('.bullet').text( newUnread );
-			console.log(boxApi);
-			if( boxApi.type === "inbox" ){
-				accountDom.children('.account-info').children('.bullet').text( totalUnread );
-			}
-
-		});
+		}
 
 	}else{
 
@@ -760,9 +848,12 @@ win.on('click','.mailbox', function(e){
 wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
 
   console.log('Cambio de flags: ', arguments);
-	console.log( '.account-' + accountId + '.box-' + path + '.active' );
 
-	if( $( '.account-' + accountId + '.box-' + path + '.active' ).length !== 0 ){
+	var selector = generateSelectorString(path);
+	selector += '.active';
+	console.log(selector);
+
+	if( $(selector + '.active').length !== 0 ){
 
 		var message = $( '.single-mail.message-' + uid );
 		var apiMessage = message.data();
