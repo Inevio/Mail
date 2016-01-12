@@ -801,6 +801,10 @@ span{
 	border-bottom: 1px solid #ccd3d5;
 }
 
+.full-mail-text:empty{
+  display: none;
+}
+
 .full-mail-attachments{
 	margin-top: 10px;
   margin-bottom: 10px;
@@ -834,20 +838,20 @@ span{
 
 .attachment{
   width: 125px;
-  height: 135px;
+  height: 155px;
 	float: left;
 	margin-top: 5px;
 }
 
 .attachment i{
-	width: 120px;
-  height: 117px;
+	width: 128px;
+  height: 128px;
 }
 
-.attachment1 i{
-	background-image: url("@static/assets/doc.png");
-  background-repeat: no-repeat;
+.attachment i{
 	display: inline-block;
+  background-image: url("@static/assets/generico_128.png");
+  background-size: 128px 128px;
 }
 
 .attachment3 i{

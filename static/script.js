@@ -15,6 +15,7 @@ var mailPrototype 				= $('.emails .single-mail.wz-prototype');
 var boxPrototype					= $('.mailbox.wz-prototype');
 //var linePrototype					= $('.line.wz-prototype');
 var fullMailPrototype			= $('.full-mail.wz-prototype');
+var attachmentsPrototype	= $('.full-mail .full-mail-attachments.wz-prototype');
 
 var initMail = function(){
 
@@ -453,8 +454,9 @@ win.on('click','.mailbox', function(e){
 				}
 
 				console.log(message);
-				var fullMailItem = fullMailPrototype.clone().removeClass('wz-prototype');
+				$('.full-mail-complete').remove();
 
+				var fullMailItem = fullMailPrototype.clone().removeClass('wz-prototype');
 				fullMailItem.find('.full-mail-title').text( message.title );
 				fullMailItem.find('.full-mail-delivery').text( message.from.name );
 				var date = message.time.toString();
@@ -468,11 +470,33 @@ win.on('click','.mailbox', function(e){
 
 				}
 
+				if( message.attachments.length > 0 ){
+
+					var attachments = fullMailItem.find('.full-mail-attachments.wz-prototype').clone();
+					attachments.removeClass('wz-prototype');
+					console.log(attachments);
+					attachments.children('.attachments-information').text( message.attachments.length + ' adjuntos' );
+					var singleAttachmentPrototype = attachments.find('.attachment.wz-prototype');
+
+					for( var i = 0; i < message.attachments.length; i++ ){
+
+						var attachment = singleAttachmentPrototype.clone().removeClass('wz-prototype');
+						attachment.find('div').text( message.attachments[i].name );
+						attachment.addClass('attachment-' + i);
+						attachment.data( message.attachments[i] );
+						attachment.insertAfter( singleAttachmentPrototype );
+
+					}
+
+					attachments.insertAfter( fullMailItem.find('.full-mail-attachments.wz-prototype') );
+
+				}
+
 				fullMailItem.addClass('full-mail-complete');
 				fullMailItem.addClass('full-mail-id-' + message.id);
-				fullMailItem.data(message);
-
+				fullMailItem.data( message );
 				fullMailItem.insertAfter( fullMailPrototype );
+
 
 			});
 
