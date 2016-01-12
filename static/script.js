@@ -475,7 +475,7 @@ win.on('click','.mailbox', function(e){
 					var attachments = fullMailItem.find('.full-mail-attachments.wz-prototype').clone();
 					attachments.removeClass('wz-prototype');
 					console.log(attachments);
-					attachments.children('.attachments-information').text( message.attachments.length + ' adjuntos' );
+					attachments.find('.attachments-information').text( message.attachments.length + ' adjuntos' );
 					var singleAttachmentPrototype = attachments.find('.attachment.wz-prototype');
 
 					for( var i = 0; i < message.attachments.length; i++ ){
@@ -825,6 +825,15 @@ win.on('click','.mailbox', function(e){
   }*/
 	return alert('Drag and drop no implementado');
 
+
+})
+
+.on('click', '.attachment' , function(){
+	
+	console.log( $(this).data() );
+	/*$(this).data().import( function( error ){
+		console.log( arguments );
+	});*/
 
 })
 
