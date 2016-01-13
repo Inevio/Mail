@@ -16,6 +16,7 @@ var boxPrototype					= $('.mailbox.wz-prototype');
 //var linePrototype					= $('.line.wz-prototype');
 var fullMailPrototype			= $('.full-mail.wz-prototype');
 var attachmentsPrototype	= $('.full-mail .full-mail-attachments.wz-prototype');
+var dragPrototype					= $('.drag-image.wz-prototype');
 
 var initMail = function(){
 
@@ -778,9 +779,13 @@ win.on('click','.mailbox', function(e){
 
 .on('wz-dragstart' , '.single-mail', function( e,drag ){
 
-	//console.log('empiezo a dragear por la vida');
-  //var ghost = messagePrototype.clone().removeClass( 'wz-prototype' );
-  var ghost = $(this).cloneWithStyle().css( {
+	console.log('empiezo a dragear por la vida');
+	console.log(drag);
+	console.log(drag.origin);
+	/*console.log(drag.origin.left);
+	console.log(drag.origin['left']);
+	console.log(drag.origin.clientY);*/
+  var ghost = dragPrototype.cloneWithStyle().removeClass( 'wz-prototype' ).css( {
 
                         margin : 0,
                         top    : 'auto',
@@ -829,7 +834,7 @@ win.on('click','.mailbox', function(e){
 })
 
 .on('click', '.attachment' , function(){
-	
+
 	console.log( $(this).data() );
 	/*$(this).data().import( function( error ){
 		console.log( arguments );
@@ -921,7 +926,43 @@ wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
 })
 
 .on( 'messageIn' , function( mailAccountId, boxId, options, mods ){
+
 	console.log('Message in', arguments);
+	console.log('.account-' + mailAccountId + '.box-' + boxId + '.active');
+	var boxDom = $('.account-' + mailAccountId + '.box-' + boxId + '.active');
+
+
+	if ( boxDom ){
+
+		var boxApi 	= boxDom.data();
+		var message = mailPrototype.clone().removeClass('wz-prototype');
+
+		boxApi.getMessage( options[2] , function(error, message){
+
+			if(error){
+				return alert(error);
+			}
+
+			message.data( message );
+			message.find('.mail-from').text( message.from.name );
+			message.find('.mail-subject').text( message.title );
+			message.find('.mail-date').text( message.date );
+			message.addClass('message-' + message.id);
+
+			if( message.flags.indexOf('\\Seen') === -1 ){
+				message.addClass('unread');
+			}
+
+			if( message.flags.indexOf('\\Flagged') !== -1 ){
+				message.addClass('flagged');
+				message.find('.important').addClass('active');
+			}
+
+			message.insertAfter( mailPrototype );
+
+		});
+	}
+
 })
 
 .on( 'messageOut' , function( mailAccountId, boxId, options, mods ){

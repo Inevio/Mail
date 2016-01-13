@@ -651,6 +651,19 @@ span{
 	background-color: #d5ebfa;
 }
 
+.inbox-middle .drag-image{
+  width: 38px;
+  height: 25px;
+}
+
+.inbox-middle .drag-image i{
+  width: 38px;
+  height: 25px;
+  background-image: url('@static/assets/draging.png');
+  background-size: 38px 25px;
+  display: inline-block;
+}
+
 
 /*End of middle content--------------------------------------------------*/
 
