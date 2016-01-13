@@ -780,9 +780,9 @@ win.on('click','.mailbox', function(e){
 .on('wz-dragstart' , '.single-mail', function( e,drag ){
 
 	console.log('empiezo a dragear por la vida');
-	console.log(drag);
+	/*console.log(drag);
 	console.log(drag.origin);
-	/*console.log(drag.origin.left);
+	console.log(drag.origin.left);
 	console.log(drag.origin['left']);
 	console.log(drag.origin.clientY);*/
   var ghost = dragPrototype.cloneWithStyle().removeClass( 'wz-prototype' ).css( {
@@ -799,37 +799,43 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on( 'wz-dropenter', '.mailbox-info', function( e,file ){
+.on( 'wz-dropenter', '.mailbox-info', function( e,item ){
 
-  $(this).addClass('active');
+  $(this).addClass('dragging-active');
 
 })
 
-.on( 'wz-dropleave', '.mailbox-info', function( e,file ){
+.on( 'wz-dropleave', '.mailbox-info', function( e,item ){
 
-  $(this).removeClass('active');
+  $(this).removeClass('dragging-active');
 
 })
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
-  /*var boxDestino = $(this).parent().data().path;
-  if( boxDestino){
+  var boxDestino = $(this).parent().data().path;
+	
+  if( boxDestino ){
+
 		var options = {
 			move_to_box : boxDestino
 		}
-    item.data().modifyMessage(options ,function(error){
 
-			console.log(arguments);
+		console.log( $('.mailbox.active').data().path );
+		console.log( boxDestino );
+		if( $('.mailbox.active').data().path != boxDestino ){
 
-			if(error){
-				return alert(error);
-			}
+			item.data().modifyMessage(options ,function(error){
+				console.log(arguments);
+				if(error){
+					return alert(error);
+				}
+	    });
 
-    });
-  }*/
-	return alert('Drag and drop no implementado');
+		}
 
+  }
+	//return alert('Drag and drop no implementado');
 
 })
 
@@ -932,7 +938,7 @@ wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
 	var boxDom = $('.account-' + mailAccountId + '.box-' + boxId + '.active');
 
 
-	if ( boxDom ){
+	if ( boxDom.lenght > 0 ){
 
 		var boxApi 	= boxDom.data();
 		var message = mailPrototype.clone().removeClass('wz-prototype');
@@ -966,7 +972,15 @@ wz.mail.on( 'flagChanged' , function( accountId, path, uid, flags ){
 })
 
 .on( 'messageOut' , function( mailAccountId, boxId, options, mods ){
+
 	console.log('Message out', arguments);
+	var boxDom = $('.account-' + mailAccountId + '.box-' + boxId + '.active');
+
+	if ( boxDom.length > 0 ){
+		console.log('.single-mail.message-' + options);
+		$('.single-mail.message-' + options).remove();
+	}
+
 });
 
 initMail();

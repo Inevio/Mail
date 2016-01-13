@@ -373,11 +373,11 @@ span{
   height: 29px;
 }
 
-.mailbox-info.active{
+.mailbox-info.active, .mailbox-info.dragging-active{
   background-color: #60b25e;
 }
 
-.mailbox-info.active span{
+.mailbox-info.active span, .mailbox-info.dragging-active span{
   color: white;
 }
 
@@ -387,7 +387,7 @@ span{
   background-size: 16px 16px;
 }
 
-.mailbox-info.active .icon{
+.mailbox-info.active .icon, .mailbox-info.dragging-active .icon{
   background:url("@static/assets/folder_active.png");
 }
 
@@ -397,7 +397,7 @@ span{
   background-size: 16px 16px;
 }
 
-.mailbox-info .inbox.active .icon{
+.mailbox-info .inbox.active .icon, .mailbox-info .inbox.dragging-active .icon{
   background:url("@static/assets/inbox_active.png");
 }
 
