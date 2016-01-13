@@ -610,20 +610,20 @@ win.on('click','.mailbox', function(e){
 
 	if( $('.mailbox-info.active span').text() === 'Trash' ){
 
-		selectedList.forEach( function(item){
+		confirm('¿Seguro que desea eliminar?', function( input ){
 
-			var apiMessage = $(item).data();
-
-			apiMessage.removeMessage( function(error){
-
-				if(error){
-					return alert(error);
-				}
-
-				item.remove();
-
-			});
-
+			if( input ){
+				selectedList.forEach( function(item){
+					var apiMessage = $(item).data();
+					apiMessage.removeMessage( function(error){
+						if(error){
+							return alert(error);
+						}
+						item.remove();
+					});
+				});
+			}
+			
 		});
 
 	}else{
@@ -814,7 +814,7 @@ win.on('click','.mailbox', function(e){
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
   var boxDestino = $(this).parent().data().path;
-	
+
   if( boxDestino ){
 
 		var options = {
