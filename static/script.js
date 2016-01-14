@@ -623,7 +623,7 @@ win.on('click','.mailbox', function(e){
 					});
 				});
 			}
-			
+
 		});
 
 	}else{
@@ -689,45 +689,52 @@ win.on('click','.mailbox', function(e){
 
 })
 
-.on('click', '.single-mail .toggle-fav', function(e){
+.on('click', '.mail-options .toggle-fav', function(e){
 
-	/*var messageApi = $(this).parents('.single-mail').data();
-	var options;
+	var selected = $('.subcontent1 .active');
+	var selectedList = [];
 
-	if( $(this).hasClass('active') ){
-		options = {
-			remove_flags : ['\\Flagged']
+	if( selected.length){
+
+		for( var i = 0; i < selected.length; i++){
+			selectedList.push(selected[i]);
 		}
-	}else{
-		options = {
-			add_flags : ['\\Flagged']
-		}
+
 	}
 
-	messageApi.modifyMessage(options , function(error, message){
+	selectedList.forEach( function(item){
 
-		if(error){
-			return alert(error);
-		}
-		console.log(arguments);
+		var apiMessage = $(item).data();
+		var options;
+		var wasFlagged;
 
-		if( $('.full-mail-complete').hasClass('flagged') ){
-
-			$('.full-mail .full-important').removeClass('active');
-			$('.full-mail-complete').removeClass('flagged');
-			$('.message-' + messageApi.id).addClass('flagged');
-			$('.message-' + messageApi.id + ' .important').addClass('active');
-
+		if( $(item).hasClass('active') ){
+			options = {
+				remove_flags : ['\\Flagged']
+			}
+			wasFlagged = 1;
 		}else{
-
-			$('.full-mail .full-important').removeClass('active');
-			$('.full-mail-complete').removeClass('flagged');
-			$('.message-' + messageApi.id).removeClass('flagged');
-			$('.message-' + messageApi.id + ' .important').removeClass('active');
-
+			options = {
+				add_flags : ['\\Flagged']
+			}
+			wasFlagged = 0;
 		}
 
-	})*/
+		apiMessage.modifyMessage(options, function(error, message){
+
+			if(error){
+				return alert(error);
+			}
+
+			if( wasFlagged ){
+				$('.message-' + messageApi.id).removeClass('flagged');
+			}else{
+				$('.message-' + messageApi.id).addClass('flagged');
+			}
+
+		});
+
+	});
 
 })
 
