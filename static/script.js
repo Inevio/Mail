@@ -879,7 +879,7 @@ win.on('click','.mailbox', function(e){
 
 .on( 'contextmenu', '.mail-account', function(e){
 
-	if( $(e.target).closest('.mailbox').length ){
+	/*if( $(e.target).closest('.mailbox').length ){
 		return;
 	}
 
@@ -892,7 +892,7 @@ win.on('click','.mailbox', function(e){
 		.addOption( lang.deleteAccount, function(){
 			//boxApi.removeBox();
 		})
-		.render();
+		.render();*/
 
 });
 
