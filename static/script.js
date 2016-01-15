@@ -478,6 +478,7 @@ win.on('click','.mailbox', function(e){
 					console.log(attachments);
 					attachments.find('.attachments-information').text( message.attachments.length + ' adjuntos' );
 					var singleAttachmentPrototype = attachments.find('.attachment.wz-prototype');
+					var attachmentsArray = [];
 
 					for( var i = 0; i < message.attachments.length; i++ ){
 
@@ -485,10 +486,11 @@ win.on('click','.mailbox', function(e){
 						attachment.find('div').text( message.attachments[i].name );
 						attachment.addClass('attachment-' + i);
 						attachment.data( message.attachments[i] );
-						attachment.insertAfter( singleAttachmentPrototype );
+						attachmentsArray.push(attachment);
 
 					}
 
+					attachments.append( attachmentsArray );
 					attachments.insertAfter( fullMailItem.find('.full-mail-attachments.wz-prototype') );
 
 				}
